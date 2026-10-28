@@ -1,6 +1,6 @@
 [
   {
-    "id": "2026-10-28",
+    "id": "2026-10-28-2",
     "date": "2026-10-28",
     "items": [
       {
@@ -27,6 +27,25 @@
           "en": "On battery, live wallpapers now move at fewer frames a second, and in power saving or when the battery is low they hold still. You can turn this off under the wallpaper in Settings.",
           "nl": "Op batterij bewegen live achtergronden nu met minder beelden per seconde, en bij energiebesparing of een bijna lege batterij staan ze stil. Je kunt dit uitzetten bij de achtergrond in Instellingen.",
           "ru": "От батареи живые обои теперь показывают меньше кадров в секунду, а в режиме энергосбережения или при низком заряде замирают. Это можно отключить в настройках обоев в Параметрах."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-28-1",
+    "date": "2026-10-28",
+    "items": [
+      {
+        "icon": "rquickshare",
+        "title": {
+          "en": "Quick Share with Android",
+          "nl": "Quick Share met Android",
+          "ru": "Quick Share с Android"
+        },
+        "text": {
+          "en": "Send photos and files from an Android phone: choose Share, then Quick Share, and pick this computer. Files land in Downloads. To send to the phone, open Quick Share and drag files into the window. Phone and computer need to be on the same network.",
+          "nl": "Stuur foto's en bestanden vanaf een Android-telefoon: kies Delen, dan Quick Share, en kies deze computer. Bestanden komen in Downloads. Om naar de telefoon te sturen open je Quick Share en sleep je bestanden in het venster. Telefoon en computer moeten op hetzelfde netwerk zitten.",
+          "ru": "Отправляйте фото и файлы с телефона Android: выберите «Поделиться», затем Quick Share и этот компьютер. Файлы попадают в «Загрузки». Чтобы отправить на телефон, откройте Quick Share и перетащите файлы в окно. Телефон и компьютер должны быть в одной сети."
         }
       }
     ]

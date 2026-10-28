@@ -164,8 +164,13 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Kernora applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' kernora-apps)" == "1.1.44" ]] \
-  || fail "kernora-apps 1.1.44 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' kernora-apps)" == "1.1.46" ]] \
+  || fail "kernora-apps 1.1.46 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' r-quick-share)" == "0.11.5" && -x /usr/bin/rquickshare ]] \
+  || fail "Quick Share (RQuickShare 0.11.5) is not installed"
+[[ "$(dpkg-divert --listpackage /usr/share/applications/RQuickShare.desktop)" == kernora-apps \
+  && ! -e /usr/share/applications/RQuickShare.desktop ]] \
+  || fail "RQuickShare's own menu entry is not replaced by Quick Share"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done

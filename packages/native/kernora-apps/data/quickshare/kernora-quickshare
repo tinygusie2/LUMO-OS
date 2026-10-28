@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+minimized=false
+[ "${1:-}" = resident ] && minimized=true
+
+settings="${XDG_DATA_HOME:-$HOME/.local/share}/dev.mandre.rquickshare/.settings.json"
+mkdir -p "$(dirname "$settings")"
+if [ -s "$settings" ] && grep -q '"startminimized"' "$settings"; then
+    sed -i -E "s/\"startminimized\"[[:space:]]*:[[:space:]]*(true|false)/\"startminimized\": $minimized/" "$settings"
+elif [ -s "$settings" ] && grep -q '"' "$settings"; then
+    sed -i -E "0,/\{/s//{\"startminimized\": $minimized, /" "$settings"
+else
+    printf '{"startminimized": %s, "realclose": false}\n' "$minimized" > "$settings"
+fi
+
+exec /usr/bin/rquickshare

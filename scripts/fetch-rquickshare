@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# shellcheck source=lib/common.sh
+source "$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
+
+for dependency in curl dpkg-deb sha256sum; do
+  require_command "$dependency"
+done
+load_upstream_config
+load_rquickshare_config
+
+cache_dir="$PROJECT_ROOT/_cache/rquickshare"
+package="$cache_dir/r-quick-share_${RQUICKSHARE_VERSION}_${BASE_ARCH}.deb"
+mkdir -p "$cache_dir"
+
+if [[ ! -s "$package" ]]; then
+  temporary=$(mktemp "$cache_dir/.fetch.XXXXXX")
+  trap 'rm -f -- "$temporary"' EXIT
+  curl --fail --silent --show-error --location --proto '=https' --tlsv1.2 \
+    --output "$temporary" "$RQUICKSHARE_URL"
+  printf '%s  %s\n' "$RQUICKSHARE_SHA256" "$temporary" | sha256sum --check --status \
+    || die "RQuickShare download does not match the pinned checksum"
+  mv -- "$temporary" "$package"
+fi
+printf '%s  %s\n' "$RQUICKSHARE_SHA256" "$package" | sha256sum --check --status \
+  || die "RQuickShare package checksum mismatch"
+[[ "$(dpkg-deb -f "$package" Package Version)" == $'Package: r-quick-share\nVersion: '"$RQUICKSHARE_VERSION" ]] \
+  || die "RQuickShare package is not r-quick-share $RQUICKSHARE_VERSION"
+
+printf 'RQuickShare: %s\n' "$package"

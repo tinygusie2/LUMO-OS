@@ -10,6 +10,7 @@ for dependency in awk date dpkg-parsechangelog dpkg-scanpackages \
 done
 load_project_config
 load_upstream_config
+load_rquickshare_config
 
 "$PROJECT_ROOT/scripts/create-development-archive-key"
 
@@ -47,6 +48,8 @@ archive_package_pool="$archive_root/pool/main/k/kernora-archive"
 desktop_pool="$archive_root/pool/main/k/kernora-desktop"
 apps_pool="$archive_root/pool/main/k/kernora-apps"
 calamares_pool="$archive_root/pool/main/c/calamares"
+rquickshare_pool="$archive_root/pool/main/r/r-quick-share"
+rquickshare_package="$PROJECT_ROOT/_cache/rquickshare/r-quick-share_${RQUICKSHARE_VERSION}_${BASE_ARCH}.deb"
 binary_index="$archive_root/dists/$DIST_CODENAME/main/binary-$BASE_ARCH"
 source_index="$archive_root/dists/$DIST_CODENAME/main/source"
 release="$archive_root/dists/$DIST_CODENAME/Release"
@@ -57,7 +60,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-mkdir -p "$pool" "$meta_pool" "$archive_package_pool" "$desktop_pool" "$apps_pool" "$calamares_pool" \
+mkdir -p "$pool" "$meta_pool" "$archive_package_pool" "$desktop_pool" "$apps_pool" "$calamares_pool" "$rquickshare_pool" \
   "$binary_index" "$source_index"
 for artifact in \
   "$source_dir/base-files_${package_version}.dsc" \
@@ -122,6 +125,9 @@ for derived in polkit-kde-agent-1; do
     install -m 0644 "$deb" "$derived_pool/"
   done
 done
+printf '%s  %s\n' "$RQUICKSHARE_SHA256" "$rquickshare_package" | sha256sum --check --status \
+  || die "RQuickShare is missing or changed; run make rquickshare"
+install -m 0644 "$rquickshare_package" "$rquickshare_pool/"
 install -m 0644 "$public_key" \
   "$archive_root/kernora-development-archive-keyring.gpg"
 

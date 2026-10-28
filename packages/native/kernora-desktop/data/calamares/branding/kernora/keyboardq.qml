@@ -57,8 +57,31 @@ Item {
             keyboardPage.variantRows = variantItems.rows();
             keyboardPage.modelRows = modelItems.rows();
             keyboardPage.switcherRows = switcherItems.rows();
+            keyboardPage.applyDutchDefault();
         }
     }
+
+    property bool dutchDefaultDone: false
+    function applyDutchDefault(): void {
+        if (dutchDefaultDone || !visible || !Qt.locale().name.startsWith("nl")) {
+            return;
+        }
+        const us = layoutRows.findIndex(row => row.key === "us");
+        if (us < 0) {
+            dutchDefaultDone = true;
+            return;
+        }
+        if (layoutsModel.currentIndex !== us) {
+            layoutsModel.currentIndex = us;
+            return;
+        }
+        const intl = variantRows.findIndex(row => row.key === "intl");
+        if (intl >= 0) {
+            variantsModel.currentIndex = intl;
+        }
+        dutchDefaultDone = true;
+    }
+    onVisibleChanged: applyDutchDefault()
 
     function rowAt(rows: var, index: int): var {
         return index >= 0 && index < rows.length ? rows[index] : null;

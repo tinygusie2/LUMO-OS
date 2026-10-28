@@ -2869,3 +2869,24 @@ msgstr "Anders blijven ze geblokkeerd tot alle rondes klaar zijn"
 
 msgid "Block during focus"
 msgstr "Blokkeren tijdens focus"
+
+msgid "Quick Share"
+msgstr "Quick Share"
+
+msgid "Share with an Android phone the way you share between phones: on the phone, choose Share, then Quick Share, and pick this computer. Both need to be on the same network."
+msgstr "Deel met een Android-telefoon zoals je tussen telefoons deelt: kies op de telefoon Delen, dan Quick Share, en kies deze computer. Beide moeten op hetzelfde netwerk zitten."
+
+msgid "Open Quick Share"
+msgstr "Quick Share openen"
+
+msgid "Send files: drag them into the window and pick the phone"
+msgstr "Bestanden versturen: sleep ze in het venster en kies de telefoon"
+
+msgid "Always ready to receive"
+msgstr "Altijd klaar om te ontvangen"
+
+msgid "Quick Share starts when you log in and waits in the status area"
+msgstr "Quick Share start bij het aanmelden en wacht in het statusgebied"
+
+msgid "nearby share android phone send receive files photos samsung pixel"
+msgstr "nearby share delen android telefoon versturen ontvangen bestanden foto's samsung pixel"

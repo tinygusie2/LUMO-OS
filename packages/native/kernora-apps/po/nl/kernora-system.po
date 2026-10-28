@@ -180,3 +180,6 @@ msgstr "Schermafbeelding"
 
 msgid "Built-in display"
 msgstr "Ingebouwd scherm"
+
+msgid "Quick Share with Android phones"
+msgstr "Quick Share met Android-telefoons"

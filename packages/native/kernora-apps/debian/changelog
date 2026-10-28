@@ -1,10 +1,22 @@
-kernora-apps (1.1.44) UNRELEASED; urgency=medium
+kernora-apps (1.1.46) UNRELEASED; urgency=medium
 
   * Settings: still wallpapers are marked Still and have no motion options;
     live wallpapers get a Gentle on battery switch.
   * Welcome: the wallpaper page mentions the still wallpapers.
 
  -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
+
+kernora-apps (1.1.45) UNRELEASED; urgency=medium
+
+  * Quick Share works with Android phones: RQuickShare 0.11.5 comes with
+    the system as Quick Share. On the phone choose Share, Quick Share and
+    pick the computer; files land in Downloads. To send, drag files into
+    the Quick Share window. It starts hidden at login and waits in the
+    status area, so the computer can always be found.
+  * Settings > Phone has a Quick Share section to open it and to choose
+    whether it is always ready to receive.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:30:00 +0000
 
 kernora-apps (1.1.43) UNRELEASED; urgency=medium
 

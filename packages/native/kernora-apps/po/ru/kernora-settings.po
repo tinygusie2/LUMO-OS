@@ -3357,3 +3357,24 @@ msgstr "Lumo удаляет драйвер NVIDIA."
 
 msgid "The NVIDIA driver is removed and stops being used after a restart."
 msgstr "Драйвер NVIDIA удалён и перестанет использоваться после перезагрузки."
+
+msgid "Quick Share"
+msgstr "Quick Share"
+
+msgid "Share with an Android phone the way you share between phones: on the phone, choose Share, then Quick Share, and pick this computer. Both need to be on the same network."
+msgstr "Делитесь с телефоном Android так же, как между телефонами: на телефоне выберите «Поделиться», затем Quick Share и этот компьютер. Оба устройства должны быть в одной сети."
+
+msgid "Open Quick Share"
+msgstr "Открыть Quick Share"
+
+msgid "Send files: drag them into the window and pick the phone"
+msgstr "Отправка файлов: перетащите их в окно и выберите телефон"
+
+msgid "Always ready to receive"
+msgstr "Всегда готов к приёму"
+
+msgid "Quick Share starts when you log in and waits in the status area"
+msgstr "Quick Share запускается при входе и ждёт в области уведомлений"
+
+msgid "nearby share android phone send receive files photos samsung pixel"
+msgstr "nearby share андроид телефон отправить получить файлы фото samsung pixel"
