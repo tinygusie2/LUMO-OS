@@ -243,3 +243,6 @@ msgstr "Используйте строчные латинские буквы, �
 #: src/system/accounts.cpp:142
 msgid "This user name is taken."
 msgstr "Это имя пользователя уже занято."
+
+msgid "Quick Share with Android phones"
+msgstr "Quick Share с телефонами Android"

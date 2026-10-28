@@ -21,6 +21,14 @@ SettingsPage {
     subtitle: i18n("See your phone's notifications here, send texts, share files and the clipboard, and find your phone.")
 
     readonly property string tool: Process.findExecutable("kdeconnect-cli")
+    readonly property bool quickShare: Process.findExecutable("rquickshare").length > 0
+    readonly property string quickShareStartup: "org.kernora.quickshare-resident.desktop"
+    property int startupRevision: 0
+    readonly property bool quickShareAlways: {
+        startupRevision;
+        const entry = Autostart.entries().find(e => e.id === quickShareStartup);
+        return entry !== undefined && entry.enabled;
+    }
     property var devices: []
     property bool loaded: false
     property string busy: ""
@@ -98,6 +106,34 @@ SettingsPage {
         visible: page.tool.length === 0
         title: i18n("Phone link is not installed")
         note: i18n("Install the kdeconnect package to connect your phone.")
+    }
+
+    Group {
+        title: i18n("Quick Share")
+        visible: page.quickShare
+        note: i18n("Share with an Android phone the way you share between phones: on the phone, choose Share, then Quick Share, and pick this computer. Both need to be on the same network.")
+
+        ListItem {
+            title: i18n("Open Quick Share")
+            subtitle: i18n("Send files: drag them into the window and pick the phone")
+            icon: "rquickshare"
+            chevron: true
+            onClicked: Process.launchApplication("org.kernora.quickshare.desktop", [])
+        }
+        ListItem {
+            title: i18n("Always ready to receive")
+            subtitle: i18n("Quick Share starts when you log in and waits in the status area")
+            icon: "document-save"
+            checkable: true
+            checked: page.quickShareAlways
+            onToggled: on => {
+                Autostart.setEnabled(page.quickShareStartup, on);
+                page.startupRevision += 1;
+                if (on) {
+                    Process.startDetached("kernora-quickshare", ["resident"]);
+                }
+            }
+        }
     }
 
     Group {

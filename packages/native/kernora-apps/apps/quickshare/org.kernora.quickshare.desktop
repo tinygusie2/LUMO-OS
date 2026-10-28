@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=Quick Share
+Name[nl]=Quick Share
+Name[ru]=Quick Share
+GenericName=Share files with Android
+GenericName[nl]=Bestanden delen met Android
+GenericName[ru]=Обмен файлами с Android
+Comment=Send and receive files with nearby Android phones
+Comment[nl]=Bestanden versturen naar en ontvangen van Android-telefoons in de buurt
+Comment[ru]=Отправка и получение файлов с телефонов Android поблизости
+Icon=rquickshare
+Exec=kernora-quickshare
+Terminal=false
+Categories=Network;FileTransfer;
+Keywords=nearby;share;android;phone;send;receive;
+Keywords[nl]=nearby;delen;android;telefoon;versturen;ontvangen;
+StartupWMClass=rquickshare

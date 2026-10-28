@@ -69,6 +69,7 @@ QVariantList Licenses::components() const
         {"fonts-roboto-unhinted", QStringLiteral("Roboto"), i18n("The boot menu typeface by Google"), "https://fonts.google.com/specimen/Roboto"},
         {"qt-style-kvantum", QStringLiteral("Kvantum"), i18n("The engine that draws application widgets"), "https://github.com/tsujan/Kvantum"},
         {"librewolf", QStringLiteral("LibreWolf"), i18n("The web browser, built from Firefox"), "https://librewolf.net"},
+        {"r-quick-share", QStringLiteral("RQuickShare"), i18n("Quick Share with Android phones"), "https://github.com/Martichou/rquickshare"},
         {"calamares", QStringLiteral("Calamares"), i18n("The system installer"), "https://calamares.io"},
         {"systemd", QStringLiteral("systemd"), i18n("The system and service manager"), "https://systemd.io"},
         {"network-manager", QStringLiteral("NetworkManager"), i18n("Network connections"), "https://networkmanager.dev"},

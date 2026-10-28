@@ -31,6 +31,18 @@ of the shell: the same tokens, components, symbols and motion.
 | Welcome (`kernora-welcome`) | Plasma Welcome | Runs at the first logins of an installed system (`--first-run`, closes in the live session) until finished. |
 | File chooser (`kernora-filechooser`) | KDE's file dialog | Every program's open, save and folder dialogs; see below. |
 
+Quick Share with Android phones is RQuickShare. It has no apt repository:
+`scripts/fetch-rquickshare` downloads the release `.deb` pinned by URL and
+SHA-256 in `configs/upstream/rquickshare.env`, and `build-local-archive`
+puts it in the Kernora archive as `r-quick-share`, so the image and installed
+systems get it through kernora-apps, which depends on it. kernora-apps
+diverts its own menu entry aside and adds `org.kernora.quickshare.desktop`
+and an autostart entry; both run `kernora-quickshare`, which sets
+RQuickShare's `startminimized` setting (on at login, off from the menu)
+before it starts. Settings > Phone opens it and switches the autostart.
+Phone and computer have to be on the same network: Quick Share finds devices
+with mDNS, which does not cross routers.
+
 The web browser is LibreWolf, which also opens PDFs; `/etc/xdg/mimeapps.list`
 (kernora-desktop) makes it the default for the web and PDFs and keeps
 pictures with Photos and JSON and XML with the Text Editor, as LibreWolf
