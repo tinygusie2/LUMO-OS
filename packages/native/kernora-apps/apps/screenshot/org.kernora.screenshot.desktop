@@ -10,6 +10,6 @@ Icon=org.kernora.screenshot
 Exec=/usr/bin/kernora-screenshot
 Categories=Qt;Utility;Graphics;
 Keywords=screenshot;capture;print;снимок;скриншот;экран;
-StartupNotify=true
+StartupNotify=false
 X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2
 X-KDE-Shortcuts=Print,Meta+Shift+S

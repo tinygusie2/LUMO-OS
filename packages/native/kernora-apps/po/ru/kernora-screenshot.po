@@ -17,84 +17,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: apps/screenshot/qml/Main.qml:29
-msgid "Screenshot"
-msgstr "Снимок экрана"
-
-#: apps/screenshot/qml/Main.qml:59
-msgid "The screen could not be captured."
-msgstr "Не удалось сделать снимок экрана."
-
-#: apps/screenshot/qml/Main.qml:69
-msgid "The screenshot could not be saved."
-msgstr "Не удалось сохранить снимок."
-
-#: apps/screenshot/qml/Main.qml:124
-msgid "Take a screenshot"
-msgstr "Снимок экрана"
-
-#: apps/screenshot/qml/Main.qml:258
-msgid "Area"
-msgstr "Область"
-
-#: apps/screenshot/qml/Main.qml:259
-msgid "Screen"
-msgstr "Экран"
-
-#: apps/screenshot/qml/Main.qml:260
-msgid "Window"
-msgstr "Окно"
-
-#: apps/screenshot/qml/Main.qml:272
-msgid "Take the screenshot"
-msgstr "Сделать снимок"
-
-#: apps/screenshot/qml/Main.qml:273
-msgid "Take the screenshot (Enter)"
-msgstr "Сделать снимок (Enter)"
-
-#: apps/screenshot/qml/Main.qml:296
-msgid "Cancel (Esc)"
-msgstr "Отмена (Esc)"
-
-#: apps/screenshot/qml/Main.qml:333
-msgid "No screenshot"
-msgstr "Снимка нет"
-
-#: apps/screenshot/qml/Main.qml:342
-msgid "Saved and copied"
-msgstr "Сохранено и скопировано"
-
-#: apps/screenshot/qml/Main.qml:356
-msgid "Take another"
-msgstr "Сделать ещё"
-
-#: apps/screenshot/qml/Main.qml:365
-msgid "Open"
-msgstr "Открыть"
-
-#: apps/screenshot/qml/Main.qml:371
-msgid "Show in Files"
-msgstr "Показать в «Файлах»"
-
-#: apps/screenshot/qml/Main.qml:377
-msgid "Delete"
-msgstr "Удалить"
-
-#: src/apps/host.cpp:64
-msgctxt "@info:credit"
-msgid "© 2026 Lumo"
-msgstr "© 2026 Lumo"
-
-#: src/apps/host.cpp:72
-msgid "Files or pages to open."
-msgstr "Файлы или страницы для открытия."
-
-#: src/apps/screenshot.cpp:8
 msgctxt "@title application name"
 msgid "Screenshot"
 msgstr "Снимок экрана"
 
-#: apps/screenshot/qml/Main.qml:377
-msgid "Screenshot taken"
-msgstr "Снимок сделан"
+msgid "Screenshot"
+msgstr "Снимок экрана"
+
+msgid "The screen could not be captured."
+msgstr "Не удалось сделать снимок экрана."
+
+msgid "The screenshot could not be saved."
+msgstr "Не удалось сохранить снимок."
+
+msgid "Take a screenshot"
+msgstr "Снимок экрана"
+
+msgid "Rectangle"
+msgstr "Прямоугольник"
+
+msgid "Freeform"
+msgstr "Произвольная форма"
+
+msgid "Window"
+msgstr "Окно"
+
+msgid "Full screen"
+msgstr "Весь экран"
+
+msgid "Close (Esc)"
+msgstr "Закрыть (Esc)"
+
+msgid "Snip copied to clipboard"
+msgstr "Фрагмент скопирован в буфер обмена"
+
+msgid "Select here to mark up and share."
+msgstr "Нажмите здесь, чтобы добавить пометки и поделиться."
+
+msgid "Mark up"
+msgstr "Пометки"
+
+msgid "New"
+msgstr "Новый"
+
+msgid "Pen"
+msgstr "Ручка"
+
+msgid "Highlighter"
+msgstr "Маркер"
+
+msgid "Colour"
+msgstr "Цвет"
+
+msgid "Undo"
+msgstr "Отменить"
+
+msgid "Redo"
+msgstr "Повторить"
+
+msgid "Clear ink"
+msgstr "Стереть все пометки"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Show in Files"
+msgstr "Показать в «Файлах»"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "No screenshot"
+msgstr "Снимка нет"
+
+msgid "Saved and copied"
+msgstr "Сохранено и скопировано"

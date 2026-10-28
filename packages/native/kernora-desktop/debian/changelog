@@ -1,4 +1,4 @@
-kernora-desktop (1.4.35) UNRELEASED; urgency=medium
+kernora-desktop (1.4.37) UNRELEASED; urgency=medium
 
   * Two new live wallpapers: Waves (layers of waves rolling towards the shore
     under a low sun) and Northern Lights (ribbons of light swaying over dark
@@ -10,7 +10,22 @@ kernora-desktop (1.4.35) UNRELEASED; urgency=medium
     frames a second, and in power saving or below 20 % it holds still. The
     setting is on by default and can be turned off per wallpaper.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:40:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
+
+kernora-desktop (1.4.36) UNRELEASED; urgency=medium
+
+  * Meta+P and the Display key open Lumo's Project panel instead of the
+    KDE screen switcher, for new and existing accounts.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+
+kernora-desktop (1.4.33) UNRELEASED; urgency=medium
+
+  * Icons for Screenshot: freeform selection (kernora-select-freeform),
+    pen (kernora-pen) and highlighter (kernora-highlighter, draw-highlight)
+    from Material Symbols.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:20:00 +0000
 
 kernora-desktop (1.4.32) UNRELEASED; urgency=medium
 

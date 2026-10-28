@@ -24,6 +24,8 @@ public:
     Q_INVOKABLE bool discard(const QUrl &image);
     Q_INVOKABLE void captureInteractive(int kind, bool cursor, const QJSValue &callback);
     Q_INVOKABLE QUrl crop(const QUrl &image, int x, int y, int width, int height);
+    Q_INVOKABLE QUrl cropShape(const QUrl &image, const QVariantList &points);
+    Q_INVOKABLE bool annotate(const QUrl &source, const QUrl &target, const QVariantList &strokes);
     Q_INVOKABLE QUrl save(const QUrl &image);
     Q_INVOKABLE void copyToClipboard(const QUrl &image);
 
@@ -31,6 +33,7 @@ private:
     void capture(const QString &method, const QVariantList &arguments, const QJSValue &callback);
     void deliver(const QJSValue &callback, bool ok, const QVariant &first, int width = 0, int height = 0);
     QString temporaryFile() const;
+    bool owned(const QString &path) const;
 
     int m_counter = 0;
 };

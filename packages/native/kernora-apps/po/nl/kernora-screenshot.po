@@ -23,35 +23,53 @@ msgstr "De schermafbeelding kon niet worden opgeslagen."
 msgid "Take a screenshot"
 msgstr "Een schermafbeelding maken"
 
-msgid "Area"
-msgstr "Gebied"
+msgid "Rectangle"
+msgstr "Rechthoek"
 
-msgid "Screen"
-msgstr "Scherm"
+msgid "Freeform"
+msgstr "Vrije vorm"
 
 msgid "Window"
 msgstr "Venster"
 
-msgid "Take the screenshot"
-msgstr "Schermafbeelding maken"
+msgid "Full screen"
+msgstr "Volledig scherm"
 
-msgid "Take the screenshot (Enter)"
-msgstr "Schermafbeelding maken (Enter)"
+msgid "Close (Esc)"
+msgstr "Sluiten (Esc)"
 
-msgid "Cancel (Esc)"
-msgstr "Annuleren (Esc)"
+msgid "Snip copied to clipboard"
+msgstr "Knipsel gekopieerd naar klembord"
 
-msgid "No screenshot"
-msgstr "Geen schermafbeelding"
+msgid "Select here to mark up and share."
+msgstr "Selecteer hier om aantekeningen te maken en te delen."
 
-msgid "Saved and copied"
-msgstr "Opgeslagen en gekopieerd"
+msgid "Mark up"
+msgstr "Aantekeningen maken"
 
-msgid "Take another"
-msgstr "Nog een maken"
+msgid "New"
+msgstr "Nieuw"
 
-msgid "Open"
-msgstr "Openen"
+msgid "Pen"
+msgstr "Pen"
+
+msgid "Highlighter"
+msgstr "Markeerstift"
+
+msgid "Colour"
+msgstr "Kleur"
+
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+msgid "Redo"
+msgstr "Opnieuw"
+
+msgid "Clear ink"
+msgstr "Alle aantekeningen wissen"
+
+msgid "Copy"
+msgstr "Kopiëren"
 
 msgid "Show in Files"
 msgstr "Tonen in Bestanden"
@@ -59,5 +77,8 @@ msgstr "Tonen in Bestanden"
 msgid "Delete"
 msgstr "Verwijderen"
 
-msgid "Screenshot taken"
-msgstr "Schermafbeelding gemaakt"
+msgid "No screenshot"
+msgstr "Geen schermafbeelding"
+
+msgid "Saved and copied"
+msgstr "Opgeslagen en gekopieerd"

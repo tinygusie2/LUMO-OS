@@ -15,6 +15,7 @@ class Displays : public QAbstractListModel
 
     Q_PROPERTY(bool ready READ ready NOTIFY readyChanged)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(QString projection READ projection NOTIFY projectionChanged)
 
 public:
     enum Roles {
@@ -50,6 +51,7 @@ public:
 
     bool ready() const { return m_config != nullptr; }
     int count() const { return rowCount(); }
+    QString projection() const;
 
     Q_INVOKABLE void snapshot();
     Q_INVOKABLE void revert();
@@ -66,15 +68,26 @@ public:
     Q_INVOKABLE void setRgbRange(int row, int range);
     Q_INVOKABLE void setHdr(int row, bool enabled);
     Q_INVOKABLE void setColorProfile(int row, const QString &path);
+    Q_INVOKABLE void setProjection(const QString &mode);
 
 Q_SIGNALS:
     void readyChanged();
     void countChanged();
     void applied(bool ok);
+    void projectionChanged();
 
 private:
     void load();
     void apply();
+    void rebuild();
+    void refresh();
+    void relayout();
+    void ensureMode(const KScreen::OutputPtr &output) const;
+    int rightEdge(const KScreen::OutputPtr &except) const;
+    QList<int> connectedIds() const;
+    QList<KScreen::OutputPtr> outputs() const;
+    KScreen::OutputPtr mainOutput() const;
+    void rememberMain(const KScreen::OutputPtr &main) const;
     KScreen::OutputPtr output(int row) const;
     KScreen::ModePtr bestMode(const KScreen::OutputPtr &output, const QSize &size, double refresh) const;
     QRect logicalGeometry(const KScreen::OutputPtr &output) const;
@@ -84,4 +97,6 @@ private:
     KScreen::ConfigPtr m_config;
     KScreen::ConfigPtr m_saved;
     QList<int> m_ids;
+    bool m_applying = false;
+    bool m_pending = false;
 };
