@@ -1,3 +1,21 @@
+kernora-apps (1.1.43) UNRELEASED; urgency=medium
+
+  * Project (Meta+P) works like Windows: a panel slides in on the right
+    with PC screen only, Duplicate, Extend and Second screen only. Click a
+    choice, or press Meta+P again or the arrow keys and Enter; Esc closes.
+    It starts hidden at login so it opens right away.
+  * A screen that was turned off can be turned on again: it gets its
+    preferred mode back and is placed to the right of the others, and the
+    screen list follows screens that are plugged in, unplugged or wake up.
+  * Display settings no longer send KWin a configuration it cannot use:
+    every change is checked first, changes made in quick succession are
+    sent one after another instead of at the same time, and screens are
+    moved up against each other after a resolution, scale or orientation
+    change so they never overlap.
+  * Require the desktop package that hands Meta+P to Project.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+
 kernora-apps (1.1.41) UNRELEASED; urgency=medium
 
   * Screenshot works like the Windows Snipping Tool: Meta+Shift+S or Print

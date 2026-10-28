@@ -1,3 +1,10 @@
+kernora-desktop (1.4.36) UNRELEASED; urgency=medium
+
+  * Meta+P and the Display key open Lumo's Project panel instead of the
+    KDE screen switcher, for new and existing accounts.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+
 kernora-desktop (1.4.33) UNRELEASED; urgency=medium
 
   * Icons for Screenshot: freeform selection (kernora-select-freeform),

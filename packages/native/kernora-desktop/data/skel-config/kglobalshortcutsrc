@@ -9,3 +9,6 @@ Window Quick Tile Top=none,Meta+Up,Quick Tile Window to the Top
 [plasmashell]
 next activity=none,Meta+Tab,Walk through activities
 show-on-mouse-pos=none,Meta+V,Show Clipboard Items at Mouse Position
+
+[kscreen]
+display=none,Display\tMeta+P,Switch Display
