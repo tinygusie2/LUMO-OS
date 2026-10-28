@@ -12,6 +12,12 @@ kernora-desktop (1.4.37) UNRELEASED; urgency=medium
 
  -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
 
+kernora-desktop (1.4.34) UNRELEASED; urgency=medium
+
+  * Dutch installs and live sessions default to the US-International
+    keyboard with dead keys, like Windows; ' followed by c gives ç.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:05:00 +0000
 kernora-desktop (1.4.36) UNRELEASED; urgency=medium
 
   * Meta+P and the Display key open Lumo's Project panel instead of the
