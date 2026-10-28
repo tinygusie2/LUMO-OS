@@ -13,6 +13,7 @@ ColumnLayout {
 
     property real cfg_Speed
     property bool cfg_PauseWhenCovered
+    property bool cfg_SaveBattery
 
     function tr(text: string): string {
         return i18nd("plasma_wallpaper_org.kernora.starfall", text);
@@ -42,6 +43,14 @@ ColumnLayout {
             checkable: true
             checked: root.cfg_PauseWhenCovered
             onToggled: checked => root.cfg_PauseWhenCovered = checked
+        }
+        UI.ListItem {
+            title: root.tr("Gentle on battery")
+            subtitle: root.tr("Fewer frames on battery; rest in power saving or when the battery is low")
+            icon: "battery-profile-powersave"
+            checkable: true
+            checked: root.cfg_SaveBattery
+            onToggled: checked => root.cfg_SaveBattery = checked
         }
     }
 }

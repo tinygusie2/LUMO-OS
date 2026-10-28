@@ -121,6 +121,31 @@ for path in \
   usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.kernora.starfall.mo \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/Scene.qml \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/materialshapes.js \
+  usr/share/plasma/wallpapers/org.kernora.waves/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.waves/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.waves/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.waves/contents/ui/palettes/blue-grey.qml \
+  usr/share/plasma/wallpapers/org.kernora.aurora/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.aurora/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.aurora/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.aurora/contents/ui/palettes/blue-grey.qml \
+  usr/share/plasma/wallpapers/org.kernora.dunes/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.dunes/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.dunes/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.dunes/contents/ui/palettes/blue-grey.qml \
+  usr/share/plasma/wallpapers/org.kernora.bloom/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.bloom/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.bloom/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.bloom/contents/ui/palettes/blue-grey.qml \
+  usr/share/plasma/wallpapers/org.kernora.contour/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.contour/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.contour/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.contour/contents/ui/palettes/blue-grey.qml \
+  usr/share/plasma/wallpapers/org.kernora.waves/contents/ui/Power.qml \
+  usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/PowerBattery.qml \
+  usr/share/plasma/wallpapers/org.kernora.starfall/contents/ui/PowerProfile.qml \
+  usr/share/plasma/wallpapers/org.kernora.bloom/contents/ui/materialshapes.js \
+  usr/share/locale/nl/LC_MESSAGES/plasma_wallpaper_org.kernora.aurora.mo \
   usr/share/kconf_update/kernora-marbles-to-pastel.upd \
   usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/kernora_marbles_to_pastel.js \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/palettes/kernora.qml \

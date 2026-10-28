@@ -39,3 +39,9 @@ msgstr "Wisselende kleuren"
 
 msgid "Save energy"
 msgstr "Energie besparen"
+
+msgid "Gentle on battery"
+msgstr "Zuinig op batterij"
+
+msgid "Fewer frames on battery; rest in power saving or when the battery is low"
+msgstr "Minder beelden op batterij; stilstaan bij energiebesparing of een bijna lege batterij"

@@ -194,8 +194,8 @@ msgid "2014 · paper and ink"
 msgstr "2014 · бумага и чернила"
 
 #: apps/welcome/qml/Main.qml
-msgid "Lumo's wallpapers are alive: they move slowly and rest behind your windows."
-msgstr "Обои Lumo живые: они медленно движутся и замирают за вашими окнами."
+msgid "Lumo's live wallpapers move slowly and rest behind your windows; the still ones use no power at all."
+msgstr "Живые обои Lumo медленно движутся и замирают за вашими окнами, а статичные совсем не расходуют энергию."
 
 #: apps/welcome/qml/Main.qml:24
 msgid "What's new"

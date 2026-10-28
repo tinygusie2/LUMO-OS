@@ -868,6 +868,15 @@ msgstr "2014 · papier en inkt"
 msgid "Live"
 msgstr "Live"
 
+msgid "Still"
+msgstr "Stilstaand"
+
+msgid "Gentle on battery"
+msgstr "Zuinig op batterij"
+
+msgid "Fewer frames on battery; rests in power saving or when the battery is low"
+msgstr "Minder beelden op batterij; staat stil bij energiebesparing of een bijna lege batterij"
+
 msgid "Your picture"
 msgstr "Jouw afbeelding"
 

@@ -490,16 +490,20 @@ QVariantList Files::liveWallpapers() const
             }
             QFile metadata(entry.absoluteFilePath() + QStringLiteral("/metadata.json"));
             QString name = entry.fileName();
+            bool still = false;
             if (metadata.open(QIODevice::ReadOnly)) {
-                const QString localized = localizedName(QJsonDocument::fromJson(metadata.readAll()).object().value(QStringLiteral("KPlugin")).toObject());
+                const QJsonObject root = QJsonDocument::fromJson(metadata.readAll()).object();
+                const QString localized = localizedName(root.value(QStringLiteral("KPlugin")).toObject());
                 if (!localized.isEmpty()) {
                     name = localized;
                 }
+                still = root.value(QStringLiteral("X-Kernora-Still")).toBool();
             }
             seen.append(entry.fileName());
             const QVariantMap item{{QStringLiteral("id"), entry.fileName()},
                                    {QStringLiteral("name"), name},
-                                   {QStringLiteral("scene"), QUrl::fromLocalFile(scene)}};
+                                   {QStringLiteral("scene"), QUrl::fromLocalFile(scene)},
+                                   {QStringLiteral("still"), still}};
             if (entry.fileName() == QLatin1String("org.kernora.shapes")) {
                 list.prepend(item);
             } else {

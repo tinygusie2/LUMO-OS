@@ -372,7 +372,7 @@ AppWindow {
         PageColumn {
             id: wallpaperPage
             heading: i18n("Pick a wallpaper")
-            text: i18n("Lumo's wallpapers are alive: they move slowly and rest behind your windows.")
+            text: i18n("Lumo's live wallpapers move slowly and rest behind your windows; the still ones use no power at all.")
             property string chosen: "org.kernora.shapes"
             GridLayout {
                 Layout.fillWidth: true

@@ -252,7 +252,7 @@ SettingsPage {
                     required property var modelData
                     Layout.fillWidth: true
                     title: modelData.name
-                    subtitle: i18n("Live")
+                    subtitle: modelData.still ? i18n("Still") : i18n("Live")
                     scene: modelData.scene
                     selected: page.wallpaperPlugin === modelData.id
                     onClicked: page.chooseLive(modelData.id)
@@ -297,7 +297,7 @@ SettingsPage {
 
     Group {
         title: page.live ? page.currentLive.name : ""
-        visible: page.live
+        visible: page.live && !page.currentLive.still
 
         SliderItem {
             title: i18n("Speed")
@@ -335,6 +335,19 @@ SettingsPage {
             onToggled: value => {
                 on = value;
                 page.setLiveOption("PauseWhenCovered", value);
+            }
+        }
+        ListItem {
+            title: i18n("Gentle on battery")
+            subtitle: i18n("Fewer frames on battery; rests in power saving or when the battery is low")
+            icon: "battery-020"
+            iconStyle: "plain"
+            checkable: true
+            property bool on: String(page.liveOption("SaveBattery", true)) !== "false"
+            checked: on
+            onToggled: value => {
+                on = value;
+                page.setLiveOption("SaveBattery", value);
             }
         }
     }

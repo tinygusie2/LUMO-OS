@@ -476,12 +476,18 @@ another, while their colours shift between moods.
   pixel per step), pauses while a maximised or full-screen window hides the
   desktop, and holds still when animations are off. Speed, colour cycling and
   pausing are in the wallpaper's settings.
+* Every live wallpaper is gentle on battery (`SaveBattery`, on by default):
+  on battery the clock ticks ten times a second instead of its usual rate,
+  and in the power-saver profile or at 20 % battery or less it stops.
+  `common/Power.qml` reads the battery (`org.kde.plasma.private.battery`)
+  and the power profile (`org.kde.plasma.private.batterymonitor`) through
+  Loaders, so a Plasma without either module simply never slows down.
+  `debian/rules` copies `common/*.qml` into each live package.
 
 ### More live wallpapers
 
-Lumo ships only live wallpapers; Shapes is the default. The others are
-Material shapes at play, in the same flat Material 3 tones -- toys, not
-landscapes. Each is a Plasma wallpaper package in `data/wallpaper/` with the
+Lumo ships its own wallpapers only, live and still; Shapes is the default.
+The others are Material shapes at play, in the same flat Material 3 tones. Each is a Plasma wallpaper package in `data/wallpaper/` with the
 same parts: a pure `Scene.qml` driven by `phase` (0..1) and `intro`, the
 `main.qml` that runs the clock and pauses behind windows, and `config.qml`
 for speed and pausing. `gen-wallpaper-assets OUT THEME` writes each package's
@@ -533,6 +539,41 @@ Settings and Welcome load `Scene.qml` directly for previews
   keep their night blue in every colour theme (a third `"fixed"` field in
   `THEMES` pins a family's hue); the horizon glow and the meteors take the
   theme's colour.
+
+* **Waves** (`org.kernora.waves`, 60 s): a low sun over the sea and five
+  layers of waves, light at the horizon and dark in front. Each layer is one
+  shape of whole wavelengths, drawn once per screen size one wavelength
+  wider than the screen; the scene only slides it sideways (a whole number
+  of wavelengths a loop, so there is no seam) and bobs it up and down, and a
+  few glints in the sun's colour shimmer between the back layers. 25 frames
+  a second. Sea and sky take the theme's colour; the sun stays warm.
+* **Northern Lights** (`org.kernora.aurora`, 120 s): three ribbons of light
+  over dark hills under 110 fixed stars. A ribbon is seven veils with the
+  same wavy lower edge, each reaching higher and fainter, so it is brightest
+  along its edge and fades upwards, the way an aurora curtain does. The
+  ribbons sway, stretch and breathe by transform and opacity only, and a
+  few faint rays drift through them. 20 frames a second. Two ribbons are
+  green in every theme (`mint`, fixed); the third takes the theme's colour.
+
+`frameInterval` in a scene sets its clock; the older scenes keep 33 ms.
+
+### Still wallpapers
+
+Still wallpapers are scenes too, with the same `Scene.qml` and palettes, so
+they take the theme's colour and show in Settings and Welcome like the live
+ones, marked Still (`"X-Kernora-Still": true` in `metadata.json`, read by
+`Files.liveWallpapers()`). Their `main.qml` only fades the scene in; there
+is no clock, no window tracking and no configuration, so once drawn they
+cost nothing.
+
+* **Dunes** (`org.kernora.dunes`): a large sun in a pale sky over four
+  layers of dunes, each with a shaded lee side.
+* **Bloom** (`org.kernora.bloom`): large Material shapes -- a flower with a
+  circle heart, a cookie12, a clover, a sun, a pill, a gem -- on a light
+  ground, in the theme's colour with fixed pink, amber and green.
+* **Contour** (`org.kernora.contour`): sixteen outlines of cookie9 widen
+  and turn out from a filled one on a dark ground with a soft glow, like
+  contour lines around a peak.
 
 Picture wallpapers are not installed. kernora-desktop no longer ships one,
 and Breeze's (`breeze-wallpaper`, a dependency of `breeze`) is removed from

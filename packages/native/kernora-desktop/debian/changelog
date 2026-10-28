@@ -1,3 +1,17 @@
+kernora-desktop (1.4.37) UNRELEASED; urgency=medium
+
+  * Two new live wallpapers: Waves (layers of waves rolling towards the shore
+    under a low sun) and Northern Lights (ribbons of light swaying over dark
+    hills). Both move only by translating, rotating and fading shapes that
+    are drawn once, at 25 and 20 frames a second.
+  * Three still wallpapers: Dunes, Bloom and Contour. They draw once, run no
+    clock and take the theme's colour like the live ones.
+  * Every live wallpaper is gentle on battery: on battery it drops to ten
+    frames a second, and in power saving or below 20 % it holds still. The
+    setting is on by default and can be turned off per wallpaper.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
+
 kernora-desktop (1.4.34) UNRELEASED; urgency=medium
 
   * Dutch installs and live sessions default to the US-International

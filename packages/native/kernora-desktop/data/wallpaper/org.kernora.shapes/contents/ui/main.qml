@@ -17,7 +17,9 @@ WallpaperItem {
     readonly property real speed: Math.max(0.1, root.configuration.Speed)
     readonly property bool reducedMotion: Kirigami.Units.longDuration === 0
     readonly property bool covered: root.configuration.PauseWhenCovered && coveringWindows.count > 0
-    readonly property bool running: !reducedMotion && !covered && root.visible
+    readonly property bool saving: root.configuration.SaveBattery && power.unplugged
+    readonly property bool resting: root.configuration.SaveBattery && (power.low || power.saver)
+    readonly property bool running: !reducedMotion && !covered && !resting && root.visible
 
     property real phase: (Screen.virtualX / 7919 + Screen.virtualY / 104729) % 1
 
@@ -38,16 +40,21 @@ WallpaperItem {
 
     property double lastTick: 0
     Timer {
-        interval: 33
+        interval: root.saving ? 100 : 33
         repeat: true
         running: root.running
         onRunningChanged: root.lastTick = Date.now()
         onTriggered: {
             const now = Date.now();
-            const dt = Math.min(now - root.lastTick, 100) / 1000;
+            const dt = Math.min(now - root.lastTick, 250) / 1000;
             root.lastTick = now;
             root.phase = (root.phase + dt * root.speed / Choreography.loopSeconds) % 1;
         }
+    }
+
+    Power {
+        id: power
+        active: root.configuration.SaveBattery
     }
 
     TaskManager.VirtualDesktopInfo {

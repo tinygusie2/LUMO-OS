@@ -15,6 +15,8 @@ TOOLS = tools
 SYMBOLS = data/symbols
 APPLETS = launcher:org.kernora.launcher shade:org.kernora.quicksettings clipboard:org.kernora.clipboard
 WIDGETS = clock glance weather battery calendar media photo note
+LIVE_WALLPAPERS = tower rhythm starfall pastel waves aurora
+STILL_WALLPAPERS = dunes bloom contour
 COLOURS := $(shell cd $(TOOLS) && python3 -c 'import kernora_design as d; print(" ".join(d.COLOURS))')
 EXTRA_COLOURS := $(filter-out kernora,$(COLOURS))
 
@@ -91,9 +93,12 @@ override_dh_auto_build:
 	install -d generated/wallpapers
 	cp -a data/wallpaper/org.kernora.shapes generated/wallpapers/
 	python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.kernora.shapes/contents/ui
-	for theme in tower rhythm starfall pastel; do \
+	set -e; for theme in $(LIVE_WALLPAPERS) $(STILL_WALLPAPERS); do \
 	  cp -a data/wallpaper/org.kernora.$$theme generated/wallpapers/; \
 	  python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.kernora.$$theme/contents/ui $$theme; \
+	done
+	set -e; for theme in shapes $(LIVE_WALLPAPERS); do \
+	  cp data/wallpaper/common/*.qml generated/wallpapers/org.kernora.$$theme/contents/ui/; \
 	done
 	set -e; for widget in $(WIDGETS); do \
 	  target=generated/plasmoids/org.kernora.widget.$$widget; \
@@ -112,7 +117,7 @@ override_dh_auto_build:
 	cp generated/wallpapers/org.kernora.shapes/contents/ui/materialshapes.js generated/explorer/
 	set -e; for colour in $(EXTRA_COLOURS); do \
 	  KERNORA_COLOUR=$$colour python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.kernora.shapes/contents/ui; \
-	  for theme in tower rhythm starfall pastel; do \
+	  for theme in $(LIVE_WALLPAPERS) $(STILL_WALLPAPERS); do \
 	    KERNORA_COLOUR=$$colour python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.kernora.$$theme/contents/ui $$theme; \
 	  done; \
 	done

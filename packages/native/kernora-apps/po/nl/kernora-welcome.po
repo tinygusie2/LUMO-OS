@@ -74,8 +74,8 @@ msgstr "2014 · papier en inkt"
 msgid "Pick a wallpaper"
 msgstr "Kies een achtergrond"
 
-msgid "Lumo's wallpapers are alive: they move slowly and rest behind your windows."
-msgstr "De achtergronden van Lumo leven: ze bewegen langzaam en komen tot rust achter je vensters."
+msgid "Lumo's live wallpapers move slowly and rest behind your windows; the still ones use no power at all."
+msgstr "De live achtergronden van Lumo bewegen langzaam en komen tot rust achter je vensters; de stilstaande kosten helemaal geen stroom."
 
 msgid "Your apps"
 msgstr "Je apps"

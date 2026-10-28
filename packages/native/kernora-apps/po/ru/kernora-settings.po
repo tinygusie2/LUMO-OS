@@ -1007,6 +1007,15 @@ msgstr "Фигуры Lumo"
 msgid "Live"
 msgstr "Живые"
 
+msgid "Still"
+msgstr "Статичные"
+
+msgid "Gentle on battery"
+msgstr "Бережно к батарее"
+
+msgid "Fewer frames on battery; rests in power saving or when the battery is low"
+msgstr "Меньше кадров от батареи; пауза в режиме энергосбережения или при низком заряде"
+
 #: apps/settings/qml/pages/AppearancePage.qml:263
 msgid "Your picture"
 msgstr "Своё изображение"

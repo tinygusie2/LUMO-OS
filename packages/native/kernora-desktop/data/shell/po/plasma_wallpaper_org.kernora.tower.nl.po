@@ -24,3 +24,9 @@ msgstr "Energie besparen"
 
 msgid "Pause while a window covers the desktop"
 msgstr "Pauzeren als een venster het bureaublad bedekt"
+
+msgid "Gentle on battery"
+msgstr "Zuinig op batterij"
+
+msgid "Fewer frames on battery; rest in power saving or when the battery is low"
+msgstr "Minder beelden op batterij; stilstaan bij energiebesparing of een bijna lege batterij"

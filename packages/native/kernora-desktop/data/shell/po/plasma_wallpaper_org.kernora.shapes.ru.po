@@ -40,3 +40,9 @@ msgstr "Смена цветов"
 
 msgid "Save energy"
 msgstr "Экономия энергии"
+
+msgid "Gentle on battery"
+msgstr "Бережно к батарее"
+
+msgid "Fewer frames on battery; rest in power saving or when the battery is low"
+msgstr "Меньше кадров от батареи; пауза в режиме энергосбережения или при низком заряде"

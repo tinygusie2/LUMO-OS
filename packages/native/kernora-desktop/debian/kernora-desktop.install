@@ -30,6 +30,11 @@ generated/wallpapers/org.kernora.tower usr/share/plasma/wallpapers
 generated/wallpapers/org.kernora.rhythm usr/share/plasma/wallpapers
 generated/wallpapers/org.kernora.pastel usr/share/plasma/wallpapers
 generated/wallpapers/org.kernora.starfall usr/share/plasma/wallpapers
+generated/wallpapers/org.kernora.waves usr/share/plasma/wallpapers
+generated/wallpapers/org.kernora.aurora usr/share/plasma/wallpapers
+generated/wallpapers/org.kernora.dunes usr/share/plasma/wallpapers
+generated/wallpapers/org.kernora.bloom usr/share/plasma/wallpapers
+generated/wallpapers/org.kernora.contour usr/share/plasma/wallpapers
 data/dpkg/kernora-wallpapers etc/dpkg/dpkg.cfg.d
 generated/kvantum/Kernora* usr/share/Kvantum
 data/kvantum/kvantum.kvconfig etc/xdg/Kvantum

@@ -1,0 +1,23 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Kernora Developers"
+            }
+        ],
+        "Category": "",
+        "Description": "Large Material shapes bloom on a light ground; a still picture that uses no power",
+        "Description[nl]": "Grote Material-vormen bloeien op een lichte achtergrond; een stilstaand beeld dat geen stroom kost",
+        "Description[ru]": "Крупные фигуры Material на светлом фоне; неподвижная картинка, не расходующая энергию",
+        "Icon": "preferences-desktop-wallpaper",
+        "Id": "org.kernora.bloom",
+        "License": "GPL-2.0+",
+        "Name": "Bloom",
+        "Name[nl]": "Bloei",
+        "Name[ru]": "Цветение"
+    },
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Kernora-Still": true,
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

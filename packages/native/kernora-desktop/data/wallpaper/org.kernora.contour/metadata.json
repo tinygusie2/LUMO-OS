@@ -1,0 +1,23 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Kernora Developers"
+            }
+        ],
+        "Category": "",
+        "Description": "Rings of a rounded shape ripple out from a glowing centre; a still picture that uses no power",
+        "Description[nl]": "Ringen van een afgeronde vorm golven uit vanaf een gloeiend midden; een stilstaand beeld dat geen stroom kost",
+        "Description[ru]": "Кольца скруглённой фигуры расходятся от светящегося центра; неподвижная картинка, не расходующая энергию",
+        "Icon": "preferences-desktop-wallpaper",
+        "Id": "org.kernora.contour",
+        "License": "GPL-2.0+",
+        "Name": "Contour",
+        "Name[nl]": "Hoogtelijnen",
+        "Name[ru]": "Изолинии"
+    },
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Kernora-Still": true,
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

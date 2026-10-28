@@ -1,5 +1,37 @@
 [
   {
+    "id": "2026-10-28-2",
+    "date": "2026-10-28",
+    "items": [
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "New wallpapers",
+          "nl": "Nieuwe achtergronden",
+          "ru": "Новые обои"
+        },
+        "text": {
+          "en": "Two new live wallpapers, Waves and Northern Lights, and three still ones: Dunes, Bloom and Contour. The still wallpapers draw once and use no power. Find them in Settings > Wallpaper & style.",
+          "nl": "Twee nieuwe live achtergronden, Golven en Noorderlicht, en drie stilstaande: Duinen, Bloei en Hoogtelijnen. De stilstaande worden één keer getekend en kosten geen stroom. Je vindt ze in Instellingen > Achtergrond en stijl.",
+          "ru": "Две новые живые обои, «Волны» и «Северное сияние», и три статичные: «Дюны», «Цветение» и «Изолинии». Статичные обои рисуются один раз и не расходуют энергию. Они в Параметрах > Обои и стиль."
+        }
+      },
+      {
+        "icon": "battery-profile-powersave",
+        "title": {
+          "en": "Live wallpapers save your battery",
+          "nl": "Live achtergronden sparen je batterij",
+          "ru": "Живые обои берегут батарею"
+        },
+        "text": {
+          "en": "On battery, live wallpapers now move at fewer frames a second, and in power saving or when the battery is low they hold still. You can turn this off under the wallpaper in Settings.",
+          "nl": "Op batterij bewegen live achtergronden nu met minder beelden per seconde, en bij energiebesparing of een bijna lege batterij staan ze stil. Je kunt dit uitzetten bij de achtergrond in Instellingen.",
+          "ru": "От батареи живые обои теперь показывают меньше кадров в секунду, а в режиме энергосбережения или при низком заряде замирают. Это можно отключить в настройках обоев в Параметрах."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-28-1",
     "date": "2026-10-28",
     "items": [
