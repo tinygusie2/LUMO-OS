@@ -11,4 +11,6 @@ fi
 if [ "$1" = remove ] || [ "$1" = abort-install ] || [ "$1" = disappear ]; then
     dpkg-divert --package kernora-apps --remove --rename \
         --divert /usr/bin/systemsettings.kde /usr/bin/systemsettings
+    dpkg-divert --package kernora-apps --remove --rename \
+        --divert /usr/share/applications/RQuickShare.desktop.kernora /usr/share/applications/RQuickShare.desktop
 fi

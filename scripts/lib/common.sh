@@ -29,6 +29,12 @@ load_librewolf_config() {
   export LIBREWOLF_FILENAME LIBREWOLF_SHA256
 }
 
+load_rquickshare_config() {
+  # shellcheck disable=SC1091
+  source "$PROJECT_ROOT/configs/upstream/rquickshare.env"
+  export RQUICKSHARE_VERSION RQUICKSHARE_URL RQUICKSHARE_SHA256
+}
+
 load_live_config() {
   # shellcheck disable=SC1091
   source "$PROJECT_ROOT/configs/live/live-user.env"

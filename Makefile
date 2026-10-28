@@ -8,7 +8,7 @@ SHELL := /bin/bash
 	calamares-source calamares-binary \
 	polkit-kde-agent-1-source polkit-kde-agent-1-binary \
 	development-archive-key archive-key local-archive publish \
-	minimal-rootfs iso-tools librewolf live-rootfs iso iso-smoke
+	minimal-rootfs iso-tools librewolf rquickshare live-rootfs iso iso-smoke
 
 check:
 	./scripts/check-host
@@ -91,7 +91,7 @@ development-archive-key:
 
 local-archive: base-files-binary kernora-base-binary kernora-archive-binary kernora-desktop-binary \
 		kernora-apps-binary calamares-binary polkit-kde-agent-1-binary \
-		development-archive-key
+		development-archive-key rquickshare
 	./scripts/build-local-archive
 
 minimal-rootfs: local-archive
@@ -102,6 +102,9 @@ iso-tools: signer-keyring
 
 librewolf:
 	./scripts/fetch-librewolf
+
+rquickshare:
+	./scripts/fetch-rquickshare
 
 archive-key:
 	./scripts/create-archive-key

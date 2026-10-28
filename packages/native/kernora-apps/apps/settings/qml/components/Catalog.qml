@@ -40,6 +40,7 @@ QtObject {
             [i18n("VPN"), "network", "", i18n("virtual private network tunnel")],
             [i18n("Proxy and advanced network settings"), "network", "", i18n("ip dns proxy static")],
             [i18n("Pair a new device"), "bluetooth", "BluetoothPairPage.qml", i18n("bluetooth headphones speaker mouse keyboard add")],
+            [i18n("Quick Share"), "phone", "", i18n("nearby share android phone send receive files photos samsung pixel")],
             [i18n("Connect a phone"), "phone", "", i18n("phone link kde connect android iphone sms text message notifications clipboard share files photos")],
             [i18n("Brightness"), "display", "", i18n("screen backlight dim")],
             [i18n("Night Light"), "display", "", i18n("blue light warm colour temperature evening")],
