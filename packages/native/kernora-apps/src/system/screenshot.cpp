@@ -19,6 +19,8 @@
 #include <QImage>
 #include <QJSEngine>
 #include <QLocale>
+#include <QPainter>
+#include <QPainterPath>
 #include <QSocketNotifier>
 #include <QStandardPaths>
 
@@ -131,7 +133,7 @@ void Screenshot::capture(const QString &method, const QVariantList &arguments, c
                                  .arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation))
                                  .arg(QCoreApplication::applicationPid())
                                  .arg(counter);
-        image.copy().save(path, "PNG");
+        image.save(path, "PNG", 80);
         deliver(callback, true, QUrl::fromLocalFile(path), width, height);
     };
 
@@ -187,12 +189,17 @@ void Screenshot::captureScreen(const QString &name, bool cursor, const QJSValue 
     capture(QStringLiteral("CaptureScreen"), {name, options(cursor)}, callback);
 }
 
+bool Screenshot::owned(const QString &path) const
+{
+    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    const QString runtime = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+    return path.startsWith(pictures + QLatin1Char('/')) || path.startsWith(runtime + QStringLiteral("/kernora-screenshot-"));
+}
+
 bool Screenshot::discard(const QUrl &image)
 {
     const QString path = image.toLocalFile();
-    const QString pictures = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-    const QString runtime = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
-    if (!path.startsWith(pictures + QLatin1Char('/')) && !path.startsWith(runtime + QStringLiteral("/kernora-screenshot-"))) {
+    if (!owned(path)) {
         return false;
     }
     return QFile::remove(path);
@@ -212,8 +219,76 @@ QUrl Screenshot::crop(const QUrl &image, int x, int y, int width, int height)
     const QImage cropped = source.copy(x, y, width, height);
     ++m_counter;
     const QString path = temporaryFile();
-    cropped.save(path, "PNG");
+    cropped.save(path, "PNG", 80);
     return QUrl::fromLocalFile(path);
+}
+
+QUrl Screenshot::cropShape(const QUrl &image, const QVariantList &points)
+{
+    QImage source(image.toLocalFile());
+    if (source.isNull() || points.size() < 6) {
+        return image;
+    }
+    QPainterPath path;
+    path.moveTo(points.at(0).toReal(), points.at(1).toReal());
+    for (qsizetype i = 2; i + 1 < points.size(); i += 2) {
+        path.lineTo(points.at(i).toReal(), points.at(i + 1).toReal());
+    }
+    path.closeSubpath();
+    const QRect bounds = path.boundingRect().toAlignedRect().intersected(source.rect());
+    if (bounds.width() < 2 || bounds.height() < 2) {
+        return image;
+    }
+    QImage shaped(bounds.size(), QImage::Format_ARGB32_Premultiplied);
+    shaped.fill(Qt::transparent);
+    QPainter painter(&shaped);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.translate(-bounds.topLeft());
+    painter.setClipPath(path);
+    painter.drawImage(0, 0, source);
+    painter.end();
+    ++m_counter;
+    const QString file = temporaryFile();
+    shaped.save(file, "PNG", 80);
+    return QUrl::fromLocalFile(file);
+}
+
+bool Screenshot::annotate(const QUrl &source, const QUrl &target, const QVariantList &strokes)
+{
+    QImage image(source.toLocalFile());
+    const QString path = target.toLocalFile();
+    if (image.isNull() || !owned(path)) {
+        return false;
+    }
+    image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+    QPainter painter(&image);
+    painter.setRenderHint(QPainter::Antialiasing);
+    for (const QVariant &entry : strokes) {
+        const QVariantMap stroke = entry.toMap();
+        const QVariantList points = stroke.value(QStringLiteral("points")).toList();
+        if (points.size() < 2) {
+            continue;
+        }
+        const bool highlighter = stroke.value(QStringLiteral("highlighter")).toBool();
+        QColor color(stroke.value(QStringLiteral("color")).toString());
+        if (highlighter) {
+            color.setAlphaF(0.4);
+        }
+        QPen pen(color, stroke.value(QStringLiteral("width")).toReal(), Qt::SolidLine, highlighter ? Qt::SquareCap : Qt::RoundCap, Qt::RoundJoin);
+        painter.setPen(pen);
+        painter.setBrush(Qt::NoBrush);
+        QPainterPath line;
+        line.moveTo(points.at(0).toReal(), points.at(1).toReal());
+        if (points.size() < 4) {
+            line.lineTo(points.at(0).toReal() + 0.01, points.at(1).toReal());
+        }
+        for (qsizetype i = 2; i + 1 < points.size(); i += 2) {
+            line.lineTo(points.at(i).toReal(), points.at(i + 1).toReal());
+        }
+        painter.drawPath(line);
+    }
+    painter.end();
+    return image.save(path, "PNG");
 }
 
 QUrl Screenshot::save(const QUrl &image)

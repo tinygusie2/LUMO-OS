@@ -7,6 +7,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Shapes
 import QtQuick.Controls as QQC2
 import QtQuick.Window
 import org.kernora.m3
@@ -18,29 +19,95 @@ import org.kde.layershell 1.0 as LayerShell
 AppWindow {
     id: app
 
-    width: 560
-    height: 500
-    minimumWidth: 400
+    width: 760
+    height: 560
+    minimumWidth: 480
     minimumHeight: 380
     color: M3.surfaceContainer
     visible: false
     title: i18n("Screenshot")
 
     property url saved
-    property string mode: "region"
+    property url original
+    property int originalWidth: 0
+    property int originalHeight: 0
     property var current: null
     property int pending: 0
     property int captured: 0
     property string firstError: ""
+    property bool capturing: false
+    property bool reopen: false
+    readonly property bool showOnActivate: false
+    property var temporaries: []
+
+    property string tool: "pen"
+    property color penColor: "#202124"
+    property color markerColor: "#ffeb3b"
+    property var strokes: []
+    property var redoStack: []
+
+    readonly property string mode: modeEntry.value === "freeform" ? "freeform" : "rectangle"
+    readonly property var penColors: ["#202124", "#e53935", "#1e88e5", "#43a047", "#ffffff"]
+    readonly property var markerColors: ["#ffeb3b", "#76ff03", "#40c4ff", "#ff4081", "#ffab40"]
+
+    ConfigEntry {
+        id: modeEntry
+        file: "kernora-screenshotrc"
+        group: "General"
+        key: "mode"
+        defaultValue: "rectangle"
+        notify: false
+    }
+
+    function setMode(value: string): void {
+        modeEntry.value = value;
+    }
+
+    function keep(url: url): void {
+        if (String(url).length > 0) {
+            temporaries = temporaries.concat([url]);
+        }
+    }
+
+    function tidy(): void {
+        const kept = [];
+        for (let i = 0; i < temporaries.length; ++i) {
+            if (String(temporaries[i]) === String(original)) {
+                kept.push(temporaries[i]);
+            } else {
+                Screenshot.discard(temporaries[i]);
+            }
+        }
+        temporaries = kept;
+    }
+
+    function idle(): void {
+        closeOverlays();
+        app.hide();
+        tidy();
+    }
 
     function start(): void {
-        app.hide();
-        startTimer.restart();
+        capturing = true;
+        reopen = app.visible;
+        snipToast.close();
+        if (app.visible) {
+            startTimer.restart();
+        } else {
+            captureScreens();
+        }
     }
     Timer {
         id: startTimer
         interval: 250
-        onTriggered: app.captureScreens()
+        onTriggered: {
+            if (app.visible) {
+                app.hide();
+                restart();
+                return;
+            }
+            app.captureScreens();
+        }
     }
 
     function captureScreens(): void {
@@ -56,6 +123,7 @@ AppWindow {
             overlay.frozen = "";
             Screenshot.captureScreen(overlay.screen.name, false, (ok, url, width, height) => {
                 if (ok) {
+                    app.keep(url);
                     overlay.frozen = url;
                     overlay.frozenWidth = width;
                     overlay.frozenHeight = height;
@@ -93,12 +161,17 @@ AppWindow {
 
     function cancel(): void {
         closeOverlays();
-        if (!app.visible) {
-            Qt.quit();
+        capturing = false;
+        if (reopen) {
+            app.show();
+            app.raise();
+        } else {
+            tidy();
         }
     }
 
     function fail(message: string): void {
+        capturing = false;
         saved = "";
         failure.text = message || i18n("The screen could not be captured.");
         app.show();
@@ -107,41 +180,118 @@ AppWindow {
 
     function finish(url: url): void {
         closeOverlays();
+        capturing = false;
         saved = Screenshot.save(url);
         if (String(saved).length === 0) {
             fail(i18n("The screenshot could not be saved."));
             return;
         }
+        keep(url);
+        original = url;
+        tidy();
+        strokes = [];
+        redoStack = [];
         Screenshot.copyToClipboard(saved);
-        shutterSound.sendEvent();
         failure.text = "";
+        if (reopen) {
+            openEditor();
+            return;
+        }
+        snipToast.urls = [app.saved];
+        snipToast.sendEvent();
+    }
+
+    function snipFullScreen(): void {
+        const overlay = current;
+        if (overlay) {
+            finish(overlay.frozen);
+        }
+    }
+
+    function snipWindow(): void {
+        closeOverlays();
+        Screenshot.captureInteractive(0, false, (ok, url) => ok ? app.finish(url) : app.cancel());
+    }
+
+    function snipRectangle(overlay: var, x: real, y: real, width: real, height: real): void {
+        const scale = overlay.frozenWidth / overlay.width;
+        finish(Screenshot.crop(overlay.frozen, Math.round(x * scale), Math.round(y * scale),
+                               Math.round(width * scale), Math.round(height * scale)));
+    }
+
+    function snipFreeform(overlay: var, points: var): void {
+        const scale = overlay.frozenWidth / overlay.width;
+        const scaled = [];
+        for (let i = 0; i < points.length; ++i) {
+            scaled.push(points[i].x * scale, points[i].y * scale);
+        }
+        finish(Screenshot.cropShape(overlay.frozen, scaled));
+    }
+
+    function openEditor(): void {
+        if (String(saved).length === 0) {
+            return;
+        }
         app.show();
         app.raise();
         app.requestActivate();
+        snipToast.close();
     }
 
-    function capture(): void {
-        const overlay = current;
-        if (!overlay) {
+    function commit(): void {
+        if (String(saved).length === 0 || String(original).length === 0) {
             return;
         }
-        if (mode === "screen") {
-            finish(overlay.frozen);
-        } else if (mode === "window") {
-            closeOverlays();
-            Screenshot.captureInteractive(0, false, (ok, url) => ok ? app.finish(url) : app.fail(""));
-        } else if (overlay.area.valid) {
-            const area = overlay.area;
-            const scale = overlay.frozenWidth / overlay.width;
-            finish(Screenshot.crop(overlay.frozen, Math.round(area.x * scale), Math.round(area.y * scale),
-                                   Math.round(area.width * scale), Math.round(area.height * scale)));
+        if (Screenshot.annotate(original, saved, strokes)) {
+            Screenshot.copyToClipboard(saved);
         }
+        ink.requestPaint();
+    }
+
+    function undo(): void {
+        if (strokes.length === 0) {
+            return;
+        }
+        const list = strokes.slice();
+        redoStack = redoStack.concat([list.pop()]);
+        strokes = list;
+        commit();
+    }
+
+    function redo(): void {
+        if (redoStack.length === 0) {
+            return;
+        }
+        const list = redoStack.slice();
+        strokes = strokes.concat([list.pop()]);
+        redoStack = list;
+        commit();
+    }
+
+    function clearInk(): void {
+        if (strokes.length === 0) {
+            return;
+        }
+        strokes = [];
+        redoStack = [];
+        commit();
     }
 
     function handleArguments(args: var): void {
-        start();
+        if (args.indexOf("resident") < 0) {
+            start();
+        }
     }
-    Component.onCompleted: start()
+    Component.onCompleted: {
+        if (startArguments.indexOf("resident") < 0) {
+            start();
+        }
+    }
+
+    onClosing: close => {
+        close.accepted = false;
+        app.hide();
+    }
 
     Instantiator {
         id: overlays
@@ -155,13 +305,11 @@ AppWindow {
             property int frozenWidth: 0
             property int frozenHeight: 0
             readonly property bool current: app.current === overlay
-            readonly property Item area: selection
 
             function open(): void {
-                selection.touched = false;
+                picker.reset();
                 show();
                 raise();
-                selection.reset();
                 if (app.current === null) {
                     app.current = overlay;
                     requestActivate();
@@ -178,16 +326,6 @@ AppWindow {
             LayerShell.Window.exclusionZone: -1
             LayerShell.Window.keyboardInteractivity: LayerShell.Window.KeyboardInteractivityExclusive
             LayerShell.Window.screenConfiguration: LayerShell.Window.ScreenFromQWindow
-            onWidthChanged: {
-                if (!selection.touched) {
-                    selection.reset();
-                }
-            }
-            onHeightChanged: {
-                if (!selection.touched) {
-                    selection.reset();
-                }
-            }
             onActiveChanged: {
                 if (active) {
                     app.current = overlay;
@@ -218,177 +356,286 @@ AppWindow {
                 }
             }
 
-            Item {
-                id: selection
+            readonly property bool showRegion: app.mode === "rectangle" && picker.active
+            Rectangle { color: "#80000000"; visible: !overlay.showRegion; anchors.fill: parent }
+            Rectangle { visible: overlay.showRegion; color: "#80000000"; x: 0; y: 0; width: parent.width; height: picker.boxTop }
+            Rectangle { visible: overlay.showRegion; color: "#80000000"; x: 0; y: picker.boxTop + picker.boxHeight; width: parent.width; height: parent.height - y }
+            Rectangle { visible: overlay.showRegion; color: "#80000000"; x: 0; y: picker.boxTop; width: picker.boxLeft; height: picker.boxHeight }
+            Rectangle { visible: overlay.showRegion; color: "#80000000"; x: picker.boxLeft + picker.boxWidth; y: picker.boxTop; width: parent.width - x; height: picker.boxHeight }
+            Rectangle {
+                visible: overlay.showRegion
+                x: picker.boxLeft
+                y: picker.boxTop
+                width: picker.boxWidth
+                height: picker.boxHeight
+                color: "transparent"
+                border.width: 1
+                border.color: "white"
+            }
 
-                property real startX: 0
-                property real startY: 0
-                property bool touched: false
-                readonly property bool valid: width >= 4 && height >= 4
-                visible: app.mode === "region" && overlay.current
-
-                function reset(): void {
-                    width = overlay.width * 0.5;
-                    height = overlay.height * 0.5;
-                    x = overlay.width * 0.25;
-                    y = overlay.height * 0.25;
-                }
-
-                Rectangle {
-                    anchors.fill: parent
-                    color: "transparent"
-                    border.width: 2
-                    border.color: M3.primary
-                }
-                Repeater {
-                    model: [[0, 0], [1, 0], [0, 1], [1, 1]]
-                    delegate: Rectangle {
-                        required property var modelData
-                        x: modelData[0] * selection.width - width / 2
-                        y: modelData[1] * selection.height - height / 2
-                        width: 16
-                        height: 16
-                        radius: 8
-                        color: M3.primary
-                        border.width: 2
-                        border.color: M3.primaryContent
-                    }
-                }
-                Rectangle {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.top
-                    anchors.bottomMargin: 8
-                    visible: selection.valid
-                    width: sizeLabel.implicitWidth + 20
-                    height: 28
-                    radius: M3.classic ? M3.cornerTooltip : 14
-                    color: M3.inverseSurface
-                    Text {
-                        id: sizeLabel
-                        anchors.centerIn: parent
-                        color: M3.inverseOnSurface
-                        font: M3.labelMedium
-                        text: Math.round(selection.width * overlay.frozenWidth / Math.max(1, overlay.width)) + " × "
-                            + Math.round(selection.height * overlay.frozenWidth / Math.max(1, overlay.width))
-                    }
+            Shape {
+                anchors.fill: parent
+                visible: app.mode === "freeform" && picker.active
+                preferredRendererType: Shape.CurveRenderer
+                ShapePath {
+                    strokeColor: "white"
+                    strokeWidth: 2
+                    fillColor: "#33ffffff"
+                    joinStyle: ShapePath.RoundJoin
+                    capStyle: ShapePath.RoundCap
+                    PathPolyline { path: picker.points }
                 }
             }
-            Rectangle { visible: selection.visible; color: "#99000000"; x: 0; y: 0; width: parent.width; height: selection.y }
-            Rectangle { visible: selection.visible; color: "#99000000"; x: 0; y: selection.y + selection.height; width: parent.width; height: parent.height - y }
-            Rectangle { visible: selection.visible; color: "#99000000"; x: 0; y: selection.y; width: selection.x; height: selection.height }
-            Rectangle { visible: selection.visible; color: "#99000000"; x: selection.x + selection.width; y: selection.y; width: parent.width - x; height: selection.height }
-            Rectangle { visible: app.mode === "window"; anchors.fill: parent; color: "#66000000" }
-            Rectangle { visible: app.mode === "region" && !overlay.current; anchors.fill: parent; color: "#99000000" }
 
             MouseArea {
+                id: picker
+
+                property bool active: false
+                property real startX: 0
+                property real startY: 0
+                property real endX: 0
+                property real endY: 0
+                property var points: []
+                readonly property real boxLeft: Math.min(startX, endX)
+                readonly property real boxTop: Math.min(startY, endY)
+                readonly property real boxWidth: Math.abs(endX - startX)
+                readonly property real boxHeight: Math.abs(endY - startY)
+
+                function reset(): void {
+                    active = false;
+                    points = [];
+                    startX = startY = endX = endY = 0;
+                }
+
                 anchors.fill: parent
-                enabled: app.mode === "region"
                 cursorShape: Qt.CrossCursor
-                property bool moving: false
-                property point grab
                 onPressed: mouse => {
                     app.current = overlay;
-                    selection.touched = true;
-                    const inside = mouse.x > selection.x && mouse.x < selection.x + selection.width
-                        && mouse.y > selection.y && mouse.y < selection.y + selection.height;
-                    moving = inside;
-                    if (inside) {
-                        grab = Qt.point(mouse.x - selection.x, mouse.y - selection.y);
-                    } else {
-                        selection.startX = mouse.x;
-                        selection.startY = mouse.y;
-                        selection.x = mouse.x;
-                        selection.y = mouse.y;
-                        selection.width = 0;
-                        selection.height = 0;
-                    }
+                    active = true;
+                    startX = endX = mouse.x;
+                    startY = endY = mouse.y;
+                    points = [Qt.point(mouse.x, mouse.y)];
                 }
                 onPositionChanged: mouse => {
-                    if (moving) {
-                        selection.x = Math.max(0, Math.min(overlay.width - selection.width, mouse.x - grab.x));
-                        selection.y = Math.max(0, Math.min(overlay.height - selection.height, mouse.y - grab.y));
-                    } else {
-                        const x = Math.max(0, Math.min(overlay.width, mouse.x));
-                        const y = Math.max(0, Math.min(overlay.height, mouse.y));
-                        selection.x = Math.min(selection.startX, x);
-                        selection.y = Math.min(selection.startY, y);
-                        selection.width = Math.abs(x - selection.startX);
-                        selection.height = Math.abs(y - selection.startY);
+                    if (!active) {
+                        return;
+                    }
+                    endX = Math.max(0, Math.min(overlay.width, mouse.x));
+                    endY = Math.max(0, Math.min(overlay.height, mouse.y));
+                    if (app.mode === "freeform") {
+                        points = points.concat([Qt.point(endX, endY)]);
                     }
                 }
-                onDoubleClicked: app.capture()
+                onReleased: {
+                    if (!active) {
+                        return;
+                    }
+                    if (app.mode === "freeform") {
+                        if (points.length > 2 && boxWidth >= 4 && boxHeight >= 4) {
+                            app.snipFreeform(overlay, points.concat([points[0]]));
+                            return;
+                        }
+                    } else if (boxWidth >= 4 && boxHeight >= 4) {
+                        app.snipRectangle(overlay, boxLeft, boxTop, boxWidth, boxHeight);
+                        return;
+                    }
+                    reset();
+                }
             }
 
             Rectangle {
-                visible: overlay.current
+                id: toolbar
+                visible: overlay.current && !picker.active
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 40
-                width: toolbar.implicitWidth + 24
-                height: 72
-                radius: M3.classic ? M3.cornerCard : 36
+                y: overlay.current ? 16 : -height
+                Behavior on y { NumberAnimation { duration: M3.durationMedium2; easing.type: Easing.OutCubic } }
+                width: tools.implicitWidth + 16
+                height: 56
+                radius: M3.classic ? M3.cornerCard : 28
                 color: M3.surfaceContainerHigh
 
                 RowLayout {
-                    id: toolbar
+                    id: tools
                     anchors.centerIn: parent
-                    spacing: 12
+                    spacing: 4
 
-                    SegmentedButtons {
-                        implicitWidth: 380
-                        options: [
-                            { value: "region", label: i18n("Area"), icon: "kernora-select-region" },
-                            { value: "screen", label: i18n("Screen"), icon: "video-display" },
-                            { value: "window", label: i18n("Window"), icon: "kernora-select-window" }
-                        ]
-                        currentValue: app.mode
-                        onSelected: value => app.mode = value
+                    IconButton {
+                        iconName: "kernora-select-region"
+                        text: i18n("Rectangle")
+                        checked: app.mode === "rectangle"
+                        onClicked: app.setMode("rectangle")
                     }
-                    QQC2.AbstractButton {
-                        id: shutter
-                        implicitWidth: 56
-                        implicitHeight: 56
-                        enabled: app.mode !== "region" || selection.valid
-                        opacity: enabled ? 1 : 0.38
-                        Accessible.name: i18n("Take the screenshot")
-                        QQC2.ToolTip.text: i18n("Take the screenshot (Enter)")
-                        QQC2.ToolTip.visible: hovered
-                        background: Rectangle {
-                            radius: shutter.pressed && !M3.classic ? 16 : 28
-                            color: M3.primary
-                            Behavior on radius { NumberAnimation { duration: M3.durationShort4 } }
-                            MStateLayer {
-                                radius: parent.radius
-                                color: M3.primaryContent
-                                hovered: shutter.hovered
-                                pressed: shutter.pressed
-                            }
-                            MIcon {
-                                anchors.centerIn: parent
-                                size: 26
-                                source: "camera-photo"
-                                color: M3.primaryContent
-                            }
-                        }
-                        onClicked: app.capture()
+                    IconButton {
+                        iconName: "kernora-select-freeform"
+                        text: i18n("Freeform")
+                        checked: app.mode === "freeform"
+                        onClicked: app.setMode("freeform")
+                    }
+                    IconButton {
+                        iconName: "kernora-select-window"
+                        text: i18n("Window")
+                        onClicked: app.snipWindow()
+                    }
+                    IconButton {
+                        iconName: "view-fullscreen"
+                        text: i18n("Full screen")
+                        onClicked: app.snipFullScreen()
+                    }
+                    Rectangle {
+                        Layout.preferredWidth: 1
+                        Layout.preferredHeight: 24
+                        Layout.leftMargin: 4
+                        Layout.rightMargin: 4
+                        color: M3.outlineVariant
                     }
                     IconButton {
                         iconName: "window-close"
-                        text: i18n("Cancel (Esc)")
+                        text: i18n("Close (Esc)")
                         onClicked: app.cancel()
                     }
                 }
             }
 
             Shortcut { sequences: ["Escape"]; onActivated: app.cancel() }
-            Shortcut { sequences: ["Return", "Enter", "Space"]; onActivated: app.capture() }
         }
     }
+
+    Notification {
+        id: snipToast
+
+
+        componentName: "kernora-screenshot"
+        eventId: "captured"
+        title: i18n("Snip copied to clipboard")
+        text: i18n("Select here to mark up and share.")
+        iconName: "org.kernora.screenshot"
+        autoDelete: false
+        defaultAction: NotificationAction {
+            label: i18n("Mark up")
+            onActivated: app.openEditor()
+        }
+        actions: [
+            NotificationAction {
+                label: i18n("Mark up")
+                onActivated: app.openEditor()
+            }
+        ]
+    }
+
+    Shortcut { sequences: [StandardKey.New]; onActivated: app.start() }
+    Shortcut { sequences: [StandardKey.Undo]; onActivated: app.undo() }
+    Shortcut { sequences: [StandardKey.Redo]; onActivated: app.redo() }
+    Shortcut { sequences: [StandardKey.Copy]; onActivated: Screenshot.copyToClipboard(app.saved) }
 
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 16
-        spacing: 16
+        spacing: 12
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 4
+
+            QQC2.Button {
+                text: i18n("New")
+                icon.name: "list-add"
+                highlighted: true
+                onClicked: app.start()
+            }
+            Item { Layout.preferredWidth: 8 }
+            IconButton {
+                visible: String(app.saved).length > 0
+                iconName: "kernora-pen"
+                text: i18n("Pen")
+                checked: app.tool === "pen"
+                onClicked: app.tool = "pen"
+            }
+            IconButton {
+                visible: String(app.saved).length > 0
+                iconName: "kernora-highlighter"
+                text: i18n("Highlighter")
+                checked: app.tool === "marker"
+                onClicked: app.tool = "marker"
+            }
+            Repeater {
+                model: String(app.saved).length > 0 ? (app.tool === "pen" ? app.penColors : app.markerColors) : []
+                delegate: QQC2.AbstractButton {
+                    id: swatch
+                    required property var modelData
+                    readonly property bool chosen: Qt.colorEqual(modelData, app.tool === "pen" ? app.penColor : app.markerColor)
+                    implicitWidth: 32
+                    implicitHeight: 40
+                    hoverEnabled: true
+                    Accessible.name: i18n("Colour")
+                    contentItem: Item {}
+                    background: Item {
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: swatch.chosen ? 26 : 20
+                            height: width
+                            radius: width / 2
+                            color: swatch.modelData
+                            border.width: swatch.chosen ? 2 : 1
+                            border.color: swatch.chosen ? M3.primary : M3.outline
+                            Behavior on width { NumberAnimation { duration: M3.durationShort4 } }
+                        }
+                    }
+                    onClicked: {
+                        if (app.tool === "pen") {
+                            app.penColor = modelData;
+                        } else {
+                            app.markerColor = modelData;
+                        }
+                    }
+                }
+            }
+            Item { Layout.preferredWidth: 8 }
+            IconButton {
+                visible: String(app.saved).length > 0
+                enabled: app.strokes.length > 0
+                iconName: "edit-undo"
+                text: i18n("Undo")
+                onClicked: app.undo()
+            }
+            IconButton {
+                visible: String(app.saved).length > 0
+                enabled: app.redoStack.length > 0
+                iconName: "edit-redo"
+                text: i18n("Redo")
+                onClicked: app.redo()
+            }
+            IconButton {
+                visible: String(app.saved).length > 0
+                enabled: app.strokes.length > 0
+                iconName: "edit-clear-history"
+                text: i18n("Clear ink")
+                onClicked: app.clearInk()
+            }
+            Item { Layout.fillWidth: true }
+            IconButton {
+                visible: String(app.saved).length > 0
+                iconName: "edit-copy"
+                text: i18n("Copy")
+                onClicked: Screenshot.copyToClipboard(app.saved)
+            }
+            IconButton {
+                visible: String(app.saved).length > 0
+                iconName: "system-file-manager"
+                text: i18n("Show in Files")
+                onClicked: Process.launchApplication("org.kernora.files.desktop", [app.saved])
+            }
+            IconButton {
+                visible: String(app.saved).length > 0
+                iconName: "user-trash"
+                text: i18n("Delete")
+                onClicked: {
+                    Screenshot.discard(app.saved);
+                    app.saved = "";
+                    app.original = "";
+                    app.idle();
+                }
+            }
+        }
 
         RoundedClip {
             Layout.fillWidth: true
@@ -397,12 +644,92 @@ AppWindow {
             visible: String(app.saved).length > 0
             Rectangle { anchors.fill: parent; color: M3.surfaceContainerHighest }
             Image {
+                id: preview
                 anchors.fill: parent
                 anchors.margins: 8
-                source: app.saved
+                source: app.original
                 fillMode: Image.PreserveAspectFit
                 cache: false
                 asynchronous: true
+
+                Canvas {
+                    id: ink
+
+                    property var live: null
+                    readonly property real ratio: preview.sourceSize.width > 0 ? preview.paintedWidth / preview.sourceSize.width : 1
+
+                    function drawStroke(context: var, stroke: var): void {
+                        const points = stroke.points;
+                        if (points.length < 2) {
+                            return;
+                        }
+                        context.globalAlpha = stroke.highlighter ? 0.4 : 1;
+                        context.strokeStyle = stroke.color;
+                        context.lineWidth = stroke.width;
+                        context.lineCap = stroke.highlighter ? "square" : "round";
+                        context.lineJoin = "round";
+                        context.beginPath();
+                        context.moveTo(points[0], points[1]);
+                        if (points.length < 4) {
+                            context.lineTo(points[0] + 0.01, points[1]);
+                        }
+                        for (let i = 2; i + 1 < points.length; i += 2) {
+                            context.lineTo(points[i], points[i + 1]);
+                        }
+                        context.stroke();
+                    }
+
+                    x: (preview.width - preview.paintedWidth) / 2
+                    y: (preview.height - preview.paintedHeight) / 2
+                    width: preview.paintedWidth
+                    height: preview.paintedHeight
+                    onWidthChanged: requestPaint()
+                    onHeightChanged: requestPaint()
+                    onPaint: {
+                        const context = getContext("2d");
+                        context.reset();
+                        context.scale(ratio, ratio);
+                        for (let i = 0; i < app.strokes.length; ++i) {
+                            drawStroke(context, app.strokes[i]);
+                        }
+                        if (live) {
+                            drawStroke(context, live);
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.CrossCursor
+                        onPressed: mouse => {
+                            const marker = app.tool === "marker";
+                            const unit = 1 / Math.max(0.01, ink.ratio);
+                            ink.live = {
+                                color: String(marker ? app.markerColor : app.penColor),
+                                width: (marker ? 18 : 3) * unit,
+                                highlighter: marker,
+                                points: [mouse.x * unit, mouse.y * unit]
+                            };
+                            ink.requestPaint();
+                        }
+                        onPositionChanged: mouse => {
+                            if (!ink.live) {
+                                return;
+                            }
+                            const unit = 1 / Math.max(0.01, ink.ratio);
+                            ink.live.points.push(mouse.x * unit, mouse.y * unit);
+                            ink.requestPaint();
+                        }
+                        onReleased: {
+                            if (!ink.live) {
+                                return;
+                            }
+                            app.strokes = app.strokes.concat([ink.live]);
+                            app.redoStack = [];
+                            ink.live = null;
+                            app.commit();
+                        }
+                    }
+                }
             }
         }
         EmptyState {
@@ -428,47 +755,5 @@ AppWindow {
                 elide: Text.ElideMiddle
             }
         }
-
-        RowLayout {
-            Layout.fillWidth: true
-            spacing: 8
-            QQC2.Button {
-                text: i18n("Take another")
-                icon.name: "camera-photo"
-                highlighted: true
-                onClicked: app.start()
-            }
-            Item { Layout.fillWidth: true }
-            IconButton {
-                visible: String(app.saved).length > 0
-                iconName: "document-open"
-                text: i18n("Open")
-                onClicked: Process.openUrl(app.saved)
-            }
-            IconButton {
-                visible: String(app.saved).length > 0
-                iconName: "system-file-manager"
-                text: i18n("Show in Files")
-                onClicked: Process.launchApplication("org.kernora.files.desktop", [app.saved])
-            }
-            IconButton {
-                visible: String(app.saved).length > 0
-                iconName: "user-trash"
-                text: i18n("Delete")
-                onClicked: {
-                    Screenshot.discard(app.saved);
-                    app.saved = "";
-                    Qt.quit();
-                }
-            }
-        }
-    }
-
-    Notification {
-        id: shutterSound
-        componentName: "kernora-screenshot"
-        eventId: "captured"
-        title: i18n("Screenshot taken")
-        iconName: "org.kernora.screenshot"
     }
 }

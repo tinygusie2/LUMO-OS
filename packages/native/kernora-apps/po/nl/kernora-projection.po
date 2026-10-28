@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kernora-projection\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "@title application name"
+msgid "Project"
+msgstr "Projecteren"
+
+msgid "Project"
+msgstr "Projecteren"
+
+msgid "PC screen only"
+msgstr "Alleen pc-scherm"
+
+msgid "Only the main screen shows a picture"
+msgstr "Alleen het hoofdscherm geeft beeld"
+
+msgid "Duplicate"
+msgstr "Dupliceren"
+
+msgid "Every screen shows the same"
+msgstr "Elk scherm laat hetzelfde zien"
+
+msgid "Extend"
+msgstr "Uitbreiden"
+
+msgid "The screens form one large desktop"
+msgstr "De schermen vormen samen één groot bureaublad"
+
+msgid "Second screen only"
+msgstr "Alleen tweede scherm"
+
+msgid "The main screen turns off"
+msgstr "Het hoofdscherm gaat uit"
+
+msgid "Connect a second screen or projector to choose how it is used."
+msgstr "Sluit een tweede scherm of beamer aan om te kiezen hoe je het gebruikt."
+
+msgid "Looking for screens…"
+msgstr "Schermen zoeken…"

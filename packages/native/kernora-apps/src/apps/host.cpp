@@ -121,6 +121,10 @@ int run(int &argc, char **argv, const Application &application, KLocalizedString
                              }
                              const QStringList forwarded = normalised(received.mid(1), workingDirectory);
                              QMetaObject::invokeMethod(root, "handleArguments", Q_ARG(QVariant, QVariant(forwarded)));
+                             const QVariant show = root->property("showOnActivate");
+                             if (show.isValid() && !show.toBool()) {
+                                 return;
+                             }
                              if (auto *window = qobject_cast<QQuickWindow *>(root)) {
                                  window->show();
                                  window->raise();

@@ -1,5 +1,24 @@
 [
   {
+    "id": "2026-10-14-3",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "icon": "org.kernora.screenshot",
+        "title": {
+          "en": "Snip like on Windows",
+          "nl": "Knippen zoals op Windows",
+          "ru": "Фрагменты как в Windows"
+        },
+        "text": {
+          "en": "Press Meta+Shift+S or Print and pick Rectangle, Freeform, Window or Full screen in the bar at the top. Drag and let go to take the snip: it is saved, copied to the clipboard and shown in a notification. Select the notification to mark up the snip with a pen or highlighter.",
+          "nl": "Druk op Meta+Shift+S of Print en kies Rechthoek, Vrije vorm, Venster of Volledig scherm in de balk bovenaan. Sleep en laat los om te knippen: het knipsel wordt opgeslagen, naar het klembord gekopieerd en in een melding getoond. Selecteer de melding om aantekeningen te maken met een pen of markeerstift.",
+          "ru": "Нажмите Meta+Shift+S или Print и выберите прямоугольник, произвольную форму, окно или весь экран на панели сверху. Выделите область и отпустите кнопку мыши: фрагмент сохранится, скопируется в буфер обмена и появится в уведомлении. Нажмите на уведомление, чтобы добавить пометки ручкой или маркером."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-14-2",
     "date": "2026-10-14",
     "items": [

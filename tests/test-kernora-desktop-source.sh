@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.32" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.36" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -203,6 +203,9 @@ grep -Fxq 'gtk-sound-theme-name=kernora' "$package_root/data/skel-config/gtk-3.0
 sh -n "$package_root/data/kconf_update/kernora-sound-theme.sh" || fail "the sound theme migration does not parse"
 sh -n "$package_root/data/kconf_update/kernora-terminal-entry.sh" || fail "the terminal entry migration does not parse"
 sh -n "$package_root/data/kconf_update/kernora-add-widgets-menu.sh" || fail "the widgets menu migration does not parse"
+sh -n "$package_root/data/kconf_update/kernora-projection-shortcut.sh" || fail "the projection shortcut migration does not parse"
+grep -Fxq 'display=none,Display\tMeta+P,Switch Display' "$package_root/data/skel-config/kglobalshortcutsrc" \
+  || fail "the KDE screen switcher still takes Meta+P"
 menu_home=$(mktemp -d)
 XDG_CONFIG_HOME="$menu_home" sh "$package_root/data/kconf_update/kernora-add-widgets-menu.sh"
 XDG_CONFIG_HOME="$menu_home" sh "$package_root/data/kconf_update/kernora-add-widgets-menu.sh"

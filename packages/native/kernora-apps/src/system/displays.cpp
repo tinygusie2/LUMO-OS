@@ -10,7 +10,9 @@
 #include <KScreen/Output>
 #include <KScreen/SetConfigOperation>
 
+#include <KConfigGroup>
 #include <KLocalizedString>
+#include <KSharedConfig>
 
 #include <algorithm>
 #include <climits>
@@ -29,25 +31,67 @@ void Displays::load()
         if (op->hasError()) {
             return;
         }
-        beginResetModel();
         m_config = qobject_cast<KScreen::GetConfigOperation *>(op)->config();
-        m_ids.clear();
-        for (const auto &output : m_config->outputs()) {
-            if (output->isConnected()) {
-                m_ids.append(output->id());
-            }
-        }
-        std::sort(m_ids.begin(), m_ids.end());
-        endResetModel();
+        rebuild();
         KScreen::ConfigMonitor::instance()->addConfig(m_config);
-        connect(KScreen::ConfigMonitor::instance(), &KScreen::ConfigMonitor::configurationChanged, this, [this]() {
-            if (rowCount() > 0) {
-                Q_EMIT dataChanged(index(0), index(rowCount() - 1));
-            }
-        });
+        connect(KScreen::ConfigMonitor::instance(), &KScreen::ConfigMonitor::configurationChanged, this, &Displays::refresh);
+        connect(m_config.data(), &KScreen::Config::outputAdded, this, &Displays::refresh);
+        connect(m_config.data(), &KScreen::Config::outputRemoved, this, &Displays::refresh);
         Q_EMIT readyChanged();
-        Q_EMIT countChanged();
     });
+}
+
+QList<int> Displays::connectedIds() const
+{
+    QList<int> ids;
+    if (!m_config) {
+        return ids;
+    }
+    for (const auto &output : m_config->outputs()) {
+        if (output && output->isConnected()) {
+            ids.append(output->id());
+        }
+    }
+    std::sort(ids.begin(), ids.end());
+    return ids;
+}
+
+void Displays::rebuild()
+{
+    beginResetModel();
+    m_ids = connectedIds();
+    endResetModel();
+    Q_EMIT countChanged();
+    Q_EMIT projectionChanged();
+}
+
+void Displays::refresh()
+{
+    if (!m_config) {
+        return;
+    }
+    if (connectedIds() != m_ids) {
+        rebuild();
+        return;
+    }
+    if (rowCount() > 0) {
+        Q_EMIT dataChanged(index(0), index(rowCount() - 1));
+    }
+    Q_EMIT projectionChanged();
+}
+
+QList<KScreen::OutputPtr> Displays::outputs() const
+{
+    QList<KScreen::OutputPtr> list;
+    if (!m_config) {
+        return list;
+    }
+    for (int id : std::as_const(m_ids)) {
+        if (const auto out = m_config->output(id)) {
+            list.append(out);
+        }
+    }
+    return list;
 }
 
 KScreen::OutputPtr Displays::output(int row) const
@@ -243,8 +287,7 @@ int Displays::mirrorSourceId(const KScreen::OutputPtr &out) const
     if (!out->isEnabled()) {
         return 0;
     }
-    for (int id : std::as_const(m_ids)) {
-        const auto other = m_config->output(id);
+    for (const auto &other : outputs()) {
         if (other->id() == out->id() || !other->isEnabled() || other->pos() != out->pos() || other->replicationSource() != 0) {
             continue;
         }
@@ -260,8 +303,7 @@ void Displays::normalizePositions()
 {
     int left = INT_MAX;
     int top = INT_MAX;
-    for (int id : std::as_const(m_ids)) {
-        const auto out = m_config->output(id);
+    for (const auto &out : outputs()) {
         if (out->isEnabled() && mirrorSourceId(out) == 0) {
             left = std::min(left, out->pos().x());
             top = std::min(top, out->pos().y());
@@ -270,8 +312,7 @@ void Displays::normalizePositions()
     if (left == INT_MAX) {
         return;
     }
-    for (int id : std::as_const(m_ids)) {
-        const auto out = m_config->output(id);
+    for (const auto &out : outputs()) {
         out->setPos(out->pos() - QPoint(left, top));
     }
 }
@@ -283,8 +324,7 @@ void Displays::setPosition(int row, int x, int y)
         return;
     }
     QList<KScreen::OutputPtr> mirrors;
-    for (int id : std::as_const(m_ids)) {
-        const auto mirror = m_config->output(id);
+    for (const auto &mirror : outputs()) {
         if (mirrorSourceId(mirror) == out->id()) {
             mirrors.append(mirror);
         }
@@ -309,14 +349,7 @@ void Displays::setMirror(int row, int sourceRow)
         out->setPos(source->pos());
     } else {
         out->setReplicationSource(0);
-        int right = 0;
-        for (int id : std::as_const(m_ids)) {
-            const auto other = m_config->output(id);
-            if (other->id() != out->id() && other->isEnabled() && mirrorSourceId(other) == 0) {
-                right = std::max(right, logicalGeometry(other).right() + 1);
-            }
-        }
-        out->setPos(QPoint(right, 0));
+        out->setPos(QPoint(rightEdge(out), 0));
     }
     normalizePositions();
     apply();
@@ -418,13 +451,93 @@ void Displays::apply()
     if (!m_config) {
         return;
     }
+    if (m_applying) {
+        m_pending = true;
+        return;
+    }
+    for (const auto &out : outputs()) {
+        if (out->isEnabled()) {
+            ensureMode(out);
+        }
+    }
+    if (!KScreen::Config::canBeApplied(m_config)) {
+        Q_EMIT applied(false);
+        refresh();
+        return;
+    }
+    m_applying = true;
     auto *operation = new KScreen::SetConfigOperation(m_config);
     connect(operation, &KScreen::ConfigOperation::finished, this, [this](KScreen::ConfigOperation *op) {
-        Q_EMIT applied(!op->hasError());
-        if (rowCount() > 0) {
-            Q_EMIT dataChanged(index(0), index(rowCount() - 1));
+        m_applying = false;
+        const bool ok = !op->hasError();
+        if (m_pending) {
+            m_pending = false;
+            apply();
+            return;
         }
+        Q_EMIT applied(ok);
+        refresh();
     });
+}
+
+void Displays::ensureMode(const KScreen::OutputPtr &out) const
+{
+    if (out->currentMode()) {
+        return;
+    }
+    KScreen::ModePtr mode = out->preferredMode();
+    if (!mode) {
+        for (const auto &m : out->modes()) {
+            if (!mode || m->size().width() * m->size().height() > mode->size().width() * mode->size().height()
+                || (m->size() == mode->size() && m->refreshRate() > mode->refreshRate())) {
+                mode = m;
+            }
+        }
+    }
+    if (mode) {
+        out->setCurrentModeId(mode->id());
+    }
+}
+
+int Displays::rightEdge(const KScreen::OutputPtr &except) const
+{
+    int right = 0;
+    for (const auto &other : outputs()) {
+        if ((!except || other->id() != except->id()) && other->isEnabled() && mirrorSourceId(other) == 0) {
+            right = std::max(right, logicalGeometry(other).right() + 1);
+        }
+    }
+    return right;
+}
+
+void Displays::relayout()
+{
+    QList<KScreen::OutputPtr> placed;
+    for (const auto &out : outputs()) {
+        if (out->isEnabled() && mirrorSourceId(out) == 0) {
+            placed.append(out);
+        }
+    }
+    std::sort(placed.begin(), placed.end(), [](const KScreen::OutputPtr &a, const KScreen::OutputPtr &b) {
+        return a->pos().x() != b->pos().x() ? a->pos().x() < b->pos().x() : a->pos().y() < b->pos().y();
+    });
+    for (int i = 1; i < placed.size(); ++i) {
+        const QRect previous = logicalGeometry(placed.at(i - 1));
+        const QRect current = logicalGeometry(placed.at(i));
+        const bool sameRow = current.top() <= previous.bottom() && current.bottom() >= previous.top();
+        if (sameRow && current.left() != previous.right() + 1) {
+            placed.at(i)->setPos(QPoint(previous.right() + 1, current.top()));
+        }
+    }
+    for (const auto &out : outputs()) {
+        const int source = mirrorSourceId(out);
+        if (source != 0) {
+            if (const auto origin = m_config->output(source)) {
+                out->setPos(origin->pos());
+            }
+        }
+    }
+    normalizePositions();
 }
 
 void Displays::setResolution(int row, const QString &resolution)
@@ -442,6 +555,7 @@ void Displays::setResolution(int row, const QString &resolution)
     const auto mode = bestMode(out, size, current ? current->refreshRate() : 0);
     if (mode) {
         out->setCurrentModeId(mode->id());
+        relayout();
         apply();
     }
 }
@@ -466,6 +580,7 @@ void Displays::setScale(int row, double scale)
         return;
     }
     out->setScale(scale);
+    relayout();
     apply();
 }
 
@@ -488,6 +603,7 @@ void Displays::setRotation(int row, int degrees)
         break;
     }
     out->setRotation(rotation);
+    relayout();
     apply();
 }
 
@@ -499,14 +615,35 @@ void Displays::setEnabled(int row, bool enabled)
     }
     if (!enabled) {
         int on = 0;
-        for (int id : std::as_const(m_ids)) {
-            on += m_config->output(id)->isEnabled() ? 1 : 0;
+        for (const auto &other : outputs()) {
+            on += other->isEnabled() ? 1 : 0;
         }
         if (on <= 1) {
             return;
         }
+        out->setEnabled(false);
+        out->setReplicationSource(0);
+        for (const auto &mirror : outputs()) {
+            if (mirror->replicationSource() == out->id()) {
+                mirror->setReplicationSource(0);
+                mirror->setPos(QPoint(rightEdge(mirror), 0));
+            }
+        }
+        if (out->isPrimary()) {
+            for (const auto &other : outputs()) {
+                if (other->isEnabled()) {
+                    m_config->setPrimaryOutput(other);
+                    break;
+                }
+            }
+        }
+    } else {
+        ensureMode(out);
+        out->setReplicationSource(0);
+        out->setEnabled(true);
+        out->setPos(QPoint(rightEdge(out), 0));
     }
-    out->setEnabled(enabled);
+    relayout();
     apply();
 }
 
@@ -517,5 +654,146 @@ void Displays::setPrimary(int row)
         return;
     }
     m_config->setPrimaryOutput(out);
+    apply();
+}
+
+KScreen::OutputPtr Displays::mainOutput() const
+{
+    const auto list = outputs();
+    if (list.isEmpty()) {
+        return {};
+    }
+    for (const auto &out : list) {
+        if (out->type() == KScreen::Output::Panel) {
+            return out;
+        }
+    }
+    const QString remembered = KConfigGroup(KSharedConfig::openConfig(QStringLiteral("kernora-displaysrc")), QStringLiteral("Projection"))
+                                   .readEntry("Main", QString());
+    for (const auto &out : list) {
+        if (!remembered.isEmpty() && out->name() == remembered && !out->isEnabled()) {
+            return out;
+        }
+    }
+    KScreen::OutputPtr best;
+    for (const auto &out : list) {
+        if (!out->isEnabled()) {
+            continue;
+        }
+        if (!best || out->priority() < best->priority()) {
+            best = out;
+        }
+    }
+    return best ? best : list.first();
+}
+
+void Displays::rememberMain(const KScreen::OutputPtr &main) const
+{
+    KConfigGroup group(KSharedConfig::openConfig(QStringLiteral("kernora-displaysrc")), QStringLiteral("Projection"));
+    group.writeEntry("Main", main->name());
+    group.sync();
+}
+
+QString Displays::projection() const
+{
+    const auto list = outputs();
+    const auto main = mainOutput();
+    if (list.size() < 2 || !main) {
+        return QStringLiteral("single");
+    }
+    int enabled = 0;
+    int mirrored = 0;
+    for (const auto &out : list) {
+        if (!out->isEnabled()) {
+            continue;
+        }
+        ++enabled;
+        if (mirrorSourceId(out) != 0) {
+            ++mirrored;
+        }
+    }
+    if (main->isEnabled() && enabled == 1) {
+        return QStringLiteral("main");
+    }
+    if (!main->isEnabled()) {
+        return QStringLiteral("second");
+    }
+    if (mirrored > 0 && mirrored == enabled - 1) {
+        return QStringLiteral("duplicate");
+    }
+    return QStringLiteral("extend");
+}
+
+void Displays::setProjection(const QString &mode)
+{
+    const auto list = outputs();
+    const auto main = mainOutput();
+    if (list.size() < 2 || !main) {
+        return;
+    }
+    rememberMain(main);
+    QList<KScreen::OutputPtr> others;
+    for (const auto &out : list) {
+        if (out->id() != main->id()) {
+            others.append(out);
+        }
+    }
+    if (mode == QLatin1String("main")) {
+        ensureMode(main);
+        main->setEnabled(true);
+        main->setReplicationSource(0);
+        main->setPos(QPoint(0, 0));
+        for (const auto &out : std::as_const(others)) {
+            out->setReplicationSource(0);
+            out->setEnabled(false);
+        }
+        m_config->setPrimaryOutput(main);
+    } else if (mode == QLatin1String("second")) {
+        int x = 0;
+        for (const auto &out : std::as_const(others)) {
+            ensureMode(out);
+            out->setReplicationSource(0);
+            out->setEnabled(true);
+            out->setPos(QPoint(x, 0));
+            x = logicalGeometry(out).right() + 1;
+        }
+        main->setReplicationSource(0);
+        main->setEnabled(false);
+        m_config->setPrimaryOutput(others.first());
+    } else if (mode == QLatin1String("duplicate")) {
+        ensureMode(main);
+        main->setEnabled(true);
+        main->setReplicationSource(0);
+        main->setPos(QPoint(0, 0));
+        for (const auto &out : std::as_const(others)) {
+            ensureMode(out);
+            out->setEnabled(true);
+            out->setReplicationSource(main->id());
+            out->setPos(main->pos());
+        }
+        m_config->setPrimaryOutput(main);
+    } else if (mode == QLatin1String("extend")) {
+        const bool wasExtended = projection() == QLatin1String("extend");
+        ensureMode(main);
+        main->setEnabled(true);
+        main->setReplicationSource(0);
+        if (!wasExtended) {
+            main->setPos(QPoint(0, 0));
+        }
+        for (const auto &out : std::as_const(others)) {
+            const bool placed = wasExtended && out->isEnabled() && mirrorSourceId(out) == 0;
+            ensureMode(out);
+            out->setReplicationSource(0);
+            out->setEnabled(true);
+            if (!placed) {
+                out->setPos(QPoint(rightEdge(out), 0));
+            }
+        }
+        m_config->setPrimaryOutput(main);
+        relayout();
+    } else {
+        return;
+    }
+    normalizePositions();
     apply();
 }

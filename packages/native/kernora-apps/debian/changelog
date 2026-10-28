@@ -1,3 +1,43 @@
+kernora-apps (1.1.43) UNRELEASED; urgency=medium
+
+  * Project (Meta+P) works like Windows: a panel slides in on the right
+    with PC screen only, Duplicate, Extend and Second screen only. Click a
+    choice, or press Meta+P again or the arrow keys and Enter; Esc closes.
+    It starts hidden at login so it opens right away.
+  * A screen that was turned off can be turned on again: it gets its
+    preferred mode back and is placed to the right of the others, and the
+    screen list follows screens that are plugged in, unplugged or wake up.
+  * Display settings no longer send KWin a configuration it cannot use:
+    every change is checked first, changes made in quick succession are
+    sent one after another instead of at the same time, and screens are
+    moved up against each other after a resolution, scale or orientation
+    change so they never overlap.
+  * Require the desktop package that hands Meta+P to Project.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+
+kernora-apps (1.1.41) UNRELEASED; urgency=medium
+
+  * Screenshot works like the Windows Snipping Tool: Meta+Shift+S or Print
+    dims the screen with a small bar at the top for Rectangle, Freeform,
+    Window and Full screen. Drag and let go to take the snip right away;
+    the last shape is remembered.
+  * The snip is saved to Pictures/Screenshots, copied to the clipboard and
+    shown in a notification with a preview. Selecting it opens the snip to
+    mark it up with a pen or highlighter in several colours, with undo,
+    redo and clear; every change is saved and copied again.
+  * Screenshot starts hidden at login and stays ready, so Meta+Shift+S
+    opens the bar without a cold start; it no longer asks for launch
+    feedback, and its temporary images are removed after each snip.
+  * Apps can opt out of being shown when activated again
+    (showOnActivate: false on the window).
+  * Screenshot in org.kernora.system crops freeform shapes and draws
+    pen and highlighter strokes onto a snip.
+  * Require the desktop package with the freeform, pen and highlighter
+    icons.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:20:00 +0000
+
 kernora-apps (1.1.40) UNRELEASED; urgency=medium
 
   * Add Focus (kernora-focus): a Pomodoro timer that turns on focus mode.
