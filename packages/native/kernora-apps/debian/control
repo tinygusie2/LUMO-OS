@@ -11,6 +11,7 @@ Build-Depends:
  libcrypt-dev,
  libappstreamqt-dev,
  libflatpak-dev,
+ libkf6bluezqt-dev,
  libkf6config-dev,
  libkf6coreaddons-dev,
  libkf6dbusaddons-dev,
@@ -30,6 +31,8 @@ Rules-Requires-Root: no
 Package: kernora-apps
 Architecture: amd64
 Depends:
+ bluez,
+ libpam-runtime,
  ${misc:Depends},
  ${shlibs:Depends},
  accountsservice,
