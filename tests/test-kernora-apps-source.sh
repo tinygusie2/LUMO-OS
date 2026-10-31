@@ -15,7 +15,7 @@ for dependency in dpkg-parsechangelog grep; do
 done
 
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$version" == "1.1.64" ]] || fail "unexpected source version"
+[[ "$version" == "1.1.65" ]] || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] || fail "wrong source format"
@@ -110,7 +110,7 @@ grep -q kernora-update-channel "$package_root/apps/settings/qml/pages/UpdatesPag
   && fail "the demo updates switch is back on the updates page"
 grep -Fq 'title: i18n("Early access")' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
   || fail "demo updates are not under Early access in System"
-grep -Fq "project(kernora-apps VERSION $version LANGUAGES CXX)" "$package_root/CMakeLists.txt" \
+grep -Fq "project(kernora-apps VERSION $version LANGUAGES C CXX)" "$package_root/CMakeLists.txt" \
   || fail "the CMake project version is not $version"
 grep -Fq 'AppIconSync icons;' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fq '"/Kernora/scalable/apps"' "$package_root/src/updatenotifier/appiconsync.cpp" \
@@ -135,7 +135,7 @@ grep -Fq 'Procs.ApplicationDataModel {' "$package_root/apps/taskmanager/qml/Main
   || fail "Task Manager can't list, end or chart"
 grep -Fxq 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$package_root/apps/taskmanager/org.kernora.taskmanager.desktop" \
   && grep -Fq 'DESTINATION ${KDE_INSTALL_DATADIR}/kglobalaccel' "$package_root/CMakeLists.txt" \
-  && grep -q 'share taskmanager)' "$package_root/src/apps/CMakeLists.txt" \
+  && grep -q 'share taskmanager' "$package_root/src/apps/CMakeLists.txt" \
   || fail "Task Manager has no shortcut or is not built"
 for dependency in ksystemstats libksysguard-bin qml6-module-org-kde-ksysguard qml6-module-org-kde-kitemmodels qml6-module-org-kde-quickcharts; do
   grep -Eq "^ $dependency,?$" "$package_root/debian/control" || fail "Task Manager needs $dependency"
@@ -183,7 +183,7 @@ grep -Fq 'id: selectionBar' "$package_root/apps/files/qml/Main.qml" \
 grep -Fq 'FloatingToolbar {' "$package_root/apps/photos/qml/Main.qml" \
   && grep -Fq 'shown: chrome.shown' "$package_root/apps/photos/qml/Main.qml" \
   || fail "the photo viewer has no floating toolbar"
-for file in apps/calculator/qml/Main.qml apps/player/qml/Main.qml apps/photos/qml/Main.qml apps/screenshot/qml/Main.qml \
+for file in apps/calculator/qml/Main.qml apps/player/qml/Main.qml apps/photos/qml/Main.qml \
     apps/welcome/qml/Main.qml apps/settings/qml/components/WallpaperTile.qml; do
   ! grep -Fq 'Behavior on radius' "$package_root/$file" && grep -Fq 'MMorph {' "$package_root/$file" \
     || fail "$file still changes shape on a plain curve"

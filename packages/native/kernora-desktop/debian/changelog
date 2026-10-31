@@ -1,4 +1,4 @@
-kernora-desktop (1.4.56) trixie; urgency=medium
+kernora-desktop (1.4.56) UNRELEASED; urgency=medium
 
   * Merge Kernora OS up to 3db9ab0 into Lumo; Kernora wins on conflicts, Lumo
     keeps its name, branding, Focus, Project panel, Calendar, PIN unlock,
