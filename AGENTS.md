@@ -1,1 +1,1 @@
-Не добавлять комментарии в код. Пояснения к изменениям писать в сообщениях или документации.
+Read CLAUDE.md: it holds the rules and the workflow for this repository.
