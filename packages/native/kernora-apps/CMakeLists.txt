@@ -54,12 +54,11 @@ install(FILES apps/taskmanager/org.kernora.taskmanager.desktop DESTINATION ${KDE
 
 install(FILES apps/welcome/org.kernora.welcome-autostart.desktop
         DESTINATION ${KDE_INSTALL_AUTOSTARTDIR} RENAME org.kernora.welcome.desktop)
-install(PROGRAMS data/systemsettings data/quickshare/kernora-quickshare DESTINATION ${KDE_INSTALL_BINDIR})
-install(FILES apps/quickshare/org.kernora.quickshare.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(PROGRAMS data/systemsettings DESTINATION ${KDE_INSTALL_BINDIR})
 install(FILES data/copyright/librewolf data/copyright/r-quick-share DESTINATION ${KDE_INSTALL_DATADIR}/kernora/copyright)
 install(FILES data/knotifications/kernora-screenshot.notifyrc data/knotifications/kernora-updates.notifyrc data/knotifications/kernora-store.notifyrc data/knotifications/kernora-calendar.notifyrc data/knotifications/kernora-focus.notifyrc
         DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
-install(FILES data/autostart/org.kernora.update-notifier.desktop data/autostart/org.kernora.bluetooth-agent.desktop data/autostart/org.kernora.calendar-reminders.desktop data/autostart/org.kernora.screenshot-resident.desktop data/autostart/org.kernora.projection-resident.desktop data/autostart/org.kernora.quickshare-resident.desktop DESTINATION ${KDE_INSTALL_AUTOSTARTDIR})
+install(FILES data/autostart/org.kernora.update-notifier.desktop data/autostart/org.kernora.bluetooth-agent.desktop data/autostart/org.kernora.calendar-reminders.desktop data/autostart/org.kernora.screenshot-resident.desktop data/autostart/org.kernora.projection-resident.desktop DESTINATION ${KDE_INSTALL_AUTOSTARTDIR})
 install(FILES data/whatsnew.json DESTINATION ${KDE_INSTALL_DATADIR}/kernora)
 install(FILES data/store/featured.json DESTINATION ${KDE_INSTALL_DATADIR}/kernora/store)
 install(FILES data/store/flathub.flatpakrepo DESTINATION ${KDE_INSTALL_DATADIR}/flatpak/remotes.d)
