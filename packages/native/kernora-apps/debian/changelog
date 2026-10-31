@@ -1,120 +1,319 @@
+kernora-apps (1.1.65) trixie; urgency=medium
+
+  * Merge Kernora OS up to 3db9ab0 into Lumo; Kernora wins on conflicts, Lumo
+    keeps its name, branding, Focus, Project panel, Calendar, PIN unlock,
+    Phone page, screenshot tool, wallpapers and keyboard defaults.
+
+ -- Lumo <lumo@localhost>  Sat, 31 Oct 2026 13:17:28 +0100
+
+kernora-apps (1.1.64) UNRELEASED; urgency=medium
+
+  * What's new: previews and Material icons for every widget.
+  * Require kernora-desktop 1.4.55, which carries them.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 20:00:00 -0700
+
+kernora-apps (1.1.63) UNRELEASED; urgency=medium
+
+  * What's new: the Ribbon live wallpaper.
+  * Require kernora-desktop 1.4.54, which carries it.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 12:00:00 -0700
+
+kernora-apps (1.1.62) UNRELEASED; urgency=medium
+
+  * Task Manager (kernora-taskmanager), Ctrl+Shift+Esc or Ctrl+Esc:
+    - Apps: running apps grouped by their cgroup (ksysguard
+      ApplicationDataModel) with CPU and memory, End task;
+    - Background processes: everything else of yours, or of all users,
+      searchable, End process;
+    - Performance: live CPU, memory, graphics, disk and network charts
+      from ksystemstats (KQuickCharts). Graphics cards that don't report
+      their load say so instead of showing 0 %.
+    Click a column's header to sort by it. Ending asks first; when
+    something is still running five seconds later a "Force quit" button
+    sends SIGKILL.
+  * What's new: Task Manager.
+  * Require kernora-desktop 1.4.53 (its icon), ksystemstats, the
+    ksysguard, kitemmodels and quickcharts QML modules and
+    libksysguard-bin, whose KAuth helper ends other users' processes
+    after asking for the password.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 12:00:00 -0700
+
+kernora-apps (1.1.61) UNRELEASED; urgency=medium
+
+  * App icons the same size and shape everywhere, like ChromeOS: the
+    session service (kernora-update-notifier, now also in the live session)
+    redraws every app icon that Kernora has no icon for into
+    ~/.local/share/icons/Kernora. Round icons are fitted to the Kernora
+    circle, the others sit on a white circle. Redone when apps are installed
+    or removed, and when the colour or the setting changes.
+  * Settings > Wallpaper & style > Colour: "Themed app icons", off by
+    default, turns those icons into a glyph in the theme colours like
+    Kernora's own.
+  * kernora-app-icons: sync, render one icon, and a self-test that runs at
+    build time.
+  * What's new: app icons, readable tooltips.
+  * The CMake project version follows the package again (1.1.60 said
+    1.1.59 in About).
+  * Require kernora-desktop 1.4.52 and qt6-svg-plugins.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 14:00:00 -0700
+
+kernora-apps (1.1.60) UNRELEASED; urgency=medium
+
+  * Settings > System > Early access: a Demo updates switch for the
+    ember-demo channel, through kernora-update-channel from kernora-archive
+    1.2.
+  * What's new: demo updates, calmer app start in the dock.
+  * Require kernora-archive 1.2 and kernora-desktop 1.4.51.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 14:00:00 -0700
+
+kernora-apps (1.1.59) UNRELEASED; urgency=medium
+
+  * What's new: drag apps to the desktop, Material icons for files.
+  * Require kernora-desktop 1.4.50.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 13:00:00 -0700
+
+kernora-apps (1.1.58) UNRELEASED; urgency=medium
+
+  * What's new: quick settings with the panel on any side.
+  * Require kernora-desktop 1.4.49.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 19:30:00 -0700
+
+kernora-apps (1.1.57) UNRELEASED; urgency=medium
+
+  * Quick Share calmed down: flat progress while sending and receiving,
+    plain round pulses instead of spinning wavy ones, and picking a
+    phone only changes its colour, nothing rotates or bounces.
+  * Require kernora-desktop 1.4.48.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 16:30:00 -0700
+
+kernora-apps (1.1.56) UNRELEASED; urgency=medium
+
+  * Quick Share, the ChromeOS way:
+    - the send window is ChromeOS's two steps: pick a device next to a
+      preview of what you share (pulse while scanning, Cancel / Next),
+      then "Share with this device?" with the secure connection ID; it
+      closes once sending starts and progress goes on in notifications;
+    - Settings > Quick Share: a main switch, device name, device
+      visibility (Everyone / Hidden / visible to everyone for 10 min).
+  * Quick Share is a real app now, laid out like the Android one: big
+    title, Receive / Send at the bottom. Receive has "You'll appear as"
+    (name, rename, who can see you) and "Sharing with you" with the Quick
+    Share symbol in a spinning cookie shape, "Ready to receive", and
+    Accept / Decline right there when a phone shares something. While it
+    is open a hidden computer is visible to everyone for a while, like on
+    Android, and goes back to hidden on close. Send takes files from the
+    picker or drag and drop; devices are a grouped M3 Expressive list
+    with shaped avatars. Opening it from Files reuses the open window.
+  * Settings > Quick Share: the symbol on top and Send and receive.
+  * What's new: Quick Share like on Chromebooks and Android.
+  * Require kernora-desktop 1.4.47 and kernora-quickshare 1.0.1.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 12:00:00 -0700
+
+kernora-apps (1.1.55) UNRELEASED; urgency=medium
+
+  * Quick Share (needs kernora-quickshare):
+    - QuickShare singleton in org.kernora.system, fed by the daemon's
+      Changed signal;
+    - Settings > Quick Share: who can see this computer, asking when
+      someone nearby shares, name, download folder, recent transfers;
+    - kernora-share, the send window: finds devices nearby, shows the PIN
+      while the phone decides, progress and the result;
+    - Files: Send with Quick Share in the menu and the selection toolbar.
+  * What's new: Quick Share.
+  * Require kernora-desktop 1.4.46 and kernora-quickshare 1.0.0.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 23 Oct 2026 21:00:00 -0700
+
+kernora-apps (1.1.54) UNRELEASED; urgency=medium
+
+  * Settings: Wallpaper & style has a Transparent panel switch (PR #4 by
+    lexaaakorolevv-cyber), now going through the launcher so it really
+    changes the panel.
+  * What's new: transparent panel.
+  * Require kernora-desktop 1.4.45.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 23 Oct 2026 16:30:00 -0700
+
+kernora-apps (1.1.53) UNRELEASED; urgency=medium
+
+  * Switching a live wallpaper marks it (IntroAt), so it grows in then but
+    not at the next login.
+  * What's new: straight into your desktop.
+  * Require kernora-desktop 1.4.44.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 22 Oct 2026 23:50:00 -0700
+
+kernora-apps (1.1.52) UNRELEASED; urgency=medium
+
+  * Settings: More settings hides the KDE modules Kernora has its own page
+    for and the KDE internal ones (activities, background services,
+    feedback, compositor, gamma, Qt Quick, landing page, task switcher).
+  * Files: selected files get a floating toolbar (clear, cut, copy, rename,
+    trash, more) and the New folder button shrinks to an icon while you
+    scroll down.
+  * What's new: less KDE, expressive Files and volume.
+  * Require kernora-desktop 1.4.43.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 21 Oct 2026 18:00:00 -0700
+
+kernora-apps (1.1.51) UNRELEASED; urgency=medium
+
+  * Photos: the viewer actions sit in a floating toolbar at the bottom.
+  * Calculator keys, the Player play button and cover, the Screenshot
+    shutter, photo tiles and wallpaper tiles change shape on springs.
+  * What's new: more Material Expressive.
+  * Require kernora-desktop 1.4.42.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 18 Oct 2026 13:30:00 -0700
+
+kernora-apps (1.1.50) UNRELEASED; urgency=medium
+
+  * Welcome shows once after installation: closing it in any way turns off
+    the login start and hides it from the menu. What's new is not affected.
+  * Require kernora-desktop 1.4.41.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 21:00:00 -0700
+
+kernora-apps (1.1.49) UNRELEASED; urgency=medium
+
+  * What's new: new quick settings and launcher.
+  * Require kernora-desktop 1.4.40.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 19:00:00 -0700
+
+kernora-apps (1.1.48) UNRELEASED; urgency=medium
+
+  * What's new: boot screens in your colours.
+  * Require kernora-desktop 1.4.39.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 15:00:00 -0700
+
+kernora-apps (1.1.47) UNRELEASED; urgency=medium
+
+  * About shows the version without the codename.
+  * What's new: boot menu colours and the shorter name.
+  * Require kernora-desktop 1.4.38.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 12:00:00 -0700
+
 kernora-apps (1.1.46) UNRELEASED; urgency=medium
 
-  * Settings: still wallpapers are marked Still and have no motion options;
-    live wallpapers get a Gentle on battery switch.
-  * Welcome: the wallpaper page mentions the still wallpapers.
+  * Sound settings no longer offer the KDE sound theme.
+  * What's new: one look.
+  * Require kernora-desktop 1.4.37.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 10:00:00 -0700
 
 kernora-apps (1.1.45) UNRELEASED; urgency=medium
 
-  * Quick Share works with Android phones: RQuickShare 0.11.5 comes with
-    the system as Quick Share. On the phone choose Share, Quick Share and
-    pick the computer; files land in Downloads. To send, drag files into
-    the Quick Share window. It starts hidden at login and waits in the
-    status area, so the computer can always be found.
-  * Settings > Phone has a Quick Share section to open it and to choose
-    whether it is always ready to receive.
+  * Photos shows the shape morphing loading indicator while a photo opens.
+  * What's new: springy buttons and navigation.
+  * Require kernora-desktop 1.4.36.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:30:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 20:00:00 -0700
+
+kernora-apps (1.1.44) UNRELEASED; urgency=medium
+
+  * Store shows the shape morphing loading indicator while screenshots load.
+  * The update bar no longer flashes full when PackageKit reports 100%.
+  * What's new: button groups and the loading indicator.
+  * Require kernora-desktop 1.4.35.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 17:00:00 -0700
 
 kernora-apps (1.1.43) UNRELEASED; urgency=medium
 
-  * Project (Meta+P) works like Windows: a panel slides in on the right
-    with PC screen only, Duplicate, Extend and Second screen only. Click a
-    choice, or press Meta+P again or the arrow keys and Enter; Esc closes.
-    It starts hidden at login so it opens right away.
-  * A screen that was turned off can be turned on again: it gets its
-    preferred mode back and is placed to the right of the others, and the
-    screen list follows screens that are plugged in, unplugged or wake up.
-  * Display settings no longer send KWin a configuration it cannot use:
-    every change is checked first, changes made in quick succession are
-    sent one after another instead of at the same time, and screens are
-    moved up against each other after a resolution, scale or orientation
-    change so they never overlap.
-  * Require the desktop package that hands Meta+P to Project.
+  * The storage bars in Settings stay flat, they are meters.
+  * What's new: wavy progress.
+  * Require kernora-desktop 1.4.34.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 12:30:00 -0700
+
+kernora-apps (1.1.42) UNRELEASED; urgency=medium
+
+  * What's new: the Kernora logo in fastfetch.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 08:30:00 -0700
 
 kernora-apps (1.1.41) UNRELEASED; urgency=medium
 
-  * Screenshot works like the Windows Snipping Tool: Meta+Shift+S or Print
-    dims the screen with a small bar at the top for Rectangle, Freeform,
-    Window and Full screen. Drag and let go to take the snip right away;
-    the last shape is remembered.
-  * The snip is saved to Pictures/Screenshots, copied to the clipboard and
-    shown in a notification with a preview. Selecting it opens the snip to
-    mark it up with a pen or highlighter in several colours, with undo,
-    redo and clear; every change is saved and copied again.
-  * Screenshot starts hidden at login and stays ready, so Meta+Shift+S
-    opens the bar without a cold start; it no longer asks for launch
-    feedback, and its temporary images are removed after each snip.
-  * Apps can opt out of being shown when activated again
-    (showOnActivate: false on the window).
-  * Screenshot in org.kernora.system crops freeform shapes and draws
-    pen and highlighter strokes onto a snip.
-  * Require the desktop package with the freeform, pen and highlighter
-    icons.
+  * The Kernora profile picture follows the colour: when the user still
+    has the stock Kernora face, the update notifier swaps ~/.face for the
+    face in the current colour and updates AccountsService, and picking
+    the Kernora face in Settings uses the current colour too.
+  * The login screen gets the colour and the light or dark theme along
+    with the wallpaper.
+  * What's new: lock screen theme, password shapes, wavy boot animation.
+  * Require kernora-desktop 1.4.33.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:20:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 01:00:00 -0700
 
 kernora-apps (1.1.40) UNRELEASED; urgency=medium
 
-  * Add Focus (kernora-focus): a Pomodoro timer that turns on focus mode.
-    While it runs, the distracting apps chosen in Settings > Focus mode are
-    closed as soon as they open, and Do Not Disturb holds back
-    notifications. When the timer is over, on Stop or after a restart the
-    desktop is back to normal.
-  * Settings: new Focus mode page with the distracting apps, focus and
-    break length, rounds, Do Not Disturb and apps in breaks.
-  * Focus in org.kernora.system finds and ends the processes of an app by
-    its systemd unit or its program.
+  * What's new uses a symbol for Store items. The colour app icon was drawn
+    as a mask there and showed up as a plain circle.
+  * Store: My apps > Updates no longer says "up to date" twice.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:54:17 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 23:00:00 -0700
 
 kernora-apps (1.1.39) UNRELEASED; urgency=medium
 
-  * What's new in English, Dutch and Russian: desktop icons leave room
-    for widgets, and the installer follows the language you choose.
-  * Require the desktop package with widget-aware icon placement.
+  * The login screen follows the desktop wallpaper. The update notifier
+    watches the Plasma desktop config and, for administrators, passes the
+    current picture or live wallpaper to kernora-greeter-background at
+    login and whenever it changes. Before, only Settings did this at the
+    moment of the choice, so a wallpaper picked in Welcome, from the
+    desktop menu or before the update never reached the login screen.
+  * Require kernora-desktop 1.4.32.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:45:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 20:00:00 -0700
+
+kernora-apps (1.1.38) UNRELEASED; urgency=medium
+
+  * Store: new layout with Apps, Games and Categories tabs in a top bar,
+    search and My apps next to them. The featured carousel and the Popular
+    shelf are gone; the Apps tab shows rows per category. App pages show
+    a stats row, Install/Uninstall/Open buttons, screenshots, ratings with
+    a per-star breakdown and app info. Updates and installed apps are in
+    My apps.
+  * What's new: Debian 13.7, the new Store and the Tower wallpaper removal.
+  * Require kernora-base 1.6 and kernora-desktop 1.4.31.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 16:00:00 -0700
 
 kernora-apps (1.1.37) UNRELEASED; urgency=medium
 
-  * What's new in Dutch, with a note for Lumo test build 3.
-  * Settings > Wallpaper & style: colour names in the system language,
-    read from name_<language> in the palette.
+  * Wallpaper & style: "Use on the lock screen too" works for live
+    wallpapers, and turning it off returns the lock screen to Kernora Shapes.
+    Choosing a wallpaper also puts it on the login screen when the user is
+    an administrator.
+  * What's new: the October fixes from the tester's list.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 08:21:43 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:00:00 -0700
 
 kernora-apps (1.1.36) UNRELEASED; urgency=medium
 
-  * Task Manager, laid out like Windows Task Manager: processes grouped
-    into apps, background and system processes with disk use and an
-    expandable list per app; Performance with CPU per logical processor,
-    speed and up time, memory composition, each disk and network adapter
-    and graphics memory; new Details and Services pages; a context menu
-    with End task, Force end, Efficiency mode, Open file location, Search
-    online and Properties; Run new task and an update speed setting.
-  * Settings > Phone: find phones on a Dutch system.
-  * Name the desktop the Lumo portal serves.
+  * Describe desktop icon placement around widgets in English and Russian.
+  * Require the desktop package with widget-aware icon placement.
 
- -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 23:30:00 +0200
+ -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 19:25:00 -0700
 
 kernora-apps (1.1.35) UNRELEASED; urgency=medium
 
-  * Add kernora-bluetooth-agent: a BlueZ pairing agent started at login that
-    shows pairing codes, asks for PINs and passkeys and confirms incoming
-    pairing and service requests in a Material 3 window.
-  * Settings > Bluetooth: explain why pairing failed (wrong code, cancelled,
-    timeout, out of range) and add Search again.
-  * Settings: Google Sans Flex is the default interface font.
-  * Call the system Lumo in every app.
-  * Windows-style shortcuts: Meta+E opens Files, Meta+I Settings and
-    Meta+Shift+S takes a screenshot of an area.
+  * What's new: English-first Live boot and immediate installer language
+    changes from either language selector, in English and Russian.
+  * Require the updated desktop package for installer language integration.
 
- -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 18:00:00 +0200
+ -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 10:00:00 -0700
 
 kernora-apps (1.1.34) UNRELEASED; urgency=high
 

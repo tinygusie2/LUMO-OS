@@ -1,19 +1,20 @@
 # Updates
 
-An installed Lumo system updates from four APT archives. The
-`kernora-archive` package sets them up, and `kernora-base` depends on it, so
-every installation has it.
+An installed Kernora system updates from four APT archives, five with demo
+updates on. The `kernora-archive` package sets them up, and `kernora-base`
+depends on it, so every installation has it.
 
 | Archive | What comes from it | How it is installed |
 | --- | --- | --- |
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
-| Lumo, `commywork9282-dotcom.github.io/kernora-updates` | Lumo's own packages | in Settings > Updates |
+| Kernora, `commywork9282-dotcom.github.io/kernora-updates` | Kernora's own packages | in Settings > Updates |
+| Kernora demo, same site, `ember-demo` | new Kernora packages before everyone else, only with Demo updates on | in Settings > Updates, after turning it on in Settings > System |
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
-the build's `sources.list` and its copy of the Lumo archive.
+the build's `sources.list` and its copy of the Kernora archive.
 
 Both the Debian archive and its security updates come with the `main` and
 `non-free-firmware` components. The image ships the firmware that graphics
@@ -33,8 +34,8 @@ the step is skipped and Settings > Updates catches up later.
 `unattended-upgrades` runs from APT's daily timers. `kernora-archive` enables it
 in `/etc/apt/apt.conf.d/21kernora-auto-upgrades` and chooses what it installs in
 `51kernora-unattended-upgrades`. Debian's own defaults match archives by the
-distribution's codename. On Lumo that codename is `ember`, so they would match
-nothing; the Lumo file names `trixie-security` instead.
+distribution's codename. On Kernora that codename is `ember`, so they would match
+nothing; the Kernora file names `trixie-security` instead.
 
 A kernel update takes effect after a restart. The live session never updates
 itself: the timers carry `ConditionKernelCommandLine=!boot=live`.
@@ -56,9 +57,31 @@ creates it), it asks once per boot for a restart, with a "Restart" button that
 opens the session's restart prompt.
 
 The events are in `kernora-updates.notifyrc`, so the notification server draws
-them like any other Lumo notification. What has been announced is kept in
-`~/.local/state/kernora-update-notifierstaterc`. The notifier exits at once in
-the live session.
+them like any other Kernora notification. What has been announced is kept in
+`~/.local/state/kernora-update-notifierstaterc`. In the live session the
+notifier only keeps the app icons in shape (docs/DESKTOP.md, Other apps'
+icons) and checks no updates.
+
+## Demo updates
+
+Settings > System has a Demo updates switch under Early access, off by
+default. Turning it on runs `/usr/libexec/kernora-update-channel set demo`
+through pkexec (polkit action `org.kernora.update-channel`, admin password).
+That copies
+`/usr/share/kernora/apt/kernora-demo.sources` to
+`/etc/apt/sources.list.d/kernora-demo.sources`, which adds the `ember-demo`
+suite from the same site and key, and Settings checks for updates again.
+
+Both suites come from the same site, so the 900 pin below covers both and APT
+just takes the higher version. `ember-demo` only holds packages newer than the
+normal ones, so a demo system gets those from it and everything else from
+`ember`.
+
+Turning it off removes the file. Demo versions that are already installed
+stay, APT doesn't downgrade. As soon as the normal updates have the same or a
+higher version the system is back in line with everyone else. When the
+switch is on, `kernora-archive` refreshes the file on upgrade, and it removes
+it on purge.
 
 ## What's new
 
@@ -76,12 +99,12 @@ installation, where Welcome itself is still due, it only records the newest
 release as seen. The window shows every release since the one seen last (up
 to three when none was seen yet) and then records the newest.
 
-## Lumo's packages win over Debian's
+## Kernora's packages win over Debian's
 
-`/etc/apt/preferences.d/kernora-archive.pref` gives the Lumo archive priority
-900. Debian therefore never replaces Lumo's builds of `base-files`, Calamares
+`/etc/apt/preferences.d/kernora-archive.pref` gives the Kernora archive priority
+900. Debian therefore never replaces Kernora's builds of `base-files`, Calamares
 or `polkit-kde-agent-1`, even when it releases a newer version of the same
-package. Such a version has to be rebuilt into the Lumo archive to reach
+package. Such a version has to be rebuilt into the Kernora archive to reach
 users.
 
 ## Publishing an update
@@ -92,19 +115,37 @@ users.
    with it, so that the "What's new" window tells them about it.
 3. If the ISO should carry the new version, update the pins in
    `configs/live/packages.txt` and the version checks in `tests/`.
-4. Run `make publish`. It builds every package and the local archive. It then
-   signs the archive with the Lumo archive key and force-pushes it to the
-   `kernora-updates` repository, which GitHub Pages serves a minute later.
+4. Run `make publish`. It builds every package and the local archive, runs
+   `tests/test-publish-updates.sh`, then signs the archive with the Kernora
+   archive key and force-pushes it to the `kernora-updates` repository, which
+   GitHub Pages serves a minute later. The demo suite there is kept, only the
+   demo packages the new normal ones caught up with are dropped.
 
 Systems pick it up at their next check: the daily refresh, or Check in
 Settings > Updates.
 
-`kernora-updates` holds only the current packages. Each publication replaces
-all of its contents in a single commit, so the repository does not grow.
+`kernora-updates` holds only the current packages, normal and demo. Each
+publication replaces all of its contents in a single commit, so the
+repository does not grow.
+
+### Demo first
+
+`make publish-demo` builds the same way but leaves the normal updates exactly
+as they are published. Into `ember-demo` it puts every package from
+`out/archive` whose version is newer than the published normal one, replacing
+what the demo had before, and it refuses when nothing is newer.
+
+Give the packages the version the release will have. When the demo is good,
+`make publish` the same tree: the packages are identical, systems on the demo
+already have them and nothing reinstalls. If a package changes after it went
+to the demo, raise its version again. Both commands refuse to publish a
+package under a version the demo already has with other contents, because
+systems that installed the demo would never get the change. They also warn
+when a package changed but kept the version it is published with.
 
 ## The signing key
 
-The Lumo Archive Signing Key is an ed25519 key with fingerprint
+The Kernora OS Archive Signing Key is an ed25519 key with fingerprint
 `76EE FBDB 0D37 0DF1 0617 45C3 8AD5 1AE6 FA0E F01C`, created 2026-10-03. It
 expires on 2029-10-02.
 

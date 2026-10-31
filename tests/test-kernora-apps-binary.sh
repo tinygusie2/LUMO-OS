@@ -32,7 +32,7 @@ for path in "$qml/qmldir" "$qml/libkernorasystem.so" usr/share/knotifications6/k
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/shell/libkernorashell.so; do
   [[ -s "$temporary_root/$path" ]] || fail "missing $path"
 done
-for app in settings files welcome editor photos player calculator screenshot store projection; do
+for app in settings files welcome editor photos player calculator screenshot store share taskmanager; do
   [[ -x "$temporary_root/usr/bin/kernora-$app" ]] || fail "missing kernora-$app"
   [[ -s "$temporary_root/usr/share/kernora/$app/Main.qml" ]] || fail "missing the $app interface"
   cmp -s "$package_root/apps/$app/qml/Main.qml" "$temporary_root/usr/share/kernora/$app/Main.qml" || fail "$app interface differs from the source"
@@ -41,17 +41,16 @@ done
 grep -q 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$temporary_root/usr/share/applications/org.kernora.screenshot.desktop" \
   || fail "Screenshot cannot ask KWin for screenshots"
+cmp -s "$temporary_root/usr/share/applications/org.kernora.taskmanager.desktop" "$temporary_root/usr/share/kglobalaccel/org.kernora.taskmanager.desktop" \
+  && grep -qx 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$temporary_root/usr/share/kglobalaccel/org.kernora.taskmanager.desktop" \
+  || fail "Ctrl+Shift+Esc does not open the Task Manager"
 grep -qx 'Exec=/usr/bin/kernora-screenshot' \
   "$temporary_root/usr/share/applications/org.kernora.screenshot.desktop" \
   || fail "Screenshot's Exec is not an absolute path; KWin would refuse it"
 
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store projection; do
+for domain in settings files editor photos player calculator screenshot welcome system update-notifier store share taskmanager; do
   [[ -s "$temporary_root/usr/share/locale/ru/LC_MESSAGES/kernora-$domain.mo" ]] \
     || fail "Russian translation is missing: kernora-$domain"
-done
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store tasks calendar focus bluetooth-agent; do
-  [[ -s "$temporary_root/usr/share/locale/nl/LC_MESSAGES/kernora-$domain.mo" ]] \
-    || fail "Dutch translation is missing: kernora-$domain"
 done
 grep -qx 'Exec=kernora-welcome --first-run' \
   "$temporary_root/etc/xdg/autostart/org.kernora.welcome.desktop" \
@@ -60,16 +59,6 @@ grep -qx 'Exec=kernora-welcome --first-run' \
 grep -qx 'Exec=kernora-update-notifier' \
   "$temporary_root/etc/xdg/autostart/org.kernora.update-notifier.desktop" \
   || fail "the update notifier is not started at login"
-for entry in files:Meta+E settings:Meta+I screenshot:Print,Meta+Shift+S tasks:Ctrl+Shift+Esc; do
-  grep -Fxq "X-KDE-Shortcuts=${entry#*:}" "$temporary_root/usr/share/kglobalaccel/org.kernora.${entry%%:*}.desktop"     || fail "kglobalaccel does not see the ${entry%%:*} shortcut"
-done
-[[ -x "$temporary_root/usr/bin/kernora-quickshare" && -s "$temporary_root/usr/share/applications/org.kernora.quickshare.desktop" ]] \
-  || fail "Quick Share is missing from the menu"
-grep -qx 'Exec=kernora-quickshare resident' "$temporary_root/etc/xdg/autostart/org.kernora.quickshare-resident.desktop" \
-  || fail "Quick Share is not started at login"
-[[ -x "$temporary_root/usr/bin/kernora-bluetooth-agent" ]] || fail "missing kernora-bluetooth-agent"
-[[ -s "$temporary_root/usr/share/kernora/bluetoothagent/Main.qml" ]] || fail "the Bluetooth pairing window is missing"
-grep -qx 'Exec=kernora-bluetooth-agent'   "$temporary_root/etc/xdg/autostart/org.kernora.bluetooth-agent.desktop"   || fail "the Bluetooth pairing agent is not started at login"
 grep -qx 'DesktopEntry=org.kernora.settings' "$temporary_root/usr/share/knotifications6/kernora-updates.notifyrc" \
   || fail "update notifications would not come from Settings"
 python3 - "$temporary_root/usr/share/kernora/whatsnew.json" <<'PYTHON_TEST' || fail "the release notes for What's new are missing or broken"

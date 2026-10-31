@@ -32,6 +32,7 @@ FocusScope {
     signal lockScreen()
     signal logOut()
     signal shutDown()
+    signal restart()
 
     readonly property int columns: Math.max(4, Math.floor((width - 16) / 116))
 
@@ -168,6 +169,7 @@ FocusScope {
                     reveal: root.reveal
                     onLaunch: (model, index) => root.launchAt(model, index)
                     onMenuRequested: (tile, x, y, favoriteId) => root.showTileMenu(tile, x, y, favoriteId)
+                    onDropped: root.requestClose()
                 }
 
                 delegate: AppTile {
@@ -179,11 +181,13 @@ FocusScope {
                     name: model.display ?? ""
                     iconSource: model.decoration ?? ""
                     favoriteId: model.favoriteId ?? ""
+                    url: model.url ?? ""
                     current: GridView.isCurrentItem && grid.activeFocus
                     enterDelay: Math.min(Math.floor(index / root.columns), 6) * 0.06
                     reveal: root.reveal
                     onClicked: root.launchAt(grid.model, index)
                     onMenuRequested: (x, y) => root.showTileMenu(appTile, x, y, favoriteId)
+                    onDropped: root.requestClose()
                 }
 
                 Keys.onUpPressed: event => {
@@ -288,21 +292,37 @@ FocusScope {
             MIconButton {
                 icon: "system-lock-screen"
                 text: i18n("Lock")
-                visible: root.canLock
+                visible: M3.classic && root.canLock
                 onClicked: root.lockScreen()
             }
             MIconButton {
                 icon: "system-log-out"
                 text: i18n("Log Out")
-                visible: root.canLogout
+                visible: M3.classic && root.canLogout
                 onClicked: root.logOut()
+            }
+            MIconButton {
+                icon: "system-reboot"
+                text: i18n("Restart")
+                visible: M3.classic && root.canShutdown
+                onClicked: root.restart()
             }
             MIconButton {
                 icon: "system-shutdown"
                 variant: "tonal"
                 text: i18n("Shut Down…")
-                visible: root.canShutdown
+                visible: M3.classic && root.canShutdown
                 onClicked: root.shutDown()
+            }
+            SessionGroup {
+                visible: !M3.classic
+                Layout.leftMargin: 4
+                actions: [
+                    { icon: "system-lock-screen", text: i18n("Lock"), visible: root.canLock, trigger: () => root.lockScreen() },
+                    { icon: "system-log-out", text: i18n("Log Out"), visible: root.canLogout, trigger: () => root.logOut() },
+                    { icon: "system-reboot", text: i18n("Restart"), visible: root.canShutdown, trigger: () => root.restart() },
+                    { icon: "system-shutdown", text: i18n("Shut Down…"), visible: root.canShutdown, primary: true, trigger: () => root.shutDown() }
+                ]
             }
         }
     }

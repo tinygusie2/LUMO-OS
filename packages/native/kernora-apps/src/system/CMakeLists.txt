@@ -18,6 +18,7 @@ target_sources(kernorasystem PRIVATE
     mpris.cpp mpris.h
     places.cpp places.h
     process.cpp process.h
+    quickshare.cpp quickshare.h
     screenshot.cpp screenshot.h
     systeminfo.cpp systeminfo.h
     tasks.cpp tasks.h

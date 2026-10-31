@@ -11,7 +11,6 @@ Build-Depends:
  libcrypt-dev,
  libappstreamqt-dev,
  libflatpak-dev,
- libkf6bluezqt-dev,
  libkf6config-dev,
  libkf6coreaddons-dev,
  libkf6dbusaddons-dev,
@@ -35,23 +34,29 @@ Depends:
  ${shlibs:Depends},
  accountsservice,
  appstream,
- bluez,
- libpam-runtime,
  flatpak,
  kde-cli-tools,
- kernora-base (>= 1.4),
- kernora-desktop (>= 1.4.37),
+ kernora-archive (>= 1.2),
+ kernora-base (>= 1.6),
+ kernora-desktop (>= 1.4.56),
+ kernora-quickshare (>= 1.0.1),
+ ksystemstats,
  libarchive-tools,
+ libksysguard-bin,
  packagekit,
  pkexec,
+ qt6-svg-plugins,
  plasma-nm,
  plasma-pa,
  plasma-workspace,
  powerdevil,
  qml6-module-org-kde-bluezqt,
  qml6-module-org-kde-kirigami,
+ qml6-module-org-kde-kitemmodels,
+ qml6-module-org-kde-ksysguard,
  qml6-module-org-kde-layershell,
  qml6-module-org-kde-notifications,
+ qml6-module-org-kde-quickcharts,
  qml6-module-org-kde-syntaxhighlighting,
  qml6-module-qt-labs-folderlistmodel,
  qml6-module-qtmultimedia,
@@ -59,18 +64,18 @@ Depends:
  qml6-module-qtquick-dialogs,
  qml6-module-qtquick-layouts,
  qml6-module-qtquick-shapes,
- r-quick-share,
  xdg-desktop-portal,
  xdg-desktop-portal-kde
-Description: Lumo applications
+Description: Kernora OS applications
  The everyday applications of Kernora OS, drawn in its Material 3 design:
  .
   * Settings: network, Bluetooth, display, sound, notifications, wallpaper
     and style, apps, power, input devices, accessibility, privacy, the
     account, date and language, updates and information about the system;
   * Store: find, install, remove and update Flathub and Debian apps;
-  * Quick Share, to send and receive files with Android phones;
   * Files, Text Editor, Photos, Media Player, Calculator and Screenshot;
+  * Task Manager: running apps, background processes and live usage of
+    the processor, memory, graphics card, disk and network;
   * Welcome, the first-run introduction;
   * the file chooser: every program's open and save dialogs, served to
     the session through the desktop portal.

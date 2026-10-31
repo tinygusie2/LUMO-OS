@@ -40,12 +40,28 @@ QtObject {{
         location: StandardPaths.writableLocation(StandardPaths.GenericConfigLocation) + "/kernorarc"
         category: "Style"
     }}
+    property Settings schemeStore: Settings {{
+        location: StandardPaths.writableLocation(StandardPaths.GenericConfigLocation) + "/kdeglobals"
+        category: "General"
+    }}
+    property Settings schemeDefaults: Settings {{
+        location: StandardPaths.writableLocation(StandardPaths.GenericConfigLocation) + "/kdedefaults/kdeglobals"
+        category: "General"
+    }}
+
+    property string colourOverride: ""
+    property var darkOverride: null
+    property var schemeDark: null
 
     function reloadGeneration() {{
         tokens.styleStore.sync();
+        tokens.schemeStore.sync();
+        tokens.schemeDefaults.sync();
+        const scheme = /^Kernora[A-Za-z0-9]*(Dark|Light)$/.exec(String(tokens.schemeStore.value("ColorScheme", "") || tokens.schemeDefaults.value("ColorScheme", "")));
+        tokens.schemeDark = scheme ? scheme[1] === "Dark" : null;
         const value = String(tokens.styleStore.value("generation", "{default}"));
         tokens.generation = (value === "md1" || value === "md2" || value === "md3") ? value : "{default}";
-        const colour = String(tokens.styleStore.value("colour", "{colour}"));
+        const colour = tokens.colourOverride.length > 0 ? tokens.colourOverride : String(tokens.styleStore.value("colour", "{colour}"));
         const chosen = tokens.colourIds.indexOf(colour) >= 0 ? colour : "{colour}";
         if (chosen !== tokens.colour || (chosen !== "{colour}" && !tokens.colourPalettes)) {{
             tokens.colour = chosen;
@@ -96,7 +112,8 @@ def colour_lines() -> list[str]:
     lines.append("    // a dark scheme by default; the check keeps the shell correct if the")
     lines.append("    // user switches to the light one.")
     lines.append(
-        "    readonly property bool dark: Kirigami.Theme.backgroundColor.hslLightness < 0.5"
+        "    readonly property bool dark: tokens.darkOverride !== null ? tokens.darkOverride"
+        " : tokens.schemeDark !== null ? tokens.schemeDark : Kirigami.Theme.backgroundColor.hslLightness < 0.5"
     )
     lines.append("")
     lines.append("    // Every role of every generation in both modes.")
@@ -263,7 +280,7 @@ def motion_lines() -> list[str]:
     lines.append("    // Material durations, scaled by the user's animation speed setting so")
     lines.append("    // that turning animations down in System Settings is respected.")
     lines.append(
-        "    readonly property real motionScale: Kirigami.Units.longDuration / 200"
+        "    readonly property real motionScale: Kirigami.Units.longDuration > 1 ? Kirigami.Units.longDuration / 200 : 0"
     )
     for name, value in design.MOTION_DURATION.items():
         prop = "duration" + name[0].upper() + name[1:]
@@ -300,8 +317,8 @@ def type_lines() -> list[str]:
         "    readonly property real scale: Kirigami.Units.gridUnit / 18"
     )
     lines.append("")
-    def pick(style: str, index: int) -> str:
-        values = [design.type_style(style, g)[index] for g in design.GENERATIONS]
+    def pick(style: str, index: int, source=design.type_style) -> str:
+        values = [source(style, g)[index] for g in design.GENERATIONS]
         if len(set(values)) == 1:
             return str(values[0])
         return f"[{', '.join(str(v) for v in values)}][tokens.generationIndex]"
@@ -310,6 +327,13 @@ def type_lines() -> list[str]:
             f"    readonly property font {style}: Qt.font({{"
             f" family: tokens.typeface, pixelSize: Math.round({pick(style, 0)} * tokens.scale),"
             f" weight: {pick(style, 2)}, letterSpacing: {pick(style, 3)} }})"
+        )
+    for style in design.TYPE_SCALE:
+        emphasized = design.emphasized_type_style
+        lines.append(
+            f"    readonly property font {style}Emphasized: Qt.font({{"
+            f" family: tokens.typeface, pixelSize: Math.round({pick(style, 0, emphasized)} * tokens.scale),"
+            f" weight: {pick(style, 2, emphasized)}, letterSpacing: {pick(style, 3, emphasized)} }})"
         )
     lines.append("    // Button labels: Material 3's label style; capitals spaced out in the older")
     lines.append("    // generations.")
@@ -321,10 +345,10 @@ def type_lines() -> list[str]:
     lines.append("    readonly property int buttonLineHeight: Math.round(20 * tokens.scale)")
     lines.append("")
     for style in design.TYPE_SCALE:
-        prop = style + "LineHeight"
-        lines.append(
-            f"    readonly property int {prop}: Math.round({pick(style, 1)} * tokens.scale)"
-        )
+        for prop in (style + "LineHeight", style + "EmphasizedLineHeight"):
+            lines.append(
+                f"    readonly property int {prop}: Math.round({pick(style, 1)} * tokens.scale)"
+            )
     return lines
 
 

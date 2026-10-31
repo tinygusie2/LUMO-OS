@@ -6,12 +6,13 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
-import "palette.js" as P
+import org.kde.kirigami as Kirigami
+import org.kernora.m3
 
 Rectangle {
     id: root
 
-    color: P.surface
+    color: M3.darkScheme.surface
 
     readonly property bool russian: Qt.locale().name.startsWith("ru")
     function tr(en: string, ru: string): string {
@@ -22,6 +23,71 @@ Rectangle {
     property int sessionIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
     property string failure: ""
     property bool busy: false
+    property real exit: 0
+
+    property bool open: false
+    readonly property real reveal: Math.max(0, Math.min(1, revealSpring.value))
+    readonly property real travel: Math.max(240, height * 0.4)
+    property bool hinting: false
+
+    function settle(show: bool, velocity: real): void {
+        open = show;
+        revealSpring.animateTo(show ? 1 : 0, velocity);
+        if (show) {
+            password.forceActiveFocus();
+            idleTimer.restart();
+        }
+    }
+
+    function endPeek(): void {
+        if (!open && !swipe.dragging) {
+            revealSpring.animateTo(0, 0);
+        }
+    }
+
+    MSpring {
+        id: revealSpring
+        dampingRatio: 0.82
+        response: 0.42
+    }
+
+    SequentialAnimation {
+        id: nudge
+        ScriptAction { script: revealSpring.animateTo(0.08, 0) }
+        PauseAnimation { duration: 180 }
+        ScriptAction { script: root.endPeek() }
+    }
+
+    Timer {
+        id: hintTimer
+        interval: 3000
+        onTriggered: root.hinting = false
+    }
+
+    Timer {
+        id: idleTimer
+        interval: 15000
+        onTriggered: {
+            if (password.text.length === 0 && !root.busy) {
+                root.settle(false, 0);
+            }
+        }
+    }
+
+    Keys.onEscapePressed: {
+        password.text = "";
+        root.settle(false, 0);
+    }
+
+    NumberAnimation {
+        id: leave
+        target: root
+        property: "exit"
+        to: 1
+        duration: 320
+        easing.type: Easing.Bezier
+        easing.bezierCurve: [0.3, 0.0, 0.8, 0.15, 1.0, 1.0]
+    }
 
     readonly property var user: users.count > userIndex ? users.objectAt(userIndex) : null
     function login(): void {
@@ -34,17 +100,26 @@ Rectangle {
         sddm.login(user.userName, password.text, sessionIndex);
     }
 
+    Timer {
+        id: clearTimer
+        interval: 400
+        onTriggered: {
+            password.text = "";
+            password.forceActiveFocus();
+        }
+    }
+
     Connections {
         target: sddm
         function onLoginFailed() {
             root.busy = false;
             root.failure = root.tr("Wrong password. Try again.", "Неверный пароль. Попробуйте ещё раз.");
-            password.selectAll();
-            password.forceActiveFocus();
+            echo.shake();
             shake.restart();
+            clearTimer.restart();
         }
         function onLoginSucceeded() {
-            root.busy = false;
+            leave.start();
         }
     }
 
@@ -57,27 +132,50 @@ Rectangle {
             width: geometry.width
             height: geometry.height
 
+            readonly property string wallpaper: /^org\.kernora\.[a-z]+$/.test(config.wallpaper || "") ? config.wallpaper : "org.kernora.shapes"
+            readonly property bool picture: config.wallpaper === "org.kde.image" && (config.wallpaperImage || "").length > 0
+
             Loader {
                 id: scene
                 anchors.fill: parent
-                source: "file:///usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/Scene.qml"
-                property real phase: 0.4
-                NumberAnimation on phase {
-                    running: config.background !== "still"
-                    from: 0.4
-                    to: 1.4
-                    duration: 420000
-                    loops: Animation.Infinite
+                active: !parent.picture || backdrop.status === Image.Error
+                source: "file:///usr/share/plasma/wallpapers/" + (parent.picture ? "org.kernora.shapes" : parent.wallpaper) + "/contents/ui/Scene.qml"
+                readonly property real loop: status === Loader.Ready && item.loopSeconds > 0 ? item.loopSeconds : 180
+                readonly property real offset: (parent.x / 7919 + parent.y / 104729) % 1
+                property real phase: 0
+                function clockPhase(): real {
+                    return (offset + Date.now() / 1000 / loop) % 1;
+                }
+                Timer {
+                    interval: 33
+                    repeat: true
+                    running: config.background !== "still" && scene.status === Loader.Ready
+                    onTriggered: scene.phase = scene.clockPhase()
                 }
                 onLoaded: {
                     item.intro = 1;
-                    item.phase = Qt.binding(() => scene.phase % 1);
+                    scene.phase = scene.clockPhase();
+                    item.phase = Qt.binding(() => scene.phase);
                 }
+                onStatusChanged: {
+                    if (status === Loader.Error && source.toString().indexOf("org.kernora.shapes") < 0) {
+                        source = "file:///usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/Scene.qml";
+                    }
+                }
+            }
+            Image {
+                id: backdrop
+                anchors.fill: parent
+                visible: parent.picture && status === Image.Ready
+                source: parent.picture ? "file://" + config.wallpaperImage : ""
+                fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+                sourceSize.width: parent.width
             }
             Rectangle {
                 anchors.fill: parent
-                color: P.surface
-                opacity: 0.35
+                color: M3.darkScheme.surface
+                opacity: (0.25 + 0.2 * root.reveal) * (1 - root.exit)
             }
         }
     }
@@ -90,25 +188,100 @@ Rectangle {
         onTriggered: root.now = new Date()
     }
 
+    MouseArea {
+        id: swipe
+
+        property bool dragging: false
+        property real pressY: 0
+        property real pressReveal: 0
+        property real lastY: 0
+        property double lastTime: 0
+        property real flick: 0
+
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: dragging ? Qt.ClosedHandCursor : Qt.ArrowCursor
+        onPressed: mouse => {
+            pressY = mouse.y;
+            lastY = mouse.y;
+            lastTime = Date.now();
+            pressReveal = root.reveal;
+            flick = 0;
+            dragging = false;
+        }
+        onPositionChanged: mouse => {
+            if (!pressed) {
+                if (!root.open) {
+                    root.hinting = true;
+                    hintTimer.restart();
+                    if (!nudge.running && revealSpring.value < 0.01) {
+                        nudge.start();
+                    }
+                }
+                return;
+            }
+            const distance = pressY - mouse.y;
+            if (!dragging && Math.abs(distance) > 8) {
+                dragging = true;
+                nudge.stop();
+            }
+            if (dragging) {
+                revealSpring.jumpTo(Math.max(0, Math.min(1, pressReveal + distance / root.travel)));
+                const now = Date.now();
+                flick = (lastY - mouse.y) / Math.max(1, now - lastTime) * 1000;
+                lastY = mouse.y;
+                lastTime = now;
+            }
+        }
+        onReleased: {
+            if (!dragging) {
+                root.settle(true, 0);
+                return;
+            }
+            dragging = false;
+            root.settle(flick > 600 || (flick > -600 && root.reveal > 0.4), flick / root.travel);
+        }
+        onCanceled: {
+            dragging = false;
+            root.settle(root.reveal > 0.4, 0);
+        }
+        onWheel: wheel => {
+            if (root.open) {
+                return;
+            }
+            const delta = wheel.pixelDelta.y !== 0 ? wheel.pixelDelta.y : wheel.angleDelta.y / 2;
+            revealSpring.jumpTo(Math.max(0, Math.min(1, root.reveal + Math.abs(delta) / root.travel)));
+            wheelSettle.restart();
+        }
+        Timer {
+            id: wheelSettle
+            interval: 160
+            onTriggered: root.settle(root.reveal > 0.3, 0)
+        }
+    }
+
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: parent.height * 0.1
+        y: parent.height * (0.3 - 0.2 * root.reveal)
         spacing: 0
+        scale: 1 - 0.18 * root.reveal
+        transformOrigin: Item.Top
+        opacity: 1 - root.exit
+        transform: Translate { y: -64 * root.exit }
         Text {
             Layout.alignment: Qt.AlignHCenter
             text: root.now.toLocaleTimeString(Qt.locale(), Qt.locale().name === "C" ? "HH:mm" : Locale.ShortFormat)
-            color: P.surfaceContent
-            font.family: "Google Sans Flex"
+            color: M3.darkScheme.surfaceContent
+            font.family: "Roboto"
             font.weight: Font.Light
-            font.pixelSize: 112
+            font.pixelSize: 136
             renderType: Text.QtRendering
         }
         Text {
             Layout.alignment: Qt.AlignHCenter
             text: root.now.toLocaleDateString(Qt.locale(), "dddd, d MMMM")
-            color: P.surfaceContent
-            font.family: "Google Sans Flex"
+            color: M3.darkScheme.surfaceContent
+            font.family: "Roboto"
             font.pixelSize: 22
             renderType: Text.QtRendering
         }
@@ -123,18 +296,57 @@ Rectangle {
             required property string icon
             readonly property string userName: name
             readonly property string displayName: realName.length > 0 ? realName : name
-            readonly property string picture: icon
+            readonly property string picture: icon.indexOf("/faces/.face.icon") >= 0 ? "" : icon.startsWith("/") ? "file://" + icon : icon
+        }
+    }
+
+    Column {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 48
+        spacing: 12
+        opacity: Math.max(0, 1 - 2.5 * root.reveal) * (1 - root.exit)
+        visible: opacity > 0
+        transform: Translate { y: -root.travel * 0.5 * root.reveal }
+
+        Text {
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: root.tr("Swipe up or start typing", "Проведите вверх или начните вводить пароль")
+            color: M3.darkScheme.surfaceContent
+            font.family: "Roboto"
+            font.pixelSize: 15
+            font.weight: Font.Medium
+            opacity: root.hinting ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: 250 } }
+        }
+        Rectangle {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 56
+            height: 56
+            radius: 28
+            color: Qt.alpha(M3.surfaceContainerHigh, 0.9)
+            Kirigami.Icon {
+                anchors.centerIn: parent
+                width: 24
+                height: 24
+                source: Qt.resolvedUrl("icons/lock.svg")
+                isMask: true
+                color: M3.surfaceContent
+            }
         }
     }
 
     Rectangle {
         id: card
+        readonly property bool shown: root.reveal > 0.5
         anchors.centerIn: parent
-        anchors.verticalCenterOffset: parent.height * 0.08
+        anchors.verticalCenterOffset: parent.height * 0.08 + (1 - root.reveal) * root.travel * 0.6
         width: 400
         height: cardColumn.implicitHeight + 64
         radius: 36
-        color: Qt.alpha(P.surfaceContainer, 0.94)
+        color: Qt.alpha(M3.surfaceContainer, 0.94)
+        opacity: Math.max(0, Math.min(1, (root.reveal - 0.25) / 0.55)) * (1 - root.exit)
+        transform: Translate { y: -96 * root.exit }
 
         SequentialAnimation {
             id: shake
@@ -159,13 +371,13 @@ Rectangle {
                 Rectangle {
                     anchors.fill: parent
                     radius: width / 2
-                    color: P.primaryContainer
+                    color: M3.primaryContainer
                     Text {
                         anchors.centerIn: parent
                         visible: face.status !== Image.Ready
                         text: parent.parent.user ? parent.parent.user.displayName.charAt(0).toUpperCase() : ""
-                        color: P.primaryContainerContent
-                        font.family: "Google Sans Flex"
+                        color: M3.primaryContainerContent
+                        font.family: "Roboto"
                         font.pixelSize: 44
                         font.weight: Font.Medium
                     }
@@ -173,7 +385,7 @@ Rectangle {
                 Image {
                     id: face
                     anchors.fill: parent
-                    source: parent.user && parent.user.picture.length > 0 ? "file://" + parent.user.picture : ""
+                    source: parent.user ? parent.user.picture : ""
                     sourceSize: Qt.size(208, 208)
                     fillMode: Image.PreserveAspectCrop
                     visible: false
@@ -198,8 +410,8 @@ Rectangle {
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
                 text: root.user ? root.user.displayName : ""
-                color: P.surfaceContent
-                font.family: "Google Sans Flex"
+                color: M3.surfaceContent
+                font.family: "Roboto"
                 font.pixelSize: 24
                 elide: Text.ElideRight
                 renderType: Text.QtRendering
@@ -214,9 +426,9 @@ Rectangle {
                     Layout.fillWidth: true
                     implicitHeight: 56
                     radius: 28
-                    color: P.surfaceContainerHighest
+                    color: M3.surfaceContainerHighest
                     border.width: password.activeFocus ? 2 : 0
-                    border.color: root.failure.length > 0 ? P.error : P.primary
+                    border.color: root.failure.length > 0 ? M3.error : M3.primary
 
                     TextInput {
                         id: password
@@ -225,44 +437,64 @@ Rectangle {
                         anchors.leftMargin: 24
                         anchors.rightMargin: 20
                         anchors.verticalCenter: parent.verticalCenter
-                        echoMode: TextInput.Password
-                        passwordCharacter: "•"
+                        echoMode: TextInput.NoEcho
+                        cursorDelegate: Item {}
                         focus: true
                         enabled: !root.busy
-                        color: P.surfaceContent
-                        selectionColor: P.primaryContainer
-                        font.family: "Google Sans Flex"
+                        color: M3.surfaceContent
+                        selectionColor: M3.primaryContainer
+                        font.family: "Roboto"
                         font.pixelSize: 18
                         renderType: Text.QtRendering
                         clip: true
                         onAccepted: root.login()
-                        onTextChanged: root.failure = ""
+                        onTextChanged: {
+                            root.failure = "";
+                            if (text.length > 0 && !root.open) {
+                                root.settle(true, 0);
+                            }
+                            idleTimer.restart();
+                        }
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: password.text.length === 0
                             text: root.tr("Password", "Пароль")
-                            color: P.surfaceVariantContent
+                            color: M3.surfaceVariantContent
                             font: password.font
                         }
+                    }
+                    MShapeEcho {
+                        id: echo
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.leftMargin: 20
+                        anchors.rightMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+                        count: password.text.length
+                        color: M3.primary
+                        size: 24
+                        spacing: 9
                     }
                 }
                 Rectangle {
                     implicitWidth: 56
                     implicitHeight: 56
                     radius: loginMouse.pressed ? 16 : 28
-                    color: P.primary
+                    color: M3.primary
                     opacity: root.busy ? 0.5 : 1
                     Behavior on radius { NumberAnimation { duration: 150 } }
-                    Image {
+                    Kirigami.Icon {
                         anchors.centerIn: parent
                         width: 26
                         height: 26
-                        sourceSize: Qt.size(52, 52)
-                        source: "icons/login.svg"
+                        source: Qt.resolvedUrl("icons/login.svg")
+                        isMask: true
+                        color: M3.primaryContent
                     }
                     MouseArea {
                         id: loginMouse
+                        enabled: card.shown
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
                         onClicked: root.login()
@@ -276,8 +508,8 @@ Rectangle {
                 visible: text.length > 0
                 text: root.failure.length > 0 ? root.failure
                     : keyboard.capsLock ? root.tr("Caps Lock is on", "Включён Caps Lock") : ""
-                color: root.failure.length > 0 ? P.error : P.surfaceVariantContent
-                font.family: "Google Sans Flex"
+                color: root.failure.length > 0 ? M3.error : M3.surfaceVariantContent
+                font.family: "Roboto"
                 font.pixelSize: 14
                 wrapMode: Text.Wrap
             }
@@ -295,19 +527,20 @@ Rectangle {
                         implicitWidth: chipText.implicitWidth + 28
                         implicitHeight: 34
                         radius: 17
-                        color: index === root.userIndex ? P.secondaryContainer : "transparent"
+                        color: index === root.userIndex ? M3.secondaryContainer : "transparent"
                         border.width: index === root.userIndex ? 0 : 1
-                        border.color: P.outline
+                        border.color: M3.outline
                         Text {
                             id: chipText
                             anchors.centerIn: parent
                             text: realName.length > 0 ? realName : name
-                            color: index === root.userIndex ? P.secondaryContainerContent : P.surfaceVariantContent
-                            font.family: "Google Sans Flex"
+                            color: index === root.userIndex ? M3.secondaryContainerContent : M3.surfaceVariantContent
+                            font.family: "Roboto"
                             font.pixelSize: 14
                         }
                         MouseArea {
                             anchors.fill: parent
+                            enabled: card.shown
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 root.userIndex = index;
@@ -327,6 +560,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 24
         spacing: 8
+        opacity: Math.max(0, Math.min(1, (root.reveal - 0.4) / 0.6)) * (1 - root.exit)
+        visible: opacity > 0
 
         Chip {
             visible: sessionModel.rowCount() > 1
@@ -339,7 +574,7 @@ Rectangle {
             model: sessionModel
             delegate: QtObject {
                 required property string name
-                readonly property string label: name.replace("Plasma (Wayland)", "Kernora").replace(/\bPlasma\b/, "Kernora")
+                readonly property string label: name.replace("Plasma (Wayland)", "Lumo").replace(/\bPlasma\b/, "Lumo")
             }
         }
         Chip {
@@ -351,8 +586,8 @@ Rectangle {
         Item { Layout.fillWidth: true }
         Text {
             text: sddm.hostName
-            color: P.surfaceVariantContent
-            font.family: "Google Sans Flex"
+            color: M3.darkScheme.surfaceVariantContent
+            font.family: "Roboto"
             font.pixelSize: 14
             Layout.rightMargin: 8
         }
@@ -369,13 +604,13 @@ Rectangle {
         implicitWidth: chipRow.implicitWidth + 28
         implicitHeight: 40
         radius: 20
-        color: chipMouse.containsMouse ? Qt.alpha(P.surfaceContainerHigh, 0.95) : Qt.alpha(P.surfaceContainer, 0.85)
+        color: chipMouse.containsMouse ? Qt.alpha(M3.surfaceContainerHigh, 0.95) : Qt.alpha(M3.surfaceContainer, 0.85)
         RowLayout {
             id: chipRow
             anchors.centerIn: parent
             spacing: 8
-            Image { source: chip.icon; sourceSize: Qt.size(40, 40); Layout.preferredWidth: 20; Layout.preferredHeight: 20 }
-            Text { text: chip.label; color: P.surfaceContent; font.family: "Google Sans Flex"; font.pixelSize: 14 }
+            Kirigami.Icon { source: Qt.resolvedUrl(chip.icon); isMask: true; color: M3.surfaceVariantContent; Layout.preferredWidth: 20; Layout.preferredHeight: 20 }
+            Text { text: chip.label; color: M3.surfaceContent; font.family: "Roboto"; font.pixelSize: 14 }
         }
         MouseArea {
             id: chipMouse
@@ -394,13 +629,14 @@ Rectangle {
         implicitWidth: 48
         implicitHeight: 48
         radius: 24
-        color: powerMouse.containsMouse ? Qt.alpha(P.surfaceContainerHigh, 0.95) : Qt.alpha(P.surfaceContainer, 0.85)
-        Image {
+        color: powerMouse.containsMouse ? Qt.alpha(M3.surfaceContainerHigh, 0.95) : Qt.alpha(M3.surfaceContainer, 0.85)
+        Kirigami.Icon {
             anchors.centerIn: parent
             width: 24
             height: 24
-            sourceSize: Qt.size(48, 48)
-            source: button.icon
+            source: Qt.resolvedUrl(button.icon)
+            isMask: true
+            color: M3.surfaceContent
         }
         Rectangle {
             anchors.bottom: parent.top
@@ -410,13 +646,13 @@ Rectangle {
             width: tip.implicitWidth + 16
             height: 28
             radius: 6
-            color: P.inverseSurface
+            color: M3.inverseSurface
             Text {
                 id: tip
                 anchors.centerIn: parent
                 text: button.label
-                color: P.inverseOnSurface
-                font.family: "Google Sans Flex"
+                color: M3.inverseOnSurface
+                font.family: "Roboto"
                 font.pixelSize: 13
             }
         }
@@ -429,5 +665,11 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: password.forceActiveFocus()
+    Component.onCompleted: {
+        const colour = String(config.colour || "");
+        M3.colourOverride = /^[a-z]+(-[a-z]+)*$/.test(colour) ? colour : "";
+        M3.darkOverride = config.mode !== "light";
+        M3.reloadGeneration();
+        password.forceActiveFocus();
+    }
 }

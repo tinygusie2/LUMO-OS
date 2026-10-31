@@ -420,8 +420,28 @@ void Files::setLiveWallpaper(const QString &plugin)
     const QString id = valid.match(plugin).hasMatch() ? plugin : QStringLiteral("org.kernora.shapes");
     evaluateShellScript(QStringLiteral(
         "for (const d of desktops()) {"
+        "  d.currentConfigGroup = ['Wallpaper', '%1', 'General'];"
+        "  d.writeConfig('IntroAt', String(Date.now()));"
         "  d.wallpaperPlugin = '%1';"
         "}").arg(id));
+}
+
+void Files::setLockScreenPlugin(const QString &plugin)
+{
+    KConfig config(QStringLiteral("kscreenlockerrc"));
+    KConfigGroup greeter = config.group(QStringLiteral("Greeter"));
+    greeter.group(QStringLiteral("Wallpaper")).deleteGroup(KConfig::Notify);
+    greeter.writeEntry("WallpaperPlugin", plugin.isEmpty() ? QStringLiteral("org.kernora.shapes") : plugin, KConfig::Notify);
+    config.sync();
+}
+
+void Files::syncGreeterBackground(const QString &plugin, const QUrl &image)
+{
+    QStringList arguments{QStringLiteral("/usr/libexec/kernora-greeter-background"), plugin};
+    if (image.isLocalFile()) {
+        arguments.append(image.toLocalFile());
+    }
+    QProcess::startDetached(QStringLiteral("pkexec"), arguments);
 }
 
 void Files::setLockScreenWallpaper(const QUrl &image)
@@ -429,8 +449,8 @@ void Files::setLockScreenWallpaper(const QUrl &image)
     KConfig config(QStringLiteral("kscreenlockerrc"));
     KConfigGroup greeter = config.group(QStringLiteral("Greeter"));
     if (image.isEmpty()) {
-        greeter.deleteEntry("WallpaperPlugin", KConfig::Notify);
         greeter.group(QStringLiteral("Wallpaper")).deleteGroup(KConfig::Notify);
+        greeter.writeEntry("WallpaperPlugin", QStringLiteral("org.kernora.shapes"), KConfig::Notify);
     } else {
         greeter.writeEntry("WallpaperPlugin", QStringLiteral("org.kde.image"), KConfig::Notify);
         KConfigGroup general = greeter.group(QStringLiteral("Wallpaper")).group(QStringLiteral("org.kde.image")).group(QStringLiteral("General"));

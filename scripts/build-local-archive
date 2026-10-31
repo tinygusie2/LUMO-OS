@@ -10,7 +10,6 @@ for dependency in awk date dpkg-parsechangelog dpkg-scanpackages \
 done
 load_project_config
 load_upstream_config
-load_rquickshare_config
 
 "$PROJECT_ROOT/scripts/create-development-archive-key"
 
@@ -25,6 +24,8 @@ desktop_version=$(dpkg-parsechangelog \
   -l"$desktop_root/debian/changelog" -S Version)
 apps_root="$PROJECT_ROOT/packages/native/kernora-apps"
 apps_version=$(dpkg-parsechangelog -l"$apps_root/debian/changelog" -S Version)
+quickshare_version=$(dpkg-parsechangelog \
+  -l"$PROJECT_ROOT/packages/native/kernora-quickshare/debian/changelog" -S Version)
 calamares_version=$(dpkg-parsechangelog \
   -l"$PROJECT_ROOT/packages/derived/calamares/changelog" -S Version)
 source_dir="$PROJECT_ROOT/_build/source-packages"
@@ -47,9 +48,8 @@ meta_pool="$archive_root/pool/main/k/kernora-base"
 archive_package_pool="$archive_root/pool/main/k/kernora-archive"
 desktop_pool="$archive_root/pool/main/k/kernora-desktop"
 apps_pool="$archive_root/pool/main/k/kernora-apps"
+quickshare_pool="$archive_root/pool/main/k/kernora-quickshare"
 calamares_pool="$archive_root/pool/main/c/calamares"
-rquickshare_pool="$archive_root/pool/main/r/r-quick-share"
-rquickshare_package="$PROJECT_ROOT/_cache/rquickshare/r-quick-share_${RQUICKSHARE_VERSION}_${BASE_ARCH}.deb"
 binary_index="$archive_root/dists/$DIST_CODENAME/main/binary-$BASE_ARCH"
 source_index="$archive_root/dists/$DIST_CODENAME/main/source"
 release="$archive_root/dists/$DIST_CODENAME/Release"
@@ -60,7 +60,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-mkdir -p "$pool" "$meta_pool" "$archive_package_pool" "$desktop_pool" "$apps_pool" "$calamares_pool" "$rquickshare_pool" \
+mkdir -p "$pool" "$meta_pool" "$archive_package_pool" "$desktop_pool" "$apps_pool" "$quickshare_pool" "$calamares_pool" \
   "$binary_index" "$source_index"
 for artifact in \
   "$source_dir/base-files_${package_version}.dsc" \
@@ -99,6 +99,13 @@ for artifact in \
   install -m 0644 "$artifact" "$apps_pool/"
 done
 for artifact in \
+  "$source_dir/kernora-quickshare_${quickshare_version}.dsc" \
+  "$source_dir/kernora-quickshare_${quickshare_version}.tar.xz" \
+  "$binary_dir/kernora-quickshare_${quickshare_version}_${BASE_ARCH}.deb"; do
+  [[ -s "$artifact" ]] || die "missing archive input: $artifact"
+  install -m 0644 "$artifact" "$quickshare_pool/"
+done
+for artifact in \
   "$source_dir/calamares_${calamares_version}.dsc" \
   "$source_dir/calamares_${calamares_version}.debian.tar.xz" \
   "$source_dir/calamares_3.3.14.orig.tar.gz" \
@@ -125,9 +132,6 @@ for derived in polkit-kde-agent-1; do
     install -m 0644 "$deb" "$derived_pool/"
   done
 done
-printf '%s  %s\n' "$RQUICKSHARE_SHA256" "$rquickshare_package" | sha256sum --check --status \
-  || die "RQuickShare is missing or changed; run make rquickshare"
-install -m 0644 "$rquickshare_package" "$rquickshare_pool/"
 install -m 0644 "$public_key" \
   "$archive_root/kernora-development-archive-keyring.gpg"
 

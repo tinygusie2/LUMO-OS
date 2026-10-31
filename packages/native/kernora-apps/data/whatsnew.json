@@ -1,5 +1,75 @@
 [
   {
+    "id": "2026-10-29-3",
+    "date": "2026-10-29",
+    "items": [
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "A preview for every widget",
+          "ru": "Превью для каждого виджета"
+        },
+        "text": {
+          "en": "In the widget list, the widgets that came with KDE are now cards like Kernora's own: each one shows a small Material preview of what it looks like, and its icon sits on a circle in your colour, like on Pixel. Desktop widgets come first, the panel ones further down.",
+          "ru": "В списке виджетов виджеты из KDE теперь выглядят как карточки Kernora: у каждого маленькое превью в стиле Material, а значок стоит на круге вашего цвета, как на Pixel. Сначала идут виджеты для рабочего стола, ниже — для панели."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-29-2",
+    "date": "2026-10-29",
+    "items": [
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "Ribbon live wallpaper",
+          "ru": "Живые обои «Лента»"
+        },
+        "text": {
+          "en": "Shapes ride along a ribbon in your theme's colour and change into new ones at its narrowest point: sixteen Material shapes, from cookies and clovers to a heart and a ghost. Thanks to the community member who drew the idea. Pick it in Settings, Wallpaper & style.",
+          "ru": "Фигуры едут по ленте в цвете вашей темы и в самом узком месте превращаются в новые: шестнадцать фигур Material, от печенья и клевера до сердца и призрака. Спасибо участнику сообщества, который нарисовал идею. Выберите их в Настройках, «Обои и стиль»."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-29-1",
+    "date": "2026-10-29",
+    "items": [
+      {
+        "icon": "speedometer",
+        "title": {
+          "en": "Task Manager",
+          "ru": "Диспетчер задач"
+        },
+        "text": {
+          "en": "See what's running and how busy the computer is: apps, background processes and live charts for the processor, memory, graphics card, disk and network. End anything that hangs. Open it from the app menu or with Ctrl+Shift+Esc.",
+          "ru": "Что запущено и насколько загружен компьютер: приложения, фоновые процессы и живые графики процессора, памяти, видеокарты, диска и сети. Зависшее можно завершить. Откройте из меню приложений или по Ctrl+Shift+Esc."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-28-3",
+    "date": "2026-10-28",
+    "items": [
+      {
+        "icon": "rquickshare",
+        "title": {
+          "en": "Quick Share with Android",
+          "nl": "Quick Share met Android",
+          "ru": "Quick Share с Android"
+        },
+        "text": {
+          "en": "Send photos and files from an Android phone: choose Share, then Quick Share, and pick this computer. Files land in Downloads. To send to the phone, open Quick Share and drag files into the window. Phone and computer need to be on the same network.",
+          "nl": "Stuur foto's en bestanden vanaf een Android-telefoon: kies Delen, dan Quick Share, en kies deze computer. Bestanden komen in Downloads. Om naar de telefoon te sturen open je Quick Share en sleep je bestanden in het venster. Telefoon en computer moeten op hetzelfde netwerk zitten.",
+          "ru": "Отправляйте фото и файлы с телефона Android: выберите «Поделиться», затем Quick Share и этот компьютер. Файлы попадают в «Загрузки». Чтобы отправить на телефон, откройте Quick Share и перетащите файлы в окно. Телефон и компьютер должны быть в одной сети."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-28-2",
     "date": "2026-10-28",
     "items": [
@@ -36,16 +106,603 @@
     "date": "2026-10-28",
     "items": [
       {
-        "icon": "rquickshare",
+        "icon": "preferences-desktop-icons",
         "title": {
-          "en": "Quick Share with Android",
-          "nl": "Quick Share met Android",
-          "ru": "Quick Share с Android"
+          "en": "App icons all the same size",
+          "ru": "Значки приложений одного размера"
         },
         "text": {
-          "en": "Send photos and files from an Android phone: choose Share, then Quick Share, and pick this computer. Files land in Downloads. To send to the phone, open Quick Share and drag files into the window. Phone and computer need to be on the same network.",
-          "nl": "Stuur foto's en bestanden vanaf een Android-telefoon: kies Delen, dan Quick Share, en kies deze computer. Bestanden komen in Downloads. Om naar de telefoon te sturen open je Quick Share en sleep je bestanden in het venster. Telefoon en computer moeten op hetzelfde netwerk zitten.",
-          "ru": "Отправляйте фото и файлы с телефона Android: выберите «Поделиться», затем Quick Share и этот компьютер. Файлы попадают в «Загрузки». Чтобы отправить на телефон, откройте Quick Share и перетащите файлы в окно. Телефон и компьютер должны быть в одной сети."
+          "en": "Icons of apps from Flathub and Debian now match Kernora's own: round icons fill the same circle, the others sit on a white circle, in the dock, the app menu, on the desktop and everywhere else.",
+          "ru": "Значки приложений из Flathub и Debian теперь выглядят как значки Kernora: круглые занимают тот же круг, остальные стоят на белом круге. В доке, в меню приложений, на рабочем столе и везде."
+        }
+      },
+      {
+        "icon": "color-picker",
+        "title": {
+          "en": "Themed app icons",
+          "ru": "Тематические значки"
+        },
+        "text": {
+          "en": "Like on Pixel: turn on Themed app icons in Settings > Wallpaper & style and every app icon takes on your colour.",
+          "ru": "Как на Pixel: включите «Тематические значки приложений» в «Настройки → Обои и стиль», и все значки приложений окрасятся в ваш цвет."
+        }
+      },
+      {
+        "icon": "dialog-information",
+        "title": {
+          "en": "Readable tooltips",
+          "ru": "Читаемые подсказки"
+        },
+        "text": {
+          "en": "Tooltips in quick settings and on the panel no longer show light text on a light background in dark mode.",
+          "ru": "Подсказки в быстрых настройках и на панели в тёмной теме больше не пишут светлым по светлому."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-26-1",
+    "date": "2026-10-26",
+    "items": [
+      {
+        "icon": "system-run",
+        "title": {
+          "en": "Calmer app start",
+          "ru": "Спокойный запуск приложений"
+        },
+        "text": {
+          "en": "While an app is starting, its icon in the dock gently pulses instead of showing KDE's spinner.",
+          "ru": "Пока приложение запускается, его значок в доке мягко пульсирует вместо крутилки KDE."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-25-2",
+    "date": "2026-10-25",
+    "items": [
+      {
+        "icon": "preferences-system-splash",
+        "title": {
+          "en": "Demo updates",
+          "ru": "Демо-обновления"
+        },
+        "text": {
+          "en": "Settings > System has a new Demo updates switch under Early access. Turn it on to get new versions before everyone else, while they are still being tested. If you turn it off, you keep what you have until the next normal update.",
+          "ru": "В «Настройки → Система» в разделе «Ранний доступ» появился переключатель «Демо-обновления». Включите его, чтобы получать новые версии раньше всех, пока они ещё проверяются. Если выключить, у вас останется то, что уже установлено, до следующего обычного обновления."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-25-1",
+    "date": "2026-10-25",
+    "items": [
+      {
+        "icon": "apps",
+        "title": {
+          "en": "Drag apps to the desktop",
+          "ru": "Приложения на рабочий стол"
+        },
+        "text": {
+          "en": "Drag an app from the app menu onto the desktop and it lands there right away, without asking whether to copy or link. App shortcuts on the desktop no longer carry the little link badge.",
+          "ru": "Перетащите приложение из меню на рабочий стол, и ярлык сразу появится там, без вопроса «копировать или создать ссылку». Значок-ссылка на ярлыках приложений больше не показывается."
+        }
+      },
+      {
+        "icon": "zoom-in",
+        "title": {
+          "en": "Bigger or smaller desktop icons",
+          "ru": "Значки на рабочем столе крупнее или мельче"
+        },
+        "text": {
+          "en": "Hold Ctrl and turn the mouse wheel over the desktop to make the icons bigger or smaller.",
+          "ru": "Зажмите Ctrl и покрутите колёсико мыши над рабочим столом, чтобы сделать значки крупнее или мельче."
+        }
+      },
+      {
+        "icon": "text-plain",
+        "title": {
+          "en": "Material icons everywhere",
+          "ru": "Иконки Material везде"
+        },
+        "text": {
+          "en": "Files on the desktop and in menus now use Material icons too: documents, PDFs, spreadsheets, code, archives, packages, pictures, music and video, plus badges and menu actions that still looked like KDE.",
+          "ru": "Файлы на рабочем столе и в меню теперь тоже с иконками Material: документы, PDF, таблицы, код, архивы, пакеты, фото, музыка и видео, а ещё значки и пункты меню, которые до сих пор выглядели как в KDE."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-24-3",
+    "date": "2026-10-24",
+    "items": [
+      {
+        "icon": "preferences-desktop-display",
+        "title": {
+          "en": "Panel on any side",
+          "ru": "Панель с любой стороны"
+        },
+        "text": {
+          "en": "Quick settings open properly with the panel on the top, left or right of the screen, and the clock and status icons fit in a side panel.",
+          "ru": "Быстрые настройки нормально открываются, когда панель сверху, слева или справа, а часы и значки помещаются в боковую панель."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-24-2",
+    "date": "2026-10-24",
+    "items": [
+      {
+        "icon": "kernora-quickshare",
+        "title": {
+          "en": "Calmer Quick Share",
+          "ru": "Quick Share спокойнее"
+        },
+        "text": {
+          "en": "Sending and receiving show a plain progress bar instead of waves, and picking a phone no longer makes it jump around.",
+          "ru": "Отправка и приём показывают обычную полоску прогресса вместо волн, а выбранный телефон больше не дёргается."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-24-1",
+    "date": "2026-10-24",
+    "items": [
+      {
+        "icon": "kernora-quickshare",
+        "title": {
+          "en": "Quick Share, like on a Chromebook",
+          "ru": "Quick Share как на Chromebook"
+        },
+        "text": {
+          "en": "Sharing now works the way it does on ChromeOS: pick a device next to a preview of your files, check the secure connection ID and follow the progress in notifications. In quick settings, tap the Quick Share icon to turn it on or off, or tap the tile to choose who can see you.",
+          "ru": "Отправка теперь устроена как в ChromeOS: выберите устройство рядом с превью файлов, сверьте код безопасного подключения и следите за прогрессом в уведомлениях. В быстрых настройках значок Quick Share включает и выключает его, а нажатие на плитку открывает выбор, кто вас видит."
+        }
+      },
+      {
+        "icon": "folder-download",
+        "title": {
+          "en": "Quick Share app",
+          "ru": "Приложение Quick Share"
+        },
+        "text": {
+          "en": "Quick Share now has its own app with Receive and Send, like on Android: see how you appear to others, who can see you, and accept files right in the window. Find it in the app menu or open it from quick settings.",
+          "ru": "У Quick Share теперь есть своё приложение с вкладками «Получить» и «Отправить», как на Android: видно, как вас видят другие и кто может вас найти, а файлы можно принять прямо в окне. Оно есть в меню приложений и открывается из быстрых настроек."
+        }
+      },
+      {
+        "icon": "preferences-desktop-notification",
+        "title": {
+          "en": "Fewer \"nearby is sharing\" pop-ups",
+          "ru": "Меньше «рядом кто-то делится»"
+        },
+        "text": {
+          "en": "Quick Share no longer mistakes earbuds and watches for a phone that shares. The prompt shows once, goes away when the phone stops, stays quiet for 15 minutes after Dismiss, and Don't ask again turns it off.",
+          "ru": "Quick Share больше не путает наушники и часы с телефоном, который делится файлами. Подсказка появляется один раз, исчезает, когда телефон перестаёт делиться, молчит 15 минут после «Закрыть», а «Больше не спрашивать» выключает её совсем."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-23-2",
+    "date": "2026-10-23",
+    "items": [
+      {
+        "icon": "kernora-quickshare",
+        "title": {
+          "en": "Quick Share with your phone",
+          "ru": "Quick Share с телефоном"
+        },
+        "text": {
+          "en": "Send photos and files between an Android phone and Kernora, no cables or apps. On the phone, share and pick this computer; Kernora asks first and saves to Downloads. To send from Kernora, right-click a file in Files. Both need to be on the same Wi-Fi. The Quick Share tile in quick settings makes the computer visible for 10 minutes.",
+          "ru": "Фото и файлы между Android-телефоном и Kernora без кабелей и приложений. На телефоне нажмите «Поделиться» и выберите этот компьютер: Kernora сначала спросит и сохранит всё в «Загрузки». Чтобы отправить с компьютера, нажмите правой кнопкой на файл в Файлах. Оба устройства должны быть в одной сети Wi-Fi. Плитка Quick Share в быстрых настройках делает компьютер видимым на 10 минут."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-23-1",
+    "date": "2026-10-23",
+    "items": [
+      {
+        "icon": "preferences-desktop-plasma-theme",
+        "title": {
+          "en": "See-through panel",
+          "ru": "Прозрачная панель"
+        },
+        "text": {
+          "en": "The panel now lets your wallpaper show through, softly blurred and tinted in your colour. Open apps get a rounded highlight around their icon. If you like it solid, turn it off in Settings, Wallpaper & style, Panel.",
+          "ru": "Сквозь панель теперь видно обои, мягко размытые и подкрашенные в ваш цвет. Открытые приложения выделяются скруглённой подложкой вокруг значка. Если нравится сплошная панель, выключите это в Настройках: Обои и стиль, Панель."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-22-1",
+    "date": "2026-10-22",
+    "items": [
+      {
+        "icon": "system-lock-screen",
+        "title": {
+          "en": "Straight into your desktop",
+          "ru": "Сразу на рабочий стол"
+        },
+        "text": {
+          "en": "After you sign in there is no loading screen any more: your wallpaper stays on screen and the desktop appears right on top of it. Unlocking works the same way, the lock screen slides away and the wallpaper carries on from where it was.",
+          "ru": "После входа больше нет экрана загрузки: на экране остаются ваши обои, а рабочий стол появляется прямо поверх них. Разблокировка работает так же: экран блокировки уезжает, а обои продолжают с того же места."
+        }
+      },
+      {
+        "icon": "go-up",
+        "title": {
+          "en": "Swipe up to unlock",
+          "ru": "Свайп вверх для входа"
+        },
+        "text": {
+          "en": "The lock screen and the login screen start with just the clock. Swipe up with the mouse, touchpad or finger and the password card follows you up, or simply start typing.",
+          "ru": "Экран блокировки и экран входа сначала показывают только часы. Проведите вверх мышью, тачпадом или пальцем, и карточка с паролем поедет следом, или просто начните вводить пароль."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-21-1",
+    "date": "2026-10-21",
+    "items": [
+      {
+        "icon": "system-file-manager",
+        "title": {
+          "en": "A toolbar for your selection",
+          "ru": "Панель для выделенных файлов"
+        },
+        "text": {
+          "en": "Select files and a floating toolbar pops up with cut, copy, rename and trash. The New folder button shrinks to an icon while you scroll, and the volume and brightness pop-up now looks like the sliders in quick settings.",
+          "ru": "Выделите файлы, и снизу появится плавающая панель с вырезанием, копированием, переименованием и корзиной. Кнопка «Новая папка» сжимается до значка при прокрутке, а подсказка громкости и яркости теперь выглядит как слайдеры в быстрых настройках."
+        }
+      },
+      {
+        "icon": "configure",
+        "title": {
+          "en": "Less KDE around",
+          "ru": "Меньше KDE"
+        },
+        "text": {
+          "en": "More settings only lists what Kernora has no page of its own for, the widgets menu no longer sends you to the KDE store, and the panel icon menu simply says Pin to panel.",
+          "ru": "«Ещё настройки» показывают только то, для чего в Kernora нет своей страницы, меню виджетов больше не ведёт в магазин KDE, а меню значка на панели просто предлагает закрепить его на панели."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-18-1",
+    "date": "2026-10-18",
+    "items": [
+      {
+        "icon": "view-preview",
+        "title": {
+          "en": "A floating toolbar in Photos",
+          "ru": "Плавающая панель в «Фото»"
+        },
+        "text": {
+          "en": "When you look at a picture, rotate, slideshow, details and full screen now sit in a rounded toolbar at the bottom, and it hides with the rest when you click the photo.",
+          "ru": "Когда вы смотрите снимок, поворот, слайд-шоу, сведения и полный экран теперь в круглой панели внизу, и она прячется вместе с остальным по щелчку на фото."
+        }
+      },
+      {
+        "icon": "preferences-desktop-theme",
+        "title": {
+          "en": "Springier shapes, bolder picks",
+          "ru": "Пружинистые формы и яркий выбор"
+        },
+        "text": {
+          "en": "Buttons, keys and tiles all over the system change shape on springs, the page you are on is written in bolder letters, and menus got rounder with the chosen option in its own colour.",
+          "ru": "Кнопки, клавиши и плитки по всей системе меняют форму на пружинах, открытая страница в меню выделена жирным, а меню стали круглее, и выбранный пункт теперь своего цвета."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-17-5",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "icon": "system-run",
+        "title": {
+          "en": "Welcome says hello once",
+          "ru": "Приветствие только один раз"
+        },
+        "text": {
+          "en": "Welcome greets you on the first login after installing Kernora and then leaves the app menu. On the live USB the installer now opens by itself.",
+          "ru": "Приветствие встречает вас при первом входе после установки Kernora и потом пропадает из меню приложений. На загрузочной флешке установщик теперь открывается сам."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-17-4",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "icon": "network-wired",
+        "title": {
+          "en": "New quick settings",
+          "ru": "Новые быстрые настройки"
+        },
+        "text": {
+          "en": "The Internet tile shows your cable or Wi-Fi network, and its arrow opens the list of networks right in the panel, the Bluetooth arrow opens your devices. Small round tiles keep the panel shorter, and the pencil lets you move, resize, hide and add tiles.",
+          "ru": "Плитка «Интернет» показывает кабель или сеть Wi-Fi, а её стрелка открывает список сетей прямо в панели, стрелка Bluetooth открывает ваши устройства. Маленькие круглые плитки делают панель короче, а карандаш позволяет переставлять, менять размер, скрывать и добавлять плитки."
+        }
+      },
+      {
+        "icon": "view-app-grid",
+        "title": {
+          "en": "A livelier app menu",
+          "ru": "Живое меню приложений"
+        },
+        "text": {
+          "en": "Apps pop into the menu and squish when you press them, and lock, log out, restart and shut down sit together in one group.",
+          "ru": "Приложения выпрыгивают в меню и пружинят при нажатии, а блокировка, выход, перезагрузка и выключение собраны в одну группу."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-17-3",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Loading screens in your colours",
+          "ru": "Экраны загрузки в ваших цветах"
+        },
+        "text": {
+          "en": "The startup and shutdown screens, the disk password screen and the screen after you log in now follow your colour and your light or dark theme.",
+          "ru": "Экраны включения и выключения, ввода пароля диска и экран после входа теперь следуют вашему цвету и светлой или тёмной теме."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-17-2",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Boot menu in your colours",
+          "ru": "Меню загрузки в ваших цветах"
+        },
+        "text": {
+          "en": "The boot menu you see when the computer starts now follows your colour and your light or dark theme.",
+          "ru": "Меню загрузки при включении компьютера теперь следует вашему цвету и светлой или тёмной теме."
+        }
+      },
+      {
+        "icon": "kernora-logo",
+        "title": {
+          "en": "Just Kernora OS 1",
+          "ru": "Просто Kernora OS 1"
+        },
+        "text": {
+          "en": "The system is now called simply Kernora OS 1, without Ember in the name.",
+          "ru": "Система теперь называется просто Kernora OS 1, без Ember в названии."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-17-1",
+    "date": "2026-10-17",
+    "items": [
+      {
+        "icon": "preferences-desktop-theme",
+        "title": {
+          "en": "One Kernora look",
+          "ru": "Единый вид Kernora"
+        },
+        "text": {
+          "en": "The old KDE theme pickers are gone from More settings, so the system can't slip back into the KDE look by accident. Colours, the dark theme, wallpapers, fonts and cursor size are all in Settings.",
+          "ru": "Старые выборы тем KDE убраны из «Дополнительных настроек», и система больше не может случайно вернуться к виду KDE. Цвета, тёмная тема, обои, шрифты и размер курсора — в Настройках."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-16-5",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "icon": "preferences-desktop-effects",
+        "title": {
+          "en": "Springy buttons",
+          "ru": "Пружинистые кнопки"
+        },
+        "text": {
+          "en": "Buttons squish into a rounder square when you press them and spring back with a little bounce. Buttons that are switched on stay a rounded square.",
+          "ru": "Кнопки при нажатии сжимаются в скруглённый квадрат и отпружинивают обратно с лёгким отскоком. Включённые кнопки остаются скруглённым квадратом."
+        }
+      },
+      {
+        "icon": "view-list-details",
+        "title": {
+          "en": "Livelier menus",
+          "ru": "Живые меню"
+        },
+        "text": {
+          "en": "In Settings, Files and Player the highlight of the chosen item grows out of its icon, and Photos shows morphing shapes while a photo opens.",
+          "ru": "В Настройках, Файлах и Плеере подсветка выбранного пункта вырастает из его иконки, а Фото показывает перетекающие фигуры, пока открывается снимок."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-16-4",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "icon": "preferences-desktop-effects",
+        "title": {
+          "en": "Livelier button groups",
+          "ru": "Живые группы кнопок"
+        },
+        "text": {
+          "en": "Choices like the power mode or the app source are now separate buttons. The one you pick becomes a pill, and the one you press grows a little and nudges its neighbours.",
+          "ru": "Выбор вроде режима питания или источника приложения теперь сделан отдельными кнопками. Выбранная превращается в пилюлю, а нажатая чуть растёт и подвигает соседей."
+        }
+      },
+      {
+        "icon": "view-refresh",
+        "title": {
+          "en": "Shapes while loading",
+          "ru": "Фигуры при загрузке"
+        },
+        "text": {
+          "en": "While screenshots load in Store, a Material shape morphs from one form into another instead of a plain bar.",
+          "ru": "Пока в Магазине грузятся скриншоты, вместо простой полоски фигура Material перетекает из одной формы в другую."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-16-3",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "icon": "download",
+        "title": {
+          "en": "Wavy progress",
+          "ru": "Волнистый прогресс"
+        },
+        "text": {
+          "en": "Downloads in Store, updates and other progress bars now show the wavy Material 3 Expressive line, and loading spinners became wavy rings. The wave calms down when the job is almost done.",
+          "ru": "Загрузки в Магазине, обновления и другие полоски прогресса теперь показывают волнистую линию Material 3 Expressive, а значки ожидания стали волнистыми кольцами. Под конец работы волна успокаивается."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-16-2",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "icon": "utilities-terminal",
+        "title": {
+          "en": "Kernora in fastfetch",
+          "ru": "Kernora в fastfetch"
+        },
+        "text": {
+          "en": "Run fastfetch in the terminal and you get the Kernora spiral instead of the Debian one. The ASCII art was drawn by milanrudis from the community. For narrow windows there is a compact version: fastfetch -c kernora-small.",
+          "ru": "Запустите fastfetch в терминале, и вместо логотипа Debian появится спираль Kernora. ASCII-арт нарисовал milanrudis из сообщества. Для узких окон есть компактная версия: fastfetch -c kernora-small."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-16-1",
+    "date": "2026-10-16",
+    "items": [
+      {
+        "icon": "system-lock-screen",
+        "title": {
+          "en": "Lock screen in your colours",
+          "ru": "Экран блокировки в ваших цветах"
+        },
+        "text": {
+          "en": "The lock screen and the login screen follow your light or dark theme and colour, and the Kernora profile picture changes colour with the rest of the system.",
+          "ru": "Экран блокировки и экран входа следуют вашей светлой или тёмной теме и цвету, а картинка профиля Kernora меняет цвет вместе с системой."
+        }
+      },
+      {
+        "icon": "preferences-desktop-effects",
+        "title": {
+          "en": "Shapes instead of dots",
+          "ru": "Фигуры вместо точек"
+        },
+        "text": {
+          "en": "When you type your password, every character pops in as a little Material shape: a cookie, a sun, a clover, a flower.",
+          "ru": "Когда вы вводите пароль, каждый символ появляется маленькой фигурой Material: печенькой, солнышком, клевером, цветком."
+        }
+      },
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "A softer start",
+          "ru": "Мягкий запуск"
+        },
+        "text": {
+          "en": "While Kernora starts, a wavy Material 3 Expressive ring spins under the logo.",
+          "ru": "Пока Kernora загружается, под логотипом крутится волнистое кольцо Material 3 Expressive."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-15-2",
+    "date": "2026-10-15",
+    "items": [
+      {
+        "icon": "system-lock-screen",
+        "title": {
+          "en": "Your wallpaper on the login screen",
+          "ru": "Ваши обои на экране входа"
+        },
+        "text": {
+          "en": "The screen you see when the computer starts now shows your wallpaper, also when you picked it in Welcome or from the desktop menu. It catches up the first time you log in after this update.",
+          "ru": "Экран, который появляется при включении компьютера, теперь показывает ваши обои, даже если вы выбрали их в «Добро пожаловать» или в меню рабочего стола. Он подхватит их при первом входе после этого обновления."
+        }
+      },
+      {
+        "icon": "video-x-generic",
+        "title": {
+          "en": "No more green bars in VLC",
+          "ru": "В VLC больше нет зелёных полос"
+        },
+        "text": {
+          "en": "On computers with an NVIDIA graphics card, VLC now decodes video without hardware acceleration, which drew green bars at the bottom of videos. You can turn it back on in VLC's settings.",
+          "ru": "На компьютерах с видеокартой NVIDIA VLC теперь декодирует видео без аппаратного ускорения, из-за которого внизу видео появлялись зелёные полосы. Его можно снова включить в настройках VLC."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-15-1",
+    "date": "2026-10-15",
+    "items": [
+      {
+        "icon": "system-software-install",
+        "title": {
+          "en": "A new look for the Store",
+          "ru": "Новый вид магазина"
+        },
+        "text": {
+          "en": "Apps, Games and Categories are tabs at the top now, with search and My apps right next to them. App pages show ratings, version and source at a glance, and a big Install button.",
+          "ru": "Приложения, игры и категории теперь во вкладках сверху, рядом поиск и «Мои приложения». На странице приложения сразу видно оценку, версию и источник, а кнопка «Установить» стала большой."
+        }
+      },
+      {
+        "icon": "system-software-update",
+        "title": {
+          "en": "Debian 13.7 underneath",
+          "ru": "Внутри теперь Debian 13.7"
+        },
+        "text": {
+          "en": "Kernora now builds on Debian 13.7 with its latest fixes and a newer Linux 6.12 kernel.",
+          "ru": "Kernora теперь основана на Debian 13.7 со всеми свежими исправлениями и более новым ядром Linux 6.12."
+        }
+      },
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "Tower wallpaper retired",
+          "ru": "Обои «Башня» убраны"
+        },
+        "text": {
+          "en": "The Tower live wallpaper is gone. If you used it, your desktop, lock screen and login screen now show Kernora Shapes.",
+          "ru": "Живых обоев «Башня» больше нет. Если они у вас стояли, на рабочем столе, экране блокировки и входа теперь «Фигуры Kernora»."
         }
       }
     ]
@@ -55,7 +712,7 @@
     "date": "2026-10-14",
     "items": [
       {
-        "icon": "org.kernora.screenshot",
+        "icon": "applets-screenshooter",
         "title": {
           "en": "Snip like on Windows",
           "nl": "Knippen zoals op Windows",
@@ -102,11 +759,72 @@
     ]
   },
   {
+    "id": "2026-10-14-1",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "icon": "preferences-desktop-effects",
+        "title": {
+          "en": "Reduce motion is safe to use",
+          "ru": "«Уменьшить движение» снова можно включать"
+        },
+        "text": {
+          "en": "Turning off animations no longer leaves an invisible layer over the desktop. Quick settings, switches and the volume indicator simply appear without moving.",
+          "ru": "Отключение анимаций больше не оставляет невидимый слой поверх рабочего стола. Быстрые настройки, переключатели и индикатор громкости просто появляются без движения."
+        }
+      },
+      {
+        "icon": "system-lock-screen",
+        "title": {
+          "en": "Your wallpaper on the lock and login screens",
+          "ru": "Ваши обои на экранах блокировки и входа"
+        },
+        "text": {
+          "en": "\"Use on the lock screen too\" now works with live wallpapers, and the login screen shows the wallpaper you chose.",
+          "ru": "«Использовать и на экране блокировки» теперь работает с живыми обоями, а экран входа показывает выбранные вами обои."
+        }
+      },
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Calmer widgets",
+          "ru": "Виджеты аккуратнее"
+        },
+        "text": {
+          "en": "Widget toolbars close when you move away or leave edit mode, the weather fits every sky, system monitors follow your theme colour and album art loads again if the first try fails.",
+          "ru": "Панель настроек виджета закрывается, когда вы уводите мышь или выходите из редактирования, погода помещается в любую фигуру, системные мониторы перекрашиваются вместе с темой, а обложка альбома загружается повторно, если первая попытка не удалась."
+        }
+      },
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Restart from the app menu",
+          "ru": "Перезагрузка из меню приложений"
+        },
+        "text": {
+          "en": "The app menu has a Restart button next to Shut Down, and the shut down window offers Restart as well. Live wallpapers pause only for windows on their own screen.",
+          "ru": "В меню приложений рядом с выключением появилась кнопка перезагрузки, и в окне выключения тоже есть «Перезагрузить». Живые обои останавливаются только из-за окон на своём экране."
+        }
+      },
+      {
+        "icon": "utilities-terminal",
+        "title": {
+          "en": "Everyday terminal tools",
+          "ru": "Привычные инструменты терминала"
+        },
+        "text": {
+          "en": "git, curl, wget, htop, fastfetch (the successor of neofetch), zip and 7zip come with the system.",
+          "ru": "git, curl, wget, htop, fastfetch (преемник neofetch), zip и 7zip теперь есть в системе сразу."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-14",
     "date": "2026-10-14",
     "items": [
       {
-        "icon": "org.kernora.focus",
+        "icon": "chronometer",
         "title": {
           "en": "Focus mode",
           "nl": "Focusmodus",
@@ -160,6 +878,44 @@
     ]
   },
   {
+    "id": "2026-10-13-9",
+    "date": "2026-10-13",
+    "items": [
+      {
+        "icon": "preferences-desktop",
+        "title": {
+          "en": "Room for your widgets",
+          "ru": "Место для виджетов",
+          "nl": "Ruimte voor je widgets"
+        },
+        "text": {
+          "en": "Desktop icons now leave room for widgets. Moving or resizing a widget shifts overlapping shortcuts to free cells, while automatic sorting also respects widget areas. Sign out and back in after updating to apply the desktop change.",
+          "ru": "Иконки рабочего стола теперь оставляют место для виджетов. При переносе или изменении размера виджета перекрытые ярлыки сдвигаются в свободные ячейки. Автоматическая сортировка тоже учитывает виджеты. После обновления выйдите из системы и войдите снова, чтобы применить изменение.",
+          "nl": "Pictogrammen op het bureaublad laten nu ruimte voor widgets. Verplaats of vergroot je een widget, dan schuiven snelkoppelingen eronder naar een vrije plek, en ook automatisch sorteren houdt rekening met widgets. Meld je na de update af en weer aan om het toe te passen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-8",
+    "date": "2026-10-13",
+    "items": [
+      {
+        "icon": "preferences-desktop-locale",
+        "title": {
+          "en": "Choose your installer language",
+          "ru": "Выбор языка установщика",
+          "nl": "Kies de taal van de installer"
+        },
+        "text": {
+          "en": "New Live images start in English by default. Choose Russian in GRUB if you prefer. Selecting a language in the installer now updates its pages immediately and sets the language for your installed system.",
+          "ru": "Новые Live-образы по умолчанию запускаются на английском. Русский можно выбрать в GRUB. Выбор языка в установщике теперь сразу переводит его страницы и задаёт язык устанавливаемой системы.",
+          "nl": "Kies je een taal in de installer, dan worden de pagina's meteen vertaald en krijgt je geïnstalleerde systeem die taal. Nieuwe Live-images starten in het Engels; kies Nederlands of Русский in het opstartmenu als je dat liever hebt."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-13-7",
     "date": "2026-10-12",
     "items": [
@@ -183,7 +939,7 @@
     "date": "2026-10-12",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "A more expressive Store",
           "ru": "Больше Material 3 в магазине",
@@ -202,7 +958,7 @@
     "date": "2026-10-12",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Open the app you installed",
           "ru": "Запускается установленная версия",
@@ -221,7 +977,7 @@
     "date": "2026-10-11",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Smoother app browsing",
           "ru": "Удобнее искать приложения",
@@ -240,7 +996,7 @@
     "date": "2026-10-11",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Your new app store",
           "ru": "Новый магазин приложений",
@@ -276,7 +1032,7 @@
     "id": "2026-10-12-4",
     "items": [
       {
-        "icon": "org.kernora.screenshot",
+        "icon": "applets-screenshooter",
         "title": {
           "en": "Screenshots on two monitors",
           "ru": "Снимки экрана на двух мониторах",
@@ -337,8 +1093,8 @@
           "nl": "Stuurprogramma's installeren zichzelf"
         },
         "text": {
-          "en": "If your computer has an NVIDIA graphics card, Lumo downloads its driver by itself, RTX 50 cards included, and asks you to restart. Without an NVIDIA card nothing is downloaded. See Settings › System › Drivers.",
-          "ru": "Если в компьютере видеокарта NVIDIA, Lumo сама скачает для неё драйвер, в том числе для RTX 50, и попросит перезагрузиться. Без видеокарты NVIDIA ничего не скачивается. Подробности — в «Настройки › Система › Драйверы».",
+          "en": "If your computer has an NVIDIA graphics card, Kernora downloads its driver by itself, RTX 50 cards included, and asks you to restart. Without an NVIDIA card nothing is downloaded. See Settings › System › Drivers.",
+          "ru": "Если в компьютере видеокарта NVIDIA, Kernora сама скачает для неё драйвер, в том числе для RTX 50, и попросит перезагрузиться. Без видеокарты NVIDIA ничего не скачивается. Подробности — в «Настройки › Система › Драйверы».",
           "nl": "Heeft je computer een NVIDIA-videokaart, dan downloadt Lumo zelf het stuurprogramma, ook voor RTX 50-kaarten, en vraagt je opnieuw op te starten. Zonder NVIDIA-kaart wordt er niets gedownload. Zie Instellingen › Systeem › Stuurprogramma's."
         }
       }
@@ -546,8 +1302,8 @@
           "nl": "Een nieuwe bewerkmodus"
         },
         "text": {
-          "en": "Moving and resizing widgets, wallpapers and panels now looks like the rest of Lumo.",
-          "ru": "Перемещать виджеты, менять их размер, обои и панели теперь можно в том же стиле, что и вся Lumo.",
+          "en": "Moving and resizing widgets, wallpapers and panels now looks like the rest of Kernora.",
+          "ru": "Перемещать виджеты, менять их размер, обои и панели теперь можно в том же стиле, что и вся Kernora.",
           "nl": "Widgets, achtergronden en panelen verplaatsen en van grootte veranderen ziet er nu uit zoals de rest van Lumo."
         }
       }
@@ -564,8 +1320,8 @@
           "nl": "Weer op de been"
         },
         "text": {
-          "en": "If the system ever hits a critical kernel error, the computer restarts by itself, and Lumo tells you what happened when you are back.",
-          "ru": "Если в ядре когда-нибудь случится критическая ошибка, компьютер перезагрузится сам, а после перезагрузки Lumo расскажет, что произошло.",
+          "en": "If the system ever hits a critical kernel error, the computer restarts by itself, and Kernora tells you what happened when you are back.",
+          "ru": "Если в ядре когда-нибудь случится критическая ошибка, компьютер перезагрузится сам, а после перезагрузки Kernora расскажет, что произошло.",
           "nl": "Krijgt het systeem ooit een ernstige kernelfout, dan start de computer vanzelf opnieuw op, en vertelt Lumo je wat er gebeurde zodra je terug bent."
         }
       }
@@ -582,8 +1338,8 @@
           "nl": "Kleurthema's"
         },
         "text": {
-          "en": "Lumo now comes in every Material colour, from red to blue grey. Apps, the panel, windows and even the live wallpapers change with it. Pick one in Settings › Wallpaper & style.",
-          "ru": "Lumo теперь бывает во всех цветах Material — от красного до сине-серого. Вместе с цветом меняются приложения, панель, окна и даже живые обои. Выберите свой в Настройки › Обои и стиль.",
+          "en": "Kernora now comes in every Material colour, from red to blue grey. Apps, the panel, windows and even the live wallpapers change with it. Pick one in Settings › Wallpaper & style.",
+          "ru": "Kernora теперь бывает во всех цветах Material — от красного до сине-серого. Вместе с цветом меняются приложения, панель, окна и даже живые обои. Выберите свой в Настройки › Обои и стиль.",
           "nl": "Lumo is er nu in elke Material-kleur, van rood tot blauwgrijs. Apps, het paneel, vensters en zelfs de bewegende achtergronden veranderen mee. Kies er een in Instellingen › Achtergrond en stijl."
         }
       }
@@ -600,8 +1356,8 @@
           "nl": "Nieuwe profielfoto's"
         },
         "text": {
-          "en": "Waves and ripples in Lumo's colours instead of KDE's pictures. Pick one in Settings › Account.",
-          "ru": "Волны и узоры в цветах Lumo вместо картинок KDE. Выберите любую в Настройки › Аккаунт.",
+          "en": "Waves and ripples in Kernora's colours instead of KDE's pictures. Pick one in Settings › Account.",
+          "ru": "Волны и узоры в цветах Kernora вместо картинок KDE. Выберите любую в Настройки › Аккаунт.",
           "nl": "Golven en rimpelingen in de kleuren van Lumo in plaats van de afbeeldingen van KDE. Kies er een in Instellingen › Account."
         }
       }
@@ -636,22 +1392,20 @@
           "nl": "Updatemeldingen"
         },
         "text": {
-          "en": "Lumo tells you when updates are ready and reminds you to restart after a system update. After the restart, this window tells you what is new.",
-          "ru": "Lumo сама сообщает, когда готовы обновления, и напоминает перезагрузиться после обновления системы. А после перезагрузки рассказывает в этом окне, что нового.",
+          "en": "Kernora tells you when updates are ready and reminds you to restart after a system update. After the restart, this window tells you what is new.",
+          "ru": "Kernora сама сообщает, когда готовы обновления, и напоминает перезагрузиться после обновления системы. А после перезагрузки рассказывает в этом окне, что нового.",
           "nl": "Lumo laat weten wanneer updates klaarstaan en herinnert je eraan opnieuw op te starten na een systeemupdate. Na het opnieuw opstarten vertelt dit venster wat er nieuw is."
         }
       },
       {
         "icon": "preferences-desktop-sound",
         "title": {
-          "en": "Lumo sounds",
-          "ru": "Звуки Lumo",
-          "nl": "Lumo-geluiden"
+          "en": "Kernora sounds",
+          "ru": "Звуки Kernora"
         },
         "text": {
           "en": "Soft new sounds for logging in, notifications, volume, screenshots and the trash. Choose and listen to them in Settings › Sound.",
-          "ru": "Новые мягкие звуки для входа, уведомлений, громкости, снимков экрана и корзины. Выбрать и послушать их можно в Настройки › Звук.",
-          "nl": "Zachte nieuwe geluiden voor inloggen, meldingen, volume, schermafbeeldingen en de prullenbak. Kies en beluister ze in Instellingen › Geluid."
+          "ru": "Новые мягкие звуки для входа, уведомлений, громкости, снимков экрана и корзины. Выбрать и послушать их можно в Настройки › Звук."
         }
       },
       {
@@ -701,8 +1455,8 @@
           "nl": "Overal één stijl"
         },
         "text": {
-          "en": "Fewer windows from KDE: Files asks itself what to do with matching names, a short notification replaces the crash report, and the browser's dialogs look like Lumo.",
-          "ru": "Меньше окон от KDE: Файлы сами спрашивают, что делать с одинаковыми именами, вместо отчёта о сбое приходит короткое уведомление, а окна браузера выглядят как Lumo.",
+          "en": "Fewer windows from KDE: Files asks itself what to do with matching names, a short notification replaces the crash report, and the browser's dialogs look like Kernora.",
+          "ru": "Меньше окон от KDE: Файлы сами спрашивают, что делать с одинаковыми именами, вместо отчёта о сбое приходит короткое уведомление, а окна браузера выглядят как Kernora.",
           "nl": "Minder vensters van KDE: Bestanden vraagt zelf wat er moet gebeuren met dezelfde namen, een korte melding vervangt het crashrapport, en de dialogen van de browser zien eruit als Lumo."
         }
       }

@@ -233,11 +233,11 @@ sync() {
   cp -a "$package_root/data/wallpaper/org.kernora.shapes" "$tree/usr/share/plasma/wallpapers/"
   python3 "$tools/gen-wallpaper-assets" "$tree/usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui" >/dev/null
   local theme
-  for theme in tower rhythm starfall pastel waves aurora dunes bloom contour; do
+  for theme in rhythm starfall pastel ribbon waves aurora dunes bloom contour; do
     cp -a "$package_root/data/wallpaper/org.kernora.$theme" "$tree/usr/share/plasma/wallpapers/"
     python3 "$tools/gen-wallpaper-assets" "$tree/usr/share/plasma/wallpapers/org.kernora.$theme/contents/ui" "$theme" >/dev/null
   done
-  for theme in shapes tower rhythm starfall pastel waves aurora; do
+  for theme in shapes rhythm starfall pastel ribbon waves aurora; do
     cp "$package_root/data/wallpaper/common/"*.qml "$tree/usr/share/plasma/wallpapers/org.kernora.$theme/contents/ui/"
   done
   python3 "$tools/gen-plasma-theme" "$package_root/data/symbols" "$tree/usr/share/plasma/desktoptheme/kernora" >/dev/null

@@ -135,3 +135,15 @@ msgstr "Обои"
 
 msgid "Done"
 msgstr "Готово"
+
+msgid "Pin to panel"
+msgstr "Закрепить на панели"
+
+msgid "Unpin from panel"
+msgstr "Открепить от панели"
+
+msgid "More"
+msgstr "Ещё"
+
+msgid "Swipe up or start typing"
+msgstr "Проведите вверх или начните вводить пароль"

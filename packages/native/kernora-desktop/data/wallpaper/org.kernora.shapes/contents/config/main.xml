@@ -17,8 +17,8 @@
     <entry name="ColourCycle" type="Bool">
       <default>true</default>
     </entry>
-    <entry name="SaveBattery" type="Bool">
-      <default>true</default>
+    <entry name="IntroAt" type="String">
+      <default></default>
     </entry>
   </group>
 </kcfg>
