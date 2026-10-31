@@ -1,0 +1,7 @@
+Package: src:linux src:linux-signed-amd64 src:firmware-nonfree src:firmware-free
+Pin: release n=trixie-backports
+Pin-Priority: 500
+
+Package: src:mesa src:libdrm src:nvidia-graphics-drivers src:nvidia-graphics-drivers-tesla
+Pin: release n=trixie-backports
+Pin-Priority: 500

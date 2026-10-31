@@ -1,6 +1,6 @@
 # Updates
 
-An installed Lumo system updates from four APT archives. The
+An installed Lumo system updates from five APT archives. The
 `kernora-archive` package sets them up, and `kernora-base` depends on it, so
 every installation has it.
 
@@ -9,6 +9,7 @@ every installation has it.
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
+| Debian backports, `deb.debian.org`, `trixie-backports` | the kernel, graphics firmware and Mesa | automatically, once a day |
 | Lumo, `commywork9282-dotcom.github.io/kernora-updates` | Lumo's own packages | in Settings > Updates |
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
@@ -27,6 +28,28 @@ behind. When the computer is online it brings the new system up to date before
 it finishes (`shellprocess@upgrade` in `data/calamares/settings.conf`:
 `apt-get update`, `full-upgrade` and `update-grub` in the target). Offline,
 the step is skipped and Settings > Updates catches up later.
+
+## Kernel and graphics from backports
+
+Debian 13's kernel (6.12) and Mesa are too old for recent graphics cards,
+such as AMD Radeon RX 9000 and Intel Arc B-series. Lumo takes these from
+`trixie-backports` instead. Backports are off by default in APT (priority
+100); `kernora-backports.pref` (kernora-archive) raises only these source
+packages to 500, so the newer version wins:
+
+- `linux`, `linux-signed-amd64`: the kernel, signed for Secure Boot;
+- `firmware-nonfree`, `firmware-free`: firmware for new GPUs and Wi-Fi;
+- `mesa`, `libdrm`: OpenGL, Vulkan and video decoding;
+- `nvidia-graphics-drivers`, `nvidia-graphics-drivers-tesla`: Debian's
+  NVIDIA driver for GTX 900 and 10, so its DKMS module keeps building
+  against the newer kernel (see `DRIVERS.md`).
+
+Every other package stays on Debian 13. The ISO build uses the same file,
+with `trixie-backports` from the pinned snapshot, and
+`tests/test-live-rootfs.sh` checks that the kernel and Mesa in the image
+carry a `~bpo13+` version. Backports updates install automatically like
+security updates (`51kernora-unattended-upgrades`), because the kernel's
+security fixes arrive there.
 
 ## Automatic updates
 

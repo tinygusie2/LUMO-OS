@@ -1,7 +1,9 @@
 # Drivers
 
 AMD and Intel graphics work with the kernel's own drivers and the firmware the
-image ships. NVIDIA cards need NVIDIA's driver. Lumo installs it by itself,
+image ships. The kernel, firmware and Mesa come from `trixie-backports`, so
+recent cards such as AMD Radeon RX 9000 and Intel Arc B-series work too (see
+`UPDATES.md`). NVIDIA cards need NVIDIA's driver. Lumo installs it by itself,
 and only on computers that have an NVIDIA card.
 
 ## What gets installed
@@ -13,7 +15,7 @@ for an NVIDIA display controller (vendor `0x10de`, class `0x0300` or
 | PCI device ID | Cards | Driver |
 | --- | --- | --- |
 | `0x1e00` and up | GeForce GTX 16, RTX 20 and newer, RTX 50 included | `nvidia-open` from NVIDIA's Debian 13 repository |
-| `0x1340` to `0x1dff` | GeForce GTX 900 and 10 | `nvidia-driver` from Debian `contrib non-free` |
+| `0x1340` to `0x1dff` | GeForce GTX 900 and 10 | `nvidia-driver` from Debian `contrib non-free`, from `trixie-backports` when it is newer |
 | below `0x1340` | older cards | none; they stay on nouveau |
 
 Without an NVIDIA card the tool stops after reading sysfs: no sources are added

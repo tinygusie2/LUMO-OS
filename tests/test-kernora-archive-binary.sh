@@ -25,6 +25,7 @@ for path in \
   etc/apt/sources.list.d/debian.sources \
   etc/apt/sources.list.d/kernora.sources \
   etc/apt/preferences.d/kernora-archive.pref \
+  etc/apt/preferences.d/kernora-backports.pref \
   etc/apt/apt.conf.d/21kernora-auto-upgrades \
   etc/apt/apt.conf.d/51kernora-unattended-upgrades \
   usr/lib/systemd/system/apt-daily.timer.d/kernora-live.conf \
@@ -35,6 +36,7 @@ for conffile in \
   /etc/apt/sources.list.d/debian.sources \
   /etc/apt/sources.list.d/kernora.sources \
   /etc/apt/preferences.d/kernora-archive.pref \
+  /etc/apt/preferences.d/kernora-backports.pref \
   /etc/apt/apt.conf.d/21kernora-auto-upgrades \
   /etc/apt/apt.conf.d/51kernora-unattended-upgrades; do
   grep -Fxq "$conffile" "$temporary_root/control/conffiles" || fail "$conffile is not a conffile"

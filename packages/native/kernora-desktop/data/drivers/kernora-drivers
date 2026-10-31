@@ -120,7 +120,7 @@ EOF
     cat > "$debian_sources" <<'EOF'
 Types: deb
 URIs: https://deb.debian.org/debian
-Suites: trixie trixie-updates
+Suites: trixie trixie-updates trixie-backports
 Components: contrib non-free
 Signed-By: /usr/share/keyrings/debian-archive-keyring.pgp
 

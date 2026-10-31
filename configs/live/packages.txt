@@ -1,5 +1,5 @@
 kernora-base=1.4
-linux-image-amd64=6.12.107-1
+linux-image-amd64
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
 initramfs-tools=0.148.4
@@ -29,8 +29,8 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-kernora-desktop=1.4.37
-kernora-calamares=1.4.37
+kernora-desktop=1.4.56
+kernora-calamares=1.4.56
 kernora-apps=1.1.46
 r-quick-share=0.11.5
 polkit-kde-agent-1=4:6.3.6-1kernora1
@@ -41,6 +41,9 @@ wine
 wine64
 gamemode
 mangohud
+mesa-vulkan-drivers
+mesa-va-drivers
+libgl1-mesa-dri
 
 firmware-linux-free
 firmware-amd-graphics

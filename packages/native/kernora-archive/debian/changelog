@@ -1,3 +1,15 @@
+kernora-archive (1.3) UNRELEASED; urgency=medium
+
+  * Debian's trixie-backports archive, for a newer kernel, graphics firmware
+    and Mesa. Recent graphics cards, such as AMD Radeon RX 9000 and Intel Arc
+    B-series, need a newer kernel and Mesa than Debian 13 ships. Only the
+    kernel, firmware, Mesa, libdrm and NVIDIA's Debian driver are taken from
+    it (kernora-backports.pref); everything else stays on Debian 13.
+  * Updates from trixie-backports install automatically each day, like
+    security updates, so the kernel keeps getting its security fixes.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 31 Oct 2026 23:30:00 +0000
+
 kernora-archive (1.1) UNRELEASED; urgency=medium
 
   * Debian's non-free-firmware component, so the firmware for graphics

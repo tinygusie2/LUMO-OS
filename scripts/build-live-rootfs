@@ -84,6 +84,8 @@ sed -e "s|@LIVE_USER@|$LIVE_USER|g" "$live_config/kernora-live-language" > "$liv
 chmod 0755 "$live_language"
 
 cp "$live_config/apt-preferences" "$apt_preferences"
+printf '\n' >> "$apt_preferences"
+cat "$PROJECT_ROOT/packages/native/kernora-archive/apt/kernora-backports.pref" >> "$apt_preferences"
 awk 'NF && $1 !~ /^#/ {
   printf "\nPackage: %s\nPin: release *\nPin-Priority: -1\n", $1
 }' "$live_config/excluded-packages.txt" >> "$apt_preferences"
@@ -151,6 +153,7 @@ TMPDIR="$work_tmp" "$tool" \
   "deb copy:$temporary_archive $DIST_CODENAME main" \
   "deb $DEBIAN_SNAPSHOT/$SNAPSHOT_TIMESTAMP $BASE_CODENAME main non-free-firmware" \
   "deb $DEBIAN_SNAPSHOT/$SNAPSHOT_TIMESTAMP $BASE_CODENAME-updates main non-free-firmware" \
+  "deb $DEBIAN_SNAPSHOT/$SNAPSHOT_TIMESTAMP $BASE_CODENAME-backports main non-free-firmware" \
   "deb $DEBIAN_SECURITY_SNAPSHOT/$SNAPSHOT_TIMESTAMP $BASE_CODENAME-security main non-free-firmware"
 
 "$PROJECT_ROOT/tests/test-live-rootfs.sh" "$rootfs"
