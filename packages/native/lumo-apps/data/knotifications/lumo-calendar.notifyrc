@@ -1,0 +1,17 @@
+[Global]
+IconName=org.lumo.calendar
+Name=Calendar
+Name[nl]=Agenda
+Name[ru]=Календарь
+Comment=Lumo Calendar
+Comment[nl]=Lumo-agenda
+DesktopEntry=org.lumo.calendar
+
+[Event/reminder]
+Name=Reminder
+Name[nl]=Herinnering
+Name[ru]=Напоминание
+Comment=An event is about to start
+Comment[nl]=Een afspraak begint zo
+Action=Popup
+Urgency=High

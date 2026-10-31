@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_sound_theme
+Script=lumo-sound-theme.sh,sh

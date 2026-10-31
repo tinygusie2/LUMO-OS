@@ -1,0 +1,23 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lumo Developers"
+            }
+        ],
+        "Category": "",
+        "Description": "Soft dunes in layers under a warm sun; a still picture that uses no power",
+        "Description[nl]": "Zachte duinen in lagen onder een warme zon; een stilstaand beeld dat geen stroom kost",
+        "Description[ru]": "Мягкие дюны слоями под тёплым солнцем; неподвижная картинка, не расходующая энергию",
+        "Icon": "preferences-desktop-wallpaper",
+        "Id": "org.lumo.dunes",
+        "License": "GPL-2.0+",
+        "Name": "Dunes",
+        "Name[nl]": "Duinen",
+        "Name[ru]": "Дюны"
+    },
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Lumo-Still": true,
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

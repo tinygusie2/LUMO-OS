@@ -1,0 +1,14 @@
+[SddmGreeterTheme]
+Name=Lumo
+Name[ru]=Lumo
+Description=The Material 3 login screen of Lumo
+Description[ru]=Экран входа Lumo в стиле Material 3
+Author=Lumo Developers
+License=GPL-2.0-or-later
+Type=sddm-theme
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=lumo
+Theme-API=2.0
+QtVersion=6

@@ -20,16 +20,16 @@ distributed with the rest under GPL-3.0. The repository also contains work by
 others, under their licences:
 
   * Files adapted from KDE Plasma (for example the notification popups in
-    packages/native/kernora-desktop/data/notifications/) keep their KDE
+    packages/native/lumo-desktop/data/notifications/) keep their KDE
     authors and licences, as their headers state.
   * packages/derived/ holds Kernora's changes to Debian packages (base-files,
     Calamares, polkit-kde-agent-1); each stays under its upstream licence.
-  * packages/native/kernora-desktop/data/symbols/ holds Material Symbols by
+  * packages/native/lumo-desktop/data/symbols/ holds Material Symbols by
     Google, under the Apache License 2.0 (see the LICENSE file there).
-  * packages/native/kernora-desktop/data/fonts/google-sans-flex/ holds Google
+  * packages/native/lumo-desktop/data/fonts/google-sans-flex/ holds Google
     Sans Flex by Google, under the SIL Open Font License 1.1 (see OFL.txt
     there). "Google Sans Flex" is a trademark of Google LLC.
-  * packages/native/kernora-desktop/tools/material_shapes.py is a port of
+  * packages/native/lumo-desktop/tools/material_shapes.py is a port of
     AndroidX graphics-shapes and the Material 3 shapes, under the Apache
     License 2.0.
 

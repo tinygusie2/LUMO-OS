@@ -1,5 +1,5 @@
-    property int kernoraAuditCommand: -1
-    property string kernoraAuditResult: ""
+    property int lumoAuditCommand: -1
+    property string lumoAuditResult: ""
     Timer {
         interval: 500
         repeat: true
@@ -20,7 +20,7 @@
                                 x: item ? item.mapToItem(gridView, 0, 0).x : null, y: item ? item.mapToItem(gridView, 0, 0).y : null});
                 }
             }
-            const state = {result: main.kernoraAuditResult, time: Date.now(), command: main.kernoraAuditCommand, widgets: widgets, icons: icons,
+            const state = {result: main.lumoAuditResult, time: Date.now(), command: main.lumoAuditCommand, widgets: widgets, icons: icons,
                            width: gridView.width, height: gridView.height, cellWidth: gridView.cellWidth,
                            cellHeight: gridView.cellHeight, flow: gridView.flow,
                            rtl: gridView.effectiveLayoutDirection === Qt.RightToLeft, sortMode: main.sortMode,
@@ -35,10 +35,10 @@
                     return;
                 }
                 const command = JSON.parse(request.responseText);
-                if (command.id === main.kernoraAuditCommand) {
+                if (command.id === main.lumoAuditCommand) {
                     return;
                 }
-                main.kernoraAuditCommand = command.id;
+                main.lumoAuditCommand = command.id;
                 const containers = [];
                 for (const child of root.appletsLayout.children) {
                     if (child.applet && child.visible) {
@@ -46,7 +46,7 @@
                     }
                 }
                 const widget = containers[command.widget || 0];
-                main.kernoraAuditResult = "widget=" + widget;
+                main.lumoAuditResult = "widget=" + widget;
                 try {
                 if (command.action === "geometry" && widget) {
                     root.appletsLayout.releaseSpace(widget);
@@ -70,9 +70,9 @@
                 } else if (command.action === "move") {
                     positioner.move([command.from, command.to]);
                 }
-                main.kernoraAuditResult += " | after=" + (widget ? widget.x + "," + widget.y : "missing");
+                main.lumoAuditResult += " | after=" + (widget ? widget.x + "," + widget.y : "missing");
                 } catch (error) {
-                    main.kernoraAuditResult += " | error=" + error;
+                    main.lumoAuditResult += " | error=" + error;
                 }
             };
             request.open("GET", "http://10.0.2.2:8765/icon-layout-command.json?t=" + Date.now());

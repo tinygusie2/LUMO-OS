@@ -1,0 +1,8 @@
+Name: Lumo PIN on the lock screen
+Default: yes
+Priority: 512
+Auth-Type: Primary
+Auth:
+	[success=end default=ignore]	pam_exec.so quiet expose_authtok /usr/libexec/lumo-pin check
+Auth-Initial:
+	[success=end default=ignore]	pam_exec.so quiet expose_authtok /usr/libexec/lumo-pin check

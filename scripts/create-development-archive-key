@@ -13,7 +13,7 @@ key_root="$PROJECT_ROOT/_state/keys"
 gnupg_home="$PROJECT_ROOT/_state/gnupg/development-archive"
 fingerprint_file="$key_root/development-archive.fingerprint"
 public_key="$key_root/development-archive.gpg"
-key_uid="$DIST_NAME Development Archive <archive@kernora.invalid>"
+key_uid="$DIST_NAME Development Archive <archive@lumo.invalid>"
 
 mkdir -p "$key_root" "$gnupg_home"
 chmod 0700 "$gnupg_home"
@@ -31,7 +31,7 @@ if [[ -z "$fingerprint" ]]; then
     printf '%s\n' 'Key-Curve: ed25519'
     printf '%s\n' 'Key-Usage: sign'
     printf 'Name-Real: %s Development Archive\n' "$DIST_NAME"
-    printf '%s\n' 'Name-Email: archive@kernora.invalid'
+    printf '%s\n' 'Name-Email: archive@lumo.invalid'
     printf '%s\n' 'Expire-Date: 1y'
     printf '%s\n' '%no-protection'
     printf '%s\n' '%commit'
@@ -58,4 +58,4 @@ chmod 0644 "$fingerprint_file"
 
 printf 'development archive key: %s\n' "$fingerprint"
 printf 'development key UID: %s\n' "$key_uid"
-printf 'warning: this local one-year key is not a Kernora release key\n'
+printf 'warning: this local one-year key is not a Lumo release key\n'

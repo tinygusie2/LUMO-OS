@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Files
+Name[ru]=Файлы
+Name[nl]=Bestanden
+GenericName=File manager
+GenericName[ru]=Файловый менеджер
+GenericName[nl]=Bestandsbeheer
+Icon=org.lumo.files
+Exec=lumo-files %U
+X-KDE-Shortcuts=Meta+E
+Categories=Qt;System;FileManager;Core;
+MimeType=inode/directory;
+Keywords=folder;explorer;manager;папка;проводник;
+StartupNotify=true

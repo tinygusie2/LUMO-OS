@@ -1,6 +1,6 @@
 # Installer language regression
 
-Run in a Kernora Live session with the native installer packages installed:
+Run in a Lumo Live session with the native installer packages installed:
 
 ```sh
 sudo python3 tests/installer-language/run.py --output /tmp/installer-language.log
@@ -16,6 +16,6 @@ target `localeConf` while retaining independently chosen German formats.
 
 It exits with an error on a failed check or a bounded timeout. Headless
 keyboard/display warnings do not determine the result; the explicit
-`KERNORA_LANGUAGE_SMOKE_PASS` marker does. The package before this change
+`LUMO_LANGUAGE_SMOKE_PASS` marker does. The package before this change
 fails when the locale page changes its target language without translating
 the installer.

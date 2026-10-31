@@ -1,0 +1,11 @@
+[Unit]
+Description=Lumo live boot readiness marker
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'printf "LUMO_BOOT_OK\n" > /dev/ttyS0 2>/dev/null; printf "LUMO_BOOT_OK\n" > /dev/console'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

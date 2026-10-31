@@ -23,27 +23,26 @@ required_paths=(
   packages/derived
   packages/derived/base-files/debian/changelog
   packages/derived/base-files/etc/os-release
-  packages/native/kernora-base/debian/control
-  packages/native/kernora-base/debian/changelog
-  packages/native/kernora-archive/debian/control
-  packages/native/kernora-archive/debian/changelog
-  packages/native/kernora-archive/keyrings/kernora-archive-keyring.asc
-  packages/native/kernora-desktop/debian/control
-  packages/native/kernora-desktop/debian/changelog
-  packages/native/kernora-apps/debian/control
-  packages/native/kernora-apps/debian/changelog
-  packages/native/kernora-apps/CMakeLists.txt
-  packages/native/kernora-desktop/data/ui/qmldir
-  configs/live/kernora-live-language
-  packages/native/kernora-desktop/data/calamares/settings.conf
-  packages/native/kernora-desktop/data/wallpaper/org.kernora.tower/metadata.json
-  packages/native/kernora-desktop/data/icons/kernora-logo.svg
-  packages/native/kernora-desktop/data/symbols.lock
-  packages/native/kernora-desktop/data/shell/m3/qmldir
-  packages/native/kernora-desktop/data/shell/launcher/metadata.json
-  packages/native/kernora-desktop/data/shell/shade/metadata.json
-  packages/native/kernora-desktop/tools/kernora_design.py
-  packages/native/kernora-desktop/tools/m3color.py
+  packages/native/lumo-base/debian/control
+  packages/native/lumo-base/debian/changelog
+  packages/native/lumo-archive/debian/control
+  packages/native/lumo-archive/debian/changelog
+  packages/native/lumo-desktop/debian/control
+  packages/native/lumo-desktop/debian/changelog
+  packages/native/lumo-apps/debian/control
+  packages/native/lumo-apps/debian/changelog
+  packages/native/lumo-apps/CMakeLists.txt
+  packages/native/lumo-desktop/data/ui/qmldir
+  configs/live/lumo-live-language
+  packages/native/lumo-desktop/data/calamares/settings.conf
+  packages/native/lumo-desktop/data/wallpaper/org.lumo.tower/metadata.json
+  packages/native/lumo-desktop/data/icons/lumo-logo.svg
+  packages/native/lumo-desktop/data/symbols.lock
+  packages/native/lumo-desktop/data/shell/m3/qmldir
+  packages/native/lumo-desktop/data/shell/launcher/metadata.json
+  packages/native/lumo-desktop/data/shell/shade/metadata.json
+  packages/native/lumo-desktop/tools/lumo_design.py
+  packages/native/lumo-desktop/tools/m3color.py
   docs/DESKTOP.md
   scripts/preview-desktop
   configs/live/apt-preferences
@@ -56,14 +55,14 @@ required_paths=(
   scripts/build-base-files-source
   scripts/create-build-rootfs
   scripts/build-base-files-binary
-  scripts/build-kernora-base-source
-  scripts/build-kernora-base-binary
-  scripts/build-kernora-archive-source
-  scripts/build-kernora-archive-binary
+  scripts/build-lumo-base-source
+  scripts/build-lumo-base-binary
+  scripts/build-lumo-archive-source
+  scripts/build-lumo-archive-binary
   scripts/create-archive-key
   scripts/publish-updates
-  scripts/build-kernora-desktop-source
-  scripts/build-kernora-desktop-binary
+  scripts/build-lumo-desktop-source
+  scripts/build-lumo-desktop-binary
   scripts/create-development-archive-key
   scripts/build-local-archive
   scripts/build-minimal-rootfs
@@ -73,12 +72,12 @@ required_paths=(
   scripts/unpack-sources
   tests/test-base-files-identity.sh
   tests/test-base-files-binary.sh
-  tests/test-kernora-base-source.sh
-  tests/test-kernora-base-binary.sh
-  tests/test-kernora-archive-source.sh
-  tests/test-kernora-archive-binary.sh
-  tests/test-kernora-desktop-source.sh
-  tests/test-kernora-desktop-binary.sh
+  tests/test-lumo-base-source.sh
+  tests/test-lumo-base-binary.sh
+  tests/test-lumo-archive-source.sh
+  tests/test-lumo-archive-binary.sh
+  tests/test-lumo-desktop-source.sh
+  tests/test-lumo-desktop-binary.sh
   tests/test-local-archive.sh
   tests/test-minimal-rootfs.sh
   tests/test-live-rootfs.sh
@@ -95,6 +94,22 @@ done
 if find "$project_root/keys" -type f \( -name '*.key' -o -name '*.sec' \) -print -quit \
   | grep -q .; then
   printf 'private-looking key material found under keys/\n' >&2
+  exit 1
+fi
+
+leftovers=$(cd "$project_root" && grep -rIni 'kernora' . \
+  --exclude-dir=.git --exclude-dir=_build --exclude-dir=_state --exclude-dir=out \
+  --exclude=LICENSE --exclude=NOTICE --exclude=README.md --exclude=CLAUDE.md \
+  --exclude=changelog --exclude=copyright --exclude=WIFI_REALTEK.md \
+  --exclude=CLAUDE_STORE_HANDOFF.md --exclude=UPDATES.md --exclude=lint-layout.sh \
+  | grep -Ev 'SPDX-FileCopyrightText: .*Kernora|^[^:]*\.patch:[0-9]+:Author: Kernora' \
+  | grep -Ev '^\./configs/live/live-user\.env:[0-9]+:LIVE_USER_PASSWORD_HASH=' \
+  | grep -Ev '^\./configs/live/grub\.cfg:[0-9]+:.*usr/share/kernora/settings/Main\.qml' \
+  | grep -Ev '^\./tests/test-iso\.sh:[0-9]+:.*(usr/share/kernora/settings/Main\.qml|before the Lumo rename)' \
+  | grep -Ev "^\./tests/test-(live-rootfs|lumo-archive-source)\.sh:[0-9]+:.*(grep -rq?i 'commywork9282-dotcom\\\\\|kernora'|upstream Kernora archive)" \
+  || true)
+if [[ -n "$leftovers" ]]; then
+  printf 'internal names must say lumo, not kernora:\n%s\n' "$leftovers" >&2
   exit 1
 fi
 

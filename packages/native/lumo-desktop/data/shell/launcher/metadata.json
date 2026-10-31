@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lumo Developers"
+            }
+        ],
+        "Category": "Application Launchers",
+        "Description": "Material 3 application launcher with search",
+        "Description[ru]": "Меню приложений в стиле Material 3 с поиском",
+        "Icon": "start-here-kde",
+        "Id": "org.lumo.launcher",
+        "License": "GPL-2.0+",
+        "Name": "Lumo Launcher",
+        "Name[ru]": "Меню приложений Lumo"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.launchermenu"
+    ]
+}

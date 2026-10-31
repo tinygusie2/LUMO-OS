@@ -1,0 +1,13 @@
+[org.kde.kdecoration2]
+library=org.kde.kwin.aurorae
+theme=__aurorae__svg__lumo
+BorderSize=None
+BorderSizeAuto=false
+ButtonsOnLeft=M
+ButtonsOnRight=IAX
+
+[TabBox]
+LayoutName=org.lumo.switcher
+
+[TabBoxAlternative]
+LayoutName=org.lumo.switcher

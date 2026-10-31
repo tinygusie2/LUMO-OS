@@ -10,7 +10,7 @@ source "$project_root/configs/upstream/base.env"
 archive="$project_root/out/archive"
 suite_root="$archive/dists/$DIST_CODENAME"
 release="$suite_root/Release"
-public_key="$archive/kernora-development-archive-keyring.gpg"
+public_key="$archive/lumo-development-archive-keyring.gpg"
 
 fail() {
   printf 'local archive test: %s\n' "$*" >&2
@@ -37,7 +37,7 @@ gpgv --keyring "$public_key" "$release.gpg" "$release" >/dev/null 2>&1 \
 gpgv --keyring "$public_key" "$suite_root/InRelease" >/dev/null 2>&1 \
   || fail "InRelease signature is invalid"
 
-temporary_root=$(mktemp -d /tmp/kernora-archive-test.XXXXXX)
+temporary_root=$(mktemp -d /tmp/lumo-archive-test.XXXXXX)
 chmod 0755 "$temporary_root"
 trap 'find "$temporary_root" -depth -delete' EXIT
 checksum_list="$temporary_root/checksums"
@@ -54,37 +54,37 @@ awk '
 package_version=$(dpkg-parsechangelog \
   -l"$project_root/packages/derived/base-files/debian/changelog" -S Version)
 meta_version=$(dpkg-parsechangelog \
-  -l"$project_root/packages/native/kernora-base/debian/changelog" -S Version)
+  -l"$project_root/packages/native/lumo-base/debian/changelog" -S Version)
 packages="$suite_root/main/binary-$BASE_ARCH/Packages"
 sources="$suite_root/main/source/Sources"
 grep -Fxq 'Package: base-files' "$packages" || fail "base-files is not indexed"
 grep -Fxq "Version: $package_version" "$packages" || fail "wrong binary version"
-grep -Fxq 'Package: kernora-base' "$packages" || fail "kernora-base is not indexed"
+grep -Fxq 'Package: lumo-base' "$packages" || fail "lumo-base is not indexed"
 grep -Fxq "Version: $meta_version" "$packages" || fail "wrong metapackage version"
 grep -Fxq 'Package: base-files' "$sources" || fail "base-files source is not indexed"
 grep -Fxq "Version: $package_version" "$sources" || fail "wrong source version"
-grep -Fxq 'Package: kernora-base' "$sources" \
-  || fail "kernora-base source is not indexed"
-grep -Fxq 'Package: kernora-archive' "$packages" || fail "kernora-archive is not indexed"
-grep -Fxq 'Package: kernora-archive' "$sources" \
-  || fail "kernora-archive source is not indexed"
+grep -Fxq 'Package: lumo-base' "$sources" \
+  || fail "lumo-base source is not indexed"
+grep -Fxq 'Package: lumo-archive' "$packages" || fail "lumo-archive is not indexed"
+grep -Fxq 'Package: lumo-archive' "$sources" \
+  || fail "lumo-archive source is not indexed"
 calamares_version=$(dpkg-parsechangelog \
   -l"$project_root/packages/derived/calamares/changelog" -S Version)
 grep -Fxq "Version: $calamares_version" "$packages" \
-  || fail "the Kernora calamares is not indexed"
+  || fail "the Lumo calamares is not indexed"
 grep -Fxq 'Package: calamares' "$sources" || fail "calamares source is not indexed"
 polkit_version=$(dpkg-parsechangelog \
   -l"$project_root/packages/derived/polkit-kde-agent-1/changelog" -S Version)
 grep -Fxq "Version: $polkit_version" "$packages" \
-  || fail "the Kernora authentication agent is not indexed"
+  || fail "the Lumo authentication agent is not indexed"
 grep -Fxq 'Package: polkit-kde-agent-1' "$sources" \
   || fail "polkit-kde-agent-1 source is not indexed"
-grep -Fxq 'Package: kernora-desktop' "$packages" \
-  || fail "kernora-desktop is not indexed"
-grep -Fxq 'Package: kernora-calamares' "$packages" \
-  || fail "kernora-calamares is not indexed"
-grep -Fxq 'Package: kernora-desktop' "$sources" \
-  || fail "kernora-desktop source is not indexed"
+grep -Fxq 'Package: lumo-desktop' "$packages" \
+  || fail "lumo-desktop is not indexed"
+grep -Fxq 'Package: lumo-calamares' "$packages" \
+  || fail "lumo-calamares is not indexed"
+grep -Fxq 'Package: lumo-desktop' "$sources" \
+  || fail "lumo-desktop source is not indexed"
 grep -Fxq "Origin: $DIST_NAME" "$release" || fail "wrong archive origin"
 grep -Fxq "Codename: $DIST_CODENAME" "$release" || fail "wrong archive codename"
 
@@ -111,13 +111,13 @@ apt-cache "${apt_options[@]}" show base-files > "$temporary_root/base-files.txt"
   || fail "APT cannot read base-files from the archive"
 grep -Fxq "Version: $package_version" "$temporary_root/base-files.txt" \
   || fail "APT selected the wrong base-files version"
-apt-cache "${apt_options[@]}" show kernora-base \
-  > "$temporary_root/kernora-base.txt" \
-  || fail "APT cannot read kernora-base from the archive"
-grep -Fxq "Version: $meta_version" "$temporary_root/kernora-base.txt" \
-  || fail "APT selected the wrong kernora-base version"
-grep -Fxq "Depends: base-files (= $package_version), kernora-archive (>= 1.0)" \
-  "$temporary_root/kernora-base.txt" \
-  || fail "APT sees the wrong Kernora identity dependency"
+apt-cache "${apt_options[@]}" show lumo-base \
+  > "$temporary_root/lumo-base.txt" \
+  || fail "APT cannot read lumo-base from the archive"
+grep -Fxq "Version: $meta_version" "$temporary_root/lumo-base.txt" \
+  || fail "APT selected the wrong lumo-base version"
+grep -Fxq "Depends: base-files (= $package_version), lumo-archive (>= 1.4)" \
+  "$temporary_root/lumo-base.txt" \
+  || fail "APT sees the wrong Lumo identity dependency"
 
 printf 'local archive test: OK\n'

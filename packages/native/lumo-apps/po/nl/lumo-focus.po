@@ -1,0 +1,115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lumo-focus\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "@title application name"
+msgid "Focus"
+msgstr "Focus"
+
+msgctxt "@title:window remaining time and phase"
+msgid "%1 · %2"
+msgstr "%1 · %2"
+
+msgid "Focus"
+msgstr "Focus"
+
+msgid "Break"
+msgstr "Pauze"
+
+msgid "Focus finished"
+msgstr "Focus klaar"
+
+msgid "You stayed focused for %1 round. All apps are allowed again."
+msgid_plural "You stayed focused for %1 rounds. All apps are allowed again."
+msgstr[0] "Je bent %1 ronde gefocust gebleven. Alle apps mogen weer."
+msgstr[1] "Je bent %1 rondes gefocust gebleven. Alle apps mogen weer."
+
+msgid "Well done. Your desktop is back to normal."
+msgstr "Goed gedaan! Je bureaublad is weer normaal."
+
+msgid "Take %1 minute off."
+msgid_plural "Take %1 minutes off."
+msgstr[0] "Neem %1 minuut vrij."
+msgstr[1] "Neem %1 minuten vrij."
+
+msgid "Time for a break"
+msgstr "Tijd voor een pauze"
+
+msgid "Back to focus"
+msgstr "Weer focussen"
+
+msgid "Round %1 of %2 has started."
+msgstr "Ronde %1 van %2 is begonnen."
+
+msgid "%1 is blocked until your focus time is over"
+msgstr "%1 is geblokkeerd tot je focustijd voorbij is"
+
+msgid "%1 are blocked until your focus time is over"
+msgstr "%1 zijn geblokkeerd tot je focustijd voorbij is"
+
+msgid "Focus mode is on"
+msgstr "Focusmodus staat aan"
+
+msgid "Close distracting apps?"
+msgstr "Afleidende apps sluiten?"
+
+msgid "%2 is open. It will be closed when focus starts, so save your work first."
+msgid_plural "%2 are open. They will be closed when focus starts, so save your work first."
+msgstr[0] "%2 is geopend. Deze app wordt gesloten zodra de focus begint, dus sla eerst je werk op."
+msgstr[1] "%2 zijn geopend. Ze worden gesloten zodra de focus begint, dus sla eerst je werk op."
+
+msgid "Start focus"
+msgstr "Focus starten"
+
+msgid "Ready to focus"
+msgstr "Klaar om te focussen"
+
+msgid "Paused"
+msgstr "Gepauzeerd"
+
+msgid "Round %1 of %2"
+msgstr "Ronde %1 van %2"
+
+msgid "%1 round"
+msgid_plural "%1 rounds"
+msgstr[0] "%1 ronde"
+msgstr[1] "%1 rondes"
+
+msgid "Pause"
+msgstr "Pauzeren"
+
+msgid "Resume"
+msgstr "Hervatten"
+
+msgid "Skip break"
+msgstr "Pauze overslaan"
+
+msgid "Stop"
+msgstr "Stoppen"
+
+msgid "Distracting apps"
+msgstr "Afleidende apps"
+
+msgid "None chosen yet"
+msgstr "Nog geen gekozen"
+
+msgid "%1 app is blocked right now"
+msgid_plural "%1 apps are blocked right now"
+msgstr[0] "%1 app is nu geblokkeerd"
+msgstr[1] "%1 apps zijn nu geblokkeerd"
+
+msgid "%1 app is blocked during focus"
+msgid_plural "%1 apps are blocked during focus"
+msgstr[0] "%1 app wordt geblokkeerd tijdens focus"
+msgstr[1] "%1 apps worden geblokkeerd tijdens focus"
+
+msgid "Timer"
+msgstr "Timer"
+
+msgid "%1 min focus, %2 min break"
+msgstr "%1 min focus, %2 min pauze"

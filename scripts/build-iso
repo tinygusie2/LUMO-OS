@@ -20,7 +20,7 @@ export SOURCE_DATE_EPOCH=$source_date_epoch
 iso_date="${SNAPSHOT_TIMESTAMP:0:8}${SNAPSHOT_TIMESTAMP:9:6}00"
 
 rootfs_dir="$PROJECT_ROOT/out/rootfs"
-rootfs_name="kernora-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.tar.xz"
+rootfs_name="lumo-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.tar.xz"
 rootfs_tar="$rootfs_dir/$rootfs_name"
 rootfs_checksum="$rootfs_tar.sha256"
 [[ -s "$rootfs_tar" && -s "$rootfs_checksum" ]] \
@@ -30,7 +30,7 @@ rootfs_checksum="$rootfs_tar.sha256"
   sha256sum --check --status "$rootfs_name.sha256"
 ) || die "live rootfs checksum mismatch"
 
-temporary_root=$(mktemp -d "${KERNORA_SCRATCH_DIR:-$PROJECT_ROOT/_build}/.iso.XXXXXX")
+temporary_root=$(mktemp -d "${LUMO_SCRATCH_DIR:-$PROJECT_ROOT/_build}/.iso.XXXXXX")
 iso_tree="$temporary_root/tree"
 kernel_tree="$temporary_root/kernel"
 mkdir -p "$iso_tree/live" "$iso_tree/boot/grub" "$iso_tree/.disk" "$kernel_tree"
@@ -59,24 +59,24 @@ xz --decompress --stdout "$rootfs_tar" \
 
 install -m 0644 "$PROJECT_ROOT/configs/live/grub.cfg" \
   "$iso_tree/boot/grub/grub.cfg"
-theme_member=./usr/share/grub/themes/kernora
+theme_member=./usr/share/grub/themes/lumo
 tar --extract --no-same-owner --directory="$kernel_tree" --file="$rootfs_tar" \
   "$theme_member"
 [[ -s "$kernel_tree/$theme_member/theme.txt" ]] \
-  || die "the live rootfs has no Kernora GRUB theme"
+  || die "the live rootfs has no Lumo GRUB theme"
 mkdir -p "$iso_tree/boot/grub/themes"
-cp -R "$kernel_tree/$theme_member" "$iso_tree/boot/grub/themes/kernora"
-chmod -R u=rwX,go=rX "$iso_tree/boot/grub/themes/kernora"
-printf '%s\n' "Kernora OS ${DIST_VERSION} (${DIST_CODENAME}) amd64 live" \
+cp -R "$kernel_tree/$theme_member" "$iso_tree/boot/grub/themes/lumo"
+chmod -R u=rwX,go=rX "$iso_tree/boot/grub/themes/lumo"
+printf '%s\n' "Lumo ${DIST_VERSION} (${DIST_CODENAME}) amd64 live" \
   > "$iso_tree/.disk/info"
 printf '%s\n' "$SNAPSHOT_TIMESTAMP" > "$iso_tree/.disk/snapshot"
 install -m 0644 \
-  "$rootfs_dir/kernora-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.packages" \
+  "$rootfs_dir/lumo-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.packages" \
   "$iso_tree/live/filesystem.packages"
 find "$iso_tree" -exec touch --date="@$source_date_epoch" {} +
 
 output_dir="$PROJECT_ROOT/out/iso"
-iso_name="kernora-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.iso"
+iso_name="lumo-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.iso"
 iso="$output_dir/$iso_name"
 temporary_iso="$output_dir/.$iso_name.tmp"
 mkdir -p "$output_dir"
@@ -86,7 +86,7 @@ PATH="$PROJECT_ROOT/_state/tools/mtools/usr/bin:$PATH" \
     --output="$temporary_iso" \
     "$iso_tree" \
     -- \
-    -volid KERNORA_1_EMBER \
+    -volid LUMO_1_EMBER \
     -volume_date uuid "$iso_date" \
     -volume_date all_file_dates "$iso_date"
 mv -- "$temporary_iso" "$iso"
@@ -96,5 +96,5 @@ mv -- "$temporary_iso" "$iso"
 )
 
 "$PROJECT_ROOT/tests/test-iso.sh" "$iso"
-printf 'Kernora ISO: %s\n' "$iso"
+printf 'Lumo ISO: %s\n' "$iso"
 printf 'ISO checksum: %s.sha256\n' "$iso"

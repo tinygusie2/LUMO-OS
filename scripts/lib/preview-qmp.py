@@ -85,7 +85,7 @@ SHIFTED = {"|": "backslash", ">": "dot", "<": "comma", '"': "apostrophe",
 def run_on_console(path: str, command: str, timeout: float = 60) -> int:
     import re
 
-    marker = f"__KERNORA_DONE_{int(time.time() * 1000)}__"
+    marker = f"__LUMO_DONE_{int(time.time() * 1000)}__"
     done = re.compile(re.escape(marker) + r"(\d+)")
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sock.connect(path)
@@ -130,11 +130,11 @@ def push_archive(path: str, archive: str, destination: str) -> int:
 
     data = base64.encodebytes(open(archive, "rb").read()).decode()
     script = (
-        "cat > /tmp/kernora-push.b64 <<'KERNORA_PUSH'\n"
+        "cat > /tmp/lumo-push.b64 <<'LUMO_PUSH'\n"
         + data
-        + "KERNORA_PUSH\n"
-        + f"base64 -d /tmp/kernora-push.b64 | tar -xzf - --no-same-owner -C {destination}"
-        + " && rm /tmp/kernora-push.b64"
+        + "LUMO_PUSH\n"
+        + f"base64 -d /tmp/lumo-push.b64 | tar -xzf - --no-same-owner -C {destination}"
+        + " && rm /tmp/lumo-push.b64"
     )
     return run_on_console(path, script, timeout=1500)
 

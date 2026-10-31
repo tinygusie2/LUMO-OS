@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lumo Developers"
+            }
+        ],
+        "Category": "",
+        "Description": "Material 3 shapes that drift, turn and pass over one another",
+        "Description[ru]": "Фигуры Material 3, которые плывут, вращаются и перекрывают друг друга",
+        "Icon": "preferences-desktop-wallpaper",
+        "Id": "org.lumo.shapes",
+        "License": "GPL-2.0+",
+        "Name": "Lumo Shapes",
+        "Name[ru]": "Фигуры Lumo"
+    },
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

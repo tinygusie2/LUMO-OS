@@ -11,7 +11,7 @@ load_upstream_config
 
 tool="$PROJECT_ROOT/_state/tools/mmdebstrap/usr/bin/mmdebstrap"
 archive_keyring="$PROJECT_ROOT/_state/trust/debian-trixie-archive-keyring.gpg"
-control=${1:-$PROJECT_ROOT/packages/native/kernora-apps/debian/control}
+control=${1:-$PROJECT_ROOT/packages/native/lumo-apps/debian/control}
 name=${2:-qt}
 [[ "$name" =~ ^[a-z0-9-]+$ ]] || die "invalid build rootfs name: $name"
 cache_dir="$PROJECT_ROOT/_cache/chroots"
@@ -38,7 +38,7 @@ print("\n".join(sorted(names)))
 PYTHON
 )
 
-manifest=./etc/kernora-build-depends
+manifest=./etc/lumo-build-depends
 if [[ -s "$cache_file" ]]; then
   recorded=$(tar -xJOf "$cache_file" "$manifest" 2>/dev/null || true)
   if [[ "$recorded" == "$wanted" ]]; then
@@ -48,7 +48,7 @@ if [[ -s "$cache_file" ]]; then
   printf '%s build rootfs cache is stale; rebuilding\n' "$name"
 fi
 
-temporary_root=$(mktemp -d "/tmp/kernora-$name-build-rootfs.XXXXXX")
+temporary_root=$(mktemp -d "/tmp/lumo-$name-build-rootfs.XXXXXX")
 chmod 0777 "$temporary_root"
 rootfs="$temporary_root/rootfs"
 temporary_keyring="$temporary_root/debian-trixie-archive-keyring.gpg"
@@ -77,7 +77,7 @@ include=$(printf '%s\n' "$wanted" | paste -sd, -)
   --aptopt='Acquire::Languages "none"' \
   --aptopt='Apt::Install-Recommends "false"' \
   --customize-hook='rm -f "$1/etc/hostname" "$1/etc/resolv.conf"' \
-  --customize-hook="upload $temporary_root/build-depends /etc/kernora-build-depends" \
+  --customize-hook="upload $temporary_root/build-depends /etc/lumo-build-depends" \
   "$BASE_CODENAME" \
   "$rootfs" \
   "deb $DEBIAN_SNAPSHOT/$SNAPSHOT_TIMESTAMP $BASE_CODENAME main"

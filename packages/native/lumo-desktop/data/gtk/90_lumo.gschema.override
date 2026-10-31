@@ -1,0 +1,5 @@
+[org.gnome.desktop.interface]
+gtk-theme='Lumo'
+
+[org.gnome.desktop.sound]
+theme-name='lumo'

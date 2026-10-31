@@ -1,3 +1,9 @@
+base-files (13.8+deb13u6+lumo1) UNRELEASED; urgency=medium
+
+  * Rename the operating-system identity and dpkg vendor from kernora to lumo.
+
+ -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
+
 base-files (13.8+deb13u6+kernora1) UNRELEASED; urgency=medium
 
   * Fork Debian base-files for Kernora OS 1 (Ember).

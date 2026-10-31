@@ -15,7 +15,7 @@ fail() {
 [[ "$(dpkg-deb --field "$deb" Package)" == "base-files" ]] || fail "wrong package name"
 [[ "$(dpkg-deb --field "$deb" Version)" == "$package_version" ]] || fail "wrong package version"
 
-temporary_root=$(mktemp -d /tmp/kernora-base-files-test.XXXXXX)
+temporary_root=$(mktemp -d /tmp/lumo-base-files-test.XXXXXX)
 trap 'find "$temporary_root" -depth -delete' EXIT
 installed_root="$temporary_root/root"
 control_root="$temporary_root/control"
@@ -24,18 +24,18 @@ dpkg-deb --control "$deb" "$control_root"
 
 [[ "$(readlink "$installed_root/etc/os-release")" == "../usr/lib/os-release" ]] \
   || fail "os-release link is not relative"
-grep -Fxq 'ID=kernora' "$installed_root/usr/lib/os-release" \
+grep -Fxq 'ID=lumo' "$installed_root/usr/lib/os-release" \
   || fail "installed os-release has the wrong ID"
 grep -Fxq 'VERSION_CODENAME=ember' "$installed_root/usr/lib/os-release" \
   || fail "installed os-release has the wrong codename"
-grep -Fxq 'Vendor: Kernora' "$installed_root/etc/dpkg/origins/kernora" \
+grep -Fxq 'Vendor: Lumo' "$installed_root/etc/dpkg/origins/lumo" \
   || fail "installed vendor origin is missing"
-grep -Fxq 'Parent: Debian' "$installed_root/etc/dpkg/origins/kernora" \
+grep -Fxq 'Parent: Debian' "$installed_root/etc/dpkg/origins/lumo" \
   || fail "installed parent origin is missing"
 
 ln -s debian "$installed_root/etc/dpkg/origins/default"
 DPKG_ROOT="$installed_root" sh "$control_root/postinst" noop
-[[ "$(readlink "$installed_root/etc/dpkg/origins/default")" == "kernora" ]] \
+[[ "$(readlink "$installed_root/etc/dpkg/origins/default")" == "lumo" ]] \
   || fail "postinst did not migrate the default vendor"
 
 printf 'base-files binary test: OK\n'

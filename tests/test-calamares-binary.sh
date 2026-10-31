@@ -22,12 +22,12 @@ dpkg-deb -x "$deb" "$temporary_root"
 
 ui=$(find "$temporary_root/usr/lib" -name 'libcalamaresui.so.*' -type f | head -1)
 [[ -n "$ui" ]] || fail "libcalamaresui is missing"
-python3 - "$ui" <<'PYTHON' || fail "libcalamaresui was built without the Kernora patch"
+python3 - "$ui" <<'PYTHON' || fail "libcalamaresui was built without the Lumo patch"
 import sys
 sys.exit(0 if "prettyRadioButton".encode("utf-16-le") in open(sys.argv[1], "rb").read() else 1)
 PYTHON
 partition=$(find "$temporary_root/usr/lib" -path '*calamares/modules/partition/*' -name '*.so' | head -1)
 [[ -n "$partition" ]] || fail "the partition module is missing"
-grep -aq '#94a6fd' "$partition" || fail "the partition module lacks the Kernora palette"
+grep -aq '#94a6fd' "$partition" || fail "the partition module lacks the Lumo palette"
 
 printf 'calamares binary test: OK\n'

@@ -26,7 +26,7 @@ jobs=$(nproc)
 
 "$PROJECT_ROOT/scripts/create-qt-build-rootfs" "$source_dir/$dsc_name" calamares
 
-temporary_root=$(mktemp -d /tmp/kernora-package-build.XXXXXX)
+temporary_root=$(mktemp -d /tmp/lumo-package-build.XXXXXX)
 chmod 0777 "$temporary_root"
 rootfs="$temporary_root/rootfs"
 input_dir="$temporary_root/input"
@@ -52,7 +52,7 @@ unshare --map-auto --setuid 0 --setgid 0 sh -c '
   tar -xJf "$2" -C "$1"
   mkdir -p "$1/build"
   cp "$3"/* "$1/build/"
-' kernora-extract "$rootfs" "$cached_rootfs" "$input_dir"
+' lumo-extract "$rootfs" "$cached_rootfs" "$input_dir"
 
 unshare \
   --map-auto \
@@ -70,7 +70,7 @@ unshare \
     cd source
     DEB_BUILD_OPTIONS="parallel=$2 nocheck" \
       dpkg-buildpackage --build=binary --build-profiles=nocheck --no-sign
-  ' kernora-build "$dsc_name" "$jobs"
+  ' lumo-build "$dsc_name" "$jobs"
 
 mkdir -p "$output_dir"
 deb="$rootfs/build/$binary_name"

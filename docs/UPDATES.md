@@ -1,7 +1,7 @@
 # Updates
 
-An installed Lumo system updates from four APT archives. The
-`kernora-archive` package sets them up, and `kernora-base` depends on it, so
+An installed Lumo system updates from three APT archives. The
+`lumo-archive` package sets them up, and `lumo-base` depends on it, so
 every installation has it.
 
 | Archive | What comes from it | How it is installed |
@@ -9,7 +9,12 @@ every installation has it.
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
-| Lumo, `commywork9282-dotcom.github.io/kernora-updates` | Lumo's own packages | in Settings > Updates |
+
+Lumo has no update archive of its own yet. Until lumo-archive 1.4 the system
+also updated from the upstream Kernora archive
+(`commywork9282-dotcom.github.io/kernora-updates`, priority 900), whose
+packages could replace Lumo's. That source is gone; Lumo's own packages change
+only with a new image until Lumo publishes its own archive (see below).
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
@@ -30,9 +35,9 @@ the step is skipped and Settings > Updates catches up later.
 
 ## Automatic updates
 
-`unattended-upgrades` runs from APT's daily timers. `kernora-archive` enables it
-in `/etc/apt/apt.conf.d/21kernora-auto-upgrades` and chooses what it installs in
-`51kernora-unattended-upgrades`. Debian's own defaults match archives by the
+`unattended-upgrades` runs from APT's daily timers. `lumo-archive` enables it
+in `/etc/apt/apt.conf.d/21lumo-auto-upgrades` and chooses what it installs in
+`51lumo-unattended-upgrades`. Debian's own defaults match archives by the
 distribution's codename. On Lumo that codename is `ember`, so they would match
 nothing; the Lumo file names `trixie-security` instead.
 
@@ -44,8 +49,8 @@ request.
 
 ## Notifications
 
-`kernora-update-notifier` (kernora-apps) starts with the session from
-`/etc/xdg/autostart/org.kernora.update-notifier.desktop`. Two minutes after
+`lumo-update-notifier` (lumo-apps) starts with the session from
+`/etc/xdg/autostart/org.lumo.update-notifier.desktop`. Two minutes after
 login, and then every six hours, it asks PackageKit for updates. It refreshes
 the package lists itself only when APT's daily refresh is more than a day old
 and the connection is not metered. When the list holds a package it has not
@@ -55,81 +60,57 @@ When `/run/reboot-required` appears (the kernel hook of `unattended-upgrades`
 creates it), it asks once per boot for a restart, with a "Restart" button that
 opens the session's restart prompt.
 
-The events are in `kernora-updates.notifyrc`, so the notification server draws
+The events are in `lumo-updates.notifyrc`, so the notification server draws
 them like any other Lumo notification. What has been announced is kept in
-`~/.local/state/kernora-update-notifierstaterc`. The notifier exits at once in
+`~/.local/state/lumo-update-notifierstaterc`. The notifier exits at once in
 the live session.
 
 ## What's new
 
 After an update, the next login opens a "What's new" window: Welcome started
-as `kernora-welcome --whats-new`. It says what changed, in plain words, from
-the release notes in `/usr/share/kernora/whatsnew.json`
-(`packages/native/kernora-apps/data/whatsnew.json`). Each release there has an
+as `lumo-welcome --whats-new`. It says what changed, in plain words, from
+the release notes in `/usr/share/lumo/whatsnew.json`
+(`packages/native/lumo-apps/data/whatsnew.json`). Each release there has an
 `id` (its date, newest first; a second release on the same day gets a suffix
 such as `2026-10-08-2`) and items with an icon, a title and a text, each in
 English and Russian. Releases of the same day are shown as one.
 
 The notifier opens the window when the newest `id` differs from `Seen` in
-`kernora-welcomerc` `[WhatsNew]`, six seconds after login. On a new
+`lumo-welcomerc` `[WhatsNew]`, six seconds after login. On a new
 installation, where Welcome itself is still due, it only records the newest
 release as seen. The window shows every release since the one seen last (up
 to three when none was seen yet) and then records the newest.
 
-## Lumo's packages win over Debian's
+## Debian does not replace Lumo's builds
 
-`/etc/apt/preferences.d/kernora-archive.pref` gives the Lumo archive priority
-900. Debian therefore never replaces Lumo's builds of `base-files`, Calamares
-or `polkit-kde-agent-1`, even when it releases a newer version of the same
-package. Such a version has to be rebuilt into the Lumo archive to reach
-users.
+Lumo builds its own versions of `base-files`, Calamares and
+`polkit-kde-agent-1`. `/etc/apt/preferences.d/lumo-archive.pref` pins every
+version of those packages whose version contains `lumo` at priority 1000, so a
+newer Debian version of the same package is never installed over it. Without
+the pin a Debian point release would replace `base-files` and the system would
+call itself Debian.
 
-## Publishing an update
+## Publishing updates later
 
-1. Change the package and add a changelog entry with a higher version.
-2. If people will notice the change, add a release at the top of
-   `packages/native/kernora-apps/data/whatsnew.json` and publish kernora-apps
-   with it, so that the "What's new" window tells them about it.
-3. If the ISO should carry the new version, update the pins in
-   `configs/live/packages.txt` and the version checks in `tests/`.
-4. Run `make publish`. It builds every package and the local archive. It then
-   signs the archive with the Lumo archive key and force-pushes it to the
-   `kernora-updates` repository, which GitHub Pages serves a minute later.
+The scripts for an archive of Lumo's own are in place, but nothing is
+published yet:
 
-Systems pick it up at their next check: the daily refresh, or Check in
-Settings > Updates.
+1. `scripts/create-archive-key` creates the Lumo Archive Signing Key in
+   `_state/gnupg/archive`, writes the public key to
+   `packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc`, sets
+   `DIST_ARCHIVE_KEY_FINGERPRINT` in `configs/project.env` and makes one
+   backup, `~/lumo-archive-key-secret.asc`. Keep that backup offline.
+2. Create the `tinygusie2/lumo-updates` repository with GitHub Pages
+   (`DIST_UPDATES_URL` and `DIST_UPDATES_REPOSITORY` in `configs/project.env`).
+3. Add `apt/lumo.sources` (pointing at `DIST_UPDATES_URL`, signed by the key)
+   and the keyring back to `lumo-archive`, and its tests.
+4. `make publish` builds every package and the local archive, signs it and
+   force-pushes it to `lumo-updates`.
 
-`kernora-updates` holds only the current packages. Each publication replaces
-all of its contents in a single commit, so the repository does not grow.
+## Systems installed before the rename
 
-## The signing key
-
-The Lumo Archive Signing Key is an ed25519 key with fingerprint
-`76EE FBDB 0D37 0DF1 0617 45C3 8AD5 1AE6 FA0E F01C`, created 2026-10-03. It
-expires on 2029-10-02.
-
-- The private key lives in `_state/gnupg/archive` on the build machine and is
-  never committed. `scripts/create-archive-key` made one backup when it created
-  the key, `~/kernora-archive-key-secret.asc`. Keep that backup offline. Without
-  it no update can be published, and a replacement key could only reach
-  installed systems by hand.
-- The public key is
-  `packages/native/kernora-archive/keyrings/kernora-archive-keyring.asc`. It is
-  installed as `/usr/share/keyrings/kernora-archive-keyring.asc` and also served
-  next to the archive.
-- Before the key expires, extend it with `gpg --homedir _state/gnupg/archive
-  --quick-set-expire <fingerprint> 3y`. Then run `scripts/create-archive-key`,
-  which exports the public key again, and publish a new `kernora-archive` while
-  the old expiry date still holds.
-
-## Systems installed before this
-
-The first test ISO (`v1-ember`, 2026-10-03) came before this change: its
-systems still point at the build snapshot and take no updates. To get updates
-there, install `kernora-archive` from the archive once, by hand:
-
-```sh
-wget https://commywork9282-dotcom.github.io/kernora-updates/pool/main/k/kernora-archive/kernora-archive_1.0_all.deb
-sudo apt install ./kernora-archive_1.0_all.deb
-sudo rm /etc/apt/sources.list
-```
+Systems installed from an image with the `kernora-*` packages cannot move to
+the `lumo-*` packages through an update, because no archive offers them.
+Install them again from a new image. The boot menu of a new image still finds
+and starts such an installation (`configs/live/grub.cfg` looks for both
+`/usr/share/lumo` and `/usr/share/kernora`).

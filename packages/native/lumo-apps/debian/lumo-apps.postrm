@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = remove ] && command -v pam-auth-update >/dev/null 2>&1; then
+    pam-auth-update --package --remove lumo-pin || true
+fi
+if [ "$1" = purge ]; then
+    rm -rf /var/lib/lumo/pin
+fi
+
+if [ "$1" = remove ] || [ "$1" = abort-install ] || [ "$1" = disappear ]; then
+    dpkg-divert --package lumo-apps --remove --rename \
+        --divert /usr/bin/systemsettings.kde /usr/bin/systemsettings
+    dpkg-divert --package lumo-apps --remove --rename \
+        --divert /usr/share/applications/RQuickShare.desktop.lumo /usr/share/applications/RQuickShare.desktop
+fi

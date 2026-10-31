@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.freedesktop.impl.portal.desktop.kernora
-Exec=@KDE_INSTALL_FULL_LIBEXECDIR@/kernora-filechooser

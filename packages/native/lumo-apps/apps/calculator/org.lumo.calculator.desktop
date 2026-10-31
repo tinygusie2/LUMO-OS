@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Calculator
+Name[ru]=Калькулятор
+Name[nl]=Rekenmachine
+GenericName=Calculator
+GenericName[ru]=Калькулятор
+GenericName[nl]=Rekenmachine
+Icon=org.lumo.calculator
+Exec=lumo-calculator
+Categories=Qt;Utility;Calculator;
+Keywords=calculator;math;калькулятор;
+StartupNotify=true

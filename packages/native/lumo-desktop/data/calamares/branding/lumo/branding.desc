@@ -1,0 +1,34 @@
+---
+componentName: lumo
+
+welcomeStyleCalamares: true
+welcomeExpandingLogo: true
+windowExpanding: normal
+windowSize: 1040px,720px
+windowPlacement: center
+
+strings:
+    productName:         Lumo
+    shortProductName:    Lumo
+    version:             Ember
+    shortVersion:        1
+    versionedName:       Lumo 1 "Ember"
+    shortVersionedName:  Lumo 1
+    bootloaderEntryName: Lumo
+
+sidebar: qml
+navigation: qml
+
+images:
+    productLogo:    "lumo-logo.png"
+    productIcon:    "lumo-logo.png"
+    productWelcome: "lumo-welcome.png"
+
+slideshow:    "show.qml"
+slideshowAPI: 2
+
+style:
+    SidebarBackground:        "#201a18"
+    SidebarText:              "#d7c2ba"
+    SidebarTextCurrent:       "#ffdbcc"
+    SidebarBackgroundCurrent: "#7f2b00"

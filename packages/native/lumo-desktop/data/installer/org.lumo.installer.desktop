@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=Install Lumo
+Name[ru]=Установить Lumo
+GenericName=Install on disk
+GenericName[ru]=Установка на диск
+Comment=Install Lumo on this computer
+Comment[ru]=Установить Lumo на этот компьютер
+Icon=org.lumo.installer
+Exec=/usr/bin/lumo-installer
+Categories=Qt;System;
+Keywords=install;installer;disk;calamares;установить;установка;диск;
+StartupNotify=true
+StartupWMClass=calamares

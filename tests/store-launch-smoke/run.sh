@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
-if pgrep -x kernora-store >/dev/null; then
+if pgrep -x lumo-store >/dev/null; then
     printf 'Close Store before running the launcher regression.\n' >&2
     exit 1
 fi
 fixture=$(mktemp -d)
 trap 'rm -rf -- "$fixture"' EXIT
 mkdir -p "$fixture/bin" "$fixture/share/applications"
-export KERNORA_LAUNCH_TEST_OUT="$fixture/called"
+export LUMO_LAUNCH_TEST_OUT="$fixture/called"
 cat > "$fixture/bin/flatpak" <<'STUB'
 #!/bin/sh
-printf '%s\n' "$@" > "$KERNORA_LAUNCH_TEST_OUT"
+printf '%s\n' "$@" > "$LUMO_LAUNCH_TEST_OUT"
 STUB
 cat > "$fixture/bin/native" <<'STUB'
 #!/bin/sh
-printf 'wrong-native-launch\n' > "$KERNORA_LAUNCH_TEST_OUT"
+printf 'wrong-native-launch\n' > "$LUMO_LAUNCH_TEST_OUT"
 STUB
 chmod +x "$fixture/bin/flatpak" "$fixture/bin/native"
 for desktop in org.telegram.desktop org.telegram.desktop.desktop telegram.desktop; do
@@ -26,8 +26,8 @@ Exec=$fixture/bin/native
 DESKTOP
 done
 XDG_DATA_HOME="$fixture/share" PATH="$fixture/bin:$PATH" \
-    KERNORA_QML_STORE="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)" \
-    timeout 150 kernora-store > "$fixture/launch.log" 2>&1
+    LUMO_QML_STORE="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)" \
+    timeout 150 lumo-store > "$fixture/launch.log" 2>&1
 cat "$fixture/launch.log"
 grep -Fq STORE_LAUNCH_STARTED "$fixture/launch.log"
 cat "$fixture/called"

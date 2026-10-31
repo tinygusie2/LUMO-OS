@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_librewolf_chrome
+Script=lumo-librewolf-chrome.sh,sh

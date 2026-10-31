@@ -1,0 +1,17 @@
+[Default Applications]
+x-scheme-handler/http=librewolf.desktop;
+x-scheme-handler/https=librewolf.desktop;
+text/html=librewolf.desktop;
+application/xhtml+xml=librewolf.desktop;
+application/pdf=librewolf.desktop;
+image/png=org.lumo.photos.desktop;
+image/jpeg=org.lumo.photos.desktop;
+image/gif=org.lumo.photos.desktop;
+image/webp=org.lumo.photos.desktop;
+application/json=org.lumo.editor.desktop;
+application/xml=org.lumo.editor.desktop;
+application/x-ms-dos-executable=org.lumo.wine.desktop;
+application/x-msdownload=org.lumo.wine.desktop;
+application/x-msi=org.lumo.wine.desktop;
+application/x-ms-shortcut=org.lumo.wine.desktop;
+text/xml=org.lumo.editor.desktop;

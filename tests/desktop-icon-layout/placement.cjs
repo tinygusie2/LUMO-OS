@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const context = vm.createContext({});
-vm.runInContext(fs.readFileSync(path.resolve(__dirname, '../../packages/native/kernora-desktop/data/folderview/IconPlacement.js'), 'utf8'), context);
+vm.runInContext(fs.readFileSync(path.resolve(__dirname, '../../packages/native/lumo-desktop/data/folderview/IconPlacement.js'), 'utf8'), context);
 let seed = 32191;
 const random = n => {
     seed = (1664525 * seed + 1013904223) >>> 0;

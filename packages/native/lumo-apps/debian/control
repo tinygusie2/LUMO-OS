@@ -1,0 +1,82 @@
+Source: lumo-apps
+Section: kde
+Priority: optional
+Maintainer: Lumo Developers <developers@lumo.invalid>
+Standards-Version: 4.7.4
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ extra-cmake-modules,
+ gettext,
+ libcrypt-dev,
+ libappstreamqt-dev,
+ libflatpak-dev,
+ libkf6bluezqt-dev,
+ libkf6config-dev,
+ libkf6coreaddons-dev,
+ libkf6dbusaddons-dev,
+ libkf6i18n-dev,
+ libkf6kio-dev,
+ libkf6notifications-dev,
+ libkf6service-dev,
+ libkf6windowsystem-dev,
+ libkscreen-dev,
+ libplasma-dev,
+ libpackagekitqt6-dev,
+ pkgconf,
+ qt6-base-dev,
+ qt6-declarative-dev
+Rules-Requires-Root: no
+
+Package: lumo-apps
+Architecture: amd64
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ accountsservice,
+ appstream,
+ bluez,
+ libpam-runtime,
+ flatpak,
+ kde-cli-tools,
+ lumo-base (>= 1.6.4),
+ lumo-desktop (>= 1.4.57),
+ libarchive-tools,
+ packagekit,
+ pkexec,
+ plasma-nm,
+ plasma-pa,
+ plasma-workspace,
+ powerdevil,
+ qml6-module-org-kde-bluezqt,
+ qml6-module-org-kde-kirigami,
+ qml6-module-org-kde-layershell,
+ qml6-module-org-kde-notifications,
+ qml6-module-org-kde-syntaxhighlighting,
+ qml6-module-qt-labs-folderlistmodel,
+ qml6-module-qtmultimedia,
+ qml6-module-qtquick-controls,
+ qml6-module-qtquick-dialogs,
+ qml6-module-qtquick-layouts,
+ qml6-module-qtquick-shapes,
+ r-quick-share,
+ xdg-desktop-portal,
+ xdg-desktop-portal-kde
+Description: Lumo applications
+ The everyday applications of Lumo, drawn in its Material 3 design:
+ .
+  * Settings: network, Bluetooth, display, sound, notifications, wallpaper
+    and style, apps, power, input devices, accessibility, privacy, the
+    account, date and language, updates and information about the system;
+  * Store: find, install, remove and update Flathub and Debian apps;
+  * Quick Share, to send and receive files with Android phones;
+  * Files, Text Editor, Photos, Media Player, Calculator and Screenshot;
+  * Welcome, the first-run introduction;
+  * the file chooser: every program's open and save dialogs, served to
+    the session through the desktop portal.
+  * update notifications: a message when updates are ready to install and
+    when installed ones need a restart.
+ .
+ It also carries org.lumo.system, the Qt Quick module through which the
+ applications read and change the system, and org.lumo.shell, which the
+ desktop uses to open a widget's settings without leaving edit mode.

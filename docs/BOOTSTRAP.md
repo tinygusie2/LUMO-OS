@@ -42,31 +42,31 @@ The target validates both the repository and the Lumo identity before
 running `dpkg-source`. It produces:
 
 ```text
-_build/source-packages/base-files_13.8+deb13u6+kernora1.dsc
-_build/source-packages/base-files_13.8+deb13u6+kernora1.tar.xz
+_build/source-packages/base-files_13.8+deb13u6+lumo1.dsc
+_build/source-packages/base-files_13.8+deb13u6+lumo1.tar.xz
 ```
 
 ## Native base metapackage
 
-`packages/native/kernora-base` is the distribution's own `3.0 (native)` source
+`packages/native/lumo-base` is the distribution's own `3.0 (native)` source
 package. Version `1.0` is an architecture-independent metapackage with an exact
-dependency on `base-files (= 13.8+deb13u6+kernora1)`.
+dependency on `base-files (= 13.8+deb13u6+lumo1)`.
 
 Build its source and binary packages separately with:
 
 ```sh
-make kernora-base-source
-make kernora-base-binary
+make lumo-base-source
+make lumo-base-binary
 ```
 
 The resulting files are written alongside the derived package artifacts:
 
 ```text
-_build/source-packages/kernora-base_1.0.dsc
-_build/source-packages/kernora-base_1.0.tar.xz
-_build/binary-packages/kernora-base_1.0_all.deb
-_build/binary-packages/kernora-base_1.0_amd64.buildinfo
-_build/binary-packages/kernora-base_1.0_amd64.changes
+_build/source-packages/lumo-base_1.0.dsc
+_build/source-packages/lumo-base_1.0.tar.xz
+_build/binary-packages/lumo-base_1.0_all.deb
+_build/binary-packages/lumo-base_1.0_amd64.buildinfo
+_build/binary-packages/lumo-base_1.0_amd64.changes
 ```
 
 ## Rootless binary package
@@ -105,9 +105,9 @@ The cache is treated as read-only during package builds: every build uses a
 temporary extracted copy. The binary results are:
 
 ```text
-_build/binary-packages/base-files_13.8+deb13u6+kernora1_amd64.deb
-_build/binary-packages/base-files_13.8+deb13u6+kernora1_amd64.buildinfo
-_build/binary-packages/base-files_13.8+deb13u6+kernora1_amd64.changes
+_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.deb
+_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.buildinfo
+_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.changes
 ```
 
 For debugging or warming the cache independently, the lower-level Make targets
@@ -134,9 +134,9 @@ uses an isolated project-local APT state to confirm that APT selects the exact
 Lumo versions and dependency.
 
 The development key is local build state under `_state/gnupg` and `_state/keys`.
-It expires after one year, uses `archive@kernora.invalid`, and is explicitly not
+It expires after one year, uses `archive@lumo.invalid`, and is explicitly not
 a production release key. The public key is copied into the development archive
-as `kernora-development-archive-keyring.gpg`; the private key is never copied to
+as `lumo-development-archive-keyring.gpg`; the private key is never copied to
 `out/`.
 
 ## Reproducible minimal rootfs
@@ -149,7 +149,7 @@ make minimal-rootfs
 
 This target depends on `make local-archive`, then runs rootless `mmdebstrap` in
 `minbase` mode. `configs/rootfs/minimal-packages.txt` currently requests the
-versioned package `kernora-base=1.1`; its dependency pulls in the exact Lumo
+versioned package `lumo-base=1.1`; its dependency pulls in the exact Lumo
 `base-files` build.
 
 Before packaging, a rootless chroot test checks the Lumo identity, dpkg
@@ -157,14 +157,14 @@ vendor, installed package versions, APT key scoping and readability of the
 embedded signed archive. The output is:
 
 ```text
-out/rootfs/kernora-1-ember-amd64.tar.xz
-out/rootfs/kernora-1-ember-amd64.tar.xz.sha256
+out/rootfs/lumo-1-ember-amd64.tar.xz
+out/rootfs/lumo-1-ember-amd64.tar.xz.sha256
 ```
 
 Verify it with:
 
 ```sh
-(cd out/rootfs && sha256sum -c kernora-1-ember-amd64.tar.xz.sha256)
+(cd out/rootfs && sha256sum -c lumo-1-ember-amd64.tar.xz.sha256)
 ```
 
 The tar stream uses sorted paths, the snapshot timestamp as `SOURCE_DATE_EPOCH`,
@@ -174,7 +174,7 @@ the same rootfs checksum.
 
 The installed `/etc/apt/sources.list` contains four declared sources:
 
-1. the embedded development archive at `/usr/share/kernora/archive`, scoped to
+1. the embedded development archive at `/usr/share/lumo/archive`, scoped to
    its embedded public key;
 2. Debian `trixie` from snapshot `20260901T000000Z`;
 3. `trixie-updates` from the same snapshot;

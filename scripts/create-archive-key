@@ -10,9 +10,9 @@ done
 load_project_config
 
 gnupg_home="$PROJECT_ROOT/_state/gnupg/archive"
-public_key="$PROJECT_ROOT/packages/native/kernora-archive/keyrings/kernora-archive-keyring.asc"
+public_key="$PROJECT_ROOT/packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc"
 project_env="$PROJECT_ROOT/configs/project.env"
-backup="$HOME/kernora-archive-key-secret.asc"
+backup="$HOME/lumo-archive-key-secret.asc"
 key_name="$DIST_NAME Archive Signing Key"
 
 mkdir -p "$gnupg_home" "$(dirname -- "$public_key")"

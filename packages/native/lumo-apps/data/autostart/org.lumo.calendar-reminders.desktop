@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Calendar reminders
+Name[nl]=Agendaherinneringen
+Name[ru]=Напоминания календаря
+Icon=org.lumo.calendar
+Exec=lumo-calendar reminders
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2

@@ -27,7 +27,7 @@
     }
     function auditRequire(ok: bool, message: string): void {
         if (!ok) {
-            console.error("KERNORA_LANGUAGE_FAIL: " + message + " | " + welcomeText);
+            console.error("LUMO_LANGUAGE_FAIL: " + message + " | " + welcomeText);
             auditTimer.stop();
             throw new Error(message);
         }
@@ -54,13 +54,13 @@
             case 2:
                 auditRequire(welcomeText.includes("Добро пожаловать"), "English to Russian did not retranslate welcome");
                 auditRequire(auditSteps.objectAt(0).display === "Добро пожаловать", "Russian sidebar did not refresh");
-                console.log("KERNORA_LANGUAGE_CHECK: welcome Russian | " + ViewManager.nextLabel);
+                console.log("LUMO_LANGUAGE_CHECK: welcome Russian | " + ViewManager.nextLabel);
                 config.localeIndex = auditIndex("German");
                 break;
             case 3:
                 auditRequire(welcomeText.includes("Willkommen"), "Russian to German did not retranslate welcome");
                 auditRequire(auditSteps.objectAt(0).display === "Willkommen", "German sidebar did not refresh");
-                console.log("KERNORA_LANGUAGE_CHECK: welcome German | " + ViewManager.nextLabel);
+                console.log("LUMO_LANGUAGE_CHECK: welcome German | " + ViewManager.nextLabel);
                 config.localeIndex = auditIndex("English");
                 break;
             case 4:

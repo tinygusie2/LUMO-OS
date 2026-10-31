@@ -3,7 +3,7 @@
 The Live GRUB menu uses stable identifiers: `live-en`, `live-ru` and
 `live-safe`. English is the first Live entry and the default. Russian stays
 available by explicit selection. Safe graphics also selects English. If the
-ISO finds an installed Kernora system, the existing `installed` entry still
+ISO finds an installed Lumo system, the existing `installed` entry still
 takes boot priority.
 
 The existing Live language service applies the chosen kernel argument before
@@ -27,14 +27,14 @@ translation loader; this change does not add new translations.
 
 Packages:
 
-- `calamares 3.3.14-1kernora2`: language integration and translated models.
-- `kernora-desktop` and `kernora-calamares 1.4.28`: configuration dependency
+- `calamares 3.3.14-1lumo2`: language integration and translated models.
+- `lumo-desktop` and `lumo-calamares 1.4.28`: configuration dependency
   and translated city-list refresh.
-- `kernora-apps 1.1.35`: What's New, entry `2026-10-13-8`, dated 13 October
+- `lumo-apps 1.1.35`: What's New, entry `2026-10-13-8`, dated 13 October
   2026, in English and Russian.
 
-In Lumo the same change ships as `kernora-desktop` / `kernora-calamares` 1.4.31
-and `kernora-apps` 1.1.39, What's New entry `2026-10-14-2` in English, Dutch
+In Lumo the same change ships as `lumo-desktop` / `lumo-calamares` 1.4.31
+and `lumo-apps` 1.1.39, What's New entry `2026-10-14-2` in English, Dutch
 and Russian. The Lumo boot menu has the ids `live-en`, `live-nl`, `live-ru` and
 `live-safe`; English stays the default.
 

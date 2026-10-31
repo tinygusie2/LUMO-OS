@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_add_widgets_menu
+Script=lumo-add-widgets-menu.sh,sh

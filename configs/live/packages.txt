@@ -1,4 +1,4 @@
-kernora-base=1.4
+lumo-base=1.6.4
 linux-image-amd64=6.12.107-1
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
@@ -29,11 +29,11 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-kernora-desktop=1.4.37
-kernora-calamares=1.4.37
-kernora-apps=1.1.46
+lumo-desktop=1.4.57
+lumo-calamares=1.4.57
+lumo-apps=1.1.65
 r-quick-share=0.11.5
-polkit-kde-agent-1=4:6.3.6-1kernora1
+polkit-kde-agent-1=4:6.3.6-1lumo1
 plymouth
 plymouth-label
 fonts-roboto-unhinted
@@ -59,7 +59,7 @@ bluez-firmware
 amd64-microcode
 intel-microcode
 
-calamares=3.3.14-1kernora2
+calamares=3.3.14-1lumo2
 squashfs-tools
 grub-common
 grub2-common

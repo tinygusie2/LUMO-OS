@@ -1,9 +1,0 @@
-#!/bin/sh
-set -e
-
-if [ "$1" = install ] || [ "$1" = upgrade ]; then
-    dpkg-divert --package kernora-apps --add --rename \
-        --divert /usr/bin/systemsettings.kde /usr/bin/systemsettings
-    dpkg-divert --package kernora-apps --add --rename \
-        --divert /usr/share/applications/RQuickShare.desktop.kernora /usr/share/applications/RQuickShare.desktop
-fi
