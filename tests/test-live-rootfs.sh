@@ -43,7 +43,7 @@ fail() {
 }
 
 grep -Fxq 'ID=lumo' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.6" ]] \
   || fail "lumo-base is not installed"
 [[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == *~bpo13+* ]] \
   || fail "the kernel does not come from trixie-backports"
@@ -60,7 +60,7 @@ done
 grep -Fxq 'Exec=/usr/bin/lumo-installer --autostart' /etc/xdg/autostart/org.lumo.installer-autostart.desktop \
   || fail "the live session does not open the installer on login"
 fastfetch_out=$(fastfetch --pipe true 2>/dev/null)
-grep -Fq ',o000000000oo,,' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
+grep -Fq '.:o0000000000000000o:.' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
   || fail "fastfetch does not show the Lumo logo with the system info"
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"

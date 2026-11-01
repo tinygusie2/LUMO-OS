@@ -1,3 +1,10 @@
+lumo-base (1.6.6) UNRELEASED; urgency=medium
+
+  * fastfetch shows the Lumo logo, the arch with the dot, drawn from
+    lumo-logo.svg, instead of the logo it still had from Kernora.
+
+ -- Lumo Developers <developers@lumo.invalid>  Mon, 02 Nov 2026 00:03:34 +0100
+
 lumo-base (1.6.5) UNRELEASED; urgency=medium
 
   * Bring in the upstream Kernora work that was merged locally on
