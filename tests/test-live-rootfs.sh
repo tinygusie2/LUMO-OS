@@ -95,8 +95,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.59" ]] \
-  || fail "lumo-desktop 1.4.59 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.60" ]] \
+  || fail "lumo-desktop 1.4.60 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"

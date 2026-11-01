@@ -1,4 +1,4 @@
-lumo-desktop (1.4.59) UNRELEASED; urgency=medium
+lumo-desktop (1.4.60) UNRELEASED; urgency=medium
 
   * The login screen (SDDM) runs on KWin's Wayland compositor instead of an
     X server, so the step from login to desktop no longer switches display

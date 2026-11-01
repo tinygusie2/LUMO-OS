@@ -40,7 +40,7 @@ Depends:
  flatpak,
  kde-cli-tools,
  lumo-base (>= 1.6.4),
- lumo-desktop (>= 1.4.59),
+ lumo-desktop (>= 1.4.60),
  libarchive-tools,
  packagekit,
  pkexec,
