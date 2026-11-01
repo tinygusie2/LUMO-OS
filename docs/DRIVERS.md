@@ -67,6 +67,21 @@ State lives in `/var/lib/lumo/drivers/state`: `installing`, `installed`,
 `failed`, `offline`, `secureboot`, `removing` or `removed`, plus the device,
 its name from `pci.ids` and the time.
 
+## Firmware and the initramfs
+
+`lumo-desktop` installs the initramfs hook
+`/usr/share/initramfs-tools/hooks/zz-lumo-firmware`, which runs after the
+standard hooks and removes nouveau's firmware (`usr/lib/firmware/nvidia/<chip>`)
+from the initramfs; the versioned folders of NVIDIA's own driver stay. With
+the trixie-backports kernel and `MODULES=most`, the kms hook otherwise copies
+every GPU firmware file in, NVIDIA's GSP blobs alone taking 152 MB: the live
+initramfs was 223 MB compressed and 379 MB unpacked, and a machine with 1 GB
+of memory stopped with "Initramfs unpacking failed" and "No working init
+found". Nouveau and NVIDIA's driver load their firmware from the root file
+system after it is mounted; AMD and Intel firmware stays in the initramfs so
+their early KMS and the boot splash keep working. `tests/test-live-rootfs.sh`
+fails when nouveau's firmware reappears or the initramfs reaches 160 MB.
+
 ## Testing without the hardware
 
 QEMU has no NVIDIA card, so a test VM shows the tool a fake device:

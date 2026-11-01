@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.60" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.61" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -428,6 +428,10 @@ grep -Fxq 'Current=lumo' "$data_root/sddm.conf.d/lumo-theme.conf" \
 grep -Fxq 'InputMethod=' "$data_root/sddm.conf.d/lumo-theme.conf" \
   || fail "the login screen would show the virtual keyboard"
 [[ -s "$data_root/sddm-theme/lumo/Main.qml" ]] || fail "the Lumo login screen is missing"
+[[ -x "$data_root/initramfs/zz-lumo-firmware" ]] || fail "the initramfs firmware hook is missing or not executable"
+sh -n "$data_root/initramfs/zz-lumo-firmware" || fail "the initramfs firmware hook does not parse"
+grep -Fxq 'data/initramfs/zz-lumo-firmware usr/share/initramfs-tools/hooks' "$package_root/debian/lumo-desktop.install" \
+  || fail "the initramfs firmware hook is not installed"
 grep -Fxq 'DisplayServer=wayland' "$data_root/sddm.conf.d/lumo-wayland.conf" \
   || fail "the login screen does not run on Wayland"
 grep -Eq '^CompositorCommand=kwin_wayland ' "$data_root/sddm.conf.d/lumo-wayland.conf" \

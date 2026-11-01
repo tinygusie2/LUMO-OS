@@ -106,8 +106,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.60" ]] \
-  || fail "lumo-desktop 1.4.60 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.61" ]] \
+  || fail "lumo-desktop 1.4.61 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -308,6 +308,11 @@ command -v pkexec >/dev/null || fail "pkexec is missing; the installer cannot st
 initrd=$(find /boot -maxdepth 1 -name 'initrd.img-*' | sort | tail -n1)
 lsinitramfs "$initrd" | grep 'usr/share/plymouth/themes/lumo/lumo.script' >/dev/null \
   || fail "the initramfs does not carry the Lumo boot splash"
+initramfs_listing=$(lsinitramfs "$initrd")
+! grep -Eq 'usr/lib/firmware/nvidia/[a-z]' <<<"$initramfs_listing" \
+  || fail "the initramfs carries nouveau's firmware"
+(( $(stat -c %s "$initrd") < 160 * 1024 * 1024 )) \
+  || fail "the initramfs is too large to unpack on a computer with 1 GB of memory"
 command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle archives"
 [[ -x /usr/bin/lumo-installer ]] || fail "the Lumo installer launcher is missing"
 [[ -s /etc/xdg/autostart/org.lumo.welcome.desktop ]] || fail "Welcome is not started at first login"

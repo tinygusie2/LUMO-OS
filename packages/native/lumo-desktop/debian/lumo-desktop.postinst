@@ -19,6 +19,9 @@ if [ "$1" = configure ]; then
     fi
     /usr/libexec/lumo-splash-wallpaper || true
     /usr/libexec/lumo-boot-theme || true
+    if dpkg --compare-versions "$2" lt 1.4.61 && [ -x /usr/sbin/update-initramfs ]; then
+        dpkg-trigger --no-await update-initramfs || update-initramfs -u || true
+    fi
     active=$(/usr/sbin/plymouth-set-default-theme 2>/dev/null || true)
     splash=/usr/share/plymouth/themes/${active:-lumo}
     stamp=/var/lib/lumo/plymouth-theme

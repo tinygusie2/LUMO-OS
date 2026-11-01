@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+PREREQ=""
+prereqs() {
+    echo "$PREREQ"
+}
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+firmware="${DESTDIR:?}/usr/lib/firmware/nvidia"
+[ -d "$firmware" ] || exit 0
+for chip in "$firmware"/*; do
+    case "${chip##*/}" in
+        [0-9]*) ;;
+        *) rm -rf "$chip" ;;
+    esac
+done
