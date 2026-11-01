@@ -1,4 +1,6 @@
+keyrings/lumo-archive-keyring.asc usr/share/keyrings
 apt/debian.sources etc/apt/sources.list.d
+apt/lumo.sources etc/apt/sources.list.d
 apt/lumo-archive.pref etc/apt/preferences.d
 apt/lumo-backports.pref etc/apt/preferences.d
 apt/21lumo-auto-upgrades etc/apt/apt.conf.d

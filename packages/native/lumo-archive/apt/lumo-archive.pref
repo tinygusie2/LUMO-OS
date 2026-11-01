@@ -1,3 +1,7 @@
+Package: *
+Pin: origin tinygusie2.github.io
+Pin-Priority: 900
+
 Package: base-files calamares polkit-kde-agent-1
 Pin: version *lumo*
 Pin-Priority: 1000

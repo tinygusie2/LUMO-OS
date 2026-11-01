@@ -1,3 +1,12 @@
+lumo-archive (1.5) UNRELEASED; urgency=medium
+
+  * Update from Lumo's own archive, tinygusie2.github.io/lumo-updates,
+    signed by the Lumo Archive Signing Key (DF06 884E A586 3BEE 786D
+    BD71 34C2 11B6 09EA CEE3). Its packages are preferred over Debian's,
+    and come in through Settings > Updates.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 14:10:00 +0000
+
 lumo-archive (1.4) UNRELEASED; urgency=medium
 
   * Rename the package from kernora-archive to lumo-archive.

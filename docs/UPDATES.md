@@ -1,6 +1,6 @@
 # Updates
 
-An installed Lumo system updates from four APT archives. The
+An installed Lumo system updates from five APT archives. The
 `lumo-archive` package sets them up, and `lumo-base` depends on it, so
 every installation has it.
 
@@ -10,12 +10,12 @@ every installation has it.
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
 | Debian backports, `deb.debian.org`, `trixie-backports` | the kernel, graphics firmware and Mesa | automatically, once a day |
+| Lumo, `tinygusie2.github.io/lumo-updates` | Lumo's own packages | in Settings > Updates |
 
-Lumo has no update archive of its own yet. Until lumo-archive 1.4 the system
-also updated from the upstream Kernora archive
+Until lumo-archive 1.4 the system updated from the upstream Kernora archive
 (`commywork9282-dotcom.github.io/kernora-updates`, priority 900), whose
-packages could replace Lumo's. That source is gone; Lumo's own packages change
-only with a new image until Lumo publishes its own archive (see below).
+packages could replace Lumo's. lumo-archive 1.4 dropped it, and 1.5 points at
+Lumo's own archive instead.
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
@@ -113,22 +113,41 @@ newer Debian version of the same package is never installed over it. Without
 the pin a Debian point release would replace `base-files` and the system would
 call itself Debian.
 
-## Publishing updates later
+## Lumo's packages win
 
-The scripts for an archive of Lumo's own are in place, but nothing is
-published yet:
+`/etc/apt/preferences.d/lumo-archive.pref` gives the Lumo archive
+(origin `tinygusie2.github.io`) priority 900, so Lumo's packages win over
+Debian's.
 
-1. `scripts/create-archive-key` creates the Lumo Archive Signing Key in
-   `_state/gnupg/archive`, writes the public key to
-   `packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc`, sets
-   `DIST_ARCHIVE_KEY_FINGERPRINT` in `configs/project.env` and makes one
-   backup, `~/lumo-archive-key-secret.asc`. Keep that backup offline.
-2. Create the `tinygusie2/lumo-updates` repository with GitHub Pages
-   (`DIST_UPDATES_URL` and `DIST_UPDATES_REPOSITORY` in `configs/project.env`).
-3. Add `apt/lumo.sources` (pointing at `DIST_UPDATES_URL`, signed by the key)
-   and the keyring back to `lumo-archive`, and its tests.
-4. `make publish` builds every package and the local archive, signs it and
-   force-pushes it to `lumo-updates`.
+## Publishing an update
+
+1. Change the package and add a changelog entry with a higher version.
+2. If people will notice the change, add a release at the top of
+   `packages/native/lumo-apps/data/whatsnew.json`.
+3. If the ISO should carry the new version, update the pins in
+   `configs/live/packages.txt` and the version checks in `tests/`.
+4. Run `make publish` on the machine that holds the key. It builds every
+   package and the local archive, signs it with the Lumo archive key and
+   force-pushes it to `tinygusie2/lumo-updates`, which GitHub Pages serves a
+   minute later.
+
+## The signing key
+
+The Lumo Archive Signing Key has fingerprint
+`DF06 884E A586 3BEE 786D BD71 34C2 11B6 09EA CEE3`, created 2026-11-01 with
+`scripts/create-archive-key`; it expires after three years.
+
+- The private key lives in `_state/gnupg/archive` on the owner's build
+  machine and is never committed. Its one backup,
+  `~/lumo-archive-key-secret.asc`, belongs offline. Without it no update can
+  be published.
+- The public key is
+  `packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc`, installed
+  as `/usr/share/keyrings/lumo-archive-keyring.asc` and served next to the
+  archive.
+- Before it expires, extend it with `gpg --homedir _state/gnupg/archive
+  --quick-set-expire <fingerprint> 3y`, run `scripts/create-archive-key`
+  again to export it, and publish a new `lumo-archive`.
 
 ## Systems installed before the rename
 

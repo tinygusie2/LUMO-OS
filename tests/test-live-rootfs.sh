@@ -285,8 +285,8 @@ grep -Fq 'origin=Debian Backports,codename=trixie-backports' <<<"$(apt-config du
   || fail "kernel updates from trixie-backports are not installed automatically"
 grep -Fxq 'Suites: trixie-security' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no Debian security updates"
-[[ ! -e /etc/apt/sources.list.d/lumo.sources ]] \
-  || fail "the image updates from an archive Lumo does not publish"
+grep -Fxq 'Signed-By: /usr/share/keyrings/lumo-archive-keyring.asc' /etc/apt/sources.list.d/lumo.sources \
+  || fail "the image takes no Lumo updates"
 if grep -rqi 'commywork9282-dotcom\|kernora' /etc/apt/sources.list.d /etc/apt/preferences.d; then
   fail "the image updates from the upstream Kernora archive"
 fi

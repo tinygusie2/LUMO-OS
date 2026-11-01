@@ -21,7 +21,9 @@ trap 'find "$temporary_root" -depth -delete' EXIT
 dpkg-deb --extract "$deb" "$temporary_root/root"
 dpkg-deb --control "$deb" "$temporary_root/control"
 for path in \
+  usr/share/keyrings/lumo-archive-keyring.asc \
   etc/apt/sources.list.d/debian.sources \
+  etc/apt/sources.list.d/lumo.sources \
   etc/apt/preferences.d/lumo-archive.pref \
   etc/apt/preferences.d/lumo-backports.pref \
   etc/apt/apt.conf.d/21lumo-auto-upgrades \
@@ -32,6 +34,7 @@ for path in \
 done
 for conffile in \
   /etc/apt/sources.list.d/debian.sources \
+  /etc/apt/sources.list.d/lumo.sources \
   /etc/apt/preferences.d/lumo-archive.pref \
   /etc/apt/preferences.d/lumo-backports.pref \
   /etc/apt/apt.conf.d/21lumo-auto-upgrades \

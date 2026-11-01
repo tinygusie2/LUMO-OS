@@ -27,6 +27,7 @@ required_paths=(
   packages/native/lumo-base/debian/changelog
   packages/native/lumo-archive/debian/control
   packages/native/lumo-archive/debian/changelog
+  packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc
   packages/native/lumo-desktop/debian/control
   packages/native/lumo-desktop/debian/changelog
   packages/native/lumo-apps/debian/control
