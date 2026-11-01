@@ -1,0 +1,42 @@
+lumo-archive (1.4) UNRELEASED; urgency=medium
+
+  * Rename the package from kernora-archive to lumo-archive.
+  * Stop updating from the upstream Kernora archive
+    (commywork9282-dotcom.github.io/kernora-updates). Its packages could
+    replace Lumo's own. Lumo has no update archive of its own yet, so the
+    package now only sets up Debian (with security updates and backports)
+    and LibreWolf.
+
+ -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
+
+kernora-archive (1.3) UNRELEASED; urgency=medium
+
+  * Debian's trixie-backports archive, for a newer kernel, graphics firmware
+    and Mesa. Recent graphics cards, such as AMD Radeon RX 9000 and Intel Arc
+    B-series, need a newer kernel and Mesa than Debian 13 ships. Only the
+    kernel, firmware, Mesa, libdrm and NVIDIA's Debian driver are taken from
+    it (kernora-backports.pref); everything else stays on Debian 13.
+  * Updates from trixie-backports install automatically each day, like
+    security updates, so the kernel keeps getting its security fixes.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 31 Oct 2026 23:30:00 +0000
+
+kernora-archive (1.1) UNRELEASED; urgency=medium
+
+  * Debian's non-free-firmware component, so the firmware for graphics
+    cards, Wi-Fi, Bluetooth, sound and processor microcode that the image
+    ships keeps receiving updates.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 10 Oct 2026 12:00:00 -0700
+
+kernora-archive (1.0) UNRELEASED; urgency=medium
+
+  * The Debian archive and its security updates, from the live mirrors
+    rather than the build's snapshot.
+  * The Kernora package archive, signed with the Kernora OS Archive Signing
+    Key (76EEFBDB0D370DF1061745C38AD51AE6FA0EF01C), preferred over Debian for
+    the packages Kernora builds.
+  * Daily automatic security updates from Debian, kernel included, and from
+    LibreWolf, with unattended-upgrades; not in the live session.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 03 Oct 2026 13:30:00 -0700

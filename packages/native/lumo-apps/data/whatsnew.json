@@ -1,0 +1,711 @@
+[
+  {
+    "id": "2026-10-28-2",
+    "date": "2026-10-28",
+    "items": [
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "New wallpapers",
+          "nl": "Nieuwe achtergronden",
+          "ru": "Новые обои"
+        },
+        "text": {
+          "en": "Two new live wallpapers, Waves and Northern Lights, and three still ones: Dunes, Bloom and Contour. The still wallpapers draw once and use no power. Find them in Settings > Wallpaper & style.",
+          "nl": "Twee nieuwe live achtergronden, Golven en Noorderlicht, en drie stilstaande: Duinen, Bloei en Hoogtelijnen. De stilstaande worden één keer getekend en kosten geen stroom. Je vindt ze in Instellingen > Achtergrond en stijl.",
+          "ru": "Две новые живые обои, «Волны» и «Северное сияние», и три статичные: «Дюны», «Цветение» и «Изолинии». Статичные обои рисуются один раз и не расходуют энергию. Они в Параметрах > Обои и стиль."
+        }
+      },
+      {
+        "icon": "battery-profile-powersave",
+        "title": {
+          "en": "Live wallpapers save your battery",
+          "nl": "Live achtergronden sparen je batterij",
+          "ru": "Живые обои берегут батарею"
+        },
+        "text": {
+          "en": "On battery, live wallpapers now move at fewer frames a second, and in power saving or when the battery is low they hold still. You can turn this off under the wallpaper in Settings.",
+          "nl": "Op batterij bewegen live achtergronden nu met minder beelden per seconde, en bij energiebesparing of een bijna lege batterij staan ze stil. Je kunt dit uitzetten bij de achtergrond in Instellingen.",
+          "ru": "От батареи живые обои теперь показывают меньше кадров в секунду, а в режиме энергосбережения или при низком заряде замирают. Это можно отключить в настройках обоев в Параметрах."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-28-1",
+    "date": "2026-10-28",
+    "items": [
+      {
+        "icon": "rquickshare",
+        "title": {
+          "en": "Quick Share with Android",
+          "nl": "Quick Share met Android",
+          "ru": "Quick Share с Android"
+        },
+        "text": {
+          "en": "Send photos and files from an Android phone: choose Share, then Quick Share, and pick this computer. Files land in Downloads. To send to the phone, open Quick Share and drag files into the window. Phone and computer need to be on the same network.",
+          "nl": "Stuur foto's en bestanden vanaf een Android-telefoon: kies Delen, dan Quick Share, en kies deze computer. Bestanden komen in Downloads. Om naar de telefoon te sturen open je Quick Share en sleep je bestanden in het venster. Telefoon en computer moeten op hetzelfde netwerk zitten.",
+          "ru": "Отправляйте фото и файлы с телефона Android: выберите «Поделиться», затем Quick Share и этот компьютер. Файлы попадают в «Загрузки». Чтобы отправить на телефон, откройте Quick Share и перетащите файлы в окно. Телефон и компьютер должны быть в одной сети."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-14-3",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "icon": "org.lumo.screenshot",
+        "title": {
+          "en": "Snip like on Windows",
+          "nl": "Knippen zoals op Windows",
+          "ru": "Фрагменты как в Windows"
+        },
+        "text": {
+          "en": "Press Meta+Shift+S or Print and pick Rectangle, Freeform, Window or Full screen in the bar at the top. Drag and let go to take the snip: it is saved, copied to the clipboard and shown in a notification. Select the notification to mark up the snip with a pen or highlighter.",
+          "nl": "Druk op Meta+Shift+S of Print en kies Rechthoek, Vrije vorm, Venster of Volledig scherm in de balk bovenaan. Sleep en laat los om te knippen: het knipsel wordt opgeslagen, naar het klembord gekopieerd en in een melding getoond. Selecteer de melding om aantekeningen te maken met een pen of markeerstift.",
+          "ru": "Нажмите Meta+Shift+S или Print и выберите прямоугольник, произвольную форму, окно или весь экран на панели сверху. Выделите область и отпустите кнопку мыши: фрагмент сохранится, скопируется в буфер обмена и появится в уведомлении. Нажмите на уведомление, чтобы добавить пометки ручкой или маркером."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-14-2",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "icon": "preferences-desktop",
+        "title": {
+          "en": "Room for your widgets",
+          "nl": "Ruimte voor je widgets",
+          "ru": "Место для виджетов"
+        },
+        "text": {
+          "en": "Desktop icons now leave room for widgets. Moving or resizing a widget shifts overlapping shortcuts to free cells, and automatic sorting respects widget areas too. Sign out and back in after updating to apply it.",
+          "nl": "Pictogrammen op het bureaublad laten nu ruimte voor widgets. Verplaats of vergroot je een widget, dan schuiven snelkoppelingen eronder naar een vrije plek, en ook automatisch sorteren houdt rekening met widgets. Meld je na de update af en weer aan om het toe te passen.",
+          "ru": "Иконки рабочего стола теперь оставляют место для виджетов. При переносе или изменении размера виджета перекрытые ярлыки сдвигаются в свободные ячейки. Автоматическая сортировка тоже учитывает виджеты. После обновления выйдите из системы и войдите снова, чтобы применить изменение."
+        }
+      },
+      {
+        "icon": "preferences-desktop-locale",
+        "title": {
+          "en": "Choose your installer language",
+          "nl": "Kies de taal van de installer",
+          "ru": "Выбор языка установщика"
+        },
+        "text": {
+          "en": "Choosing a language in the installer now translates its pages right away and sets the language of your installed system. New Live images start in English; pick Nederlands or Русский in the boot menu if you prefer.",
+          "nl": "Kies je een taal in de installer, dan worden de pagina's meteen vertaald en krijgt je geïnstalleerde systeem die taal. Nieuwe Live-images starten in het Engels; kies Nederlands of Русский in het opstartmenu als je dat liever hebt.",
+          "ru": "Выбор языка в установщике теперь сразу переводит его страницы и задаёт язык устанавливаемой системы. Новые Live-образы запускаются на английском; Nederlands или Русский можно выбрать в меню загрузки."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-14",
+    "date": "2026-10-14",
+    "items": [
+      {
+        "icon": "org.lumo.focus",
+        "title": {
+          "en": "Focus mode",
+          "nl": "Focusmodus",
+          "ru": "Режим фокусировки"
+        },
+        "text": {
+          "en": "The new Focus app is a Pomodoro timer. Choose your distracting apps in Settings › Focus mode; they stay closed until the timer is over.",
+          "nl": "De nieuwe app Focus is een pomodorotimer. Kies je afleidende apps in Instellingen › Focusmodus; ze blijven dicht tot de timer afloopt.",
+          "ru": "Новое приложение «Фокус» — таймер помодоро. Выберите отвлекающие приложения в Настройках › Режим фокусировки; они не откроются, пока идёт таймер."
+        }
+      },
+      {
+        "icon": "utilities-system-monitor",
+        "title": {
+          "en": "A new Task Manager",
+          "nl": "Een nieuw Taakbeheer",
+          "ru": "Новый диспетчер задач"
+        },
+        "text": {
+          "en": "Task Manager is laid out like the one in Windows: processes, performance graphs and startup apps, each on its own page. Open it with Ctrl+Shift+Esc.",
+          "nl": "Taakbeheer is ingedeeld zoals in Windows: processen, prestatiegrafieken en opstart-apps, elk op een eigen pagina. Open het met Ctrl+Shift+Esc.",
+          "ru": "Диспетчер задач устроен как в Windows: процессы, графики производительности и автозагрузка, каждый на своей странице. Откройте его сочетанием Ctrl+Shift+Esc."
+        }
+      },
+      {
+        "icon": "kdeconnect",
+        "title": {
+          "en": "Phones found in Dutch",
+          "nl": "Telefoons gevonden in het Nederlands",
+          "ru": "Телефоны находятся на нидерландском"
+        },
+        "text": {
+          "en": "Settings › Phone now finds your phone when Lumo is set to Dutch.",
+          "nl": "Instellingen › Telefoon vindt je telefoon nu ook als Lumo in het Nederlands staat.",
+          "ru": "Настройки › Телефон теперь находят телефон и при нидерландском языке системы."
+        }
+      },
+      {
+        "icon": "preferences-desktop-locale",
+        "title": {
+          "en": "More Lumo in Dutch",
+          "nl": "Meer Lumo in het Nederlands",
+          "ru": "Больше Lumo на нидерландском"
+        },
+        "text": {
+          "en": "This window and the colour names in Settings › Wallpaper & style are now in Dutch too. The orange default colour is called Lumo.",
+          "nl": "Dit venster en de kleurnamen in Instellingen › Achtergrond en stijl zijn nu ook in het Nederlands. De oranje standaardkleur heet Lumo.",
+          "ru": "Это окно и названия цветов в разделе Настройки › Обои и стиль теперь есть и на нидерландском. Оранжевый цвет по умолчанию называется Lumo."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-7",
+    "date": "2026-10-12",
+    "items": [
+      {
+        "icon": "network-wireless",
+        "title": {
+          "en": "Wi-Fi power setting rolled back",
+          "ru": "Откат настройки питания Wi-Fi",
+          "nl": "Wifi-energie-instelling teruggedraaid"
+        },
+        "text": {
+          "en": "Following a report of packet loss and lag spikes in CS2 after the last update, the automatic RTL8852CE power-saving change has been withdrawn. Restart after updating to restore the previous Wi-Fi defaults. Your saved connection settings are preserved. The cause of the network delays is still being investigated.",
+          "ru": "После сообщения о потере пакетов и скачках задержки в CS2 после предыдущего обновления автоматическая настройка энергосбережения RTL8852CE отменена. Перезагрузитесь после обновления, чтобы вернуть прежнее поведение Wi-Fi. Сохранённые параметры подключений остаются на месте. Причина сетевых задержек ещё выясняется.",
+          "nl": "Na een melding van pakketverlies en haperingen in CS2 na de vorige update is de automatische energiebesparing voor RTL8852CE ingetrokken. Start opnieuw op na de update om de vorige wifi-instellingen terug te krijgen. Je opgeslagen verbindingen blijven bewaard. De oorzaak van de netwerkvertraging wordt nog onderzocht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-5",
+    "date": "2026-10-12",
+    "items": [
+      {
+        "icon": "org.lumo.store",
+        "title": {
+          "en": "A more expressive Store",
+          "ru": "Больше Material 3 в магазине",
+          "nl": "Een levendigere Store"
+        },
+        "text": {
+          "en": "Store has softer tonal surfaces, clearer navigation and a refreshed app page. Cards appear smoothly and respond to hovering and pressing, while screenshots fade in as they load. The layout adapts to smaller windows, and animations follow your desktop speed setting.",
+          "ru": "В магазине появились мягкие тональные поверхности, более чёткая навигация и обновлённая страница приложения. Карточки плавно появляются и реагируют на наведение и нажатие, а снимки экрана проявляются после загрузки. Интерфейс подстраивается под узкое окно, а анимации учитывают выбранную в системе скорость.",
+          "nl": "De Store heeft zachtere tinten, duidelijkere navigatie en een vernieuwde app-pagina. Kaarten verschijnen soepel en reageren als je erover beweegt of erop drukt, en schermafbeeldingen faden in zodra ze geladen zijn. De indeling past zich aan kleinere vensters aan, en animaties volgen de snelheid die je voor het bureaublad hebt gekozen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-4",
+    "date": "2026-10-12",
+    "items": [
+      {
+        "icon": "org.lumo.store",
+        "title": {
+          "en": "Open the app you installed",
+          "ru": "Запускается установленная версия",
+          "nl": "De app openen die je installeerde"
+        },
+        "text": {
+          "en": "Store now starts the installed Flatpak version from the correct installation, even when a Debian launcher has the same name. Native apps use their Debian launcher.",
+          "ru": "Магазин запускает установленную версию Flatpak из нужной области установки, даже если ярлык Debian называется так же. Для обычных пакетов используется ярлык Debian.",
+          "nl": "De Store start nu de geïnstalleerde Flatpak-versie uit de juiste installatie, ook als een Debian-starter dezelfde naam heeft. Gewone apps gebruiken hun Debian-starter."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-3",
+    "date": "2026-10-11",
+    "items": [
+      {
+        "icon": "org.lumo.store",
+        "title": {
+          "en": "Smoother app browsing",
+          "ru": "Удобнее искать приложения",
+          "nl": "Soepeler apps zoeken"
+        },
+        "text": {
+          "en": "Typing a new search from an app page now takes you straight to the results. Missing screenshots show a fallback icon. Find Flatpak app updates in Store and system updates in Settings.",
+          "ru": "Новый запрос со страницы приложения сразу открывает результаты поиска. Если снимок экрана недоступен, показывается значок. Обновления Flatpak находятся в магазине, системные — в настройках.",
+          "nl": "Typ je op een app-pagina een nieuwe zoekopdracht, dan ga je meteen naar de resultaten. Ontbrekende schermafbeeldingen tonen een vervangend pictogram. Updates van Flatpak-apps vind je in de Store, systeemupdates in Instellingen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-2",
+    "date": "2026-10-11",
+    "items": [
+      {
+        "icon": "org.lumo.store",
+        "title": {
+          "en": "Your new app store",
+          "ru": "Новый магазин приложений",
+          "nl": "Je nieuwe appwinkel"
+        },
+        "text": {
+          "en": "Find apps and games in Store, choose Flathub or Debian, and install them without a terminal. Browse categories, screenshots and ratings, manage installed apps and update Flatpak apps in one place. System updates stay in Settings.",
+          "ru": "Находите приложения и игры в «Магазине», выбирайте Flathub или Debian и устанавливайте без терминала. Категории, снимки экрана, оценки, установленные приложения и обновления Flatpak теперь в одном месте. Обновления системы остаются в «Настройках».",
+          "nl": "Vind apps en games in de Store, kies Flathub of Debian en installeer ze zonder terminal. Blader door categorieën, schermafbeeldingen en beoordelingen, beheer je geïnstalleerde apps en werk Flatpak-apps op één plek bij. Systeemupdates blijven in Instellingen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-1",
+    "items": [
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Widget settings keep edit mode",
+          "ru": "Настройки виджета не выходят из редактирования",
+          "nl": "Widgetinstellingen houden de bewerkmodus vast"
+        },
+        "text": {
+          "en": "Opening a widget's settings while you arrange the desktop no longer ends edit mode. Close the settings and carry on.",
+          "ru": "Если открыть настройки виджета во время редактирования рабочего стола, режим редактирования больше не выключается. Закройте настройки и продолжайте.",
+          "nl": "Open je de instellingen van een widget terwijl je het bureaublad indeelt, dan stopt de bewerkmodus niet meer. Sluit de instellingen en ga verder."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-12-4",
+    "items": [
+      {
+        "icon": "org.lumo.screenshot",
+        "title": {
+          "en": "Screenshots on two monitors",
+          "ru": "Снимки экрана на двух мониторах",
+          "nl": "Schermafbeeldingen op twee monitoren"
+        },
+        "text": {
+          "en": "Each monitor now shows its own picture while you select an area, and Screen takes the monitor your mouse is on.",
+          "ru": "Каждый монитор теперь показывает свою картинку, пока вы выбираете область, а «Экран» снимает тот монитор, где сейчас мышь.",
+          "nl": "Elke monitor toont nu zijn eigen beeld terwijl je een gebied kiest, en Scherm neemt de monitor waar je muis op staat."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-12-3",
+    "items": [
+      {
+        "icon": "audio-volume-high",
+        "title": {
+          "en": "A tidier sound badge",
+          "ru": "Аккуратный значок звука",
+          "nl": "Een nettere geluidsbadge"
+        },
+        "text": {
+          "en": "An app that plays sound gets a small round badge on its panel icon; click it to mute. Turn off \"Use audio indicators to mute tasks\" in the panel's settings and the badge goes away.",
+          "ru": "У приложения, которое играет звук, на значке в панели появляется маленький круглый значок — нажмите на него, чтобы выключить звук. Если в настройках панели снять галочку «Использовать индикаторы воспроизведения для отключения звука», значок пропадёт.",
+          "nl": "Een app die geluid afspeelt krijgt een kleine ronde badge op zijn pictogram in het paneel; klik erop om het geluid uit te zetten. Zet „Audio-indicatoren gebruiken om taken te dempen” uit in de instellingen van het paneel en de badge verdwijnt."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-12-2",
+    "items": [
+      {
+        "icon": "weather-few-clouds",
+        "title": {
+          "en": "Choosing the weather city",
+          "ru": "Выбор города для погоды",
+          "nl": "De stad voor het weer kiezen"
+        },
+        "text": {
+          "en": "Cities appear while you type. Pick one and press Apply or OK, like every other widget setting.",
+          "ru": "Города находятся прямо при наборе. Выберите нужный и нажмите «Применить» или «ОК» — как в любых других настройках виджета.",
+          "nl": "Steden verschijnen terwijl je typt. Kies er een en druk op Toepassen of OK, net als bij elke andere widgetinstelling."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-12",
+    "items": [
+      {
+        "icon": "cpu",
+        "title": {
+          "en": "Drivers install themselves",
+          "ru": "Драйверы ставятся сами",
+          "nl": "Stuurprogramma's installeren zichzelf"
+        },
+        "text": {
+          "en": "If your computer has an NVIDIA graphics card, Lumo downloads its driver by itself, RTX 50 cards included, and asks you to restart. Without an NVIDIA card nothing is downloaded. See Settings › System › Drivers.",
+          "ru": "Если в компьютере видеокарта NVIDIA, Lumo сама скачает для неё драйвер, в том числе для RTX 50, и попросит перезагрузиться. Без видеокарты NVIDIA ничего не скачивается. Подробности — в «Настройки › Система › Драйверы».",
+          "nl": "Heeft je computer een NVIDIA-videokaart, dan downloadt Lumo zelf het stuurprogramma, ook voor RTX 50-kaarten, en vraagt je opnieuw op te starten. Zonder NVIDIA-kaart wordt er niets gedownload. Zie Instellingen › Systeem › Stuurprogramma's."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-11-2",
+    "items": [
+      {
+        "icon": "preferences-desktop-default-applications",
+        "title": {
+          "en": "Default apps on the first try",
+          "ru": "Приложения по умолчанию с первого раза",
+          "nl": "Standaard-apps in één keer goed"
+        },
+        "text": {
+          "en": "Choosing a default app in Settings › Apps now shows your choice right away.",
+          "ru": "Выбор приложения по умолчанию в «Настройки › Приложения» теперь сразу виден.",
+          "nl": "Kies je een standaard-app in Instellingen › Apps, dan zie je je keuze nu meteen."
+        }
+      },
+      {
+        "icon": "weather-few-clouds",
+        "title": {
+          "en": "Weather shows your city",
+          "ru": "Погода показывает ваш город",
+          "nl": "Het weer toont je stad"
+        },
+        "text": {
+          "en": "Pressing Enter in the city search no longer closes the settings, the widget picks up a new city at once and shows its name.",
+          "ru": "Enter в поиске города больше не закрывает настройки, виджет сразу подхватывает новый город и показывает его название.",
+          "nl": "Op Enter drukken in het zoekveld voor de stad sluit de instellingen niet meer; de widget neemt een nieuwe stad meteen over en toont de naam."
+        }
+      },
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Add widgets from the desktop menu",
+          "ru": "Виджеты из меню рабочего стола",
+          "nl": "Widgets toevoegen vanuit het bureaubladmenu"
+        },
+        "text": {
+          "en": "Right-click the desktop and choose Add or Manage Widgets… — now from the very first start.",
+          "ru": "Нажмите правой кнопкой на рабочем столе и выберите «Добавить или изменить виджеты…» — теперь с самого первого запуска.",
+          "nl": "Klik met rechts op het bureaublad en kies Widgets toevoegen of beheren…, nu al vanaf de allereerste start."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-11",
+    "items": [
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "A clean boot screen",
+          "ru": "Чистый экран загрузки",
+          "nl": "Een rustig opstartscherm"
+        },
+        "text": {
+          "en": "Technical kernel messages, for example about NVIDIA RTX 50 graphics cards, no longer appear on screen while the computer starts.",
+          "ru": "Технические сообщения ядра, например о видеокартах NVIDIA RTX 50, больше не появляются на экране при включении компьютера.",
+          "nl": "Technische kernelmeldingen, bijvoorbeeld over NVIDIA RTX 50-videokaarten, verschijnen niet meer op het scherm terwijl de computer opstart."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-10",
+    "items": [
+      {
+        "icon": "system-lock-screen",
+        "title": {
+          "en": "A calmer lock screen",
+          "ru": "Спокойный экран блокировки",
+          "nl": "Een rustiger vergrendelscherm"
+        },
+        "text": {
+          "en": "The lock screen no longer asks you to scan a fingerprint or a smartcard on computers that have no reader.",
+          "ru": "Экран блокировки больше не просит приложить палец или смарт-карту на компьютерах, где нет считывателя.",
+          "nl": "Het vergrendelscherm vraagt niet meer om een vingerafdruk of smartcard op computers zonder lezer."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09-5",
+    "items": [
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "Pastel",
+          "ru": "Пастель",
+          "nl": "Pastel"
+        },
+        "text": {
+          "en": "New live wallpaper with soft Material shapes, like on Pixel, in the colours of your theme. It replaces Marble Run; if you used Marble Run, you now have Pastel.",
+          "ru": "Новые живые обои с мягкими фигурами Material, как на Pixel, в цветах вашей темы. Они заменяют «Горку»: если у вас стояла «Горка», теперь будет «Пастель».",
+          "nl": "Nieuwe bewegende achtergrond met zachte Material-vormen, zoals op Pixel, in de kleuren van je thema. Hij vervangt Marble Run; gebruikte je Marble Run, dan heb je nu Pastel."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09-4",
+    "items": [
+      {
+        "icon": "preferences-system-windows",
+        "title": {
+          "en": "Sharp window previews",
+          "ru": "Чёткие превью окон",
+          "nl": "Scherpe venstervoorbeelden"
+        },
+        "text": {
+          "en": "Hovering an app in the panel shows a clear preview of its window again, also in virtual machines, instead of coloured stripes.",
+          "ru": "При наведении на приложение в панели снова видно чёткое превью его окна, в том числе в виртуальных машинах, а не цветные полосы.",
+          "nl": "Beweeg je over een app in het paneel, dan zie je weer een duidelijk voorbeeld van het venster, ook in virtuele machines, in plaats van gekleurde strepen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09-2",
+    "items": [
+      {
+        "icon": "preferences-desktop-wallpaper",
+        "title": {
+          "en": "Starfall",
+          "ru": "Звездопад",
+          "nl": "Starfall"
+        },
+        "text": {
+          "en": "A new live wallpaper: stars twinkle over quiet hills, and every few seconds a shooting star crosses the sky. Pick it in Settings › Wallpaper & style.",
+          "ru": "Новые живые обои: звёзды мерцают над тихими холмами, и каждые несколько секунд небо пересекает падающая звезда. Выберите их в Настройки › Обои и стиль.",
+          "nl": "Een nieuwe bewegende achtergrond: sterren twinkelen boven stille heuvels, en om de paar seconden schiet er een vallende ster langs de hemel. Kies hem in Instellingen › Achtergrond en stijl."
+        }
+      },
+      {
+        "icon": "user-identity",
+        "title": {
+          "en": "Your picture in the app menu",
+          "ru": "Ваше фото в меню приложений",
+          "nl": "Je foto in het app-menu"
+        },
+        "text": {
+          "en": "The app menu shows your profile picture again instead of a plain coloured circle.",
+          "ru": "Меню приложений снова показывает фото профиля, а не просто цветной круг.",
+          "nl": "Het app-menu toont weer je profielfoto in plaats van een effen gekleurde cirkel."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-09",
+    "items": [
+      {
+        "icon": "preferences-desktop-color",
+        "title": {
+          "en": "Easier to read in every colour",
+          "ru": "Читается в любом цвете",
+          "nl": "Beter leesbaar in elke kleur"
+        },
+        "text": {
+          "en": "In the Material Design 1 style, yellow, lime, cyan, indigo and other colours no longer melt into the background: text and icons always stand out.",
+          "ru": "В стиле Material Design 1 жёлтый, лаймовый, бирюзовый, индиго и другие цвета больше не сливаются с фоном: текст и значки всегда хорошо видны.",
+          "nl": "In de stijl Material Design 1 vallen geel, limoen, cyaan, indigo en andere kleuren niet meer weg tegen de achtergrond: tekst en pictogrammen springen er altijd uit."
+        }
+      },
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Widgets one click away",
+          "ru": "Виджеты в один клик",
+          "nl": "Widgets met één klik"
+        },
+        "text": {
+          "en": "Right-click the desktop and choose Add or Manage Widgets. The clock comes first.",
+          "ru": "Нажмите правой кнопкой на рабочем столе и выберите «Добавить или изменить виджеты…». Часы — первые в списке.",
+          "nl": "Klik met rechts op het bureaublad en kies Widgets toevoegen of beheren. De klok staat bovenaan."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08-7",
+    "items": [
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Material 3 widgets",
+          "ru": "Виджеты Material 3",
+          "nl": "Material 3-widgets"
+        },
+        "text": {
+          "en": "A big clock, At a Glance, weather, batteries, calendar, music, photos and notes for your desktop, in the colours of your theme. Right-click the desktop, choose Enter Edit Mode and press Widgets.",
+          "ru": "Большие часы, «Коротко о главном», погода, батареи, календарь, музыка, фото и заметки на рабочем столе — в цветах вашей темы. Нажмите правой кнопкой на рабочем столе, выберите «Перейти в режим редактирования» и нажмите «Виджеты».",
+          "nl": "Een grote klok, In één oogopslag, weer, batterijen, agenda, muziek, foto's en notities voor je bureaublad, in de kleuren van je thema. Klik met rechts op het bureaublad, kies Bewerkmodus openen en druk op Widgets."
+        }
+      },
+      {
+        "icon": "document-edit",
+        "title": {
+          "en": "A new edit mode",
+          "ru": "Новый режим редактирования",
+          "nl": "Een nieuwe bewerkmodus"
+        },
+        "text": {
+          "en": "Moving and resizing widgets, wallpapers and panels now looks like the rest of Lumo.",
+          "ru": "Перемещать виджеты, менять их размер, обои и панели теперь можно в том же стиле, что и вся Lumo.",
+          "nl": "Widgets, achtergronden en panelen verplaatsen en van grootte veranderen ziet er nu uit zoals de rest van Lumo."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08-6",
+    "items": [
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Back on its feet",
+          "ru": "Снова на ногах",
+          "nl": "Weer op de been"
+        },
+        "text": {
+          "en": "If the system ever hits a critical kernel error, the computer restarts by itself, and Lumo tells you what happened when you are back.",
+          "ru": "Если в ядре когда-нибудь случится критическая ошибка, компьютер перезагрузится сам, а после перезагрузки Lumo расскажет, что произошло.",
+          "nl": "Krijgt het systeem ooit een ernstige kernelfout, dan start de computer vanzelf opnieuw op, en vertelt Lumo je wat er gebeurde zodra je terug bent."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08-5",
+    "items": [
+      {
+        "icon": "preferences-desktop-color",
+        "title": {
+          "en": "Colour themes",
+          "ru": "Цветовые темы",
+          "nl": "Kleurthema's"
+        },
+        "text": {
+          "en": "Lumo now comes in every Material colour, from red to blue grey. Apps, the panel, windows and even the live wallpapers change with it. Pick one in Settings › Wallpaper & style.",
+          "ru": "Lumo теперь бывает во всех цветах Material — от красного до сине-серого. Вместе с цветом меняются приложения, панель, окна и даже живые обои. Выберите свой в Настройки › Обои и стиль.",
+          "nl": "Lumo is er nu in elke Material-kleur, van rood tot blauwgrijs. Apps, het paneel, vensters en zelfs de bewegende achtergronden veranderen mee. Kies er een in Instellingen › Achtergrond en stijl."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08-4",
+    "items": [
+      {
+        "icon": "user-identity",
+        "title": {
+          "en": "New profile pictures",
+          "ru": "Новые картинки профиля",
+          "nl": "Nieuwe profielfoto's"
+        },
+        "text": {
+          "en": "Waves and ripples in Lumo's colours instead of KDE's pictures. Pick one in Settings › Account.",
+          "ru": "Волны и узоры в цветах Lumo вместо картинок KDE. Выберите любую в Настройки › Аккаунт.",
+          "nl": "Golven en rimpelingen in de kleuren van Lumo in plaats van de afbeeldingen van KDE. Kies er een in Instellingen › Account."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08-3",
+    "items": [
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Installed system boot fixed",
+          "ru": "Исправлена загрузка установленной системы",
+          "nl": "Opstarten van een geïnstalleerd systeem hersteld"
+        },
+        "text": {
+          "en": "Fixed root directory ownership that could leave a newly installed system at a black screen. Restart after updating to restore the login screen. New installation images include the fix.",
+          "ru": "Исправлен владелец корневого каталога: из-за ошибки после установки мог появляться чёрный экран. После обновления перезагрузитесь, чтобы восстановить экран входа. Новые установочные образы уже содержат исправление.",
+          "nl": "De eigenaar van de hoofdmap is hersteld; daardoor kon een net geïnstalleerd systeem op een zwart scherm blijven hangen. Start opnieuw op na de update om het inlogscherm terug te krijgen. Nieuwe installatie-images bevatten de oplossing."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-08",
+    "items": [
+      {
+        "icon": "system-software-update",
+        "title": {
+          "en": "Update notifications",
+          "ru": "Уведомления об обновлениях",
+          "nl": "Updatemeldingen"
+        },
+        "text": {
+          "en": "Lumo tells you when updates are ready and reminds you to restart after a system update. After the restart, this window tells you what is new.",
+          "ru": "Lumo сама сообщает, когда готовы обновления, и напоминает перезагрузиться после обновления системы. А после перезагрузки рассказывает в этом окне, что нового.",
+          "nl": "Lumo laat weten wanneer updates klaarstaan en herinnert je eraan opnieuw op te starten na een systeemupdate. Na het opnieuw opstarten vertelt dit venster wat er nieuw is."
+        }
+      },
+      {
+        "icon": "preferences-desktop-sound",
+        "title": {
+          "en": "Lumo sounds",
+          "ru": "Звуки Lumo",
+          "nl": "Lumo-geluiden"
+        },
+        "text": {
+          "en": "Soft new sounds for logging in, notifications, volume, screenshots and the trash. Choose and listen to them in Settings › Sound.",
+          "ru": "Новые мягкие звуки для входа, уведомлений, громкости, снимков экрана и корзины. Выбрать и послушать их можно в Настройки › Звук.",
+          "nl": "Zachte nieuwe geluiden voor inloggen, meldingen, volume, schermafbeeldingen en de prullenbak. Kies en beluister ze in Instellingen › Geluid."
+        }
+      },
+      {
+        "icon": "preferences-desktop-keyboard-shortcut",
+        "title": {
+          "en": "Keyboard shortcuts",
+          "ru": "Сочетания клавиш",
+          "nl": "Sneltoetsen"
+        },
+        "text": {
+          "en": "Every shortcut in one place: find the one you need and just press a new one. Ctrl+Alt+T opens the terminal again.",
+          "ru": "Все сочетания в одном месте: найдите нужное и просто нажмите новое. А Ctrl+Alt+T снова открывает терминал.",
+          "nl": "Alle sneltoetsen op één plek: zoek degene die je nodig hebt en druk gewoon een nieuwe in. Ctrl+Alt+T opent weer de terminal."
+        }
+      },
+      {
+        "icon": "system-users",
+        "title": {
+          "en": "Accounts",
+          "ru": "Аккаунты",
+          "nl": "Accounts"
+        },
+        "text": {
+          "en": "Add the people who use this computer, make them administrators and change their passwords right in Settings.",
+          "ru": "Добавляйте людей, которые пользуются компьютером, делайте их администраторами и меняйте пароли прямо в Настройках.",
+          "nl": "Voeg de mensen toe die deze computer gebruiken, maak ze beheerder en wijzig hun wachtwoord, gewoon in Instellingen."
+        }
+      },
+      {
+        "icon": "preferences-desktop-font",
+        "title": {
+          "en": "Fonts and accessibility",
+          "ru": "Шрифты и специальные возможности",
+          "nl": "Lettertypen en toegankelijkheid"
+        },
+        "text": {
+          "en": "Pick a typeface for the interface and one for code. Sticky keys, moving the pointer with the keyboard and shaking the mouse to find the pointer are in Accessibility.",
+          "ru": "Выберите шрифт для интерфейса и для кода. Залипание клавиш, управление указателем с клавиатуры и встряхивание мыши, чтобы найти курсор, — в специальных возможностях.",
+          "nl": "Kies een lettertype voor de interface en een voor code. Plaktoetsen, de aanwijzer met het toetsenbord bewegen en de muis schudden om de aanwijzer te vinden staan in Toegankelijkheid."
+        }
+      },
+      {
+        "icon": "applications-system",
+        "title": {
+          "en": "One style everywhere",
+          "ru": "Всё в одном стиле",
+          "nl": "Overal één stijl"
+        },
+        "text": {
+          "en": "Fewer windows from KDE: Files asks itself what to do with matching names, a short notification replaces the crash report, and the browser's dialogs look like Lumo.",
+          "ru": "Меньше окон от KDE: Файлы сами спрашивают, что делать с одинаковыми именами, вместо отчёта о сбое приходит короткое уведомление, а окна браузера выглядят как Lumo.",
+          "nl": "Minder vensters van KDE: Bestanden vraagt zelf wat er moet gebeuren met dezelfde namen, een korte melding vervangt het crashrapport, en de dialogen van de browser zien eruit als Lumo."
+        }
+      }
+    ]
+  }
+]

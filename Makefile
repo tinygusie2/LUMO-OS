@@ -2,9 +2,9 @@ SHELL := /bin/bash
 
 .PHONY: check keyring index signer-keyring sources unpack verify \
 	build-tools build-rootfs base-files-source base-files-binary \
-	kernora-base-source kernora-base-binary kernora-archive-source \
-	kernora-archive-binary kernora-desktop-source \
-	kernora-desktop-binary kernora-apps-source kernora-apps-binary \
+	lumo-base-source lumo-base-binary lumo-archive-source \
+	lumo-archive-binary lumo-desktop-source \
+	lumo-desktop-binary lumo-apps-source lumo-apps-binary \
 	calamares-source calamares-binary \
 	polkit-kde-agent-1-source polkit-kde-agent-1-binary \
 	development-archive-key archive-key local-archive publish \
@@ -33,9 +33,9 @@ verify:
 	./tests/lint-layout.sh
 	./tests/test-squashfs-root.sh
 	./tests/test-base-files-identity.sh
-	./tests/test-kernora-base-source.sh
-	./tests/test-kernora-archive-source.sh
-	./tests/test-kernora-desktop-source.sh
+	./tests/test-lumo-base-source.sh
+	./tests/test-lumo-archive-source.sh
+	./tests/test-lumo-desktop-source.sh
 	./scripts/verify-sources
 
 base-files-source: verify
@@ -50,29 +50,29 @@ build-rootfs: build-tools
 base-files-binary: verify build-rootfs
 	./scripts/build-base-files-binary
 
-kernora-base-source: verify
-	./scripts/build-kernora-base-source
+lumo-base-source: verify
+	./scripts/build-lumo-base-source
 
-kernora-base-binary: verify build-rootfs
-	./scripts/build-kernora-base-binary
+lumo-base-binary: verify build-rootfs
+	./scripts/build-lumo-base-binary
 
-kernora-archive-source: verify
-	./scripts/build-kernora-archive-source
+lumo-archive-source: verify
+	./scripts/build-lumo-archive-source
 
-kernora-archive-binary: verify build-rootfs
-	./scripts/build-kernora-archive-binary
+lumo-archive-binary: verify build-rootfs
+	./scripts/build-lumo-archive-binary
 
-kernora-desktop-source: verify
-	./scripts/build-kernora-desktop-source
+lumo-desktop-source: verify
+	./scripts/build-lumo-desktop-source
 
-kernora-desktop-binary: verify build-rootfs
-	./scripts/build-kernora-desktop-binary
+lumo-desktop-binary: verify build-rootfs
+	./scripts/build-lumo-desktop-binary
 
-kernora-apps-source: verify
-	./scripts/build-kernora-apps-source
+lumo-apps-source: verify
+	./scripts/build-lumo-apps-source
 
-kernora-apps-binary: verify build-rootfs
-	./scripts/build-kernora-apps-binary
+lumo-apps-binary: verify build-rootfs
+	./scripts/build-lumo-apps-binary
 
 calamares-source: verify
 	./scripts/build-calamares-source
@@ -89,8 +89,8 @@ polkit-kde-agent-1-binary: verify build-rootfs
 development-archive-key:
 	./scripts/create-development-archive-key
 
-local-archive: base-files-binary kernora-base-binary kernora-archive-binary kernora-desktop-binary \
-		kernora-apps-binary calamares-binary polkit-kde-agent-1-binary \
+local-archive: base-files-binary lumo-base-binary lumo-archive-binary lumo-desktop-binary \
+		lumo-apps-binary calamares-binary polkit-kde-agent-1-binary \
 		development-archive-key rquickshare
 	./scripts/build-local-archive
 

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = configure ]; then
+    install -d -m 0755 /var/lib/lumo
+    install -d -m 0711 /var/lib/lumo/pin
+    pam-auth-update --package || true
+fi
+
+#DEBHELPER#

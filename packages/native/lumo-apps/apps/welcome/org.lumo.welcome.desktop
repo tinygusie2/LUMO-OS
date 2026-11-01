@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Welcome
+Name[ru]=Добро пожаловать
+Name[nl]=Welkom
+GenericName=Introduction to Lumo
+GenericName[ru]=Знакомство с Lumo
+GenericName[nl]=Kennismaking met Lumo
+Icon=org.lumo.welcome
+Exec=lumo-welcome
+Categories=Qt;System;
+Keywords=welcome;tour;introduction;приветствие;знакомство;
+StartupNotify=true

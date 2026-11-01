@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_marbles_to_pastel
+Script=lumo-marbles-to-pastel.sh,sh

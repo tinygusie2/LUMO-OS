@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Bluetooth pairing
+Name[ru]=Сопряжение Bluetooth
+Name[nl]=Bluetooth-koppeling
+Icon=preferences-system-bluetooth
+Exec=lumo-bluetooth-agent
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=1

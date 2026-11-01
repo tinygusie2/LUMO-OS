@@ -11,7 +11,7 @@ fail() {
 }
 
 version=$(dpkg-parsechangelog -l"$package_root/changelog" -S Version)
-[[ "$version" == *kernora* ]] || fail "the derived version does not name Kernora: $version"
+[[ "$version" == *lumo* ]] || fail "the derived version does not name Lumo: $version"
 grep -Fxq "calamares     3.3.14-1              $version" "$project_root/manifests/derived-packages.txt" \
   || fail "manifests/derived-packages.txt does not record $version"
 
@@ -29,7 +29,7 @@ if [[ -s "$dsc" ]]; then
     [[ -n "$patch" && "$patch" != \#* ]] || continue
     tar -tJf "$source_dir/calamares_${version}.debian.tar.xz" \
       | grep -Fx "debian/patches/$patch" > /dev/null \
-      || fail "the Kernora patch is not in the source package: $patch"
+      || fail "the Lumo patch is not in the source package: $patch"
   done < "$package_root/patches/series"
 fi
 

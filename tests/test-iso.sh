@@ -20,7 +20,7 @@ source "$project_root/configs/live/live-user.env"
 live_user=$LIVE_USER
 live_uid=$LIVE_USER_UID
 
-temporary_root=$(mktemp -d /tmp/kernora-iso-test.XXXXXX)
+temporary_root=$(mktemp -d /tmp/lumo-iso-test.XXXXXX)
 trap 'find "$temporary_root" -depth -delete' EXIT
 
 xorriso -indev "$iso" -report_el_torito plain \
@@ -37,9 +37,9 @@ grep -Fq 'grub2-mbr' "$temporary_root/system-area.txt" \
 
 for path in \
   /boot/grub/grub.cfg \
-  /boot/grub/themes/kernora/theme.txt \
-  /boot/grub/themes/kernora/roboto-regular-16.pf2 \
-  /boot/grub/themes/kernora/select_c.png \
+  /boot/grub/themes/lumo/theme.txt \
+  /boot/grub/themes/lumo/roboto-regular-16.pf2 \
+  /boot/grub/themes/lumo/select_c.png \
   /live/vmlinuz \
   /live/initrd.img \
   /live/filesystem.squashfs \
@@ -53,9 +53,11 @@ done
 xorriso -osirrox on -indev "$iso" \
   -extract /boot/grub/grub.cfg "$temporary_root/grub.cfg" \
   > "$temporary_root/extract-grub.txt" 2>&1
-awk '/usr\/share\/kernora\/settings\/Main.qml/ && !found { found = NR } /^menuentry .*--id live-en/ { live = NR }
+awk '/usr\/share\/lumo\/settings\/Main.qml/ && !found { found = NR } /^menuentry .*--id live-en/ { live = NR }
      END { exit !(found && live && found < live) }' "$temporary_root/grub.cfg" \
-  || fail "the ISO menu does not start an installed Kernora before the live session"
+  || fail "the ISO menu does not start an installed Lumo before the live session"
+grep -Fq '/usr/share/kernora/settings/Main.qml' "$temporary_root/grub.cfg" \
+  || fail "the ISO menu does not start an installed system from before the Lumo rename"
 grep -Fxq 'set default=live-en' "$temporary_root/grub.cfg" \
   || fail "the default live session is not English"
 awk '/^menuentry .*--id live-/ { exit !($0 ~ /--id live-en/) }' "$temporary_root/grub.cfg" \
@@ -80,12 +82,12 @@ awk '$NF == "squashfs-root" { found = 1; if ($1 != "drwxr-xr-x" || $2 != "0/0") 
 
 unsquashfs -cat "$temporary_root/filesystem.squashfs" usr/lib/os-release \
   > "$temporary_root/os-release"
-grep -Fxq 'ID=kernora' "$temporary_root/os-release" \
+grep -Fxq 'ID=lumo' "$temporary_root/os-release" \
   || fail "SquashFS has the wrong OS identity"
 unsquashfs -cat "$temporary_root/filesystem.squashfs" \
-  etc/systemd/system/kernora-boot-ready.service \
+  etc/systemd/system/lumo-boot-ready.service \
   > "$temporary_root/boot-ready.service"
-grep -Fq 'KERNORA_BOOT_OK' "$temporary_root/boot-ready.service" \
+grep -Fq 'LUMO_BOOT_OK' "$temporary_root/boot-ready.service" \
   || fail "boot readiness marker is absent"
 
 xorriso -osirrox on -indev "$iso" \

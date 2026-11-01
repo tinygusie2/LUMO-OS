@@ -4,7 +4,7 @@
     property string auditLanguageStatus: config.currentLanguageStatus
     function auditRequire(ok: bool, message: string): void {
         if (!ok) {
-            console.error("KERNORA_LANGUAGE_FAIL: " + message);
+            console.error("LUMO_LANGUAGE_FAIL: " + message);
             auditTimer.stop();
             throw new Error(message);
         }
@@ -29,7 +29,7 @@
                 auditRequire(config.currentLanguageCode === "ru_RU.UTF-8", "Explicit target locale was replaced by translation locale");
                 auditRequire(config.currentLCCode === "de_DE.UTF-8", "Language change overwrote number/date formats");
                 auditRequire(locationPage.cities.some(city => city.key === "New_York" && city.name.includes("Нью")), "City list did not refresh its translations");
-                console.log("KERNORA_LANGUAGE_CHECK: location Russian, translated cities and independent German formats");
+                console.log("LUMO_LANGUAGE_CHECK: location Russian, translated cities and independent German formats");
                 ViewManager.back();
                 break;
             case 2:
@@ -50,6 +50,6 @@
             const locale = Global.value("localeConf");
             auditRequire(locale.LANG.startsWith("en"), "Final target LANG is inconsistent with selection");
             auditRequire(locale.LC_TIME === "de_DE.UTF-8", "Final target LC_TIME lost explicit formats");
-            console.log("KERNORA_LANGUAGE_SMOKE_PASS: " + JSON.stringify(locale));
+            console.log("LUMO_LANGUAGE_SMOKE_PASS: " + JSON.stringify(locale));
         }
     }

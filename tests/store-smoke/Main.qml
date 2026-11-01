@@ -1,5 +1,5 @@
 import QtQuick
-import org.kernora.store
+import org.lumo.store
 
 Window {
     visible: false
@@ -33,7 +33,7 @@ Window {
                 if (!require(installed.count === Store.installedCount, "installed count mismatch")) return;
                 console.log("STORE_SMOKE: video=" + results.count + " games=" + games.count + " installed=" + installed.count);
                 stageStartedAt = Date.now();
-                results.search = "kernora-this-app-does-not-exist-791827";
+                results.search = "lumo-this-app-does-not-exist-791827";
                 stage = 1;
             } else if (stage === 1) {
                 if (results.count !== 0 && Date.now() - stageStartedAt < 10000) return;

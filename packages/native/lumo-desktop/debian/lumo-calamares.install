@@ -1,0 +1,11 @@
+data/calamares/settings.conf etc/calamares
+data/calamares/modules etc/calamares
+data/calamares/branding/lumo etc/calamares/branding
+generated/branding/lumo-logo.png etc/calamares/branding/lumo
+generated/branding/lang etc/calamares/branding/lumo
+generated/branding/images etc/calamares/branding/lumo
+generated/branding/stylesheet.qss etc/calamares/branding/lumo
+data/installer/lumo-installer usr/bin
+data/installer/org.lumo.installer.policy usr/share/polkit-1/actions
+data/installer/49-lumo-installer.rules usr/share/polkit-1/rules.d
+data/installer/org.lumo.installer.desktop usr/share/applications

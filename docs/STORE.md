@@ -25,14 +25,14 @@ installed apps remain usable; new downloads still need a connection.
 
 ## Validation
 
-Build and check packages using `scripts/build-kernora-apps-binary` and
-`scripts/build-kernora-desktop-binary`. Their tests verify the Store module,
+Build and check packages using `scripts/build-lumo-apps-binary` and
+`scripts/build-lumo-desktop-binary`. Their tests verify the Store module,
 launcher, runtime dependencies, remote definition and Russian translation.
 
 In a disposable Lumo desktop session with both catalogues downloaded:
 
 ```sh
-KERNORA_QML_STORE=/path/to/tests/store-smoke kernora-store
+LUMO_QML_STORE=/path/to/tests/store-smoke lumo-store
 ```
 
 The smoke test checks broad search results, categories, installed counts,
@@ -63,7 +63,7 @@ In a disposable desktop VM with working Debian/Flathub sources, close
 Store and run:
 
 ```sh
-KERNORA_TEST_DISPOSABLE_SESSION=1 tests/store-install-smoke/run.sh
+LUMO_TEST_DISPOSABLE_SESSION=1 tests/store-install-smoke/run.sh
 ```
 
 This test removes and reinstalls galculator and GNOME Calculator. It logs
@@ -84,11 +84,11 @@ To preview the QML with an installed Lumo Store backend, close Store first
 and run in a Lumo desktop session:
 
 ```sh
-KERNORA_QML_STORE=/absolute/path/to/packages/native/kernora-apps/apps/store/qml kernora-store
+LUMO_QML_STORE=/absolute/path/to/packages/native/lumo-apps/apps/store/qml lumo-store
 ```
 
 The owner-approved October 12 Material 3 changes shipped in
-`kernora-apps 1.1.32` through the existing APT channel and the existing
+`lumo-apps 1.1.32` through the existing APT channel and the existing
 `v1-ember-5` release. What's New describes the changes in English and Russian.
 The release tag stays unchanged; the attached ISO still contains 1.1.30 and
 installed systems receive the newer package through Settings > Updates.

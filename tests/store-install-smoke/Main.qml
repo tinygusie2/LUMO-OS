@@ -1,5 +1,5 @@
 import QtQuick
-import org.kernora.store
+import org.lumo.store
 
 Window {
     id: root

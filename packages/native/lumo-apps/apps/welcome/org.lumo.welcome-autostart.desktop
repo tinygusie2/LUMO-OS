@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Welcome
+Name[ru]=Добро пожаловать
+Icon=org.lumo.welcome
+Exec=lumo-welcome --first-run
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-condition=lumo-welcomerc:General:ShowOnLogin:true
+X-KDE-autostart-phase=2

@@ -6,7 +6,7 @@ The distribution is an archive-first Debian derivative:
 signed Debian snapshot -> authenticated upstream source
                                       |
 derived base-files -------------------+--> rootless package builds
-native kernora-base ------------------+             |
+native lumo-base ------------------+             |
                                                     v
                                       signed development APT archive
                                                     |
@@ -24,7 +24,7 @@ the build pipeline in this repository.
 
 The first derived package is the complete Debian `base-files` source tree in
 `packages/derived/base-files`, currently versioned
-`13.8+deb13u6+kernora1`. It is built with Debian package tooling; it is not
+`13.8+deb13u6+lumo1`. It is built with Debian package tooling; it is not
 extracted from, or layered onto, an installer ISO. The fork changes the Lumo
 OS identity and vendor origin while retaining Debian parent and original
 maintainer provenance.
@@ -37,10 +37,10 @@ the Debian and Lumo versions.
 Two more packages are Debian's own sources rebuilt with Lumo patches, which
 `packages/derived/<name>` holds as a quilt series and a changelog entry:
 
-* `calamares` (`3.3.14-1kernora2`): the installer's partition page in
+* `calamares` (`3.3.14-1lumo2`): the installer's partition page in
   Material 3. `scripts/build-calamares-source` and
   `scripts/build-calamares-binary` build it.
-* `polkit-kde-agent-1` (`4:6.3.6-1kernora1`): the authentication prompt as a
+* `polkit-kde-agent-1` (`4:6.3.6-1lumo1`): the authentication prompt as a
   Material 3 dialog. `scripts/build-derived-source` and
   `scripts/build-derived-binary` build it; they take any derived package by
   name and read its versions from `manifests/derived-packages.txt`.
@@ -51,16 +51,16 @@ in `configs/live/packages.txt`.
 
 ## Implemented native package
 
-`packages/native/kernora-base` is a native Debian `3.0 (native)` package,
+`packages/native/lumo-base` is a native Debian `3.0 (native)` package,
 version `1.4` and architecture `all`. It has an exact dependency on
-`base-files (= 13.8+deb13u6+kernora1)`, making the Lumo identity package an
+`base-files (= 13.8+deb13u6+lumo1)`, making the Lumo identity package an
 explicit part of the distribution base. Its source-to-binary path is exercised
-by `make kernora-base-source` and `make kernora-base-binary`. It also supplies
+by `make lumo-base-source` and `make lumo-base-binary`. It also supplies
 optional hardware workarounds; see [the RTL8852CE workaround](WIFI_REALTEK.md).
 
 ## Desktop package
 
-`packages/native/kernora-desktop` (version `1.4`) carries the Lumo desktop:
+`packages/native/lumo-desktop` (version `1.4`) carries the Lumo desktop:
 the Material 3 design system, generated at build time from one seed colour,
 the Lumo Plasma and icon themes, and the launcher and quick settings applets
 of the panel. It is data and QML only (`Architecture: all`); its generators
@@ -68,13 +68,13 @@ need nothing but Python in the build chroot. See [DESKTOP.md](DESKTOP.md).
 
 ## Applications package
 
-`packages/native/kernora-apps` (version `1.0`, `amd64`) carries Lumo's own
+`packages/native/lumo-apps` (version `1.0`, `amd64`) carries Lumo's own
 applications -- Settings, Files, Text Editor, Photos, Media Player,
-Calculator, Screenshot and Welcome -- and `org.kernora.system`, the C++ Qt
+Calculator, Screenshot and Welcome -- and `org.lumo.system`, the C++ Qt
 Quick module they use to read and change the system. It is built with CMake
 and KDE Frameworks in a separate Qt build root (`scripts/create-qt-build-rootfs`,
-cached from the package's Build-Depends): `make kernora-apps-source` and
-`make kernora-apps-binary`. See [APPS.md](APPS.md).
+cached from the package's Build-Depends): `make lumo-apps-source` and
+`make lumo-apps-binary`. See [APPS.md](APPS.md).
 
 ## Rootless package build
 
@@ -93,11 +93,11 @@ _build/source-packages/{.dsc,.tar.xz}
           v
 _build/binary-packages/{.deb,.buildinfo,.changes}
 
-packages/native/kernora-base
+packages/native/lumo-base
           |
-          | make kernora-base-source / make kernora-base-binary
+          | make lumo-base-source / make lumo-base-binary
           v
-_build/{source-packages,binary-packages}/kernora-base_1.0_*
+_build/{source-packages,binary-packages}/lumo-base_1.0_*
 ```
 
 `mmdebstrap` creates the `amd64` build environment from the same immutable
@@ -127,29 +127,29 @@ versions, package dependency and package selection.
 
 The signing identity is intentionally a local development key. It is generated
 under ignored `_state` directories, has a one-year expiry and an
-`archive@kernora.invalid` UID, and is exported into the archive so the local
+`archive@lumo.invalid` UID, and is exported into the archive so the local
 proof can be consumed. It is not the Lumo production release key and must
 not be promoted as one.
 
 ## Minimal rootfs
 
 `make minimal-rootfs` uses `mmdebstrap --variant=minbase` in rootless `unshare`
-mode. The explicit package manifest installs `kernora-base=1.1`, whose exact
+mode. The explicit package manifest installs `lumo-base=1.1`, whose exact
 dependency selects the Lumo `base-files` fork. The resulting filesystem is
 tested inside a rootless chroot for OS identity, dpkg vendor, package versions,
 APT trust scoping and access to the embedded development archive.
 
 The rootfs contains:
 
-- the development archive at `/usr/share/kernora/archive`;
+- the development archive at `/usr/share/lumo/archive`;
 - its public key at
-  `/usr/share/keyrings/kernora-development-archive-keyring.gpg`;
+  `/usr/share/keyrings/lumo-development-archive-keyring.gpg`;
 - a key-scoped `file:` APT source for that archive;
 - timestamp-pinned Debian `trixie`, `trixie-updates` and `trixie-security`
   snapshot sources.
 
 The release artifact is
-`out/rootfs/kernora-1-ember-amd64.tar.xz`, with a sibling `.sha256` file. Tar
+`out/rootfs/lumo-1-ember-amd64.tar.xz`, with a sibling `.sha256` file. Tar
 members are sorted and normalized to the snapshot epoch, numeric root
 ownership, and stable PAX metadata. With the same pinned inputs, including the
 same development signing key, repeated builds produce the same artifact hash.
@@ -159,7 +159,7 @@ same development signing key, repeated builds produce the same artifact hash.
 1. **Stage 0:** authenticate/pin upstream sources and validate the repository
    (implemented).
 2. **Stage 1:** choose identity; build the forked `base-files` and native
-   `kernora-base`; publish and verify a signed local development archive
+   `lumo-base`; publish and verify a signed local development archive
    (development proof implemented). Production key governance, public URLs and
    real maintainer/archive email addresses remain release blockers.
 3. **Stage 2:** build, test and checksum a reproducible minimal rootfs from the

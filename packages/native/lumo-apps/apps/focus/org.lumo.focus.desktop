@@ -1,0 +1,23 @@
+[Desktop Entry]
+Type=Application
+Name=Focus
+Name[nl]=Focus
+Name[ru]=Фокус
+GenericName=Focus mode and Pomodoro timer
+GenericName[nl]=Focusmodus en pomodorotimer
+GenericName[ru]=Режим фокусировки и таймер помодоро
+Comment=Block distracting apps while a Pomodoro timer runs
+Comment[nl]=Afleidende apps blokkeren zolang een pomodorotimer loopt
+Comment[ru]=Блокировать отвлекающие приложения, пока идёт таймер помодоро
+Icon=org.lumo.focus
+Exec=lumo-focus
+Categories=Qt;Utility;
+Keywords=focus;pomodoro;timer;distraction;concentrate;study;focusmodus;concentratie;studeren;фокус;помодоро;
+StartupNotify=true
+Actions=start;
+
+[Desktop Action start]
+Name=Start focus
+Name[nl]=Focus starten
+Name[ru]=Начать фокусировку
+Exec=lumo-focus start

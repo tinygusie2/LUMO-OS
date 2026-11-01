@@ -1,0 +1,23 @@
+Source: lumo-base
+Section: admin
+Maintainer: Lumo Developers <developers@lumo.invalid>
+Standards-Version: 4.7.4
+Build-Depends: debhelper-compat (= 13)
+Rules-Requires-Root: no
+
+Package: lumo-base
+Architecture: all
+Depends:
+ ${misc:Depends},
+ base-files (= 13.8+deb13u6+lumo1),
+ lumo-archive (>= 1.4)
+Description: Lumo base system and hardware defaults
+ This package depends on the Lumo-specific packages required by every
+ Lumo installation: the system identity and the package archives
+ that keep it updated.
+ .
+ It also provides optional hardware workarounds, including a NetworkManager
+ power-saving example for the Realtek RTL8852CE wireless adapter. Examples
+ are not automatically enabled.
+ Removing it does not remove its dependencies, but may prevent future
+ base-system additions from being installed automatically.

@@ -23,7 +23,7 @@ cache_file="$PROJECT_ROOT/_cache/chroots/trixie-amd64-buildd.tar.xz"
 dsc_name="base-files_${package_version}.dsc"
 tar_name="base-files_${package_version}.tar.xz"
 
-temporary_root=$(mktemp -d /tmp/kernora-package-build.XXXXXX)
+temporary_root=$(mktemp -d /tmp/lumo-package-build.XXXXXX)
 chmod 0777 "$temporary_root"
 rootfs="$temporary_root/rootfs"
 cached_rootfs="$temporary_root/build-rootfs.tar.xz"
@@ -48,7 +48,7 @@ unshare --map-auto --setuid 0 --setgid 0 sh -c '
   tar -xJf "$2" -C "$1"
   mkdir -p "$1/build"
   cp "$3" "$4" "$1/build/"
-' kernora-extract "$rootfs" "$cached_rootfs" \
+' lumo-extract "$rootfs" "$cached_rootfs" \
   "$input_dir/$dsc_name" "$input_dir/$tar_name"
 
 unshare \
@@ -66,7 +66,7 @@ unshare \
     dpkg-source --extract "$1" source
     cd source
     dpkg-buildpackage --build=binary --no-sign
-  ' kernora-build "$dsc_name"
+  ' lumo-build "$dsc_name"
 
 mkdir -p "$output_dir"
 for artifact in \

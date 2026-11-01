@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=File Chooser
+Name[ru]=Выбор файла
+Comment=Lumo's file dialogs
+Comment[ru]=Диалоги открытия и сохранения файлов Lumo
+Icon=org.lumo.files
+Exec=false
+NoDisplay=true

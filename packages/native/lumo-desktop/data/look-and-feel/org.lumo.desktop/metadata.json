@@ -1,0 +1,14 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Lumo Developers"
+            }
+        ],
+        "Description": "Default Lumo desktop appearance",
+        "Id": "org.lumo.desktop",
+        "License": "LicenseRef-Lumo-Artwork",
+        "Name": "Lumo"
+    }
+}

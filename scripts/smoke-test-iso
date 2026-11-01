@@ -10,7 +10,7 @@ done
 load_project_config
 load_upstream_config
 
-iso="$PROJECT_ROOT/out/iso/kernora-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.iso"
+iso="$PROJECT_ROOT/out/iso/lumo-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.iso"
 [[ -s "$iso" ]] || die "ISO is missing; run make iso"
 
 logs="$PROJECT_ROOT/out/test-logs"
@@ -26,7 +26,7 @@ run_boot_test() {
   local temporary_root pid marker_seen=0
   local -a firmware_args=()
 
-  temporary_root=$(mktemp -d /tmp/kernora-qemu.XXXXXX)
+  temporary_root=$(mktemp -d /tmp/lumo-qemu.XXXXXX)
   if [[ "$firmware" == "uefi" ]]; then
     [[ -s /usr/share/OVMF/OVMF_CODE_4M.fd ]] \
       || die "OVMF_CODE_4M.fd is missing"
@@ -55,7 +55,7 @@ run_boot_test() {
   pid=$!
 
   for ((second = 0; second < 90; second += 1)); do
-    if grep -Fq 'KERNORA_BOOT_OK' "$log"; then
+    if grep -Fq 'LUMO_BOOT_OK' "$log"; then
       marker_seen=1
       break
     fi
@@ -69,7 +69,7 @@ run_boot_test() {
   wait "$pid" 2>/dev/null || true
   find "$temporary_root" -depth -delete
   (( marker_seen == 1 )) \
-    || die "$firmware boot did not reach KERNORA_BOOT_OK; see $log"
+    || die "$firmware boot did not reach LUMO_BOOT_OK; see $log"
   printf '%s boot smoke test: OK (%s)\n' "$firmware" "$accel"
 }
 

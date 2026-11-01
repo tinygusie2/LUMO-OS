@@ -1,0 +1,15 @@
+[Global]
+IconName=org.lumo.store
+Name=Store
+Name[ru]=Магазин
+Comment=Lumo Store
+Comment[ru]=Магазин Lumo
+DesktopEntry=org.lumo.store
+
+[Event/done]
+Name=Installation finished
+Name[ru]=Установка завершена
+Comment=An app finished installing, updating or failed to
+Comment[ru]=Приложение установлено, обновлено или не удалось его установить
+Action=Popup
+Urgency=Normal

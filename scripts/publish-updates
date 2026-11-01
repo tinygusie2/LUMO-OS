@@ -12,8 +12,8 @@ load_upstream_config
 
 archive="$PROJECT_ROOT/out/archive"
 gnupg_home="$PROJECT_ROOT/_state/gnupg/archive"
-public_key="$PROJECT_ROOT/packages/native/kernora-archive/keyrings/kernora-archive-keyring.asc"
-checkout="$PROJECT_ROOT/_state/publish/kernora-updates"
+public_key="$PROJECT_ROOT/packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc"
+checkout="$PROJECT_ROOT/_state/publish/lumo-updates"
 suite="dists/$DIST_CODENAME"
 
 [[ -s "$archive/$suite/InRelease" ]] || die "the package archive is missing; run make local-archive"
@@ -68,7 +68,7 @@ gpgv --keyring "$verify_home/keyring.gpg" "$staging/$suite/InRelease" 2>/dev/nul
   || die "the published index does not verify with the shipped key"
 rm -rf -- "$verify_home"
 
-install -m 0644 "$public_key" "$staging/kernora-archive-keyring.asc"
+install -m 0644 "$public_key" "$staging/lumo-archive-keyring.asc"
 touch "$staging/.nojekyll"
 cat > "$staging/index.html" <<HTML
 <!doctype html>
@@ -77,9 +77,9 @@ cat > "$staging/index.html" <<HTML
 <title>$DIST_NAME packages</title>
 <body style="font-family: sans-serif; max-width: 40em; margin: 3em auto; line-height: 1.5">
 <h1>$DIST_NAME packages</h1>
-<p>This is the APT archive of $DIST_NAME. Installed systems take their Kernora
+<p>This is the APT archive of $DIST_NAME. Installed systems take their Lumo
 updates from here on their own; nothing here needs to be downloaded by hand.</p>
-<p>Signing key: <a href="kernora-archive-keyring.asc">kernora-archive-keyring.asc</a><br>
+<p>Signing key: <a href="lumo-archive-keyring.asc">lumo-archive-keyring.asc</a><br>
 Fingerprint: <code>$DIST_ARCHIVE_KEY_FINGERPRINT</code></p>
 </body>
 </html>
@@ -99,7 +99,7 @@ git -C "$checkout" rm -r --quiet --cached . >/dev/null 2>&1 || true
 find "$checkout" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf -- {} +
 cp -a "$staging/." "$checkout/"
 git -C "$checkout" add --all
-git -C "$checkout" commit --quiet -m "Kernora OS packages for $DIST_CODENAME, $(date --utc +%Y-%m-%d)"
+git -C "$checkout" commit --quiet -m "Lumo packages for $DIST_CODENAME, $(date --utc +%Y-%m-%d)"
 git -C "$checkout" branch --quiet -M main
 git -C "$checkout" push --quiet --force origin main
 

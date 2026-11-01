@@ -1,5 +1,5 @@
 import QtQuick
-import org.kernora.store
+import org.lumo.store
 
 Window {
     visible: true
@@ -30,7 +30,7 @@ Window {
                 }
             }
             if (!id) return;
-            if (Store.launch("org.kernora.nonexistent-launch-fixture") || !Store.launch(id)) {
+            if (Store.launch("org.lumo.nonexistent-launch-fixture") || !Store.launch(id)) {
                 console.error("STORE_LAUNCH_FAILED: incorrect launch result");
                 Qt.quit();
                 return;

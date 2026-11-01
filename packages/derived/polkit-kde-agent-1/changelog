@@ -1,3 +1,9 @@
+polkit-kde-agent-1 (4:6.3.6-1lumo1) UNRELEASED; urgency=medium
+
+  * Rename the Kernora patch to Lumo.
+
+ -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
+
 polkit-kde-agent-1 (4:6.3.6-1kernora1) UNRELEASED; urgency=medium
 
   * Kernora OS: the authentication prompt as a Material 3 dialog -- a

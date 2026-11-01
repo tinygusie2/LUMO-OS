@@ -3,7 +3,7 @@
 Desktop shortcuts previously used Plasma's icon grid independently of widget
 placement. A shortcut could therefore be placed underneath a widget.
 
-`KernoraIconLayout.qml` observes actual visible desktop applet geometry, maps it
+`LumoIconLayout.qml` observes actual visible desktop applet geometry, maps it
 into the icon grid and reserves intersecting cells with four pixels of spacing.
 `IconPlacement.js` retains unaffected manual positions and moves conflicting
 icons into the nearest available cells. Automatic sorting fills available cells
@@ -16,7 +16,7 @@ persist through the native positioner; automatic placement does not overwrite
 saved manual positions. Changes are restricted to the root desktop containment,
 not folder popups. Apply the update by signing out and back in.
 
-The packaged FolderView is based on the file shipped in Kernora's Plasma 6.3.6
+The packaged FolderView is based on the file shipped in Lumo's Plasma 6.3.6
 image, with baseline SHA256
 `b308111803d996819972c879986a11da84b9cda199aa6bfce0dc6480307e3bf6`.
 Its existing click handling and context-menu behavior are preserved. SPDX legal
@@ -37,9 +37,9 @@ Each check inspected actual delegate rectangles after geometry settled and
 verified that all 12 source items survived without intersecting widget bounds.
 The standalone placement regression passed 2,000 deterministic layouts.
 
-Upstream shipped this as `kernora-desktop` / `kernora-calamares` 1.4.29 and
-`kernora-apps` 1.1.36. In Lumo it is `kernora-desktop` / `kernora-calamares`
-1.4.31 and `kernora-apps` 1.1.39, with What's New entry `2026-10-14-2` in
+Upstream shipped this as `lumo-desktop` / `lumo-calamares` 1.4.29 and
+`lumo-apps` 1.1.36. In Lumo it is `lumo-desktop` / `lumo-calamares`
+1.4.31 and `lumo-apps` 1.1.39, with What's New entry `2026-10-14-2` in
 English, Dutch and Russian.
 These changes do not alter the Calamares executable or networking settings.
 

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Type=Application
+Name=Calendar
+Name[nl]=Agenda
+Name[ru]=Календарь
+GenericName=Calendar
+GenericName[nl]=Agenda
+GenericName[ru]=Календарь
+Comment=Plan events and get reminded
+Comment[nl]=Afspraken plannen en herinneringen krijgen
+Icon=org.lumo.calendar
+Exec=lumo-calendar %F
+MimeType=text/calendar;
+Categories=Qt;Office;Calendar;
+Keywords=calendar;agenda;event;appointment;reminder;afspraak;календарь;
+StartupNotify=true

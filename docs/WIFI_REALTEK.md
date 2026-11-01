@@ -9,7 +9,7 @@ caused it. Version 1.4 withdraws that unvalidated automatic default to allow
 comparison with the previous Wi-Fi behavior, without adding further driver
 parameters. The original disconnect report remains unresolved.
 
-Upgrade to `kernora-base` 1.4 and `kernora-apps` 1.1.34, then **reboot**.
+Upgrade to `lumo-base` 1.4 and `lumo-apps` 1.1.34, then **reboot**.
 The old vendor policy in `/usr/lib/NetworkManager/conf.d` is removed by dpkg.
 The package reloads configuration but does not restart the network, rewrite
 saved profiles, remove administrator overrides or change Steam/CS2 launch
@@ -23,14 +23,14 @@ messages after a spike using the command below. Game-server or Internet
 route loss, local radio loss and rendering stalls require different evidence.
 
 The optional example is now installed at
-`/usr/share/kernora/workarounds/20-kernora-rtl8852ce.conf`, outside every
+`/usr/share/lumo/workarounds/20-lumo-rtl8852ce.conf`, outside every
 NetworkManager configuration directory. It has no automatic effect. To opt
 in deliberately when investigating low-power failures, copy it into
 `/etc/NetworkManager/conf.d` without overwriting an existing administrator
 configuration:
 
 ```sh
-sudo cp --no-clobber /usr/share/kernora/workarounds/20-kernora-rtl8852ce.conf /etc/NetworkManager/conf.d/
+sudo cp --no-clobber /usr/share/lumo/workarounds/20-lumo-rtl8852ce.conf /etc/NetworkManager/conf.d/
 sudo nmcli general reload conf
 ```
 
@@ -78,13 +78,13 @@ The original ISO is unchanged. Implementation commit: `3926e85`.
 
 ## Historical 1.3 implementation and validation
 
-`kernora-base` 1.3 provides a conservative power-saving workaround for the
+`lumo-base` 1.3 provides a conservative power-saving workaround for the
 in-kernel `rtw89_8852ce` driver (PCI ID `10ec:c852`). This is a candidate
 mitigation for a user report, not a confirmed diagnosis of that machine.
 The ISO already includes `firmware-realtek` and a supported in-kernel driver.
 
 The package installs
-`/usr/lib/NetworkManager/conf.d/20-kernora-rtl8852ce.conf`. Its connection
+`/usr/lib/NetworkManager/conf.d/20-lumo-rtl8852ce.conf`. Its connection
 default matches only `driver:rtw89_8852ce` and sets `wifi.powersave=2`
 (disabled). It applies to existing and new profiles whose power-saving
 setting is `0` (default). Explicit profile values `1`, `2` and `3` remain
@@ -146,7 +146,7 @@ to 1.4 removes the vendor default while preserving administrator files.
 For a new empty override:
 
 ```sh
-sudo cp --no-clobber /dev/null /etc/NetworkManager/conf.d/20-kernora-rtl8852ce.conf
+sudo cp --no-clobber /dev/null /etc/NetworkManager/conf.d/20-lumo-rtl8852ce.conf
 sudo nmcli general reload conf
 ```
 
@@ -164,14 +164,14 @@ that empty override and reload/reconnect to restore the Lumo default.
 
 `make verify`, native source checks and both binary package checks passed.
 In a disposable Lumo QEMU guest running Linux `6.12.107+deb13-amd64` and
-NetworkManager `1.52.1`, upgrading `kernora-base` from 1.2 to 1.3 succeeded.
+NetworkManager `1.52.1`, upgrading `lumo-base` from 1.2 to 1.3 succeeded.
 NetworkManager parsed the installed vendor policy, an empty administrator
 file masked it, and an explicit administrator policy overrode it. Saved
 profiles with default and explicitly enabled power saving retained their
 settings. The running NetworkManager PID and active Ethernet connection
 were unchanged by installation.
 
-`kernora-apps` 1.1.33 depends on `kernora-base >= 1.3`, so its What's New entry
+`lumo-apps` 1.1.33 depends on `lumo-base >= 1.3`, so its What's New entry
 arrives with the corresponding policy. The installed native Qt module
 returned the new entry in both English and Russian. The ISO pins are updated
 for subsequent builds; the published ISO itself is unchanged.
@@ -182,8 +182,8 @@ reporter's disconnects are fixed; RTL8852CE hardware validation is pending.
 
 ## Delivery
 
-Published `kernora-base` 1.3 and `kernora-apps` 1.1.33 through the existing
-signed [APT channel](https://commywork9282-dotcom.github.io/kernora-updates),
+Published `lumo-base` 1.3 and `lumo-apps` 1.1.33 through the existing
+signed [APT channel](https://commywork9282-dotcom.github.io/lumo-updates),
 archive commit `370093a7b894925f24e4681af02c3ae1e366b915`. GitHub Pages
 reported a successful build. An actual guest APT refresh verified the
 public signature and selected these versions at archive priority 900.

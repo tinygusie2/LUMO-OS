@@ -1,8 +1,9 @@
 # Lumo: working notes for Claude
 
 Lumo is a Debian 13 desktop distribution for people coming from Windows,
-forked from Kernora OS. Package, file and code names still say `kernora`;
-only what the user sees says Lumo. The owner writes in Dutch: answer in Dutch,
+forked from Kernora OS. Packages, files and code are called `lumo` too;
+`tests/lint-layout.sh` fails on a new `kernora`, except in copyright lines,
+old changelog entries and the fork credits in `README.md` and `NOTICE`. The owner writes in Dutch: answer in Dutch,
 but keep code, commit messages, changelogs and docs in English.
 
 For new features and visible changes, follow the `lumo-feature` skill in
@@ -24,35 +25,35 @@ For new features and visible changes, follow the `lumo-feature` skill in
 - A change is not done until it builds and its tests pass. If you cannot
   build or test it in your environment, say so in the PR; do not claim it works.
 - The look follows Material 3 Expressive. All colours come from the seed
-  colour `#ff6a1e` through `m3color.py` and `kernora_design.py` in
-  `packages/native/kernora-desktop/tools/`; never hard-code a colour. Icons
+  colour `#ff6a1e` through `m3color.py` and `lumo_design.py` in
+  `packages/native/lumo-desktop/tools/`; never hard-code a colour. Icons
   are Material Symbols, added through `tools/symbols_map.py` and
-  `data/symbols.lock` in kernora-desktop. The typeface is Google Sans Flex.
+  `data/symbols.lock` in lumo-desktop. The typeface is Google Sans Flex.
 
 ## Layout
 
-- `packages/native/kernora-apps`: Lumo's apps (QML + C++, CMake). Each app has
+- `packages/native/lumo-apps`: Lumo's apps (QML + C++, CMake). Each app has
   `apps/<name>/qml`, a launcher in `src/apps/<name>.cpp`, a gettext domain in
   `po/nl` and `po/ru`, and entries in `data/whatsnew.json`.
-- `packages/native/kernora-desktop`: the shell, widgets, wallpapers, themes,
+- `packages/native/lumo-desktop`: the shell, widgets, wallpapers, themes,
   icons, installer branding. Translations in `data/shell/po`.
-- `packages/native/kernora-base`, `kernora-archive`, `packages/derived/`:
+- `packages/native/lumo-base`, `lumo-archive`, `packages/derived/`:
   identity, keyring, changed Debian packages.
 - `configs/live/`: what goes into the ISO. `scripts/`: build steps.
   `tests/`: one test per build step. `docs/`: how each part works.
 
 ## Versions
 
-A version bump of `kernora-apps` or `kernora-desktop` touches all of these;
+A version bump of `lumo-apps` or `lumo-desktop` touches all of these;
 grep for the old version to find them:
 
 - `debian/changelog` (new entry on top) and, for apps, `project(... VERSION ...)`
   in `CMakeLists.txt`;
 - dependency floors in the other package's `debian/control`
-  (e.g. `kernora-desktop (>= 1.4.36)`);
-- `configs/live/packages.txt` (`kernora-apps=`, `kernora-desktop=`,
-  `kernora-calamares=`);
-- `tests/test-kernora-*-source.sh` (`unexpected source version`) and
+  (e.g. `lumo-desktop (>= 1.4.36)`);
+- `configs/live/packages.txt` (`lumo-apps=`, `lumo-desktop=`,
+  `lumo-calamares=`);
+- `tests/test-lumo-*-source.sh` (`unexpected source version`) and
   `tests/test-live-rootfs.sh` (`is not installed`).
 
 ## Checks
@@ -61,16 +62,16 @@ Fast, and they run in a cloud session:
 
 ```sh
 tests/lint-layout.sh
-tests/test-kernora-apps-source.sh
-tests/test-kernora-desktop-source.sh
+tests/test-lumo-apps-source.sh
+tests/test-lumo-desktop-source.sh
 ```
 
 They need `gettext` and `libxml2-utils`; if `msgfmt` or `xmllint` is missing,
 run `apt-get install -y gettext libxml2-utils`.
 
 Slower, and they need a Debian build root (`make build-rootfs`):
-`make kernora-apps-binary`, `make kernora-desktop-binary` and their
-`tests/test-kernora-*-binary.sh`. A full image is `make iso` then
+`make lumo-apps-binary`, `make lumo-desktop-binary` and their
+`tests/test-lumo-*-binary.sh`. A full image is `make iso` then
 `make iso-smoke`.
 
 ## Seeing the result
@@ -84,7 +85,7 @@ scripts/preview-desktop start               # boot the preview VM
 scripts/preview-desktop apps --qml-only     # push changed QML, fast
 scripts/preview-desktop apps                # rebuild and install the apps
 scripts/preview-desktop sync                # shell, themes, icons, installer
-scripts/preview-desktop launch kernora-settings network
+scripts/preview-desktop launch lumo-settings network
 scripts/preview-desktop input click 720 450 # also key, type, drag, scroll (1440x900)
 scripts/preview-desktop shot _build/preview/shots/name.png
 ```

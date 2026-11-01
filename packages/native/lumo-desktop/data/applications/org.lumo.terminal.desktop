@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name=Terminal
+Name[ru]=Терминал
+Name[nl]=Terminal
+GenericName=Command line
+GenericName[ru]=Командная строка
+GenericName[nl]=Opdrachtregel
+Comment=Run commands
+Comment[ru]=Выполнение команд
+Icon=org.lumo.terminal
+Exec=alacritty --class org.lumo.terminal
+TryExec=alacritty
+Categories=System;TerminalEmulator;
+Keywords=terminal;shell;console;command;терминал;консоль;командная строка;
+StartupNotify=true
+StartupWMClass=org.lumo.terminal
+X-KDE-Shortcuts=Ctrl+Alt+T
+Actions=New;
+
+[Desktop Action New]
+Name=New window
+Name[ru]=Новое окно
+Exec=alacritty --class org.lumo.terminal

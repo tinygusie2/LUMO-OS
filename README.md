@@ -5,9 +5,9 @@ based on Debian 13 (trixie) and runs KDE Plasma 6 with its own shell, apps and
 themes, designed after Material 3.
 
 Lumo is a fork of [Kernora OS](https://github.com/commywork9282-dotcom/Kernora-OS-)
-by the Kernora Developers, under the same licence. Package, file, theme and
-code names still say `kernora`; only what the user sees is called Lumo. See
-`NOTICE` for the credits.
+by the Kernora Developers, under the same licence. Since lumo-desktop 1.4.57
+the packages, files, themes and code use the Lumo name as well. See `NOTICE`
+for the credits.
 
 This repository has everything needed to build the live ISO: Lumo's own
 packages, the changes made to a few Debian packages, the image configuration,
@@ -91,7 +91,7 @@ make sources
 make iso-smoke
 ```
 
-The result is `out/iso/kernora-1-ember-live-amd64.iso` with a `.sha256`
+The result is `out/iso/lumo-1-ember-live-amd64.iso` with a `.sha256`
 file next to it. `make iso` builds the ISO without the boot tests.
 
 Steps can also be run one at a time, for example `make local-archive` (all
@@ -99,8 +99,8 @@ packages and the signed APT archive) or `make live-rootfs`. See the
 `Makefile` for the full list.
 
 The live root file system is built in `/var/tmp`, because `/tmp` is often a
-small tmpfs; set `KERNORA_TMPDIR` to use another place. The ISO build stages
-its squashfs in `_build/`; set `KERNORA_SCRATCH_DIR` to stage it elsewhere.
+small tmpfs; set `LUMO_TMPDIR` to use another place. The ISO build stages
+its squashfs in `_build/`; set `LUMO_SCRATCH_DIR` to stage it elsewhere.
 
 Builds are reproducible: the Debian snapshot, tool versions and every
 downloaded file are pinned by SHA-256, and archives are written with fixed
@@ -112,8 +112,8 @@ To try changes to the shell or the apps without rebuilding the ISO,
 
 ## Layout
 
-- `packages/native/`: Lumo's own packages (`kernora-base`,
-  `kernora-archive`, `kernora-desktop`, `kernora-apps`).
+- `packages/native/`: Lumo's own packages (`lumo-base`,
+  `lumo-archive`, `lumo-desktop`, `lumo-apps`).
 - `packages/derived/`: changes to Debian's `base-files`, Calamares and
   `polkit-kde-agent-1`.
 - `configs/`: the upstream pins, the live image and the system identity.

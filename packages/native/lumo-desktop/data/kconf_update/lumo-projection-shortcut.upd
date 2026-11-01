@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_projection_shortcut
+Script=lumo-projection-shortcut.sh,sh

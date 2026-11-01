@@ -1,3 +1,3 @@
-kernora-base      1.4       Kernora base system and hardware defaults
-kernora-desktop   1.4       Kernora Material 3 shell, themes and installer configuration
-kernora-apps      1.0       Kernora applications: Settings, Files, Text Editor, Photos, Media Player, Calculator, Screenshot, Welcome
+lumo-base      1.4       Lumo base system and hardware defaults
+lumo-desktop   1.4       Lumo Material 3 shell, themes and installer configuration
+lumo-apps      1.0       Lumo applications: Settings, Files, Text Editor, Photos, Media Player, Calculator, Screenshot, Welcome

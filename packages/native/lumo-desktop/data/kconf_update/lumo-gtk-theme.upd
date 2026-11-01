@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_gtk_theme
+Script=lumo-gtk-theme.sh,sh

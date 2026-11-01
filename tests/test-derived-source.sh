@@ -13,7 +13,7 @@ fail() {
 
 version=$(dpkg-parsechangelog -l"$package_root/changelog" -S Version)
 file_version=${version#*:}
-[[ "$version" == *kernora* ]] || fail "the derived version does not name Kernora: $version"
+[[ "$version" == *lumo* ]] || fail "the derived version does not name Lumo: $version"
 awk -v name="$name" -v version="$version" '$1 == name && $3 == version { found = 1 } END { exit !found }' \
   "$project_root/manifests/derived-packages.txt" \
   || fail "manifests/derived-packages.txt does not record $version"
@@ -27,7 +27,7 @@ while read -r patch; do
   grep -q '^Description: ' "$package_root/patches/$patch" || fail "patch has no DEP-3 description: $patch"
   patches+=("$patch")
 done < "$package_root/patches/series"
-(( ${#patches[@]} > 0 )) || fail "no Kernora patches"
+(( ${#patches[@]} > 0 )) || fail "no Lumo patches"
 
 dsc="$source_dir/${name}_${file_version}.dsc"
 if [[ -s "$dsc" ]]; then
@@ -36,7 +36,7 @@ if [[ -s "$dsc" ]]; then
   grep -q "${name}_${file_version}.debian.tar.xz" "$dsc" || fail "source package lacks its Debian tarball"
   contents=$(tar -tJf "$debian_tarball")
   for patch in "${patches[@]}"; do
-    grep -Fxq "debian/patches/$patch" <<<"$contents" || fail "the Kernora patch is not in the source package: $patch"
+    grep -Fxq "debian/patches/$patch" <<<"$contents" || fail "the Lumo patch is not in the source package: $patch"
   done
 fi
 
