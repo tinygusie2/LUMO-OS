@@ -10,12 +10,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: apps/settings/qml/Main.qml:20 apps/settings/qml/Main.qml:145
 #: apps/settings/qml/pages/NetworkDetailsPage.qml:91
 msgid "Settings"
 msgstr "Настройки"
+
+msgid "Panel"
+msgstr "Панель"
+
+msgid "Transparent panel"
+msgstr "Прозрачная панель"
+
+msgid "Applies to all panels. The shape and colour follow the system style."
+msgstr "Применяется ко всем панелям. Форма и цвет соответствуют стилю системы."
+
+msgid "Let the wallpaper show through a softly tinted background"
+msgstr "Обои просвечивают сквозь фон с мягким оттенком системной темы"
+
+msgid "The panel transparency could not be changed."
+msgstr "Не удалось изменить прозрачность панели."
 
 #: apps/settings/qml/Main.qml:153
 msgid "Search settings"
@@ -160,7 +176,9 @@ msgstr "Wi-Fi"
 
 #: apps/settings/qml/components/Catalog.qml:40
 msgid "wireless network hotspot internet connect password"
-msgstr "wifi вайфай беспроводная сеть точка доступа интернет подключение пароль wireless network"
+msgstr ""
+"wifi вайфай беспроводная сеть точка доступа интернет подключение пароль "
+"wireless network"
 
 #: apps/settings/qml/components/Catalog.qml:41
 #: apps/settings/qml/pages/NetworkPage.qml:284
@@ -756,8 +774,10 @@ msgid "System details copied."
 msgstr "Сведения о системе скопированы."
 
 #: apps/settings/qml/pages/AboutPage.qml:208
-msgid "Other devices on the network and Bluetooth see this computer by this name."
-msgstr "Под этим именем компьютер видят другие устройства в сети и по Bluetooth."
+msgid ""
+"Other devices on the network and Bluetooth see this computer by this name."
+msgstr ""
+"Под этим именем компьютер видят другие устройства в сети и по Bluetooth."
 
 #: apps/settings/qml/pages/AboutPage.qml:209
 #: apps/settings/qml/pages/BluetoothDevicePage.qml:79
@@ -959,8 +979,11 @@ msgid "Change password"
 msgstr "Сменить пароль"
 
 #: apps/settings/qml/pages/AccountPage.qml:231
-msgid "Use at least 8 characters. The system asks for your current password to confirm."
-msgstr "Не менее 8 символов. Для подтверждения система запросит текущий пароль."
+msgid ""
+"Use at least 8 characters. The system asks for your current password to "
+"confirm."
+msgstr ""
+"Не менее 8 символов. Для подтверждения система запросит текущий пароль."
 
 #: apps/settings/qml/pages/AccountPage.qml:232
 msgid "Change"
@@ -1006,15 +1029,6 @@ msgstr "Фигуры Lumo"
 #: apps/settings/qml/pages/AppearancePage.qml:245
 msgid "Live"
 msgstr "Живые"
-
-msgid "Still"
-msgstr "Статичные"
-
-msgid "Gentle on battery"
-msgstr "Бережно к батарее"
-
-msgid "Fewer frames on battery; rests in power saving or when the battery is low"
-msgstr "Меньше кадров от батареи; пауза в режиме энергосбережения или при низком заряде"
 
 #: apps/settings/qml/pages/AppearancePage.qml:263
 msgid "Your picture"
@@ -1235,7 +1249,8 @@ msgid "No Bluetooth adapter"
 msgstr "Нет адаптера Bluetooth"
 
 #: apps/settings/qml/pages/BluetoothPage.qml:81
-msgid "This computer has no Bluetooth, or its adapter is switched off in hardware."
+msgid ""
+"This computer has no Bluetooth, or its adapter is switched off in hardware."
 msgstr "На этом компьютере нет Bluetooth или адаптер выключен аппаратно."
 
 #: apps/settings/qml/pages/BluetoothPage.qml:87
@@ -1244,7 +1259,8 @@ msgstr "Bluetooth"
 
 #: apps/settings/qml/pages/BluetoothPage.qml:98
 msgid "Visible to nearby devices as “%1” while this page is open."
-msgstr "Пока открыта эта страница, устройства поблизости видят компьютер как «%1»."
+msgstr ""
+"Пока открыта эта страница, устройства поблизости видят компьютер как «%1»."
 
 #: apps/settings/qml/pages/BluetoothPage.qml:102
 msgid "Your devices"
@@ -1348,7 +1364,9 @@ msgid "Screen brightness"
 msgstr "Яркость экрана"
 
 #: apps/settings/qml/pages/DisplayPage.qml:121
-msgid "Night Light makes the screen warmer, which is easier on the eyes in the evening."
+msgid ""
+"Night Light makes the screen warmer, which is easier on the eyes in the "
+"evening."
 msgstr "Ночной режим делает цвета экрана теплее — вечером так легче глазам."
 
 #: apps/settings/qml/pages/DisplayPage.qml:124
@@ -1455,7 +1473,6 @@ msgstr "Книжная, перевёрнутая"
 #: apps/settings/qml/pages/DisplayPage.qml:338
 msgid "Arrange screens and more"
 msgstr "Расположение экранов и другое"
-
 
 #: apps/settings/qml/pages/DisplayPage.qml:353
 msgid "Keep these display settings?"
@@ -1593,7 +1610,6 @@ msgstr "Для левой руки"
 msgid "Scrolling speed"
 msgstr "Скорость прокрутки"
 
-
 #: apps/settings/qml/pages/InputPage.qml:321
 msgid "Advanced keyboard options"
 msgstr "Дополнительные параметры клавиатуры"
@@ -1655,8 +1671,12 @@ msgid "Separate settings for numbers, time, currency and measurement units"
 msgstr "Отдельные настройки для чисел, времени, валюты и единиц измерения"
 
 #: apps/settings/qml/pages/LegalPage.qml:24
-msgid "Lumo is free software, made from the work of many open-source projects. Their authors and licences are listed here."
-msgstr "Lumo — свободная система, созданная из труда многих проектов с открытым кодом. Здесь перечислены их авторы и лицензии."
+msgid ""
+"Lumo is free software, made from the work of many open-source "
+"projects. Their authors and licences are listed here."
+msgstr ""
+"Lumo — свободная система, созданная из труда многих проектов с "
+"открытым кодом. Здесь перечислены их авторы и лицензии."
 
 #: apps/settings/qml/pages/LegalPage.qml:35
 #: apps/settings/qml/pages/LegalPage.qml:38
@@ -1664,8 +1684,11 @@ msgid "Lumo"
 msgstr "Lumo"
 
 #: apps/settings/qml/pages/LegalPage.qml:39
-msgid "The Lumo shell, apps and design: GNU General Public License 2.0 or later"
-msgstr "Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 или новее"
+msgid ""
+"The Lumo shell, apps and design: GNU General Public License 2.0 or later"
+msgstr ""
+"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 "
+"или новее"
 
 #: apps/settings/qml/pages/LegalPage.qml:46
 msgid "GNU General Public License 2.0"
@@ -1735,8 +1758,10 @@ msgid "Forget “%1”?"
 msgstr "Забыть «%1»?"
 
 #: apps/settings/qml/pages/NetworkDetailsPage.qml:108
-msgid "The saved password is removed. You can connect again later by entering it."
-msgstr "Сохранённый пароль будет удалён. Подключиться снова можно, введя его ещё раз."
+msgid ""
+"The saved password is removed. You can connect again later by entering it."
+msgstr ""
+"Сохранённый пароль будет удалён. Подключиться снова можно, введя его ещё раз."
 
 #: apps/settings/qml/pages/NetworkDetailsPage.qml:109
 msgid "The saved settings of this connection are removed."
@@ -1831,8 +1856,11 @@ msgid "No apps yet"
 msgstr "Пока нет приложений"
 
 #: apps/settings/qml/pages/NotificationAppsPage.qml:62
-msgid "When an app sends a notification, you can choose here how it may notify you."
-msgstr "Когда приложение пришлёт уведомление, здесь можно будет выбрать, как ему разрешено вас оповещать."
+msgid ""
+"When an app sends a notification, you can choose here how it may notify you."
+msgstr ""
+"Когда приложение пришлёт уведомление, здесь можно будет выбрать, как ему "
+"разрешено вас оповещать."
 
 #: apps/settings/qml/pages/NotificationAppsPage.qml:74
 msgid "Only in the history"
@@ -2070,7 +2098,6 @@ msgstr "При закрытии крышки"
 msgid "Advanced power settings"
 msgstr "Дополнительные настройки питания"
 
-
 #: apps/settings/qml/pages/PrivacyPage.qml:44
 msgid "Lock the screen automatically"
 msgstr "Автоматическая блокировка"
@@ -2103,8 +2130,12 @@ msgid "Lock now"
 msgstr "Заблокировать сейчас"
 
 #: apps/settings/qml/pages/PrivacyPage.qml:111
-msgid "The index stays on this computer. It lets search find files by name and by what they contain."
-msgstr "Индекс хранится только на этом компьютере. Он позволяет искать файлы по имени и содержимому."
+msgid ""
+"The index stays on this computer. It lets search find files by name and by "
+"what they contain."
+msgstr ""
+"Индекс хранится только на этом компьютере. Он позволяет искать файлы по "
+"имени и содержимому."
 
 #: apps/settings/qml/pages/PrivacyPage.qml:114
 msgid "Index files for search"
@@ -2147,7 +2178,9 @@ msgid "Clear history?"
 msgstr "Очистить историю?"
 
 #: apps/settings/qml/pages/PrivacyPage.qml:184
-msgid "Lists of recently used files and folders are emptied. The files themselves stay."
+msgid ""
+"Lists of recently used files and folders are emptied. The files themselves "
+"stay."
 msgstr "Списки недавних файлов и папок будут очищены. Сами файлы останутся."
 
 #: apps/settings/qml/pages/PrivacyPage.qml:185
@@ -2361,9 +2394,12 @@ msgstr "Не удалось сменить стиль."
 msgid "Style"
 msgstr "Стиль"
 
-msgid "Every generation of Material, drawn in the Lumo colours: shapes, depth, buttons and the quick settings change with it."
-msgstr "Любое поколение Material в цветах Lumo: вместе с ним меняются формы, тени, кнопки и быстрые настройки."
-
+msgid ""
+"Every generation of Material, drawn in the Lumo colours: shapes, depth, "
+"buttons and the quick settings change with it."
+msgstr ""
+"Любое поколение Material в цветах Lumo: вместе с ним меняются формы, "
+"тени, кнопки и быстрые настройки."
 
 #: apps/settings/qml/pages/AppearancePage.qml
 msgid "Applying…"
@@ -2374,8 +2410,12 @@ msgid "Dark backgrounds for the system and apps"
 msgstr "Тёмный фон в системе и приложениях"
 
 #: apps/settings/qml/pages/AppearancePage.qml
-msgid "Shapes, depth, buttons and the quick settings follow the chosen generation of Material."
-msgstr "Формы, тени, кнопки и быстрые настройки следуют выбранному поколению Material."
+msgid ""
+"Shapes, depth, buttons and the quick settings follow the chosen generation "
+"of Material."
+msgstr ""
+"Формы, тени, кнопки и быстрые настройки следуют выбранному поколению "
+"Material."
 
 #: apps/settings/qml/pages/AppearancePage.qml
 msgid "Interface style"
@@ -2393,11 +2433,13 @@ msgstr "2018 · Material Theming"
 msgid "2014 · paper and ink"
 msgstr "2014 · бумага и чернила"
 
-#: apps/settings/qml/components/Catalog.qml:50 apps/settings/qml/pages/SoundDevicesPage.qml:19
+#: apps/settings/qml/components/Catalog.qml:50
+#: apps/settings/qml/pages/SoundDevicesPage.qml:19
 msgid "Sound devices"
 msgstr "Звуковые устройства"
 
-#: apps/settings/qml/pages/SoundDevicePage.qml:24 apps/settings/qml/pages/SoundDevicesPage.qml:101
+#: apps/settings/qml/pages/SoundDevicePage.qml:24
+#: apps/settings/qml/pages/SoundDevicesPage.qml:101
 msgid "In use"
 msgstr "Используется"
 
@@ -2414,14 +2456,20 @@ msgid "Sound cards"
 msgstr "Звуковые карты"
 
 #: apps/settings/qml/pages/SoundDevicesPage.qml:158
-msgid "A profile decides which outputs and inputs a card offers, for example stereo, surround or HDMI."
-msgstr "Профиль определяет, какие выходы и входы есть у карты: например, стерео, объёмный звук или HDMI."
+msgid ""
+"A profile decides which outputs and inputs a card offers, for example "
+"stereo, surround or HDMI."
+msgstr ""
+"Профиль определяет, какие выходы и входы есть у карты: например, стерео, "
+"объёмный звук или HDMI."
 
-#: apps/settings/qml/pages/SoundDevicePage.qml:100 apps/settings/qml/pages/SoundDevicesPage.qml:168
+#: apps/settings/qml/pages/SoundDevicePage.qml:100
+#: apps/settings/qml/pages/SoundDevicesPage.qml:168
 msgid "Profile"
 msgstr "Профиль"
 
-#: apps/settings/qml/pages/SoundDevicePage.qml:107 apps/settings/qml/pages/SoundDevicesPage.qml:172
+#: apps/settings/qml/pages/SoundDevicePage.qml:107
+#: apps/settings/qml/pages/SoundDevicesPage.qml:172
 msgid "Not available"
 msgstr "Недоступен"
 
@@ -2541,23 +2589,27 @@ msgstr "Единицы измерения"
 msgid "Paper size"
 msgstr "Размер бумаги"
 
-#: apps/settings/qml/pages/FormatsPage.qml:68 apps/settings/qml/pages/FormatsPage.qml:72
+#: apps/settings/qml/pages/FormatsPage.qml:68
+#: apps/settings/qml/pages/FormatsPage.qml:72
 msgid "As in the region"
 msgstr "Как в регионе"
 
 #: apps/settings/qml/components/Catalog.qml:81
-msgid "numbers currency money measurement units paper size metric imperial date format"
-msgstr "числа валюта деньги единицы измерения бумага размер метрическая имперская формат даты"
+msgid ""
+"numbers currency money measurement units paper size metric imperial date "
+"format"
+msgstr ""
+"числа валюта деньги единицы измерения бумага размер метрическая имперская "
+"формат даты"
 
-#: apps/settings/qml/components/Catalog.qml:69 apps/settings/qml/pages/KeyboardOptionsPage.qml:22
+#: apps/settings/qml/components/Catalog.qml:69
+#: apps/settings/qml/pages/KeyboardOptionsPage.qml:22
 msgid "Compose key"
 msgstr "Клавиша Compose"
-
 
 #: apps/settings/qml/pages/KeyboardOptionsPage.qml:24
 msgid "Key for extra characters"
 msgstr "Клавиша для дополнительных символов"
-
 
 #: apps/settings/qml/pages/KeyboardOptionsPage.qml:25
 msgid "Alt and Meta keys"
@@ -2592,8 +2644,10 @@ msgid "Only one can be on"
 msgstr "Можно включить только один"
 
 #: apps/settings/qml/components/Catalog.qml:69
-msgid "special characters accents caps lock alt meta keyboard model xkb options"
-msgstr "особые символы акценты caps lock alt meta модель клавиатуры параметры xkb"
+msgid ""
+"special characters accents caps lock alt meta keyboard model xkb options"
+msgstr ""
+"особые символы акценты caps lock alt meta модель клавиатуры параметры xkb"
 
 #: apps/settings/qml/pages/KeyboardOptionsPage.qml:83
 msgid "One option is on."
@@ -2602,7 +2656,9 @@ msgstr[0] "Включён %1 параметр."
 msgstr[1] "Включено %1 параметра."
 msgstr[2] "Включено %1 параметров."
 
-#: apps/settings/qml/components/Catalog.qml:70 apps/settings/qml/pages/InputPage.qml:303 apps/settings/qml/pages/PointerOptionsPage.qml:17
+#: apps/settings/qml/components/Catalog.qml:70
+#: apps/settings/qml/pages/InputPage.qml:303
+#: apps/settings/qml/pages/PointerOptionsPage.qml:17
 msgid "Touchpad and mouse options"
 msgstr "Параметры тачпада и мыши"
 
@@ -2654,7 +2710,8 @@ msgstr "Прокрутка с зажатой кнопкой"
 msgid "Hold the middle button and move the mouse"
 msgstr "Удерживайте среднюю кнопку и двигайте мышь"
 
-#: apps/settings/qml/pages/PointerOptionsPage.qml:158 apps/settings/qml/pages/PointerOptionsPage.qml:195
+#: apps/settings/qml/pages/PointerOptionsPage.qml:158
+#: apps/settings/qml/pages/PointerOptionsPage.qml:195
 msgid "Right click"
 msgstr "Правый щелчок"
 
@@ -2711,10 +2768,15 @@ msgid "Restore defaults"
 msgstr "Вернуть по умолчанию"
 
 #: apps/settings/qml/components/Catalog.qml:70
-msgid "two finger scrolling edge tap and drag drag lock right click acceleration middle click"
-msgstr "прокрутка двумя пальцами край перетаскивание касанием фиксация правый щелчок ускорение средний щелчок"
+msgid ""
+"two finger scrolling edge tap and drag drag lock right click acceleration "
+"middle click"
+msgstr ""
+"прокрутка двумя пальцами край перетаскивание касанием фиксация правый щелчок "
+"ускорение средний щелчок"
 
-#: apps/settings/qml/pages/PowerAdvancedPage.qml:138 apps/settings/qml/pages/PowerPage.qml:121
+#: apps/settings/qml/pages/PowerAdvancedPage.qml:138
+#: apps/settings/qml/pages/PowerPage.qml:121
 msgid "Low battery"
 msgstr "Низкий заряд"
 
@@ -2747,8 +2809,12 @@ msgid "Other devices"
 msgstr "Другие устройства"
 
 #: apps/settings/qml/pages/PowerAdvancedPage.qml:114
-msgid "Wireless mice, keyboards, headphones and other devices with their own battery."
-msgstr "Беспроводные мыши, клавиатуры, наушники и другие устройства со своей батареей."
+msgid ""
+"Wireless mice, keyboards, headphones and other devices with their own "
+"battery."
+msgstr ""
+"Беспроводные мыши, клавиатуры, наушники и другие устройства со своей "
+"батареей."
 
 #: apps/settings/qml/pages/PowerAdvancedPage.qml:117
 msgid "Warn about their low battery at"
@@ -2759,8 +2825,12 @@ msgid "Power mode for each state"
 msgstr "Режим питания в разных состояниях"
 
 #: apps/settings/qml/pages/PowerAdvancedPage.qml:132
-msgid "The power mode switches by itself when the computer changes between these states."
-msgstr "Режим питания меняется сам, когда компьютер переходит из одного состояния в другое."
+msgid ""
+"The power mode switches by itself when the computer changes between these "
+"states."
+msgstr ""
+"Режим питания меняется сам, когда компьютер переходит из одного состояния в "
+"другое."
 
 #: apps/settings/qml/pages/PowerAdvancedPage.qml:165
 msgid "How to sleep"
@@ -2795,8 +2865,12 @@ msgid "Music and videos stop when the computer goes to sleep"
 msgstr "Музыка и видео останавливаются, когда компьютер засыпает"
 
 #: apps/settings/qml/components/Catalog.qml:63
-msgid "low battery critical level hibernate wireless mouse keyboard battery hybrid sleep pause media"
-msgstr "низкий заряд критический гибернация беспроводная мышь клавиатура батарея гибридный сон пауза медиа"
+msgid ""
+"low battery critical level hibernate wireless mouse keyboard battery hybrid "
+"sleep pause media"
+msgstr ""
+"низкий заряд критический гибернация беспроводная мышь клавиатура батарея "
+"гибридный сон пауза медиа"
 
 #: apps/settings/qml/pages/DisplayPage.qml:325
 msgid "Position of several screens, mirroring, colour"
@@ -2807,12 +2881,20 @@ msgid "Nothing more to set up"
 msgstr "Больше нечего настраивать"
 
 #: apps/settings/qml/pages/DisplayArrangementPage.qml:100
-msgid "Connect another screen to arrange them, or use Display & brightness for this one."
-msgstr "Подключите ещё один экран, чтобы расставить их, а этот настраивается в разделе «Экран и яркость»."
+msgid ""
+"Connect another screen to arrange them, or use Display & brightness for this "
+"one."
+msgstr ""
+"Подключите ещё один экран, чтобы расставить их, а этот настраивается в "
+"разделе «Экран и яркость»."
 
 #: apps/settings/qml/pages/DisplayArrangementPage.qml:202
-msgid "Drag a screen to where it stands on your desk. Screens snap to each other's edges."
-msgstr "Перетащите экран туда, где он стоит на столе. Экраны прилипают друг к другу краями."
+msgid ""
+"Drag a screen to where it stands on your desk. Screens snap to each other's "
+"edges."
+msgstr ""
+"Перетащите экран туда, где он стоит на столе. Экраны прилипают друг к другу "
+"краями."
 
 #: apps/settings/qml/pages/DisplayArrangementPage.qml:206
 msgid "Mirroring"
@@ -2846,7 +2928,8 @@ msgstr "Всегда"
 msgid "Colour range"
 msgstr "Цветовой диапазон"
 
-#: apps/settings/qml/pages/DisplayArrangementPage.qml:257 apps/settings/qml/pages/DisplayPage.qml:137
+#: apps/settings/qml/pages/DisplayArrangementPage.qml:257
+#: apps/settings/qml/pages/DisplayPage.qml:137
 msgid "Automatic"
 msgstr "Автоматически"
 
@@ -2899,10 +2982,15 @@ msgid "Remove the colour profile"
 msgstr "Убрать цветовой профиль"
 
 #: apps/settings/qml/components/Catalog.qml:46
-msgid "multiple monitors position mirror duplicate adaptive sync vrr freesync hdr overscan colour profile icc rgb range"
-msgstr "несколько мониторов расположение зеркало дублировать адаптивная синхронизация vrr freesync hdr overscan цветовой профиль icc rgb диапазон"
+msgid ""
+"multiple monitors position mirror duplicate adaptive sync vrr freesync hdr "
+"overscan colour profile icc rgb range"
+msgstr ""
+"несколько мониторов расположение зеркало дублировать адаптивная "
+"синхронизация vrr freesync hdr overscan цветовой профиль icc rgb диапазон"
 
-#: apps/settings/qml/pages/DisplayArrangementPage.qml:36 apps/settings/qml/pages/DisplayPage.qml:248
+#: apps/settings/qml/pages/DisplayArrangementPage.qml:36
+#: apps/settings/qml/pages/DisplayPage.qml:248
 msgid "%1. %2"
 msgstr "%1. %2"
 
@@ -2910,13 +2998,9 @@ msgstr "%1. %2"
 msgid "Sounds"
 msgstr "Звуки"
 
-#: apps/settings/qml/pages/SoundPage.qml:228
-msgid "Ocean"
-msgstr "Ocean"
-
-#: apps/settings/qml/pages/SoundPage.qml:228
-msgid "The KDE sounds"
-msgstr "Звуки KDE"
+#: apps/settings/qml/pages/SoundPage.qml:227
+msgid "Lumo"
+msgstr "Lumo"
 
 #: apps/settings/qml/pages/SoundPage.qml:255
 msgid "Listen"
@@ -2935,8 +3019,8 @@ msgid "Trash emptied"
 msgstr "Корзина очищена"
 
 #: apps/settings/qml/components/Catalog.qml:52
-msgid "sound theme lumo ocean login chime alerts notification sounds"
-msgstr "звуковая тема lumo ocean вход мелодия сигналы звуки уведомлений"
+msgid "sound theme lumo login chime alerts notification sounds"
+msgstr "звуковая тема lumo вход мелодия сигналы звуки уведомлений"
 
 #: apps/settings/qml/pages/StoragePage.qml:88
 msgctxt "the trash has nothing in it"
@@ -2959,7 +3043,9 @@ msgstr "Аккаунт «%1» добавлен."
 msgid "(you)"
 msgstr "(вы)"
 
-#: apps/settings/qml/pages/AccountsPage.qml:55 apps/settings/qml/pages/AccountsPage.qml:151 apps/settings/qml/pages/UserPage.qml:61
+#: apps/settings/qml/pages/AccountsPage.qml:55
+#: apps/settings/qml/pages/AccountsPage.qml:151
+#: apps/settings/qml/pages/UserPage.qml:61
 msgid "Administrator"
 msgstr "Администратор"
 
@@ -2967,7 +3053,8 @@ msgstr "Администратор"
 msgid "Standard account"
 msgstr "Обычный аккаунт"
 
-#: apps/settings/qml/pages/AccountsPage.qml:68 apps/settings/qml/pages/AccountsPage.qml:96
+#: apps/settings/qml/pages/AccountsPage.qml:68
+#: apps/settings/qml/pages/AccountsPage.qml:96
 msgid "Add an account"
 msgstr "Добавить аккаунт"
 
@@ -2991,7 +3078,8 @@ msgstr "Для входа в систему; строчные латинские
 msgid "Repeat the password"
 msgstr "Повторите пароль"
 
-#: apps/settings/qml/pages/AccountsPage.qml:152 apps/settings/qml/pages/UserPage.qml:62
+#: apps/settings/qml/pages/AccountsPage.qml:152
+#: apps/settings/qml/pages/UserPage.qml:62
 msgid "Can install software and change settings for everyone"
 msgstr "Может устанавливать программы и менять настройки для всех"
 
@@ -3051,15 +3139,18 @@ msgstr "Этим шрифтом написаны меню, кнопки и те�
 msgid "Interface"
 msgstr "Интерфейс"
 
-#: apps/settings/qml/pages/FontsPage.qml:116 apps/settings/qml/pages/FontsPage.qml:138
+#: apps/settings/qml/pages/FontsPage.qml:116
+#: apps/settings/qml/pages/FontsPage.qml:138
 msgid "Typeface"
 msgstr "Шрифт"
 
-#: apps/settings/qml/pages/FontsPage.qml:125 apps/settings/qml/pages/FontsPage.qml:147
+#: apps/settings/qml/pages/FontsPage.qml:125
+#: apps/settings/qml/pages/FontsPage.qml:147
 msgid "Size"
 msgstr "Размер"
 
-#: apps/settings/qml/pages/FontsPage.qml:128 apps/settings/qml/pages/FontsPage.qml:150
+#: apps/settings/qml/pages/FontsPage.qml:128
+#: apps/settings/qml/pages/FontsPage.qml:150
 msgid "%1 pt"
 msgstr "%1 пт"
 
@@ -3112,8 +3203,12 @@ msgid "Turn features on with the keyboard"
 msgstr "Включать функции с клавиатуры"
 
 #: apps/settings/qml/pages/AccessibilityMorePage.qml:107
-msgid "Press Shift five times for sticky keys, or hold it for eight seconds for slow keys"
-msgstr "Нажмите Shift пять раз для залипания клавиш или удерживайте восемь секунд для медленных клавиш"
+msgid ""
+"Press Shift five times for sticky keys, or hold it for eight seconds for "
+"slow keys"
+msgstr ""
+"Нажмите Shift пять раз для залипания клавиш или удерживайте восемь секунд "
+"для медленных клавиш"
 
 #: apps/settings/qml/pages/AccessibilityMorePage.qml:115
 msgid "Sound for Caps Lock and Num Lock"
@@ -3236,12 +3331,14 @@ msgctxt "start the app"
 msgid "Open"
 msgstr "Открыть"
 
-#: apps/settings/qml/components/Catalog.qml:56 apps/settings/qml/pages/AppearancePage.qml:193
+#: apps/settings/qml/components/Catalog.qml:56
+#: apps/settings/qml/pages/AppearancePage.qml:193
 msgid "Colour"
 msgstr "Цвет"
 
 #: apps/settings/qml/pages/AppearancePage.qml:194
-msgid "Apps, the panel, windows and the live wallpapers take on the chosen colour."
+msgid ""
+"Apps, the panel, windows and the live wallpapers take on the chosen colour."
 msgstr "Приложения, панель, окна и живые обои окрашиваются в выбранный цвет."
 
 #: apps/settings/qml/pages/AppearancePage.qml:53
@@ -3259,8 +3356,14 @@ msgstr "цвет акцент палитра оформление красный
 msgid "Updates come with the installation"
 msgstr "Обновления придут вместе с установкой"
 
-msgid "You are trying Lumo from the installation medium, and nothing installed here is kept. Install Lumo: when the computer is online, the installer brings the new system up to date by itself."
-msgstr "Сейчас Lumo запущена с установочного носителя, и всё, что здесь устанавливается, не сохранится. Установите Lumo: если компьютер подключён к интернету, установщик сам обновит новую систему."
+msgid ""
+"You are trying Lumo from the installation medium, and nothing installed "
+"here is kept. Install Lumo: when the computer is online, the installer "
+"brings the new system up to date by itself."
+msgstr ""
+"Сейчас Lumo запущена с установочного носителя, и всё, что здесь "
+"устанавливается, не сохранится. Установите Lumo: если компьютер подключён "
+"к интернету, установщик сам обновит новую систему."
 
 msgid "Install Lumo"
 msgstr "Установить Lumo"
@@ -3268,8 +3371,11 @@ msgstr "Установить Lumo"
 msgid "Drivers"
 msgstr "Драйверы"
 
-msgid "Lumo finds the drivers your hardware needs and installs them by itself."
-msgstr "Lumo сама находит и устанавливает драйверы, которые нужны вашему оборудованию."
+msgid ""
+"Lumo finds the drivers your hardware needs and installs them by itself."
+msgstr ""
+"Lumo сама находит и устанавливает драйверы, которые нужны вашему "
+"оборудованию."
 
 msgid "NVIDIA graphics card"
 msgstr "видеокарты NVIDIA"
@@ -3296,13 +3402,22 @@ msgid "Your graphics card works with the drivers built into Lumo."
 msgstr "Ваша видеокарта работает со встроенными драйверами Lumo."
 
 msgid "The installer sets up the driver for %1 when the computer is online."
-msgstr "Если компьютер подключён к интернету, установщик сам поставит драйвер для %1."
+msgstr ""
+"Если компьютер подключён к интернету, установщик сам поставит драйвер для %1."
 
-msgid "NVIDIA no longer makes a driver for this card. It keeps working with the open driver built into Lumo."
-msgstr "NVIDIA больше не выпускает драйвер для этой видеокарты. Она продолжит работать со встроенным открытым драйвером Lumo."
+msgid ""
+"NVIDIA no longer makes a driver for this card. It keeps working with the "
+"open driver built into Lumo."
+msgstr ""
+"NVIDIA больше не выпускает драйвер для этой видеокарты. Она продолжит "
+"работать со встроенным открытым драйвером Lumo."
 
-msgid "Lumo is downloading the driver for %1 and installing it. It takes a few minutes, and you can keep working."
-msgstr "Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько минут, можно продолжать работать."
+msgid ""
+"Lumo is downloading the driver for %1 and installing it. It takes a few "
+"minutes, and you can keep working."
+msgstr ""
+"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько "
+"минут, можно продолжать работать."
 
 msgid "The driver for %1 is installed. It starts working after a restart."
 msgstr "Драйвер для %1 установлен и заработает после перезагрузки."
@@ -3313,17 +3428,28 @@ msgstr "%1 работает с драйвером NVIDIA %2."
 msgid "%1 uses the NVIDIA driver."
 msgstr "%1 работает с драйвером NVIDIA."
 
-msgid "The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off in the computer's firmware settings, then try again."
-msgstr "Драйвер NVIDIA не загрузится, пока включён Secure Boot. Выключите Secure Boot в настройках BIOS/UEFI и попробуйте снова."
+msgid ""
+"The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off "
+"in the computer's firmware settings, then try again."
+msgstr ""
+"Драйвер NVIDIA не загрузится, пока включён Secure Boot. Выключите Secure "
+"Boot в настройках BIOS/UEFI и попробуйте снова."
 
 msgid "Check the internet connection and try again."
 msgstr "Проверьте подключение к интернету и попробуйте снова."
 
-msgid "There is no internet connection. The driver for %1 will be installed when the computer is online."
-msgstr "Нет подключения к интернету. Драйвер для %1 установится, когда компьютер будет в сети."
+msgid ""
+"There is no internet connection. The driver for %1 will be installed when "
+"the computer is online."
+msgstr ""
+"Нет подключения к интернету. Драйвер для %1 установится, когда компьютер "
+"будет в сети."
 
-msgid "The NVIDIA driver will be installed automatically as soon as the computer is online."
-msgstr "Драйвер NVIDIA установится автоматически, как только компьютер будет в сети."
+msgid ""
+"The NVIDIA driver will be installed automatically as soon as the computer is "
+"online."
+msgstr ""
+"Драйвер NVIDIA установится автоматически, как только компьютер будет в сети."
 
 msgid "Install the NVIDIA driver to get the full speed of this card."
 msgstr "Установите драйвер NVIDIA, чтобы видеокарта работала в полную силу."
@@ -3337,8 +3463,41 @@ msgstr "Удалить драйвер"
 msgid "Install drivers automatically"
 msgstr "Устанавливать драйверы автоматически"
 
-msgid "When a graphics card needs a driver, Lumo installs it and asks you to restart"
-msgstr "Если видеокарте нужен драйвер, Lumo установит его и попросит перезагрузить компьютер"
+msgid "Demo updates"
+msgstr "Демо-обновления"
+
+msgid "Themed app icons"
+msgstr "Тематические значки приложений"
+
+msgid "Apps without a Lumo icon take on the colour too"
+msgstr "Приложения без значка Lumo тоже окрашиваются в цвет темы"
+
+msgid "Early access"
+msgstr "Ранний доступ"
+
+msgid "early access beta testing new versions demo"
+msgstr "ранний доступ бета тестирование новые версии демо"
+
+msgid ""
+"You get new versions before everyone else. If you turn this off, you keep "
+"them until a normal update replaces them"
+msgstr ""
+"Вы получаете новые версии раньше всех. Если выключить, они останутся, пока "
+"их не заменит обычное обновление"
+
+msgid ""
+"Get new versions before everyone else. They are still being tested and can "
+"have bugs"
+msgstr ""
+"Получайте новые версии раньше всех. Они ещё проверяются, в них могут быть "
+"ошибки"
+
+msgid ""
+"When a graphics card needs a driver, Lumo installs it and asks you to "
+"restart"
+msgstr ""
+"Если видеокарте нужен драйвер, Lumo установит его и попросит "
+"перезагрузить компьютер"
 
 msgid "Graphics card drivers"
 msgstr "Драйверы видеокарты"
@@ -3347,7 +3506,8 @@ msgid "graphics card video nvidia gpu driver"
 msgstr "видеокарта видео графика nvidia gpu драйвер"
 
 msgid "Lumo could not start this. Install the latest updates and try again."
-msgstr "Не получилось запустить. Установите последние обновления и попробуйте снова."
+msgstr ""
+"Не получилось запустить. Установите последние обновления и попробуйте снова."
 
 msgid "Removing the driver…"
 msgstr "Удаление драйвера…"
@@ -3361,11 +3521,260 @@ msgstr "Драйвер NVIDIA удалён и перестанет исполь�
 msgid "Quick Share"
 msgstr "Quick Share"
 
-msgid "Share with an Android phone the way you share between phones: on the phone, choose Share, then Quick Share, and pick this computer. Both need to be on the same network."
-msgstr "Делитесь с телефоном Android так же, как между телефонами: на телефоне выберите «Поделиться», затем Quick Share и этот компьютер. Оба устройства должны быть в одной сети."
+msgid "Send and receive files with phones nearby"
+msgstr "Обмен файлами с телефонами поблизости"
+
+msgid "Quick Share visibility"
+msgstr "Видимость в Quick Share"
+
+msgid "nearby share android phone send receive files everyone hidden"
+msgstr ""
+"nearby share android телефон отправить получить файлы все скрыт видимость"
+
+msgid "A link"
+msgstr "Ссылка"
+
+msgid "A Wi-Fi network"
+msgstr "Сеть Wi-Fi"
+
+msgid "Text"
+msgstr "Текст"
+
+msgid "%1 · sent"
+msgstr "%1 · отправлено"
+
+msgid "%1 · received"
+msgstr "%1 · получено"
+
+msgid "%1 · declined"
+msgstr "%1 · отклонено"
+
+msgid "%1 · cancelled"
+msgstr "%1 · отменено"
+
+msgid "%1 · not finished"
+msgstr "%1 · не завершено"
+
+msgid "%1 · waiting"
+msgstr "%1 · ожидание"
+
+msgid "%1 · %2%"
+msgstr "%1 · %2%"
+
+msgid "Everyone"
+msgstr "Все"
+
+msgid "Hidden"
+msgstr "Скрыт"
+
+msgid "Save received files to"
+msgstr "Сохранять полученные файлы в"
+
+msgid "Recent"
+msgstr "Недавние"
+
+msgid "Unknown device"
+msgstr "Неизвестное устройство"
+
+msgid "%1 file"
+msgid_plural "%1 files"
+msgstr[0] "%1 файл"
+msgstr[1] "%1 файла"
+msgstr[2] "%1 файлов"
+
+msgid "Use Quick Share"
+msgstr "Использовать Quick Share"
+
+msgid "How your device appears to others"
+msgstr "Так ваше устройство видят другие"
+
+msgid "Device visibility"
+msgstr "Видимость устройства"
+
+msgid ""
+"Your device visibility controls who can share with you while your screen is "
+"unlocked. Every transfer still waits for you to accept it."
+msgstr ""
+"Видимость определяет, кто может отправлять вам файлы, пока экран "
+"разблокирован. Любую передачу всё равно нужно принять."
+
+msgid "Quick Share is off. Nobody can see this computer."
+msgstr "Quick Share выключен. Этот компьютер никому не виден."
+
+msgid "Any device nearby can share with you"
+msgstr "Любое устройство рядом может отправлять вам файлы"
+
+msgid "No one can share with you"
+msgstr "Никто не может отправлять вам файлы"
+
+msgid "Visible to everyone"
+msgstr "Видимость для всех"
+
+msgid "For 10 min"
+msgstr "На 10 мин"
+
+msgid "%1 left"
+msgstr "Осталось %1"
+
+msgid "%1 min"
+msgstr "%1 мин"
+
+msgid "%1 sec"
+msgstr "%1 с"
+
+msgid "Ask when a device nearby is sharing"
+msgstr "Спрашивать, когда устройство рядом делится файлами"
+
+msgid "Offer to become visible when a phone nearby opens Quick Share"
+msgstr "Предлагать стать видимым, когда телефон рядом открывает Quick Share"
+
+msgid "Received files"
+msgstr "Полученные файлы"
+
+msgid "How your device appears to others in Quick Share."
+msgstr "Так ваше устройство видят другие в Quick Share."
+
+msgid "Share files, photos and links with Android phones and computers nearby."
+msgstr ""
+"Делитесь файлами, фото и ссылками с телефонами Android и компьютерами "
+"поблизости."
+
+msgid "Send and receive"
+msgstr "Отправить и получить"
 
 msgid "Open Quick Share"
 msgstr "Открыть Quick Share"
+
+#: apps/settings/qml/components/Catalog.qml:30
+#: apps/settings/qml/pages/AboutPage.qml:22
+#: apps/settings/qml/pages/SystemPage.qml:97
+msgid "About Lumo"
+msgstr "О Lumo"
+
+#: apps/settings/qml/pages/AboutPage.qml:179
+msgid "Licences, authors and copyrights of the software in Lumo"
+msgstr "Лицензии, авторы и авторские права программ в Lumo"
+
+#: apps/settings/qml/pages/AppearancePage.qml:244
+#: apps/settings/qml/pages/AppearancePage.qml:288
+msgid "Lumo Shapes"
+msgstr "Фигуры Lumo"
+
+msgid "Still"
+msgstr "Статичные"
+
+msgid "Gentle on battery"
+msgstr "Бережно к батарее"
+
+msgid ""
+"Fewer frames on battery; rests in power saving or when the battery is low"
+msgstr ""
+"Меньше кадров от батареи; пауза в режиме энергосбережения или при низком "
+"заряде"
+
+#: apps/settings/qml/pages/LegalPage.qml:24
+msgid ""
+"Lumo is free software, made from the work of many open-source projects. "
+"Their authors and licences are listed here."
+msgstr ""
+"Lumo — свободная система, созданная из труда многих проектов с открытым "
+"кодом. Здесь перечислены их авторы и лицензии."
+
+#: apps/settings/qml/pages/LegalPage.qml:35
+#: apps/settings/qml/pages/LegalPage.qml:38
+msgid "Lumo"
+msgstr "Lumo"
+
+#: apps/settings/qml/pages/LegalPage.qml:39
+msgid ""
+"The Lumo shell, apps and design: GNU General Public License 2.0 or later"
+msgstr ""
+"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 или "
+"новее"
+
+#: src/apps/host.cpp:64
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid ""
+"Every generation of Material, drawn in the Lumo colours: shapes, depth, "
+"buttons and the quick settings change with it."
+msgstr ""
+"Любое поколение Material в цветах Lumo: вместе с ним меняются формы, тени, "
+"кнопки и быстрые настройки."
+
+#: apps/settings/qml/pages/SoundPage.qml:228
+msgid "Ocean"
+msgstr "Ocean"
+
+#: apps/settings/qml/pages/SoundPage.qml:228
+msgid "The KDE sounds"
+msgstr "Звуки KDE"
+
+#: apps/settings/qml/components/Catalog.qml:52
+msgid "sound theme lumo ocean login chime alerts notification sounds"
+msgstr "звуковая тема lumo ocean вход мелодия сигналы звуки уведомлений"
+
+#: apps/settings/qml/pages/FontsPage.qml:158
+msgid "Restore the Lumo fonts"
+msgstr "Вернуть шрифты Lumo"
+
+msgid ""
+"You are trying Lumo from the installation medium, and nothing installed here "
+"is kept. Install Lumo: when the computer is online, the installer brings the "
+"new system up to date by itself."
+msgstr ""
+"Сейчас Lumo запущена с установочного носителя, и всё, что здесь "
+"устанавливается, не сохранится. Установите Lumo: если компьютер подключён к "
+"интернету, установщик сам обновит новую систему."
+
+msgid "Install Lumo"
+msgstr "Установить Lumo"
+
+msgid "Lumo finds the drivers your hardware needs and installs them by itself."
+msgstr ""
+"Lumo сама находит и устанавливает драйверы, которые нужны вашему "
+"оборудованию."
+
+msgid "Your graphics card works with the drivers built into Lumo."
+msgstr "Ваша видеокарта работает со встроенными драйверами Lumo."
+
+msgid ""
+"NVIDIA no longer makes a driver for this card. It keeps working with the "
+"open driver built into Lumo."
+msgstr ""
+"NVIDIA больше не выпускает драйвер для этой видеокарты. Она продолжит "
+"работать со встроенным открытым драйвером Lumo."
+
+msgid ""
+"Lumo is downloading the driver for %1 and installing it. It takes a few "
+"minutes, and you can keep working."
+msgstr ""
+"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько минут, "
+"можно продолжать работать."
+
+msgid ""
+"When a graphics card needs a driver, Lumo installs it and asks you to restart"
+msgstr ""
+"Если видеокарте нужен драйвер, Lumo установит его и попросит перезагрузить "
+"компьютер"
+
+msgid "Lumo could not start this. Install the latest updates and try again."
+msgstr ""
+"Не получилось запустить. Установите последние обновления и попробуйте снова."
+
+msgid "Lumo is removing the NVIDIA driver."
+msgstr "Lumo удаляет драйвер NVIDIA."
+
+msgid ""
+"Share with an Android phone the way you share between phones: on the phone, "
+"choose Share, then Quick Share, and pick this computer. Both need to be on "
+"the same network."
+msgstr ""
+"Делитесь с телефоном Android так же, как между телефонами: на телефоне "
+"выберите «Поделиться», затем Quick Share и этот компьютер. Оба устройства "
+"должны быть в одной сети."
 
 msgid "Send files: drag them into the window and pick the phone"
 msgstr "Отправка файлов: перетащите их в окно и выберите телефон"
@@ -3377,4 +3786,5 @@ msgid "Quick Share starts when you log in and waits in the status area"
 msgstr "Quick Share запускается при входе и ждёт в области уведомлений"
 
 msgid "nearby share android phone send receive files photos samsung pixel"
-msgstr "nearby share андроид телефон отправить получить файлы фото samsung pixel"
+msgstr ""
+"nearby share андроид телефон отправить получить файлы фото samsung pixel"

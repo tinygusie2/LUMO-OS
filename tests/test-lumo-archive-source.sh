@@ -16,7 +16,7 @@ done
 # shellcheck disable=SC1091
 source "$project_root/configs/project.env"
 
-[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.5" ]] \
+[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.6" ]] \
   || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
@@ -68,6 +68,29 @@ grep -Fxq 'Package: base-files calamares polkit-kde-agent-1' "$apt/lumo-archive.
   && grep -Fxq 'Pin: version *lumo*' "$apt/lumo-archive.pref" \
   && grep -Fxq 'Pin-Priority: 1000' "$apt/lumo-archive.pref" \
   || fail "Debian could replace Lumo's own builds of Debian packages"
+demo_sources="$apt/lumo-demo.sources"
+[[ "$(awk '/^URIs:/ { print $2 }' "$demo_sources")" == "$DIST_UPDATES_URL" ]] \
+  || fail "the demo updates do not come from $DIST_UPDATES_URL"
+grep -Fxq "Suites: $DIST_CODENAME-demo" "$demo_sources" || fail "the demo updates use the wrong suite"
+grep -Fxq 'Signed-By: /usr/share/keyrings/lumo-archive-keyring.asc' "$demo_sources" \
+  || fail "the demo updates are not signed by the archive key"
+grep -Fxq 'apt/lumo-demo.sources usr/share/lumo/apt' "$package_root/debian/lumo-archive.install" \
+  || fail "the demo updates are not kept out of APT until turned on"
+channel="$package_root/channel/lumo-update-channel"
+[[ -x "$channel" ]] || fail "lumo-update-channel is not executable"
+sh -n "$channel" || fail "lumo-update-channel has a syntax error"
+grep -Fq 'sources=/etc/apt/sources.list.d/lumo-demo.sources' "$channel" \
+  || fail "lumo-update-channel does not manage the demo sources"
+grep -Fq 'template=/usr/share/lumo/apt/lumo-demo.sources' "$channel" \
+  || fail "lumo-update-channel does not use the shipped demo sources"
+grep -Fq '<annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/lumo-update-channel</annotate>' \
+  "$package_root/channel/org.lumo.update-channel.policy" || fail "the update channel policy names the wrong program"
+grep -Fq '<allow_active>auth_admin_keep</allow_active>' "$package_root/channel/org.lumo.update-channel.policy" \
+  || fail "changing the update channel does not ask for an administrator"
+grep -Fq 'install -m 0644 /usr/share/lumo/apt/lumo-demo.sources /etc/apt/sources.list.d/lumo-demo.sources' \
+  "$package_root/debian/lumo-archive.postinst" || fail "updates do not refresh turned-on demo sources"
+grep -Fq 'rm -f /etc/apt/sources.list.d/lumo-demo.sources' "$package_root/debian/lumo-archive.postrm" \
+  || fail "purging does not remove the demo sources"
 grep -Fq '"origin=Debian,codename=trixie-security,label=Debian-Security";' "$apt/51lumo-unattended-upgrades" \
   || fail "security updates are not installed automatically"
 grep -Fxq 'APT::Periodic::Unattended-Upgrade "1";' "$apt/21lumo-auto-upgrades" \

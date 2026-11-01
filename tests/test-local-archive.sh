@@ -85,6 +85,10 @@ grep -Fxq 'Package: lumo-calamares' "$packages" \
   || fail "lumo-calamares is not indexed"
 grep -Fxq 'Package: lumo-desktop' "$sources" \
   || fail "lumo-desktop source is not indexed"
+grep -Fxq 'Package: lumo-quickshare' "$packages" \
+  || fail "lumo-quickshare is not indexed"
+grep -Fxq 'Package: lumo-quickshare' "$sources" \
+  || fail "lumo-quickshare source is not indexed"
 grep -Fxq "Origin: $DIST_NAME" "$release" || fail "wrong archive origin"
 grep -Fxq "Codename: $DIST_CODENAME" "$release" || fail "wrong archive codename"
 
@@ -116,8 +120,8 @@ apt-cache "${apt_options[@]}" show lumo-base \
   || fail "APT cannot read lumo-base from the archive"
 grep -Fxq "Version: $meta_version" "$temporary_root/lumo-base.txt" \
   || fail "APT selected the wrong lumo-base version"
-grep -Fxq "Depends: base-files (= $package_version), lumo-archive (>= 1.4)" \
-  "$temporary_root/lumo-base.txt" \
+grep -E '^Depends: ' "$temporary_root/lumo-base.txt" \
+  | grep -Fq "Depends: base-files (= $package_version), lumo-archive (>= 1.6)" \
   || fail "APT sees the wrong Lumo identity dependency"
 
 printf 'local archive test: OK\n'

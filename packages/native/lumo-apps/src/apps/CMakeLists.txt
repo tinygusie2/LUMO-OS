@@ -7,7 +7,7 @@ target_link_libraries(lumohost PUBLIC
     KF6::CoreAddons KF6::DBusAddons KF6::I18n KF6::I18nQml)
 target_compile_definitions(lumohost PUBLIC LUMO_APPS_VERSION="${PROJECT_VERSION}")
 
-foreach(app settings files welcome editor photos player calculator screenshot store tasks calendar focus projection)
+foreach(app settings files welcome editor photos player calculator screenshot store share taskmanager calendar focus projection)
     add_executable(lumo-${app} ${app}.cpp)
     target_link_libraries(lumo-${app} PRIVATE lumohost)
     target_compile_definitions(lumo-${app} PRIVATE TRANSLATION_DOMAIN="lumo-${app}")

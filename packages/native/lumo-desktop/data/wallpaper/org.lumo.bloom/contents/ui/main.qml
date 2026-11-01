@@ -17,7 +17,7 @@ WallpaperItem {
         NumberAnimation on intro {
             from: 0
             to: 1
-            duration: Kirigami.Units.longDuration === 0 ? 0 : 900
+            duration: Kirigami.Units.longDuration <= 1 ? 0 : 900
             easing.type: Easing.OutCubic
         }
     }

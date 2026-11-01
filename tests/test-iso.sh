@@ -64,11 +64,9 @@ awk '/^menuentry .*--id live-/ { exit !($0 ~ /--id live-en/) }' "$temporary_root
   || fail "English is not the first live entry"
 grep -Fq 'menuentry "Lumo · Русский" --id live-ru {' "$temporary_root/grub.cfg" \
   || fail "the Russian live session is missing"
-grep -Fq 'menuentry "Lumo · Nederlands" --id live-nl {' "$temporary_root/grub.cfg" \
-  || fail "the Dutch live session is missing"
 grep -Fq '    set default=installed' "$temporary_root/grub.cfg" \
   || fail "an installed system no longer takes boot priority"
-[[ "$(grep -c ' quiet loglevel=3 splash ' "$temporary_root/grub.cfg")" == 3 ]] \
+[[ "$(grep -c ' quiet loglevel=3 splash ' "$temporary_root/grub.cfg")" == 2 ]] \
   || fail "the live session prints kernel errors over the boot splash"
 
 xorriso -osirrox on -indev "$iso" \

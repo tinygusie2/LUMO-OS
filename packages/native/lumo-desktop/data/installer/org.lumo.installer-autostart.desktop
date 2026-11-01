@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Install Lumo
+Name[ru]=Установить Lumo
+Icon=org.lumo.installer
+Exec=/usr/bin/lumo-installer --autostart
+NoDisplay=true
+OnlyShowIn=KDE;
+X-KDE-autostart-phase=2
