@@ -501,6 +501,14 @@ dpkg-deb --ctrl-tarfile "$desktop_deb" | tar -xO ./postinst 2>/dev/null | grep -
   || fail "the graphics driver check is not enabled on installation"
 dpkg-deb --ctrl-tarfile "$desktop_deb" | tar -xO ./postinst 2>/dev/null | grep -q "'lumo-drivers.service'" \
   && fail "installing the package would run the driver install inside the dpkg transaction"
+triggers=$(dpkg-deb --ctrl-tarfile "$desktop_deb" | tar -xO ./triggers 2>/dev/null || true)
+grep -Fxq 'activate-noawait update-initramfs' <<<"$triggers" \
+  || fail "lumo-desktop does not rebuild the initramfs for its hook"
+if grep -Ev '^(#.*|activate(-await|-noawait)? .+|interest(-await|-noawait)? .+|)$' <<<"$triggers" | grep -q .; then
+  fail "lumo-desktop's triggers file has lines dpkg rejects"
+fi
+dpkg-deb -c "$desktop_deb" | grep -E '^-rwxr-xr-x .* \./usr/share/initramfs-tools/hooks/zz-lumo-firmware$' >/dev/null \
+  || fail "the initramfs firmware hook is not installed executable"
 [[ "$(readlink "$temporary_root/desktop/usr/share/kglobalaccel/org.lumo.terminal.desktop")" == */applications/org.lumo.terminal.desktop ]] \
   || fail "kglobalaccel does not see the terminal's launch shortcut"
 grep -Fxq 'Icon=org.lumo.terminal' "$temporary_root/desktop/etc/skel/.local/share/applications/Alacritty.desktop" \

@@ -4,7 +4,7 @@ set -Eeuo pipefail
 # shellcheck source=lib/common.sh
 source "$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
-for dependency in chroot cp dpkg-parsechangelog find install tar unshare; do
+for dependency in chroot cp dpkg-parsechangelog find install mount tar unshare; do
   require_command "$dependency"
 done
 
@@ -64,7 +64,8 @@ unshare \
   --net \
   --fork \
   --mount-proc="$rootfs/proc" \
-  chroot "$rootfs" /bin/bash -lc '
+  sh -c 'rm -f "$1/dev/null" && touch "$1/dev/null" && mount --bind /dev/null "$1/dev/null" && shift && exec chroot "$@"' \
+  lumo-dev "$rootfs" "$rootfs" /bin/bash -lc '
     set -Eeuo pipefail
     cd /build
     dpkg-source --extract "$1" source

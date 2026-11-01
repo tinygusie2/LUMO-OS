@@ -6,6 +6,17 @@ lumo-desktop (1.4.62) UNRELEASED; urgency=medium
 
  -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 22:30:00 +0000
 
+lumo-desktop (1.4.61) UNRELEASED; urgency=medium
+
+  * Leave nouveau's NVIDIA firmware out of the initramfs. With the trixie-backports
+    kernel and firmware the initramfs grew to 223 MB (379 MB unpacked), most
+    of it NVIDIA GSP firmware, and a computer with 1 GB of memory could not
+    unpack it and stopped with "No working init found". Nouveau and NVIDIA's
+    own driver load it from the root file system later; the versioned
+    firmware of NVIDIA's own driver stays.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 17:15:00 +0000
+
 lumo-desktop (1.4.60) UNRELEASED; urgency=medium
 
   * The login screen (SDDM) runs on KWin's Wayland compositor instead of an
