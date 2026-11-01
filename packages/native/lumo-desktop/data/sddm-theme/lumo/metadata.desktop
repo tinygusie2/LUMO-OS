@@ -1,8 +1,10 @@
 [SddmGreeterTheme]
 Name=Lumo
 Name[ru]=Lumo
+Name[nl]=Lumo
 Description=The Material 3 login screen of Lumo
 Description[ru]=Экран входа Lumo в стиле Material 3
+Description[nl]=Het aanmeldscherm van Lumo in Material 3
 Author=Lumo Developers
 License=GPL-2.0-or-later
 Type=sddm-theme

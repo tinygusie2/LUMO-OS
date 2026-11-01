@@ -9,11 +9,13 @@
         "Category": "",
         "Description": "A tower of Material shapes rocks, tumbles down and hops back together",
         "Description[ru]": "Башня из фигур Material раскачивается, рассыпается и снова собирается",
+        "Description[nl]": "Een toren van Material-vormen wiebelt, valt om en springt weer in elkaar",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "org.lumo.tower",
         "License": "GPL-2.0+",
         "Name": "Tower",
-        "Name[ru]": "Башня"
+        "Name[ru]": "Башня",
+        "Name[nl]": "Toren"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell",
     "X-Plasma-API-Minimum-Version": "6.0"

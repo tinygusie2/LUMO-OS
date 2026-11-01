@@ -82,3 +82,10 @@ msgstr "Geen schermafbeelding"
 
 msgid "Saved and copied"
 msgstr "Opgeslagen en gekopieerd"
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."

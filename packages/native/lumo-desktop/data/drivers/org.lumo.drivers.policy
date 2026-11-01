@@ -8,8 +8,10 @@
   <vendor>Lumo</vendor>
   <action id="org.lumo.drivers">
     <description>Manage graphics drivers</description>
+    <description xml:lang="nl">Stuurprogramma's voor de videokaart beheren</description>
     <description xml:lang="ru">Управление драйверами видеокарты</description>
     <message>Installing or removing a graphics driver changes the system</message>
+    <message xml:lang="nl">Een stuurprogramma voor de videokaart installeren of verwijderen wijzigt het systeem</message>
     <message xml:lang="ru">Установка или удаление драйвера видеокарты изменяет систему</message>
     <icon_name>cpu</icon_name>
     <defaults>

@@ -1,0 +1,232 @@
+# Russian translations for lumo-calendar package.
+# Copyright (C) 2026 THE lumo-calendar'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the lumo-calendar package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lumo-calendar\n"
+"Report-Msgid-Bugs-To: dev@lumo.invalid\n"
+"POT-Creation-Date: 2026-11-01 14:20+0000\n"
+"PO-Revision-Date: 2026-11-01 14:20+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: apps/calendar/qml/Main.qml:25
+msgid "Calendar"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:89
+msgid "This file could not be read"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:95
+msgid "%1 event imported"
+msgid_plural "%1 events imported"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/calendar/qml/Main.qml:100
+msgid "Lumo calendar"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:102
+msgid "Saved in Documents"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:102
+msgid "Show"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:104
+msgid "The calendar could not be saved"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:132 apps/calendar/qml/Main.qml:581
+msgid "All day"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:153 apps/calendar/qml/Main.qml:348
+#: apps/calendar/qml/Main.qml:474
+msgid "Event"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:154 apps/calendar/qml/Main.qml:220
+msgid "Today"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:199
+msgid "Import a calendar"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:200
+msgid "All files (*)"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:200
+msgid "Calendars (*.ics)"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:214 apps/calendar/qml/Main.qml:504
+msgid "New event"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:226
+msgid "Previous"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:231
+msgid "Next"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:243
+msgid "Day"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:244
+msgid "Week"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:245
+msgid "Month"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:252
+msgid "More"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:256
+msgid "Import .ics file…"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:257
+msgid "Export to Documents"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:437
+msgid "Nothing planned"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:438
+msgid "Double-click a day or press Ctrl+N to add an event."
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:504
+msgid "Edit event"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:505
+msgid "Save"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:547
+msgid "Title"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:554
+msgid "Starts (YYYY-MM-DD)"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:555
+msgid "Not a date"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:561 apps/calendar/qml/Main.qml:577
+msgid "Time"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:570
+msgid "Ends (YYYY-MM-DD)"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:571
+msgid "Ends before it starts"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:588
+msgid "Repeat"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:594
+msgid "Never"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:595
+msgid "Every day"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:596
+msgid "Every week"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:597
+msgid "Every month"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:598
+msgid "Every year"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:607
+msgid "Remind me"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:614
+msgid "No reminder"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:615
+msgid "When it starts"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:616
+msgid "5 minutes before"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:617
+msgid "15 minutes before"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:618
+msgid "30 minutes before"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:619
+msgid "1 hour before"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:620
+msgid "1 day before"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:626
+msgid "Location"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:627
+msgid "Notes"
+msgstr ""
+
+#: apps/calendar/qml/Main.qml:630
+msgid "Delete event"
+msgstr ""
+
+#: src/apps/calendar.cpp:8
+msgctxt "@title application name"
+msgid "Calendar"
+msgstr ""
+
+#: src/apps/host.cpp:59
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr ""
+
+#: src/apps/host.cpp:67
+msgid "Files or pages to open."
+msgstr ""

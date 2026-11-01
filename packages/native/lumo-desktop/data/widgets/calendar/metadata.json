@@ -9,11 +9,13 @@
         "Category": "Date and Time",
         "Description": "This month, with today in a circle",
         "Description[ru]": "Текущий месяц, сегодняшний день в кружке",
+        "Description[nl]": "Deze maand, met vandaag in een cirkel",
         "Icon": "view-calendar",
         "Id": "org.lumo.widget.calendar",
         "License": "GPL-2.0+",
         "Name": "Calendar",
-        "Name[ru]": "Календарь"
+        "Name[ru]": "Календарь",
+        "Name[nl]": "Agenda"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

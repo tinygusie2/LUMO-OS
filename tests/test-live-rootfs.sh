@@ -95,8 +95,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.57" ]] \
-  || fail "lumo-desktop 1.4.57 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.58" ]] \
+  || fail "lumo-desktop 1.4.58 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -168,8 +168,8 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.65" ]] \
-  || fail "lumo-apps 1.1.65 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.66" ]] \
+  || fail "lumo-apps 1.1.66 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' r-quick-share)" == "0.11.5" && -x /usr/bin/rquickshare ]] \
   || fail "Quick Share (RQuickShare 0.11.5) is not installed"
 [[ "$(dpkg-divert --listpackage /usr/share/applications/RQuickShare.desktop)" == lumo-apps \

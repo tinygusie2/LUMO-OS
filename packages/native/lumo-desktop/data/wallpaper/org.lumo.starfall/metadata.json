@@ -9,11 +9,13 @@
         "Category": "",
         "Description": "Stars twinkle over quiet hills, and now and then a shooting star crosses the night sky",
         "Description[ru]": "Звёзды мерцают над тихими холмами, и время от времени ночное небо пересекает падающая звезда",
+        "Description[nl]": "Sterren fonkelen boven stille heuvels, en af en toe schiet er een vallende ster langs de nachtelijke hemel",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "org.lumo.starfall",
         "License": "GPL-2.0+",
         "Name": "Starfall",
-        "Name[ru]": "Звездопад"
+        "Name[ru]": "Звездопад",
+        "Name[nl]": "Sterrenregen"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell",
     "X-Plasma-API-Minimum-Version": "6.0"

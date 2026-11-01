@@ -8,8 +8,10 @@
   <vendor>Lumo</vendor>
   <action id="org.lumo.installer">
     <description>Install Lumo</description>
+    <description xml:lang="nl">Lumo installeren</description>
     <description xml:lang="ru">Установка Lumo</description>
     <message>Installing Lumo changes the disks of this computer</message>
+    <message xml:lang="nl">Lumo installeren wijzigt de schijven van deze computer</message>
     <message xml:lang="ru">Установка Lumo изменяет диски этого компьютера</message>
     <icon_name>org.lumo.installer</icon_name>
     <defaults>

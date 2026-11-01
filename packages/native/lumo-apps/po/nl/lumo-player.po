@@ -85,3 +85,10 @@ msgstr "Mediabestanden (*.mp4 *.mkv *.webm *.avi *.mov *.m4v *.ogv *.mpg *.mp3 *
 
 msgid "All files (*)"
 msgstr "Alle bestanden (*)"
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."

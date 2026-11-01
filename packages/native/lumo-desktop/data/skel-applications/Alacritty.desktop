@@ -2,6 +2,7 @@
 Type=Application
 Name=Terminal
 Name[ru]=Терминал
+Name[nl]=Terminal
 Icon=org.lumo.terminal
 Exec=alacritty
 NoDisplay=true

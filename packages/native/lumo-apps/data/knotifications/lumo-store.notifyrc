@@ -2,14 +2,18 @@
 IconName=org.lumo.store
 Name=Store
 Name[ru]=Магазин
+Name[nl]=Store
 Comment=Lumo Store
 Comment[ru]=Магазин Lumo
+Comment[nl]=Lumo Store
 DesktopEntry=org.lumo.store
 
 [Event/done]
 Name=Installation finished
 Name[ru]=Установка завершена
+Name[nl]=Installatie voltooid
 Comment=An app finished installing, updating or failed to
 Comment[ru]=Приложение установлено, обновлено или не удалось его установить
+Comment[nl]=Een app is klaar met installeren of bijwerken, of dat is mislukt
 Action=Popup
 Urgency=Normal

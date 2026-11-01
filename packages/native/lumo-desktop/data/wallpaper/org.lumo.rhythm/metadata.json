@@ -9,11 +9,13 @@
         "Category": "",
         "Description": "A ring of Material shapes swinging in and out of step: spirals, stars, and back to a circle",
         "Description[ru]": "Кольцо фигур Material качается то вразнобой, то в такт: спирали, звёзды и снова круг",
+        "Description[nl]": "Een ring van Material-vormen die in en uit de maat zwaait: spiralen, sterren en weer terug naar een cirkel",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "org.lumo.rhythm",
         "License": "GPL-2.0+",
         "Name": "Rhythm",
-        "Name[ru]": "Ритм"
+        "Name[ru]": "Ритм",
+        "Name[nl]": "Ritme"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell",
     "X-Plasma-API-Minimum-Version": "6.0"

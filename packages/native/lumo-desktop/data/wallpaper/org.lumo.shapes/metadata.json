@@ -9,11 +9,13 @@
         "Category": "",
         "Description": "Material 3 shapes that drift, turn and pass over one another",
         "Description[ru]": "Фигуры Material 3, которые плывут, вращаются и перекрывают друг друга",
+        "Description[nl]": "Material 3-vormen die drijven, draaien en over elkaar heen schuiven",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "org.lumo.shapes",
         "License": "GPL-2.0+",
         "Name": "Lumo Shapes",
-        "Name[ru]": "Фигуры Lumo"
+        "Name[ru]": "Фигуры Lumo",
+        "Name[nl]": "Lumo Vormen"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell",
     "X-Plasma-API-Minimum-Version": "6.0"

@@ -2,10 +2,13 @@
 Type=Application
 Name=Install Lumo
 Name[ru]=Установить Lumo
+Name[nl]=Lumo installeren
 GenericName=Install on disk
 GenericName[ru]=Установка на диск
+GenericName[nl]=Op schijf installeren
 Comment=Install Lumo on this computer
 Comment[ru]=Установить Lumo на этот компьютер
+Comment[nl]=Lumo op deze computer installeren
 Icon=org.lumo.installer
 Exec=/usr/bin/lumo-installer
 Categories=Qt;System;

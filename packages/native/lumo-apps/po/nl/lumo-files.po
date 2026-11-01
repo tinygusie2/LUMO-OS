@@ -306,3 +306,10 @@ msgstr "“%1” vervangen?"
 
 msgid "A file with this name already exists in this folder. Saving replaces its contents."
 msgstr "Er staat al een bestand met deze naam in deze map. Opslaan vervangt de inhoud ervan."
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."

@@ -2,15 +2,19 @@
 IconName=system-software-update
 Name=Updates
 Name[ru]=Обновления
+Name[nl]=Updates
 Comment=Lumo software updates
 Comment[ru]=Обновления Lumo
+Comment[nl]=Software-updates van Lumo
 DesktopEntry=org.lumo.settings
 
 [Event/updatesAvailable]
 Name=Updates are available
 Name[ru]=Доступны обновления
+Name[nl]=Er zijn updates beschikbaar
 Comment=New versions of the system and apps are ready to install
 Comment[ru]=Новые версии системы и приложений готовы к установке
+Comment[nl]=Nieuwe versies van het systeem en de apps staan klaar om te installeren
 Action=Popup|Sound
 Sound=dialog-information
 Urgency=Normal
@@ -18,23 +22,29 @@ Urgency=Normal
 [Event/restartNeeded]
 Name=Restart to finish updating
 Name[ru]=Перезагрузка для завершения обновления
+Name[nl]=Opnieuw opstarten om het bijwerken af te ronden
 Comment=Installed updates take effect after a restart
 Comment[ru]=Установленные обновления вступят в силу после перезагрузки
+Comment[nl]=Geïnstalleerde updates werken na opnieuw opstarten
 Action=Popup
 Urgency=Normal
 
 [Event/driverInstalling]
 Name=Installing the graphics driver
 Name[ru]=Установка драйвера видеокарты
+Name[nl]=Het stuurprogramma voor de videokaart wordt geïnstalleerd
 Comment=Lumo is installing the driver your graphics card needs
 Comment[ru]=Lumo устанавливает драйвер, нужный вашей видеокарте
+Comment[nl]=Lumo installeert het stuurprogramma dat je videokaart nodig heeft
 Action=Popup
 Urgency=Normal
 
 [Event/driverReady]
 Name=Graphics driver installed
 Name[ru]=Драйвер видеокарты установлен
+Name[nl]=Stuurprogramma voor de videokaart geïnstalleerd
 Comment=The new graphics driver works after a restart
 Comment[ru]=Новый драйвер видеокарты заработает после перезагрузки
+Comment[nl]=Het nieuwe stuurprogramma voor de videokaart werkt na opnieuw opstarten
 Action=Popup
 Urgency=Normal
