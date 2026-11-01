@@ -72,7 +72,9 @@ its name from `pci.ids` and the time.
 `lumo-desktop` installs the initramfs hook
 `/usr/share/initramfs-tools/hooks/zz-lumo-firmware`, which runs after the
 standard hooks and removes nouveau's firmware (`usr/lib/firmware/nvidia/<chip>`)
-from the initramfs; the versioned folders of NVIDIA's own driver stay. With
+from the initramfs; the versioned folders of NVIDIA's own driver stay. The
+kms hook only queues nouveau, and mkinitramfs copies queued modules and their
+firmware after all hooks, so the hook first runs `apply_add_modules` itself. With
 the trixie-backports kernel and `MODULES=most`, the kms hook otherwise copies
 every GPU firmware file in, NVIDIA's GSP blobs alone taking 152 MB: the live
 initramfs was 223 MB compressed and 379 MB unpacked, and a machine with 1 GB

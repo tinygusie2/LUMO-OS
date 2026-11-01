@@ -12,6 +12,11 @@ case "$1" in
         ;;
 esac
 
+. /usr/share/initramfs-tools/hook-functions
+if command -v apply_add_modules >/dev/null 2>&1; then
+    apply_add_modules
+fi
+
 firmware="${DESTDIR:?}/usr/lib/firmware/nvidia"
 [ -d "$firmware" ] || exit 0
 for chip in "$firmware"/*; do
