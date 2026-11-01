@@ -9,11 +9,13 @@
         "Category": "Utilities",
         "Description": "A note on the desktop",
         "Description[ru]": "Заметка на рабочем столе",
+        "Description[nl]": "Een notitie op het bureaublad",
         "Icon": "note",
         "Id": "org.lumo.widget.note",
         "License": "GPL-2.0+",
         "Name": "Note",
-        "Name[ru]": "Заметка"
+        "Name[ru]": "Заметка",
+        "Name[nl]": "Notitie"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

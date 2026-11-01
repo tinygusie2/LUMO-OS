@@ -9,11 +9,13 @@
         "Category": "Date and Time",
         "Description": "The date, the weather and the battery at a glance, right on the wallpaper",
         "Description[ru]": "Дата, погода и заряд с первого взгляда прямо на обоях",
+        "Description[nl]": "De datum, het weer en de batterij in één oogopslag, direct op de achtergrond",
         "Icon": "weather-few-clouds",
         "Id": "org.lumo.widget.glance",
         "License": "GPL-2.0+",
         "Name": "At a Glance",
-        "Name[ru]": "Коротко о главном"
+        "Name[ru]": "Коротко о главном",
+        "Name[nl]": "In één oogopslag"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

@@ -1,4 +1,4 @@
-lumo-desktop (1.4.58) UNRELEASED; urgency=medium
+lumo-desktop (1.4.59) UNRELEASED; urgency=medium
 
   * Bring in the upstream Kernora work that was merged locally on
     2026-10-31 and the owner's fixes after it, with every name already
@@ -14,6 +14,17 @@ lumo-desktop (1.4.58) UNRELEASED; urgency=medium
     against the newer kernel the image now ships.
 
  -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
+lumo-desktop (1.4.58) UNRELEASED; urgency=medium
+
+  * Fill in the Dutch translations that were missing: names and
+    descriptions of the widgets, wallpapers, launcher, clipboard, quick
+    settings, window switcher and login theme, the installer's menu entry,
+    polkit prompts and progress steps, the terminal entry, removable storage
+    notifications and the crash notification.
+  * The login screen and the installer slideshow speak Dutch.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 14:22:33 +0000
 
 kernora-desktop (1.4.56) UNRELEASED; urgency=medium
 

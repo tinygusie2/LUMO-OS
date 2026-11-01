@@ -13,8 +13,15 @@ Presentation {
     id: presentation
 
     readonly property bool russian: Qt.locale().name.startsWith("ru")
+    readonly property bool dutch: Qt.locale().name.startsWith("nl")
 
-    readonly property var texts: russian ? [
+    readonly property var texts: dutch ? [
+        ["Lumo wordt geïnstalleerd", "Dit duurt een paar minuten. Je kunt het live-systeem gewoon blijven gebruiken terwijl het werkt."],
+        ["Alles op één plek", "Instellingen brengt wifi, geluid, beeldschermen, je account en updates samen, met zoeken naar elke optie."],
+        ["Apps voor elke dag", "Bestanden, Foto's, Mediaspeler, Teksteditor, Rekenmachine en Schermafbeelding zijn klaar vanaf de eerste start."],
+        ["Licht of donker", "Kies je stijl in Achtergrond en stijl, terwijl Lumo Vormen rustig achter je vensters drijven."],
+        ["Op een stevige basis", "Lumo is gebouwd op een vaste momentopname van Debian en KDE Plasma; updates komen binnen via Instellingen."]
+    ] : russian ? [
         ["Lumo устанавливается", "Это займёт несколько минут. Пока идёт установка, живой системой можно пользоваться как обычно."],
         ["Всё в одном месте", "«Настройки» собирают вместе Wi-Fi, звук, экраны, аккаунт и обновления — с поиском по любому параметру."],
         ["Приложения на каждый день", "«Файлы», «Фото», «Медиаплеер», «Текстовый редактор», «Калькулятор» и «Снимок экрана» готовы с первого запуска."],

@@ -41,7 +41,7 @@ Depends:
  kde-cli-tools,
  lumo-archive (>= 1.6),
  lumo-base (>= 1.6.5),
- lumo-desktop (>= 1.4.58),
+ lumo-desktop (>= 1.4.59),
  lumo-quickshare (>= 1.0.3),
  ksystemstats,
  libarchive-tools,

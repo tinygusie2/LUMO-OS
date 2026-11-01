@@ -1,4 +1,4 @@
-lumo-apps (1.1.66) UNRELEASED; urgency=medium
+lumo-apps (1.1.67) UNRELEASED; urgency=medium
 
   * Bring in the upstream Kernora work that was merged locally on
     2026-10-31 and the owner's fixes after it, with every name already
@@ -10,6 +10,19 @@ lumo-apps (1.1.66) UNRELEASED; urgency=medium
     over; reinstall from a new image.
 
  -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
+lumo-apps (1.1.66) UNRELEASED; urgency=medium
+
+  * Fill in the Dutch translations that were missing: the editor's toolbar,
+    menu and error messages, the command line help and credit line of every
+    app, "%1 on Windows" in Settings, the Store's Comment, the Welcome and
+    update notifier autostart entries, the file chooser's entry and the
+    notifications of Store and updates.
+  * tools/extract-messages keeps the file chooser's strings in the
+    lumo-files catalog instead of marking them obsolete, and skips apps
+    without a launcher.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 14:22:33 +0000
 
 kernora-apps (1.1.65) UNRELEASED; urgency=medium
 

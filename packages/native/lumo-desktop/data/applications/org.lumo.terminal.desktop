@@ -8,6 +8,7 @@ GenericName[ru]=Командная строка
 GenericName[nl]=Opdrachtregel
 Comment=Run commands
 Comment[ru]=Выполнение команд
+Comment[nl]=Opdrachten uitvoeren
 Icon=org.lumo.terminal
 Exec=alacritty --class org.lumo.terminal
 TryExec=alacritty
@@ -21,4 +22,5 @@ Actions=New;
 [Desktop Action New]
 Name=New window
 Name[ru]=Новое окно
+Name[nl]=Nieuw venster
 Exec=alacritty --class org.lumo.terminal

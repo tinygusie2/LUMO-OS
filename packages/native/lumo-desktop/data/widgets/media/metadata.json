@@ -9,11 +9,13 @@
         "Category": "Multimedia",
         "Description": "The music or video that is playing, with its cover and controls",
         "Description[ru]": "Музыка или видео, которые сейчас играют, с обложкой и кнопками",
+        "Description[nl]": "De muziek of video die nu speelt, met hoes en bediening",
         "Icon": "media-playback-start",
         "Id": "org.lumo.widget.media",
         "License": "GPL-2.0+",
         "Name": "Now Playing",
-        "Name[ru]": "Сейчас играет"
+        "Name[ru]": "Сейчас играет",
+        "Name[nl]": "Nu aan het spelen"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [
