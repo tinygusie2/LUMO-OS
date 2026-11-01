@@ -25,6 +25,7 @@ AppWindow {
     title: current && current.title.length > 0 ? current.title : i18n("Terminal")
 
     ConfigEntry { id: zoom; file: "lumo-terminalrc"; group: "General"; key: "FontSize"; defaultValue: 11 }
+    ConfigEntry { id: ignoreCase; file: "lumo-terminalrc"; group: "General"; key: "IgnoreCase"; defaultValue: true }
     readonly property real fontSize: Number(zoom.value) > 0 ? Number(zoom.value) : 11
     readonly property var current: views.count > 0 && pages.currentIndex >= 0 ? views.itemAt(pages.currentIndex) : null
     property int nextId: 1
@@ -98,6 +99,7 @@ AppWindow {
 
         RowLayout {
             Layout.fillWidth: true
+            Layout.fillHeight: false
             Layout.preferredHeight: 56
             Layout.leftMargin: M3.spacingS
             Layout.rightMargin: M3.spacingS
@@ -304,6 +306,7 @@ AppWindow {
         QQC2.MenuSeparator {}
         QQC2.MenuItem { text: i18n("Bigger text"); icon.name: "zoom-in"; onTriggered: app.setZoom(app.fontSize + 1) }
         QQC2.MenuItem { text: i18n("Smaller text"); icon.name: "zoom-out"; onTriggered: app.setZoom(app.fontSize - 1) }
+        QQC2.MenuItem { text: i18n("Ignore upper and lower case"); checkable: true; checked: ignoreCase.value === true || ignoreCase.value === "true"; onTriggered: ignoreCase.value = checked }
         QQC2.MenuSeparator {}
         QQC2.MenuItem { text: i18n("Open folder in Files"); icon.name: "folder"; onTriggered: Process.startDetached("lumo-files", [app.current.terminal.workingDirectory]) }
         QQC2.MenuItem { text: i18n("Windows commands"); icon.name: "help-contents"; onTriggered: app.current.terminal.sendText("help\n") }

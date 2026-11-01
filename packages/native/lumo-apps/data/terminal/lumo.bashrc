@@ -10,8 +10,66 @@ __lumo_t() {
     gettext -d lumo-terminal "$1" 2>/dev/null || printf '%s' "$1"
 }
 
+__lumo_ignore_case() {
+    local value=true line
+    if [ -r "${XDG_CONFIG_HOME:-$HOME/.config}/lumo-terminalrc" ]; then
+        while IFS= read -r line; do
+            case "$line" in IgnoreCase=*) value=${line#IgnoreCase=} ;; esac
+        done < "${XDG_CONFIG_HOME:-$HOME/.config}/lumo-terminalrc"
+    fi
+    [ "$value" = "$__lumo_case" ] && return
+    __lumo_case=$value
+    if [ "$value" = true ]; then
+        bind 'set completion-ignore-case on' 2>/dev/null
+        shopt -s nocaseglob
+    else
+        bind 'set completion-ignore-case off' 2>/dev/null
+        shopt -u nocaseglob
+    fi
+}
+
+__lumo_find_folder() {
+    local path=$1 result part match entry
+    case "$path" in
+        /*) result=/ ;;
+        *) result=. ;;
+    esac
+    local IFS=/
+    for part in $path; do
+        [ -z "$part" ] && continue
+        if [ -d "$result/$part" ]; then
+            result="$result/$part"
+            continue
+        fi
+        match=""
+        for entry in "$result"/*/ "$result"/.*/; do
+            entry=${entry%/}
+            entry=${entry##*/}
+            if [ "${entry,,}" = "${part,,}" ]; then
+                match=$entry
+                break
+            fi
+        done
+        [ -z "$match" ] && return 1
+        result="$result/$match"
+    done
+    printf '%s' "${result#./}"
+}
+
+cd() {
+    if [ "$__lumo_case" = true ] && [ $# -eq 1 ] && [ -n "$1" ] && [ "$1" != - ] && [ ! -d "$1" ]; then
+        local found
+        if found=$(__lumo_find_folder "$1"); then
+            builtin cd -- "$found"
+            return
+        fi
+    fi
+    builtin cd "$@"
+}
+
 __lumo_prompt() {
     local status=$?
+    __lumo_ignore_case
     printf '\033]7;file://%s%s\033\\' "${HOSTNAME:-localhost}" "$PWD"
     printf '\033]0;%s\007' "${PWD/#$HOME/\~}"
     __lumo_mark=""

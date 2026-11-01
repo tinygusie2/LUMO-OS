@@ -1,3 +1,14 @@
+lumo-apps (1.1.71) UNRELEASED; urgency=medium
+
+  * Terminal: the tab bar keeps its height and the terminal fills the
+    rest of the window; before, the two shared the height and the tab bar
+    sat in the middle.
+  * Terminal ignores upper and lower case, like Windows: cd downloads
+    opens Downloads and Tab completes names in any case. Ignore upper and
+    lower case in the menu turns it off (lumo-terminalrc IgnoreCase).
+
+ -- Lumo Developers <developers@lumo.invalid>  Mon, 02 Nov 2026 00:00:00 +0100
+
 lumo-apps (1.1.70) UNRELEASED; urgency=medium
 
   * A running app whose program was replaced by an update now starts

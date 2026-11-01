@@ -47,6 +47,9 @@ msgstr "Очистить экран"
 msgid "Bigger text"
 msgstr "Крупнее текст"
 
+msgid "Ignore upper and lower case"
+msgstr "Не различать регистр"
+
 msgid "Smaller text"
 msgstr "Мельче текст"
 

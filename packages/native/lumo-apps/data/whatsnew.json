@@ -1,5 +1,24 @@
 [
   {
+    "id": "2026-11-02",
+    "date": "2026-11-02",
+    "items": [
+      {
+        "icon": "utilities-terminal",
+        "title": {
+          "en": "Terminal ignores upper and lower case",
+          "nl": "Terminal let niet op hoofdletters",
+          "ru": "Терминал не различает регистр"
+        },
+        "text": {
+          "en": "In Terminal, cd downloads now opens Downloads, and Tab completes names whatever case you type, just like in Windows. If you want Linux's exact names back, turn off Ignore upper and lower case in the menu.",
+          "nl": "In Terminal opent cd downloads nu gewoon Downloads, en Tab vult namen aan, of je nu hoofdletters typt of niet, net als in Windows. Wil je toch de exacte namen van Linux, zet dan Hoofdletters negeren in het menu uit.",
+          "ru": "В Терминале cd downloads теперь открывает Downloads, а Tab дополняет имена независимо от регистра, как в Windows. Если нужен точный регистр, как обычно в Linux, отключите в меню пункт «Не различать регистр»."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-11-01-1",
     "date": "2026-11-01",
     "items": [

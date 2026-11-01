@@ -166,8 +166,8 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.70" ]] \
-  || fail "lumo-apps 1.1.70 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.71" ]] \
+  || fail "lumo-apps 1.1.71 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do

@@ -24,7 +24,7 @@ libpam-fprintd
 
 lumo-desktop=1.4.62
 lumo-calamares=1.4.62
-lumo-apps=1.1.70
+lumo-apps=1.1.71
 lumo-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1lumo1
 plymouth

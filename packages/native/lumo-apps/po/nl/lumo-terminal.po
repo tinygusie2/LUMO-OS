@@ -47,6 +47,9 @@ msgstr "Scherm wissen"
 msgid "Bigger text"
 msgstr "Grotere tekst"
 
+msgid "Ignore upper and lower case"
+msgstr "Hoofdletters negeren"
+
 msgid "Smaller text"
 msgstr "Kleinere tekst"
 
