@@ -506,7 +506,7 @@ grep -Fxq 'activate-noawait update-initramfs' <<<"$triggers" \
 if grep -Ev '^(#.*|activate(-await|-noawait)? .+|interest(-await|-noawait)? .+|)$' <<<"$triggers" | grep -q .; then
   fail "lumo-desktop's triggers file has lines dpkg rejects"
 fi
-dpkg-deb -c "$desktop_deb" | grep -Eq '^-rwxr-xr-x .* \./usr/share/initramfs-tools/hooks/zz-lumo-firmware$' \
+dpkg-deb -c "$desktop_deb" | grep -E '^-rwxr-xr-x .* \./usr/share/initramfs-tools/hooks/zz-lumo-firmware$' >/dev/null \
   || fail "the initramfs firmware hook is not installed executable"
 [[ "$(readlink "$temporary_root/desktop/usr/share/kglobalaccel/org.lumo.terminal.desktop")" == */applications/org.lumo.terminal.desktop ]] \
   || fail "kglobalaccel does not see the terminal's launch shortcut"
