@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.59" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.60" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -428,6 +428,12 @@ grep -Fxq 'Current=lumo' "$data_root/sddm.conf.d/lumo-theme.conf" \
 grep -Fxq 'InputMethod=' "$data_root/sddm.conf.d/lumo-theme.conf" \
   || fail "the login screen would show the virtual keyboard"
 [[ -s "$data_root/sddm-theme/lumo/Main.qml" ]] || fail "the Lumo login screen is missing"
+grep -Fxq 'DisplayServer=wayland' "$data_root/sddm.conf.d/lumo-wayland.conf" \
+  || fail "the login screen does not run on Wayland"
+grep -Eq '^CompositorCommand=kwin_wayland ' "$data_root/sddm.conf.d/lumo-wayland.conf" \
+  || fail "the login screen is not drawn by KWin"
+grep -Fxq 'data/sddm.conf.d/lumo-wayland.conf etc/sddm.conf.d' "$package_root/debian/lumo-desktop.install" \
+  || fail "the Wayland login screen setting is not installed"
 
 settings="$data_root/calamares/settings.conf"
 [[ -s "$settings" ]] || fail "installer settings are missing"

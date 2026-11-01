@@ -101,6 +101,12 @@ differences and easing curves.
 The login screen (SDDM) runs before anyone logs in and keeps Material 3; the
 lock screen follows the user's style. So does the boot (GRUB, Plymouth).
 
+SDDM runs on Wayland (`data/sddm.conf.d/lumo-wayland.conf`): KWin draws the
+greeter with `kwin_wayland --drm`, and the greeter uses the layer-shell
+integration, so there is no X server between boot and desktop. `xserver-xorg`
+and `kwin-x11` stay in the image as a fallback; removing
+`/etc/sddm.conf.d/lumo-wayland.conf` brings back the X11 greeter.
+
 ## Colour themes
 
 Lumo comes in its own colour and in the Material colours: red, pink,

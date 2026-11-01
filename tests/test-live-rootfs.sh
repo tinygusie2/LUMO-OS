@@ -106,8 +106,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.59" ]] \
-  || fail "lumo-desktop 1.4.59 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.60" ]] \
+  || fail "lumo-desktop 1.4.60 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -327,6 +327,9 @@ done
 # The Lumo login screen, and what it is drawn with.
 grep -Fxq 'Current=lumo' /etc/sddm.conf.d/lumo-theme.conf \
   || fail "SDDM does not use the Lumo login screen"
+grep -Fxq 'DisplayServer=wayland' /etc/sddm.conf.d/lumo-wayland.conf \
+  || fail "SDDM does not run on Wayland"
+[[ -x /usr/bin/kwin_wayland ]] || fail "the Wayland login screen has no compositor"
 [[ -s /usr/share/sddm/themes/lumo/Main.qml && -s /usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MShapeEcho.qml ]] \
   || fail "the Lumo login screen is incomplete"
 grep -Fxq "User=${LIVE_USER:?}" /etc/sddm.conf.d/lumo-autologin.conf \
