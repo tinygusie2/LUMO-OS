@@ -15,7 +15,7 @@ for dependency in dpkg-parsechangelog grep; do
 done
 
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$version" == "1.1.67" ]] || fail "unexpected source version"
+[[ "$version" == "1.1.68" ]] || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] || fail "wrong source format"
@@ -141,6 +141,9 @@ for dependency in ksystemstats libksysguard-bin qml6-module-org-kde-ksysguard qm
   grep -Eq "^ $dependency,?$" "$package_root/debian/control" || fail "Task Manager needs $dependency"
 done
 msgfmt --check -o /dev/null "$package_root/po/ru/lumo-taskmanager.po" || fail "the Task Manager translation is broken"
+for po in "$package_root"/po/*/*.po; do
+  msgfmt --check -o /dev/null "$po" 2>/dev/null || fail "translation does not compile: ${po#"$package_root"/}"
+done
 grep -Fq 'key: "themedApps"' "$package_root/apps/settings/qml/pages/AppearancePage.qml" \
   && grep -Fq 'msgid "Themed app icons"' "$package_root/po/ru/lumo-settings.po" \
   && grep -Eq '^ qt6-svg-plugins,$' "$package_root/debian/control" \

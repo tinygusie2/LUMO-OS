@@ -1672,11 +1672,11 @@ msgstr "Отдельные настройки для чисел, времени,
 
 #: apps/settings/qml/pages/LegalPage.qml:24
 msgid ""
-"Lumo is free software, made from the work of many open-source "
-"projects. Their authors and licences are listed here."
+"Lumo is free software, made from the work of many open-source projects. "
+"Their authors and licences are listed here."
 msgstr ""
-"Lumo — свободная система, созданная из труда многих проектов с "
-"открытым кодом. Здесь перечислены их авторы и лицензии."
+"Lumo — свободная система, созданная из труда многих проектов с открытым "
+"кодом. Здесь перечислены их авторы и лицензии."
 
 #: apps/settings/qml/pages/LegalPage.qml:35
 #: apps/settings/qml/pages/LegalPage.qml:38
@@ -1687,8 +1687,8 @@ msgstr "Lumo"
 msgid ""
 "The Lumo shell, apps and design: GNU General Public License 2.0 or later"
 msgstr ""
-"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 "
-"или новее"
+"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 или "
+"новее"
 
 #: apps/settings/qml/pages/LegalPage.qml:46
 msgid "GNU General Public License 2.0"
@@ -2398,8 +2398,8 @@ msgid ""
 "Every generation of Material, drawn in the Lumo colours: shapes, depth, "
 "buttons and the quick settings change with it."
 msgstr ""
-"Любое поколение Material в цветах Lumo: вместе с ним меняются формы, "
-"тени, кнопки и быстрые настройки."
+"Любое поколение Material в цветах Lumo: вместе с ним меняются формы, тени, "
+"кнопки и быстрые настройки."
 
 #: apps/settings/qml/pages/AppearancePage.qml
 msgid "Applying…"
@@ -2998,10 +2998,6 @@ msgstr "%1. %2"
 msgid "Sounds"
 msgstr "Звуки"
 
-#: apps/settings/qml/pages/SoundPage.qml:227
-msgid "Lumo"
-msgstr "Lumo"
-
 #: apps/settings/qml/pages/SoundPage.qml:255
 msgid "Listen"
 msgstr "Послушать"
@@ -3357,13 +3353,13 @@ msgid "Updates come with the installation"
 msgstr "Обновления придут вместе с установкой"
 
 msgid ""
-"You are trying Lumo from the installation medium, and nothing installed "
-"here is kept. Install Lumo: when the computer is online, the installer "
-"brings the new system up to date by itself."
+"You are trying Lumo from the installation medium, and nothing installed here "
+"is kept. Install Lumo: when the computer is online, the installer brings the "
+"new system up to date by itself."
 msgstr ""
 "Сейчас Lumo запущена с установочного носителя, и всё, что здесь "
-"устанавливается, не сохранится. Установите Lumo: если компьютер подключён "
-"к интернету, установщик сам обновит новую систему."
+"устанавливается, не сохранится. Установите Lumo: если компьютер подключён к "
+"интернету, установщик сам обновит новую систему."
 
 msgid "Install Lumo"
 msgstr "Установить Lumo"
@@ -3371,8 +3367,7 @@ msgstr "Установить Lumo"
 msgid "Drivers"
 msgstr "Драйверы"
 
-msgid ""
-"Lumo finds the drivers your hardware needs and installs them by itself."
+msgid "Lumo finds the drivers your hardware needs and installs them by itself."
 msgstr ""
 "Lumo сама находит и устанавливает драйверы, которые нужны вашему "
 "оборудованию."
@@ -3416,8 +3411,8 @@ msgid ""
 "Lumo is downloading the driver for %1 and installing it. It takes a few "
 "minutes, and you can keep working."
 msgstr ""
-"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько "
-"минут, можно продолжать работать."
+"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько минут, "
+"можно продолжать работать."
 
 msgid "The driver for %1 is installed. It starts working after a restart."
 msgstr "Драйвер для %1 установлен и заработает после перезагрузки."
@@ -3493,11 +3488,10 @@ msgstr ""
 "ошибки"
 
 msgid ""
-"When a graphics card needs a driver, Lumo installs it and asks you to "
-"restart"
+"When a graphics card needs a driver, Lumo installs it and asks you to restart"
 msgstr ""
-"Если видеокарте нужен драйвер, Lumo установит его и попросит "
-"перезагрузить компьютер"
+"Если видеокарте нужен драйвер, Lumo установит его и попросит перезагрузить "
+"компьютер"
 
 msgid "Graphics card drivers"
 msgstr "Драйверы видеокарты"
@@ -3645,21 +3639,6 @@ msgstr "Отправить и получить"
 msgid "Open Quick Share"
 msgstr "Открыть Quick Share"
 
-#: apps/settings/qml/components/Catalog.qml:30
-#: apps/settings/qml/pages/AboutPage.qml:22
-#: apps/settings/qml/pages/SystemPage.qml:97
-msgid "About Lumo"
-msgstr "О Lumo"
-
-#: apps/settings/qml/pages/AboutPage.qml:179
-msgid "Licences, authors and copyrights of the software in Lumo"
-msgstr "Лицензии, авторы и авторские права программ в Lumo"
-
-#: apps/settings/qml/pages/AppearancePage.qml:244
-#: apps/settings/qml/pages/AppearancePage.qml:288
-msgid "Lumo Shapes"
-msgstr "Фигуры Lumo"
-
 msgid "Still"
 msgstr "Статичные"
 
@@ -3672,38 +3651,6 @@ msgstr ""
 "Меньше кадров от батареи; пауза в режиме энергосбережения или при низком "
 "заряде"
 
-#: apps/settings/qml/pages/LegalPage.qml:24
-msgid ""
-"Lumo is free software, made from the work of many open-source projects. "
-"Their authors and licences are listed here."
-msgstr ""
-"Lumo — свободная система, созданная из труда многих проектов с открытым "
-"кодом. Здесь перечислены их авторы и лицензии."
-
-#: apps/settings/qml/pages/LegalPage.qml:35
-#: apps/settings/qml/pages/LegalPage.qml:38
-msgid "Lumo"
-msgstr "Lumo"
-
-#: apps/settings/qml/pages/LegalPage.qml:39
-msgid ""
-"The Lumo shell, apps and design: GNU General Public License 2.0 or later"
-msgstr ""
-"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 или "
-"новее"
-
-#: src/apps/host.cpp:64
-msgctxt "@info:credit"
-msgid "© 2026 Lumo"
-msgstr "© 2026 Lumo"
-
-msgid ""
-"Every generation of Material, drawn in the Lumo colours: shapes, depth, "
-"buttons and the quick settings change with it."
-msgstr ""
-"Любое поколение Material в цветах Lumo: вместе с ним меняются формы, тени, "
-"кнопки и быстрые настройки."
-
 #: apps/settings/qml/pages/SoundPage.qml:228
 msgid "Ocean"
 msgstr "Ocean"
@@ -3715,57 +3662,6 @@ msgstr "Звуки KDE"
 #: apps/settings/qml/components/Catalog.qml:52
 msgid "sound theme lumo ocean login chime alerts notification sounds"
 msgstr "звуковая тема lumo ocean вход мелодия сигналы звуки уведомлений"
-
-#: apps/settings/qml/pages/FontsPage.qml:158
-msgid "Restore the Lumo fonts"
-msgstr "Вернуть шрифты Lumo"
-
-msgid ""
-"You are trying Lumo from the installation medium, and nothing installed here "
-"is kept. Install Lumo: when the computer is online, the installer brings the "
-"new system up to date by itself."
-msgstr ""
-"Сейчас Lumo запущена с установочного носителя, и всё, что здесь "
-"устанавливается, не сохранится. Установите Lumo: если компьютер подключён к "
-"интернету, установщик сам обновит новую систему."
-
-msgid "Install Lumo"
-msgstr "Установить Lumo"
-
-msgid "Lumo finds the drivers your hardware needs and installs them by itself."
-msgstr ""
-"Lumo сама находит и устанавливает драйверы, которые нужны вашему "
-"оборудованию."
-
-msgid "Your graphics card works with the drivers built into Lumo."
-msgstr "Ваша видеокарта работает со встроенными драйверами Lumo."
-
-msgid ""
-"NVIDIA no longer makes a driver for this card. It keeps working with the "
-"open driver built into Lumo."
-msgstr ""
-"NVIDIA больше не выпускает драйвер для этой видеокарты. Она продолжит "
-"работать со встроенным открытым драйвером Lumo."
-
-msgid ""
-"Lumo is downloading the driver for %1 and installing it. It takes a few "
-"minutes, and you can keep working."
-msgstr ""
-"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько минут, "
-"можно продолжать работать."
-
-msgid ""
-"When a graphics card needs a driver, Lumo installs it and asks you to restart"
-msgstr ""
-"Если видеокарте нужен драйвер, Lumo установит его и попросит перезагрузить "
-"компьютер"
-
-msgid "Lumo could not start this. Install the latest updates and try again."
-msgstr ""
-"Не получилось запустить. Установите последние обновления и попробуйте снова."
-
-msgid "Lumo is removing the NVIDIA driver."
-msgstr "Lumo удаляет драйвер NVIDIA."
 
 msgid ""
 "Share with an Android phone the way you share between phones: on the phone, "
