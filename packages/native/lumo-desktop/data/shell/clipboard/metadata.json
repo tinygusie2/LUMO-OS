@@ -9,11 +9,13 @@
         "Category": "Utilities",
         "Description": "The clipboard history as a Material 3 sheet, opened with Meta+V",
         "Description[ru]": "История буфера обмена в виде карточки Material 3, открывается по Meta+V",
+        "Description[nl]": "De klembordgeschiedenis als Material 3-paneel, te openen met Meta+V",
         "Icon": "edit-paste",
         "Id": "org.lumo.clipboard",
         "License": "GPL-2.0+",
         "Name": "Lumo Clipboard",
-        "Name[ru]": "Буфер обмена Lumo"
+        "Name[ru]": "Буфер обмена Lumo",
+        "Name[nl]": "Lumo Klembord"
     },
     "X-Plasma-API-Minimum-Version": "6.0"
 }

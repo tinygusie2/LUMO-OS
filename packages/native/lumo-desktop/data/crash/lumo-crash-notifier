@@ -11,6 +11,7 @@ import subprocess
 
 TEXT = {
     "ru": ("Приложение закрылось", "Приложение «{name}» неожиданно закрылось. Его можно открыть снова."),
+    "nl": ("Een app is gesloten", "{name} is onverwacht gesloten. Je kunt de app opnieuw openen."),
     "en": ("An app closed", "{name} closed unexpectedly. You can open it again."),
 }
 

@@ -2,6 +2,7 @@
 Type=Application
 Name=Update notifications
 Name[ru]=Уведомления об обновлениях
+Name[nl]=Meldingen over updates
 Icon=system-software-update
 Exec=lumo-update-notifier
 NoDisplay=true

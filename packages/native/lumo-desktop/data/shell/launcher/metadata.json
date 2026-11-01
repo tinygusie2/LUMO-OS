@@ -9,11 +9,13 @@
         "Category": "Application Launchers",
         "Description": "Material 3 application launcher with search",
         "Description[ru]": "Меню приложений в стиле Material 3 с поиском",
+        "Description[nl]": "Appmenu in Material 3 met zoekfunctie",
         "Icon": "start-here-kde",
         "Id": "org.lumo.launcher",
         "License": "GPL-2.0+",
         "Name": "Lumo Launcher",
-        "Name[ru]": "Меню приложений Lumo"
+        "Name[ru]": "Меню приложений Lumo",
+        "Name[nl]": "Lumo Appmenu"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-Provides": [

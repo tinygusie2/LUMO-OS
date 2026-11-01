@@ -14,8 +14,9 @@ Rectangle {
     color: P.surface
 
     readonly property bool russian: Qt.locale().name.startsWith("ru")
-    function tr(en: string, ru: string): string {
-        return russian ? ru : en;
+    readonly property bool dutch: Qt.locale().name.startsWith("nl")
+    function tr(en: string, ru: string, nl: string): string {
+        return dutch ? nl : russian ? ru : en;
     }
 
     property int userIndex: userModel.lastIndex >= 0 ? userModel.lastIndex : 0
@@ -38,7 +39,7 @@ Rectangle {
         target: sddm
         function onLoginFailed() {
             root.busy = false;
-            root.failure = root.tr("Wrong password. Try again.", "Неверный пароль. Попробуйте ещё раз.");
+            root.failure = root.tr("Wrong password. Try again.", "Неверный пароль. Попробуйте ещё раз.", "Onjuist wachtwoord. Probeer het opnieuw.");
             password.selectAll();
             password.forceActiveFocus();
             shake.restart();
@@ -241,7 +242,7 @@ Rectangle {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             visible: password.text.length === 0
-                            text: root.tr("Password", "Пароль")
+                            text: root.tr("Password", "Пароль", "Wachtwoord")
                             color: P.surfaceVariantContent
                             font: password.font
                         }
@@ -275,7 +276,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 visible: text.length > 0
                 text: root.failure.length > 0 ? root.failure
-                    : keyboard.capsLock ? root.tr("Caps Lock is on", "Включён Caps Lock") : ""
+                    : keyboard.capsLock ? root.tr("Caps Lock is on", "Включён Caps Lock", "Caps Lock staat aan") : ""
                 color: root.failure.length > 0 ? P.error : P.surfaceVariantContent
                 font.family: "Google Sans Flex"
                 font.pixelSize: 14
@@ -356,9 +357,9 @@ Rectangle {
             font.pixelSize: 14
             Layout.rightMargin: 8
         }
-        PowerButton { visible: sddm.canSuspend; icon: "icons/suspend.svg"; label: root.tr("Sleep", "Сон"); onClicked: sddm.suspend() }
-        PowerButton { visible: sddm.canReboot; icon: "icons/reboot.svg"; label: root.tr("Restart", "Перезагрузка"); onClicked: sddm.reboot() }
-        PowerButton { visible: sddm.canPowerOff; icon: "icons/shutdown.svg"; label: root.tr("Shut down", "Выключение"); onClicked: sddm.powerOff() }
+        PowerButton { visible: sddm.canSuspend; icon: "icons/suspend.svg"; label: root.tr("Sleep", "Сон", "Slaapstand"); onClicked: sddm.suspend() }
+        PowerButton { visible: sddm.canReboot; icon: "icons/reboot.svg"; label: root.tr("Restart", "Перезагрузка", "Opnieuw opstarten"); onClicked: sddm.reboot() }
+        PowerButton { visible: sddm.canPowerOff; icon: "icons/shutdown.svg"; label: root.tr("Shut down", "Выключение", "Afsluiten"); onClicked: sddm.powerOff() }
     }
 
     component Chip: Rectangle {

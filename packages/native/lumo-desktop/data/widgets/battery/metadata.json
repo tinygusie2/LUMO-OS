@@ -9,11 +9,13 @@
         "Category": "System Information",
         "Description": "The charge of this computer and of connected devices, as rings",
         "Description[ru]": "Заряд компьютера и подключённых устройств в виде колец",
+        "Description[nl]": "De lading van deze computer en van verbonden apparaten, als ringen",
         "Icon": "battery-full",
         "Id": "org.lumo.widget.battery",
         "License": "GPL-2.0+",
         "Name": "Batteries",
-        "Name[ru]": "Батареи"
+        "Name[ru]": "Батареи",
+        "Name[nl]": "Batterijen"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

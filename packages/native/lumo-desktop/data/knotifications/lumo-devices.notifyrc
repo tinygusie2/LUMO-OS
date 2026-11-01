@@ -2,13 +2,17 @@
 IconName=org.lumo.files
 Name=Files
 Name[ru]=Файлы
+Name[nl]=Bestanden
 Comment=Removable storage
 Comment[ru]=Съёмные накопители
+Comment[nl]=Verwisselbare opslag
 DesktopEntry=org.lumo.files
 
 [Event/storageAdded]
 Name=Storage device connected
 Name[ru]=Подключён накопитель
+Name[nl]=Opslagapparaat aangesloten
 Comment=A USB drive or memory card was plugged in
 Comment[ru]=Подключена флешка или карта памяти
+Comment[nl]=Er is een USB-stick of geheugenkaart aangesloten
 Action=Popup

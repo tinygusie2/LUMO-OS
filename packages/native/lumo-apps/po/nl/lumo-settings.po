@@ -2890,3 +2890,13 @@ msgstr "Quick Share start bij het aanmelden en wacht in het statusgebied"
 
 msgid "nearby share android phone send receive files photos samsung pixel"
 msgstr "nearby share delen android telefoon versturen ontvangen bestanden foto's samsung pixel"
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."
+
+msgid "%1 on Windows"
+msgstr "%1 op Windows"

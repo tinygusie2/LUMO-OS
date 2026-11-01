@@ -392,3 +392,10 @@ msgstr "Apps die je uit de Store installeert, verschijnen hier."
 
 msgid "Try another name or a shorter word."
 msgstr "Probeer een andere naam of een korter woord."
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."

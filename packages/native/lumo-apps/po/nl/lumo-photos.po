@@ -91,3 +91,10 @@ msgstr "Openen met een andere app"
 
 msgid "Move to trash"
 msgstr "Naar prullenbak"
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."

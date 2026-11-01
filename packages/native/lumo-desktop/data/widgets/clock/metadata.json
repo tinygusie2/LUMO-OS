@@ -9,11 +9,13 @@
         "Category": "Date and Time",
         "Description": "Bold digits or an analog dial on a Material shape",
         "Description[ru]": "Крупные цифры или циферблат на фигуре Material",
+        "Description[nl]": "Grote cijfers of een analoge wijzerplaat op een Material-vorm",
         "Icon": "clock",
         "Id": "org.lumo.widget.clock",
         "License": "GPL-2.0+",
         "Name": "Lumo Clock",
-        "Name[ru]": "Часы"
+        "Name[ru]": "Часы",
+        "Name[nl]": "Lumo Klok"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

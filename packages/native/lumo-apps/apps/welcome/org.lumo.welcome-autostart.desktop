@@ -2,6 +2,7 @@
 Type=Application
 Name=Welcome
 Name[ru]=Добро пожаловать
+Name[nl]=Welkom
 Icon=org.lumo.welcome
 Exec=lumo-welcome --first-run
 NoDisplay=true

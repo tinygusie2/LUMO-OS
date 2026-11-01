@@ -8,11 +8,13 @@
         ],
         "Description": "Material 3 window cards, as Lumo shows recent apps",
         "Description[ru]": "Карточки окон в стиле Material 3, как недавние приложения Lumo",
+        "Description[nl]": "Vensterkaarten in Material 3, zoals Lumo recente apps toont",
         "Icon": "preferences-system-windows-switcher-thumbnail-grid",
         "Id": "org.lumo.switcher",
         "License": "GPL-2.0-or-later",
         "Name": "Lumo",
-        "Name[ru]": "Lumo"
+        "Name[ru]": "Lumo",
+        "Name[nl]": "Lumo"
     },
     "X-Plasma-API": "declarativeappletscript"
 }
