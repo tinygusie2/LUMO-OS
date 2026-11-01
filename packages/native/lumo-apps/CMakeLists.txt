@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 cmake_minimum_required(VERSION 3.25)
-project(lumo-apps VERSION 1.1.65 LANGUAGES C CXX)
+project(lumo-apps VERSION 1.1.66 LANGUAGES C CXX)
 
 set(QT_MIN_VERSION 6.8)
 set(KF_MIN_VERSION 6.13)
@@ -42,7 +42,7 @@ add_subdirectory(src/updatenotifier)
 add_subdirectory(src/bluetoothagent)
 add_subdirectory(src/pin)
 
-set(LUMO_APPS settings files welcome editor photos player calculator screenshot store tasks calendar focus projection)
+set(LUMO_APPS settings files welcome editor photos player calculator screenshot store share taskmanager calendar focus projection)
 foreach(app ${LUMO_APPS})
     install(DIRECTORY apps/${app}/qml/ DESTINATION ${KDE_INSTALL_DATADIR}/lumo/${app})
     install(FILES apps/${app}/org.lumo.${app}.desktop DESTINATION ${KDE_INSTALL_APPDIR})
@@ -50,15 +50,15 @@ endforeach()
 
 install(DIRECTORY apps/filechooser/qml/ DESTINATION ${KDE_INSTALL_DATADIR}/lumo/filechooser)
 install(DIRECTORY apps/bluetoothagent/qml/ DESTINATION ${KDE_INSTALL_DATADIR}/lumo/bluetoothagent)
+install(FILES apps/taskmanager/org.lumo.taskmanager.desktop DESTINATION ${KDE_INSTALL_DATADIR}/kglobalaccel)
 
 install(FILES apps/welcome/org.lumo.welcome-autostart.desktop
         DESTINATION ${KDE_INSTALL_AUTOSTARTDIR} RENAME org.lumo.welcome.desktop)
-install(PROGRAMS data/systemsettings data/quickshare/lumo-quickshare DESTINATION ${KDE_INSTALL_BINDIR})
-install(FILES apps/quickshare/org.lumo.quickshare.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(PROGRAMS data/systemsettings DESTINATION ${KDE_INSTALL_BINDIR})
 install(FILES data/copyright/librewolf data/copyright/r-quick-share DESTINATION ${KDE_INSTALL_DATADIR}/lumo/copyright)
 install(FILES data/knotifications/lumo-screenshot.notifyrc data/knotifications/lumo-updates.notifyrc data/knotifications/lumo-store.notifyrc data/knotifications/lumo-calendar.notifyrc data/knotifications/lumo-focus.notifyrc
         DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
-install(FILES data/autostart/org.lumo.update-notifier.desktop data/autostart/org.lumo.bluetooth-agent.desktop data/autostart/org.lumo.calendar-reminders.desktop data/autostart/org.lumo.screenshot-resident.desktop data/autostart/org.lumo.projection-resident.desktop data/autostart/org.lumo.quickshare-resident.desktop DESTINATION ${KDE_INSTALL_AUTOSTARTDIR})
+install(FILES data/autostart/org.lumo.update-notifier.desktop data/autostart/org.lumo.bluetooth-agent.desktop data/autostart/org.lumo.calendar-reminders.desktop data/autostart/org.lumo.screenshot-resident.desktop data/autostart/org.lumo.projection-resident.desktop DESTINATION ${KDE_INSTALL_AUTOSTARTDIR})
 install(FILES data/whatsnew.json DESTINATION ${KDE_INSTALL_DATADIR}/lumo)
 install(FILES data/store/featured.json DESTINATION ${KDE_INSTALL_DATADIR}/lumo/store)
 install(FILES data/store/flathub.flatpakrepo DESTINATION ${KDE_INSTALL_DATADIR}/flatpak/remotes.d)

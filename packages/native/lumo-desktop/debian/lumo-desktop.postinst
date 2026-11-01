@@ -7,8 +7,28 @@ if [ "$1" = configure ]; then
     if dpkg --compare-versions "$2" lt 1.4.28         && [ -e /usr/lib/systemd/system/NetworkManager-wait-online.service ]; then
         systemctl disable NetworkManager-wait-online.service >/dev/null 2>&1 || true
     fi
+    if [ -d /boot/grub ]; then
+        /usr/libexec/lumo-grub-theme || true
+    fi
     if [ -e /boot/grub/grub.cfg ] && command -v update-grub >/dev/null 2>&1; then
         update-grub || true
+    fi
+    greeter=/usr/share/sddm/themes/lumo/theme.conf.user
+    if [ -f "$greeter" ] && grep -q '^wallpaper=org\.lumo\.tower$' "$greeter"; then
+        sed -i 's/^wallpaper=org\.lumo\.tower$/wallpaper=org.lumo.shapes/' "$greeter"
+    fi
+    /usr/libexec/lumo-splash-wallpaper || true
+    /usr/libexec/lumo-boot-theme || true
+    active=$(/usr/sbin/plymouth-set-default-theme 2>/dev/null || true)
+    splash=/usr/share/plymouth/themes/${active:-lumo}
+    stamp=/var/lib/lumo/plymouth-theme
+    if [ -d "$splash" ] && [ -x /usr/sbin/update-initramfs ]; then
+        sum=$( { echo "${active:-lumo}"; cd "$splash" && find . -type f | LC_ALL=C sort | xargs md5sum; } | md5sum | cut -d' ' -f1)
+        if [ "$sum" != "$(cat "$stamp" 2>/dev/null || true)" ]; then
+            dpkg-trigger --no-await update-initramfs || update-initramfs -u || true
+            install -d -m 0755 /var/lib/lumo
+            printf '%s\n' "$sum" > "$stamp"
+        fi
     fi
 fi
 

@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_tower_to_shapes
+Script=lumo-tower-to-shapes.sh,sh

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = configure ] && [ -e /etc/apt/sources.list.d/lumo-demo.sources ]; then
+    install -m 0644 /usr/share/lumo/apt/lumo-demo.sources /etc/apt/sources.list.d/lumo-demo.sources
+fi
+
+#DEBHELPER#
+
+exit 0

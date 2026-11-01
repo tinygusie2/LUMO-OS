@@ -33,13 +33,13 @@ grep -Fxq 'Parent: Debian' /etc/dpkg/origins/lumo \
   || fail "Lumo is not the default dpkg vendor"
 
 [[ "$(dpkg-query -W -f='${Version}' base-files)" \
-  == "13.8+deb13u6+lumo1" ]] || fail "wrong base-files version"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.4" ]] \
+  == "13.8+deb13u7+lumo1" ]] || fail "wrong base-files version"
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
   || fail "lumo-base is not installed"
 
 grep -Fq 'signed-by=/usr/share/keyrings/lumo-development-archive-keyring.gpg' \
   /etc/apt/sources.list || fail "Lumo source is not scoped to its key"
-grep -Fq 'snapshot.debian.org/archive/debian/20260901T000000Z' \
+grep -Fq 'snapshot.debian.org/archive/debian/20261015T000000Z' \
   /etc/apt/sources.list || fail "Debian source is not pinned to the snapshot"
 [[ ! -e /etc/apt/apt.conf.d/99mmdebstrap ]] \
   || fail "temporary mmdebstrap APT configuration remains"
@@ -70,7 +70,7 @@ apt_options=(
 apt-get "${apt_options[@]}" update >/dev/null \
   || fail "APT rejected the embedded Lumo archive"
 apt-cache "${apt_options[@]}" show lumo-base > "$apt_root/lumo-base.txt"
-grep -Fxq 'Depends: base-files (= 13.8+deb13u6+lumo1), lumo-archive (>= 1.4)' \
+grep -Fxq 'Depends: base-files (= 13.8+deb13u7+lumo1), lumo-archive (>= 1.6)' \
   "$apt_root/lumo-base.txt" || fail "APT sees the wrong identity dependency"
 
 printf 'inside rootfs: OK\n'

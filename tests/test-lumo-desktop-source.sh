@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.57" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.58" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -35,7 +35,7 @@ grep -Eq '^ calamares \(>= [^)]*lumo[0-9]+\),$' "$control" \
   || fail "installer configuration does not depend on the Lumo calamares"
 
 data_root="$package_root/data"
-for wallpaper in shapes tower rhythm starfall pastel waves aurora; do
+for wallpaper in shapes rhythm starfall pastel ribbon; do
   for file in metadata.json contents/ui/main.qml contents/ui/Scene.qml contents/ui/config.qml contents/config/main.xml; do
     [[ -s "$data_root/wallpaper/org.lumo.$wallpaper/$file" ]] \
       || fail "the $wallpaper wallpaper lacks $file"
@@ -43,28 +43,25 @@ for wallpaper in shapes tower rhythm starfall pastel waves aurora; do
   [[ -s "$package_root/data/shell/po/plasma_wallpaper_org.lumo.$wallpaper.ru.po" ]] \
     || fail "the $wallpaper wallpaper has no Russian translation"
 done
-[[ -s "$data_root/wallpaper/org.lumo.tower/contents/ui/tower.js" ]] || fail "the tower's simulation is missing"
-for wallpaper in shapes tower rhythm starfall pastel waves aurora; do
-  main="$data_root/wallpaper/org.lumo.$wallpaper/contents/ui/main.qml"
-  grep -Fq 'root.configuration.SaveBattery && power.unplugged' "$main" \
-    || fail "the $wallpaper wallpaper does not slow down on battery"
-  grep -Fq '!resting' "$main" || fail "the $wallpaper wallpaper does not rest in power saving"
-  grep -Fq '<entry name="SaveBattery" type="Bool">' "$data_root/wallpaper/org.lumo.$wallpaper/contents/config/main.xml" \
-    || fail "the $wallpaper wallpaper has no battery setting"
-done
-for file in Power.qml PowerBattery.qml PowerProfile.qml; do
-  [[ -s "$data_root/wallpaper/common/$file" ]] || fail "the wallpapers' $file is missing"
-done
-for wallpaper in dunes bloom contour; do
-  for file in metadata.json contents/ui/main.qml contents/ui/Scene.qml; do
-    [[ -s "$data_root/wallpaper/org.lumo.$wallpaper/$file" ]] \
-      || fail "the still $wallpaper wallpaper lacks $file"
-  done
-  grep -Fq '"X-Lumo-Still": true' "$data_root/wallpaper/org.lumo.$wallpaper/metadata.json" \
-    || fail "the $wallpaper wallpaper is not marked still"
-  grep -Eq 'Timer|FrameAnimation|TasksModel' "$data_root/wallpaper/org.lumo.$wallpaper/contents/ui/main.qml" \
-    && fail "the still $wallpaper wallpaper runs a clock"
-done
+grep -Fq 'import "morphs.js" as Morphs' "$data_root/wallpaper/org.lumo.ribbon/contents/ui/Scene.qml" \
+  && grep -Fq 'readonly property int to: (5 * slot + 1) % scene.kinds' "$data_root/wallpaper/org.lumo.ribbon/contents/ui/Scene.qml" \
+  && grep -Fq '"ribbon": {' "$package_root/tools/gen-wallpaper-assets" \
+  || fail "Ribbon's shapes do not change into one another"
+ribbon_assets=$(mktemp -d)
+python3 "$package_root/tools/gen-wallpaper-assets" "$ribbon_assets" ribbon >/dev/null \
+  && python3 - "$ribbon_assets/morphs.js" <<'PY' || fail "gen-wallpaper-assets does not write Ribbon's morphs"
+import json, re, sys
+text = open(sys.argv[1]).read()
+samples = int(re.search(r"var samples = (\d+);", text).group(1))
+names = json.loads(re.search(r"var names = (\[.*?\]);", text).group(1))
+shapes = json.loads(re.search(r"var shapes = (\[.*\]);", text, re.S).group(1))
+assert len(names) == len(shapes) == 16 and "puffy" not in names
+assert all(len(radii) == samples and 0.2 < min(radii) and max(radii) < 0.75 for radii in shapes)
+PY
+rm -rf "$ribbon_assets"
+[[ ! -e "$data_root/wallpaper/org.lumo.tower" ]] || fail "Tower is back"
+[[ ! -e "$package_root/data/shell/po/plasma_wallpaper_org.lumo.tower.ru.po" ]] || fail "Tower still has a translation"
+grep -q '"tower"' "$package_root/tools/gen-wallpaper-assets" && fail "gen-wallpaper-assets still has a Tower palette"
 [[ ! -e "$data_root/wallpaper/org.lumo.marbles" ]] || fail "Marble Run is back"
 sh -n "$package_root/data/kconf_update/lumo-marbles-to-pastel.sh" || fail "the Marble Run migration does not parse"
 marbles_home=$(mktemp -d)
@@ -75,19 +72,42 @@ grep -Fxq 'WallpaperPlugin=org.lumo.pastel' "$marbles_home/kscreenlockerrc" \
 grep -Fq '"org.lumo.pastel"' "$package_root/data/shell-updates/lumo_marbles_to_pastel.js" \
   || fail "desktops with Marble Run do not move to Pastel"
 rm -rf "$marbles_home"
-themes=$(mktemp -d)
-for wallpaper in waves aurora dunes bloom contour; do
-  python3 "$package_root/tools/gen-wallpaper-assets" "$themes/$wallpaper" "$wallpaper" >/dev/null \
-    || fail "gen-wallpaper-assets cannot write the $wallpaper palette"
+sh -n "$package_root/data/kconf_update/lumo-tower-to-shapes.sh" || fail "the Tower migration does not parse"
+tower_home=$(mktemp -d)
+printf '[Greeter]\nWallpaperPlugin=org.lumo.tower\n' > "$tower_home/kscreenlockerrc"
+XDG_CONFIG_HOME="$tower_home" sh "$package_root/data/kconf_update/lumo-tower-to-shapes.sh"
+grep -Fxq 'WallpaperPlugin=org.lumo.shapes' "$tower_home/kscreenlockerrc" \
+  || fail "a lock screen with Tower does not move to Shapes"
+grep -Fq '"org.lumo.shapes"' "$package_root/data/shell-updates/lumo_tower_to_shapes.js" \
+  || fail "desktops with Tower do not move to Shapes"
+grep -Fq 'wallpaper=org.lumo.shapes' "$package_root/debian/lumo-desktop.postinst" \
+  || fail "a login screen with Tower does not move to Shapes"
+rm -rf "$tower_home"
+sh -n "$package_root/data/plasma-env/lumo-video-decoding.sh" || fail "the VLC decoding script does not parse"
+video_home=$(mktemp -d)
+mkdir -p "$video_home/sys/module/nvidia" "$video_home/.var/app/org.videolan.VLC/config/vlc"
+printf '[avcodec]\navcodec-hw=vaapi_drm\n' > "$video_home/.var/app/org.videolan.VLC/config/vlc/vlcrc"
+for run in 1 2; do
+  HOME="$video_home" XDG_CONFIG_HOME="$video_home/.config" XDG_STATE_HOME="$video_home/.local/state" LUMO_SYSFS="$video_home/sys" \
+    sh -c ". '$package_root/data/plasma-env/lumo-video-decoding.sh'"
 done
-rm -rf "$themes"
+[[ "$(grep -c '^avcodec-hw=none$' "$video_home/.config/vlc/vlcrc")" == 1 ]] || fail "VLC keeps hardware decoding on NVIDIA"
+grep -Fxq 'avcodec-hw=vaapi_drm' "$video_home/.var/app/org.videolan.VLC/config/vlc/vlcrc" \
+  && ! grep -q 'avcodec-hw=none' "$video_home/.var/app/org.videolan.VLC/config/vlc/vlcrc" \
+  || fail "a VLC decoder chosen by the user is overridden"
+rm -rf "$video_home/.config" "$video_home/.local"
+rm -rf "$video_home/sys/module/nvidia"
+HOME="$video_home" XDG_CONFIG_HOME="$video_home/.config" XDG_STATE_HOME="$video_home/.local/state" LUMO_SYSFS="$video_home/sys" \
+  sh -c ". '$package_root/data/plasma-env/lumo-video-decoding.sh'"
+[[ ! -e "$video_home/.config/vlc/vlcrc" ]] || fail "VLC decoding changes without an NVIDIA driver"
+rm -rf "$video_home"
 assets=$(mktemp -d)
-python3 "$package_root/tools/gen-wallpaper-assets" "$assets" tower >/dev/null \
-  || fail "gen-wallpaper-assets cannot write the tower's assets"
+python3 "$package_root/tools/gen-wallpaper-assets" "$assets" pastel >/dev/null \
+  || fail "gen-wallpaper-assets cannot write Pastel's assets"
 grep -q '"hull":\[\[' "$assets/materialshapes.js" || fail "the shapes have no hulls"
-grep -q '"paper"' "$assets/palettes/lumo.qml" || fail "the tower's palette has no paper"
-LUMO_COLOUR=blue python3 "$package_root/tools/gen-wallpaper-assets" "$assets" tower >/dev/null \
-  || fail "gen-wallpaper-assets cannot write the tower's blue palette"
+grep -q '"base"' "$assets/palettes/lumo.qml" || fail "Pastel's palette has no base"
+LUMO_COLOUR=blue python3 "$package_root/tools/gen-wallpaper-assets" "$assets" pastel >/dev/null \
+  || fail "gen-wallpaper-assets cannot write Pastel's blue palette"
 cmp -s "$assets/palettes/lumo.qml" "$assets/palettes/blue.qml" && fail "the wallpaper does not change with the colour"
 rm -rf "$assets"
 palettes=$(mktemp -d)
@@ -126,6 +146,9 @@ grep -Fxq 'Theme=org.lumo.desktop' "$defaults" \
 grep -Fq 'loglevel=3' "$package_root/data/grub/lumo.cfg" \
   && grep -Fq 'update-grub' "$package_root/debian/lumo-desktop.postinst" \
   || fail "installed systems print kernel errors over the boot splash"
+grep -Fq 'dpkg-trigger --no-await update-initramfs' "$package_root/debian/lumo-desktop.postinst" \
+  && grep -Fq '/var/lib/lumo/plymouth-theme' "$package_root/debian/lumo-desktop.postrm" \
+  || fail "a changed boot splash does not reach the initramfs on upgrade"
 grep -Fq 'Keys.onReturnPressed: event => event.accepted = true' "$package_root/data/widgets/common/CityPicker.qml" \
   || fail "Enter in the city search closes the widget settings"
 grep -Fq 'property Timer watch' "$package_root/data/widgets/common/WeatherModel.qml" \
@@ -162,6 +185,7 @@ grep -Fxq 'name=lumo' "$defaults" \
   || fail "look-and-feel does not select the Lumo Plasma theme"
 
 tools_root="$package_root/tools"
+python3 "$project_root/tests/test-panel-transparency.py" || fail "panel transparency variants are inconsistent"
 for tool in gen-color-schemes gen-icon-theme gen-kdeglobals gen-plasma-theme \
   gen-qml-tokens gen-translations fetch-symbols gen-wallpaper-assets \
   gen-kvantum-theme gen-aurorae-theme gen-avatar gen-avatars gen-terminal-theme gen-greeter-palette \
@@ -230,9 +254,6 @@ grep -Fxq 'gtk-sound-theme-name=lumo' "$package_root/data/skel-config/gtk-3.0/se
 sh -n "$package_root/data/kconf_update/lumo-sound-theme.sh" || fail "the sound theme migration does not parse"
 sh -n "$package_root/data/kconf_update/lumo-terminal-entry.sh" || fail "the terminal entry migration does not parse"
 sh -n "$package_root/data/kconf_update/lumo-add-widgets-menu.sh" || fail "the widgets menu migration does not parse"
-sh -n "$package_root/data/kconf_update/lumo-projection-shortcut.sh" || fail "the projection shortcut migration does not parse"
-grep -Fxq 'display=none,Display\tMeta+P,Switch Display' "$package_root/data/skel-config/kglobalshortcutsrc" \
-  || fail "the KDE screen switcher still takes Meta+P"
 menu_home=$(mktemp -d)
 XDG_CONFIG_HOME="$menu_home" sh "$package_root/data/kconf_update/lumo-add-widgets-menu.sh"
 XDG_CONFIG_HOME="$menu_home" sh "$package_root/data/kconf_update/lumo-add-widgets-menu.sh"
@@ -295,16 +316,42 @@ LUMO_COLOUR=blue python3 "$tools_root/gen-icon-theme" "$package_root/data/symbol
   || fail "gen-icon-theme fails for a colour"
 grep -Fxq 'Inherits=Lumo,breeze-dark,breeze,hicolor' "$icons/Lumo-blue/index.theme" \
   || fail "a colour's icons do not fall back to Lumo's"
-[[ "$(find "$icons/Lumo-blue/scalable" -name '*.svg' -type f | wc -l)" -eq 14 ]] \
-  || fail "a colour's icon theme should hold only the fourteen app icons"
+[[ "$(find "$icons/Lumo-blue/scalable" -name '*.svg' -type f | wc -l)" -eq 16 ]] \
+  || fail "a colour's icon theme should hold only the sixteen app icons"
+for icon in actions/lumo-quickshare status/lumo-tile-quickshare-on apps/org.lumo.quickshare; do
+  [[ -e "$icons/Lumo/scalable/$icon.svg" ]] || fail "the icon theme has no $icon"
+done
 find "$icons/Lumo-blue" -name 'preferences-system*' | grep -q . \
   && fail "a colour's icons would shadow preferences-system-* through KDE's generic fallback"
+python3 - "$package_root/data/explorer" "$icons/Lumo" <<'PY' || fail "the widget picker uses an icon or a preview Lumo does not have"
+import pathlib, re, sys
+explorer, theme = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+table = (explorer / "widgets.js").read_text()
+preview = (explorer / "OtherPreview.qml").read_text()
+names = set(re.findall(r'(?:icon|badge|glyph|trailing): "([^"]+)"', table))
+for group in re.findall(r'buttons: \[([^\]]*)\]', table):
+    names.update(re.findall(r'"([^"]+)"', group))
+names.update(re.findall(r'(?:source|icon): "([^"]+)"', preview))
+for group in re.findall(r'model: \[([^\]]*)\]', preview, re.S):
+    names.update(re.findall(r'"([a-z][a-z0-9.-]*)"', group))
+names -= {"primary", "secondary", "tertiary"}
+have = {path.stem for path in theme.glob("scalable/*/*.svg")} | {"start-here-kde-symbolic"}
+missing = sorted(names - have)
+assert not missing, missing
+cases = set(re.findall(r'case "([a-z]+)":', preview)) | {"glyph", "button"}
+kinds = set(re.findall(r'(?:preview|content): "([a-z]+)"', table))
+assert kinds <= cases, sorted(kinds - cases)
+PY
 rm -rf "$icons"
 grep -Fq 'LookAndFeelPackage=org.lumo.desktop' "$tools_root/gen-kdeglobals" \
   || fail "Lumo look-and-feel is not the system default"
 PYTHONDONTWRITEBYTECODE=1 python3 "$tools_root/fetch-symbols" --check >/dev/null \
   || fail "vendored Material Symbols do not match data/symbols.lock"
 [[ -s "$data_root/symbols/LICENSE" ]] || fail "Material Symbols licence is missing"
+[[ -x "$tools_root/draw-symbols" ]] || fail "draw-symbols is missing"
+grep -Eq '^[0-9a-f]{64}  lumo_quick_share_(fill1_)?24px.svg$' "$data_root/symbols.lock" \
+  || fail "the Quick Share symbol is not in data/symbols.lock"
+grep -Fxq 'MShape MShape.qml' "$data_root/shell/m3/qmldir" || fail "m3 has no MShape"
 
 shell_root="$data_root/shell"
 for applet in launcher:org.lumo.launcher shade:org.lumo.quicksettings clipboard:org.lumo.clipboard; do
@@ -369,11 +416,13 @@ if grep -Fq '"AccentColor"' "$tools_root/kde_colors.py"; then
 fi
 splash="$data_root/look-and-feel/org.lumo.desktop/contents/splash/Splash.qml"
 [[ -s "$splash" ]] || fail "session splash is missing"
-grep -Fq 'images/lumo.png' "$splash" \
-  || fail "splash does not draw the Lumo mark"
-if grep '^import' "$splash" | grep -qv '^import QtQuick$'; then
-  fail "splash imports something other than QtQuick"
+if grep '^import' "$splash" | grep -Evq '^import (QtQuick|QtQuick\.Window|org\.lumo\.m3)$'; then
+  fail "splash imports something unexpected"
 fi
+grep -Fq 'source: "file:///var/lib/lumo/greeter/wallpaper.qml"' "$splash" \
+  && grep -Fq 'return (offset + Date.now() / 1000 / loop) % 1;' "$splash" \
+  && ! grep -Fq 'MCircularProgress' "$splash" && ! grep -Fq 'lumo.png' "$splash" \
+  || fail "the session splash is a loading screen instead of the wallpaper"
 grep -Fxq 'Current=lumo' "$data_root/sddm.conf.d/lumo-theme.conf" \
   || fail "greeter does not use the Lumo login screen"
 grep -Fxq 'InputMethod=' "$data_root/sddm.conf.d/lumo-theme.conf" \
@@ -444,5 +493,236 @@ PYTHON_TEST
 grep -Fq 'import org.lumo.shell' "$package_root/data/editmode/ConfigOverlay.qml" \
   && grep -Fq 'overlay.appletSettings.open(applet.plasmoid, overlay)' "$package_root/data/editmode/ConfigOverlay.qml" \
   || fail "a widget's settings end edit mode"
+
+grep -Fq 'motionScale: Kirigami.Units.longDuration > 1 ? Kirigami.Units.longDuration / 200 : 0' "$package_root/tools/gen-qml-tokens" \
+  && grep -Fq '!isFinite(x) || !isFinite(v)' "$package_root/data/shell/m3/MSpring.qml" \
+  && ! grep -rFq 'Kirigami.Units.longDuration === 0' "$package_root/data/wallpaper" \
+  || fail "Reduce motion breaks the shell"
+grep -Fq 'function dismiss()' "$package_root/data/editmode/ConfigOverlay.qml" \
+  && grep -Fq 'if (!appletsLayout.editMode)' "$package_root/data/editmode/ConfigOverlay.qml" \
+  || fail "widget toolbars stay open outside edit mode"
+grep -Fq 'readonly property real room:' "$package_root/data/widgets/weather/contents/ui/main.qml" \
+  || fail "weather text overflows narrow shapes"
+! grep -rFq 'filterByScreen: true' "$package_root/data/wallpaper" \
+  && grep -Fq 'x >= screen.x && x < screen.x + screen.width' "$package_root/data/wallpaper/org.lumo.starfall/contents/ui/main.qml" \
+  || fail "live wallpapers pause for windows on other screens"
+grep -Fq 'coverRetry.restart()' "$package_root/data/widgets/media/contents/ui/main.qml" \
+  && grep -Fq 'artRetry.restart()' "$package_root/data/shell/shade/contents/ui/MediaCard.qml" \
+  || fail "album art is not retried"
+grep -Fq 'function lumoRecolor()' "$package_root/data/systemmonitor/main.qml" \
+  && grep -Fq 'name="lumoColorBase"' "$package_root/data/systemmonitor/main.xml" \
+  && grep -Fq 'org.kde.plasma.systemmonitor/contents/ui/main.qml' "$package_root/debian/lumo-desktop.preinst" \
+  && grep -Fq 'org.kde.plasma.systemmonitor/contents/config/main.xml' "$package_root/debian/lumo-desktop.postrm" \
+  || fail "system monitor colours ignore the theme"
+grep -Fq 'session.requestReboot()' "$package_root/data/shell/launcher/contents/ui/main.qml" \
+  && grep -Fq 'if (maysd && (reboot || halt || showAllOptions))' "$package_root/data/look-and-feel/org.lumo.desktop/contents/logout/Logout.qml" \
+  || fail "the power menu has no restart"
+grep -Fq 'org.freedesktop.policykit.exec.path">/usr/libexec/lumo-greeter-background' "$package_root/data/greeter/org.lumo.greeter-background.policy" \
+  && grep -Fq 'config.wallpaper' "$package_root/data/sddm-theme/lumo/Main.qml" \
+  && grep -Fq 'readonly property bool ownBackground' "$package_root/data/lockscreen/LockScreen.qml" \
+  && grep -Fxq 'WallpaperPlugin=org.lumo.shapes' "$package_root/data/xdg-kscreenlockerrc/kscreenlockerrc" \
+  && grep -Fq '/usr/share/lumo/xdg:' "$package_root/data/plasma-env/lumo-config-dirs.sh" \
+  || fail "lock and login screens ignore the wallpaper"
+
+lockscreen="$package_root/data/lockscreen/LockScreen.qml"
+grep -Fq 'MShapeEcho {' "$lockscreen" && grep -Fq 'echoMode: TextInput.NoEcho' "$lockscreen" \
+  || fail "the lock screen still shows plain password dots"
+[[ "$(grep -c 'M3.darkScheme' "$lockscreen")" -le 4 ]] || fail "the lock screen card ignores the light theme"
+greeter_qml="$package_root/data/sddm-theme/lumo/Main.qml"
+grep -Fq 'import org.lumo.m3' "$greeter_qml" && grep -Fq 'MShapeEcho {' "$greeter_qml" \
+  && grep -Fq 'M3.colourOverride' "$greeter_qml" && ! grep -Fq 'palette.js' "$greeter_qml" \
+  || fail "the login screen does not follow the synced colour and theme"
+grep -Fq 'MShapeEcho MShapeEcho.qml' "$package_root/data/shell/m3/qmldir" || fail "MShapeEcho is not registered"
+grep -Fq 'MLinearProgress {' "$package_root/data/ui/LinearProgress.qml" \
+  && grep -Fq 'MCircularProgress {' "$package_root/data/style/org.lumo.desktop/BusyIndicator.qml" \
+  && grep -Fq 'contentItem: MLinearProgress {' "$package_root/data/style/org.lumo.desktop/ProgressBar.qml" \
+  || fail "progress bars and spinners are not the wavy expressive ones"
+grep -Fq 'readonly property bool waving: wavy && !M3.classic' "$package_root/data/shell/m3/MLinearProgress.qml" \
+  && grep -Fq 'shown > 0.1 && shown < 0.95' "$package_root/data/shell/m3/MLinearProgress.qml" \
+  || fail "the wave does not flatten for md1/md2 or at the ends of the progress"
+grep -Fq 'MLoadingIndicator MLoadingIndicator.qml' "$package_root/data/shell/m3/qmldir" \
+  && grep -Fq 'gen-loading-shapes generated/style/org/lumo/m3/loadingshapes.js' "$package_root/debian/rules" \
+  || fail "the shape morphing loading indicator is not built"
+shapes_out=$(mktemp)
+python3 "$package_root/tools/gen-loading-shapes" "$shapes_out"
+python3 - "$shapes_out" <<'PY' || fail "loading shapes are not sampled the same way"
+import json, re, sys
+text = open(sys.argv[1]).read()
+samples = int(re.search(r"var samples = (\d+);", text).group(1))
+shapes = json.loads(re.search(r"var shapes = (.*);", text).group(1))
+assert len(shapes) == 7 and all(len(s) == samples for s in shapes)
+assert all(0.2 < r < 0.75 for s in shapes for r in s)
+PY
+rm -f "$shapes_out"
+grep -Fq 'readonly property bool expressive: !M3.classic' "$package_root/data/ui/SegmentedButtons.qml" \
+  && grep -Fq '(isFirst ? full : inner + (full - inner) * chosenMorph.value)' "$package_root/data/ui/SegmentedButtons.qml" \
+  || fail "segmented buttons are not the connected expressive group"
+grep -Fq 'MMorph { id: checkMorph; active: root.checked }' "$package_root/data/ui/IconButton.qml" \
+  || fail "icon buttons do not change shape when pressed or checked"
+grep -Fq 'MMorph MMorph.qml' "$package_root/data/shell/m3/qmldir" \
+  && grep -Fq '"expressiveFast": (0.6, 0.222)' "$package_root/tools/lumo_design.py" \
+  && grep -Fq 'MMorph { id: pressMorph; active: surface.control.down }' "$package_root/data/style/org.lumo.desktop/private/ButtonSurface.qml" \
+  && grep -Fq 'MMorph { id: checkMorph; active: root.checkable && root.checked }' "$package_root/data/shell/m3/MIconButton.qml" \
+  && grep -Fq 'MMorph { id: pressMorph; active: mouse.pressed }' "$package_root/data/shell/m3/MButton.qml" \
+  || fail "buttons do not morph on the expressive springs"
+grep -Fq 'height + (parent.width - height) * selectMorph.value' "$package_root/data/ui/NavigationItem.qml" \
+  || fail "the navigation indicator does not grow out of the icon"
+tokens_out=$(mktemp)
+python3 "$package_root/tools/gen-qml-tokens" "$tokens_out" >/dev/null
+grep -Fq 'readonly property font bodyLargeEmphasized: Qt.font({ family: tokens.typeface, pixelSize: Math.round(16 * tokens.scale), weight: [400, 400, 500][tokens.generationIndex]' "$tokens_out" \
+  && grep -Fq 'readonly property int labelLargeEmphasizedLineHeight:' "$tokens_out" \
+  && grep -Fq 'menu: [2, 4, 16]' "$tokens_out" \
+  && grep -Fq 'role: root.current ? "bodyLargeEmphasized" : "bodyLarge"' "$package_root/data/ui/NavigationItem.qml" \
+  || fail "there is no emphasized type for selected items"
+rm -f "$tokens_out"
+grep -Fq 'color: control.selected ? M3.tertiaryContainer' "$package_root/data/style/org.lumo.desktop/MenuItem.qml" \
+  && grep -Fq 'radius: M3.classic ? 0 : 12' "$package_root/data/shell/m3/MMenu.qml" \
+  && grep -Fxq 'MENU_RADIUS = 16' "$package_root/tools/gen-kvantum-theme" \
+  || fail "menus are not the expressive ones"
+for script in lumo-desktop.preinst lumo-desktop.postrm; do
+  grep -q '^pickers=.*\bkcm_landingpage\b' "$package_root/debian/$script" \
+    && grep -Fq 'systemsettings_qwidgets/kcm_kwintabbox.so' "$package_root/debian/$script" \
+    && grep -Fq '"$tasks/ContextMenu.qml" "$tasks/Task.qml"' "$package_root/debian/$script" \
+    || fail "the KDE landing page, task switcher picker or task menu are not replaced ($script)"
+done
+grep -Fq 'color: M3.inverseOnSurface' "$package_root/data/style/org.lumo.desktop/ToolTip.qml" \
+  && grep -Fq 'color: M3.inverseSurface' "$package_root/data/style/org.lumo.desktop/ToolTip.qml" \
+  || fail "tooltip text does not match the tooltip background"
+! grep -Fq 'sourceComponent: busyIndicator' "$package_root/data/taskmanager/Task.qml" \
+  && grep -Fq 'running: model.IsStartup && Kirigami.Units.longDuration > 1' "$package_root/data/taskmanager/Task.qml" \
+  && grep -Fq 'NumberAnimation { target: icon; property: "scale"; to: 0.82;' "$package_root/data/taskmanager/Task.qml" \
+  && grep -Fxq 'data/taskmanager/Task.qml usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui' "$package_root/debian/lumo-desktop.install" \
+  && grep -Fxq 'Files: data/taskmanager/Task.qml' "$package_root/debian/copyright" \
+  || fail "starting apps still get KDE's spinner on their dock icon"
+grep -Fq 'i18nd("lumo-ui", "Unpin from panel")' "$package_root/data/taskmanager/ContextMenu.qml" \
+  && ! grep -Fq 'internalAction("configure")' "$package_root/data/taskmanager/ContextMenu.qml" \
+  && ! grep -Fq 'Task Manager' "$package_root/data/taskmanager/ContextMenu.qml" \
+  && grep -Fxq 'data/taskmanager/ContextMenu.qml usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui' "$package_root/debian/lumo-desktop.install" \
+  || fail "the task icon menu still talks about the KDE task manager"
+grep -Fq 'delegate: WidgetCard {' "$package_root/data/explorer/WidgetExplorer.qml" \
+  && grep -Fq 'sourceComponent: card.lumo ? lumoPreview : otherPreview' "$package_root/data/explorer/WidgetCard.qml" \
+  && grep -Fq 'cp data/explorer/*.qml data/explorer/*.js' "$package_root/debian/rules" \
+  || fail "widgets from KDE are not shown as cards with Material previews"
+grep -Fq 'i18nd("plasmashellprivateplugin", "Download New Plasma Widgets")' "$package_root/data/explorer/WidgetExplorer.qml" \
+  && grep -Fq '.filter(action => !action.separator && action.text.length > 0 && action.text !== store)' "$package_root/data/explorer/WidgetExplorer.qml" \
+  && grep -Fq 'readonly property real widestRow' "$package_root/data/shell/m3/MMenu.qml" \
+  || fail "the widgets menu still offers the KDE store or clips its labels"
+grep -Fq 'readonly property real handleX: track.level * (width - slot)' "$package_root/data/osd/LumoOsdItem.qml" \
+  || fail "the volume pop-up is not the expressive slider"
+for wallpaper in shapes pastel rhythm starfall ribbon; do
+  main="$package_root/data/wallpaper/org.lumo.$wallpaper/contents/ui/main.qml"
+  grep -Fq 'readonly property bool lockScreen: typeof authenticator !== "undefined"' "$main" \
+    && grep -Fq 'function phaseAt(time: double): real {' "$main" \
+    && grep -Fq 'intro: root.switched ? 0 : 1' "$main" \
+    && grep -Fq 'running: root.running && !root.lockScreen' "$main" \
+    && grep -Fq '<entry name="IntroAt" type="String">' "$package_root/data/wallpaper/org.lumo.$wallpaper/contents/config/main.xml" \
+    || fail "the $wallpaper wallpaper does not run on the clock or replays its intro at login"
+done
+for screen in lockscreen/LockScreen.qml sddm-theme/lumo/Main.qml; do
+  grep -Fq 'revealSpring.jumpTo(Math.max(0, Math.min(1, ' "$package_root/data/$screen" \
+    && grep -Fq 'onWheel: wheel => {' "$package_root/data/$screen" \
+    && grep -Fq 'flick > 600 || (flick > -600 && ' "$package_root/data/$screen" \
+    || fail "$screen has no swipe up"
+done
+grep -Fq '"lock_24px.svg": ("lock", "onSurface")' "$package_root/tools/gen-greeter-palette" \
+  && grep -Fq 'msgid "Swipe up or start typing"' "$package_root/data/shell/po/lumo-ui.ru.po" \
+  || fail "the swipe hint has no icon or translation"
+grep -Fq 'leave.start();' "$package_root/data/sddm-theme/lumo/Main.qml" \
+  && grep -Fq 'return (offset + Date.now() / 1000 / loop) % 1;' "$package_root/data/sddm-theme/lumo/Main.qml" \
+  && grep -Fq 'onFinished: Qt.quit()' "$package_root/data/lockscreen/LockScreen.qml" \
+  && ! grep -Fq 'Qt.quit();' "$package_root/data/lockscreen/LockScreen.qml" \
+  || fail "login and lock screens do not slide away on success"
+grep -Fxq 'data/greeter/lumo-splash-wallpaper usr/libexec' "$package_root/debian/lumo-desktop.install" \
+  && grep -Fq '/usr/libexec/lumo-splash-wallpaper || true' "$package_root/data/greeter/lumo-greeter-background" \
+  && grep -Fq '/usr/libexec/lumo-splash-wallpaper || true' "$package_root/debian/lumo-desktop.postinst" \
+  && [[ -x "$package_root/data/greeter/lumo-splash-wallpaper" ]] \
+  || fail "the splash does not learn which wallpaper to show"
+grep -Fxq 'FloatingToolbar 1.0 FloatingToolbar.qml' "$package_root/data/ui/qmldir" \
+  && grep -Fq 'checkedFill: M3.secondaryContainer' "$package_root/data/ui/IconButton.qml" \
+  || fail "there is no floating toolbar"
+for file in shell/shade/contents/ui/PanelRow.qml shell/shade/contents/ui/MediaCard.qml shell/launcher/contents/ui/LauncherButton.qml \
+    lockscreen/LockScreen.qml lockscreen/LumoMediaControls.qml look-and-feel/org.lumo.desktop/contents/logout/Logout.qml \
+    calamares/branding/lumo/keyboardq.qml calamares/branding/lumo/finishedq.qml; do
+  ! grep -Fq 'Behavior on radius' "$package_root/data/$file" && grep -Fq 'MMorph {' "$package_root/data/$file" \
+    || fail "$file still changes shape on a plain curve"
+done
+for script in lumo-desktop.preinst lumo-desktop.postrm; do
+  for module in kcm_lookandfeel kcm_desktoptheme kcm_colors kcm_style kcm_icons kcm_cursortheme \
+      kcm_kwindecoration kcm_splashscreen kcm_sddm kcm_soundtheme; do
+    grep -q "^pickers=.*\b$module\b" "$package_root/debian/$script" \
+      || fail "$module can still bring the KDE look back ($script)"
+  done
+  grep -Fq '/usr/bin/lookandfeeltool /usr/bin/plasma-apply-lookandfeel' "$package_root/debian/$script" \
+    && grep -Fq '/usr/bin/kvantummanager' "$package_root/debian/$script" \
+    || fail "theme reset tools are still around ($script)"
+done
+grep -Fxq 'Exec=/usr/bin/lumo-installer --autostart' "$package_root/data/installer/org.lumo.installer-autostart.desktop" \
+  && grep -Fxq 'data/installer/org.lumo.installer-autostart.desktop etc/xdg/autostart' "$package_root/debian/lumo-calamares.install" \
+  && grep -Fq "grep -qw 'boot=live' /proc/cmdline" "$package_root/data/installer/lumo-installer" \
+  || fail "the live session does not open the installer"
+grep -Fxq 'Id=lumo_welcome_retired' "$package_root/data/kconf_update/lumo-welcome-retired.upd" \
+  && grep -Fxq 'data/kconf_update/lumo-welcome-retired.sh usr/share/kconf_update' "$package_root/debian/lumo-desktop.install" \
+  && [[ -x "$package_root/data/kconf_update/lumo-welcome-retired.sh" ]] \
+  || fail "welcome stays in the menu after people went through it"
+shade_ui="$package_root/data/shell/shade/contents/ui"
+grep -Fq 'internet: internetTile' "$shade_ui/ShadeSheet.qml" && grep -Fq 'TileGrid {' "$shade_ui/ShadeSheet.qml" \
+  && grep -Fq 'root.detail === "internet" ? internetPanel' "$shade_ui/ShadeSheet.qml" \
+  && grep -Fq '"/lumo-quicksettingsrc"' "$shade_ui/TileGrid.qml" \
+  && grep -Fq 'handler.addAndActivateConnection(entry.modelData.devicePath, entry.modelData.specificPath, password.text)' "$shade_ui/InternetPanel.qml" \
+  && grep -Fq 'device.connectToDevice()' "$shade_ui/BluetoothPanel.qml" \
+  && grep -Fq 'readonly property bool wiredConnected' "$shade_ui/sources/NetworkSource.qml" \
+  || fail "quick settings are not the android style internet, bluetooth and editable tiles"
+grep -Fq 'property bool compact: false' "$package_root/data/shell/m3/MTile.qml" \
+  && grep -Fq 'readonly property bool split: hasDetails && !compact && available' "$package_root/data/shell/m3/MTile.qml" \
+  || fail "tiles have no small or split form"
+grep -Fq 'SessionGroup {' "$package_root/data/shell/launcher/contents/ui/LauncherView.qml" \
+  && grep -Fq 'MMorph { id: pressMorph; active: mouse.pressed }' "$package_root/data/shell/launcher/contents/ui/AppTile.qml" \
+  || fail "the launcher is not the expressive one"
+grep -Fq 'msgid "Edit tiles"' "$package_root/data/shell/po/plasma_applet_org.lumo.quicksettings.ru.po" \
+  && grep -Fq 'msgid "Pair new device"' "$package_root/data/shell/po/plasma_applet_org.lumo.quicksettings.ru.po" \
+  || fail "the new quick settings are not translated"
+grep -Fq 'root.backend.openSettings("appearance")' "$package_root/data/shell/shade/contents/ui/ShadeSheet.qml" \
+  && ! grep -Fq 'kcm_lookandfeel' "$package_root/data/shell/shade/contents/ui/ShadeSheet.qml" \
+  || fail "the dark theme tile still points at the KDE global theme"
+grep -Fxq 'Id=lumo_sound_theme_without_ocean' "$package_root/data/kconf_update/lumo-sound-theme.upd" \
+  || fail "ocean users are not moved to the Lumo sounds"
+grep -Fq 'GRUB_THEME=/boot/grub/themes/lumo/theme.txt' "$package_root/data/grub/lumo.cfg" \
+  && grep -Fq '/usr/libexec/lumo-grub-theme' "$package_root/data/grub/lumo.cfg" \
+  && grep -Fq '/usr/libexec/lumo-grub-theme || true' "$package_root/data/greeter/lumo-greeter-background" \
+  && grep -Fq '/usr/libexec/lumo-grub-theme || true' "$package_root/debian/lumo-desktop.postinst" \
+  && grep -Fq 'generated/grub-themes/$$colour-$$mode $$mode' "$package_root/debian/rules" \
+  || fail "the boot menu does not follow the colour and theme"
+grep -Fq '/usr/libexec/lumo-boot-theme --initramfs || true' "$package_root/data/greeter/lumo-greeter-background" \
+  && grep -Fq '/usr/libexec/lumo-boot-theme || true' "$package_root/debian/lumo-desktop.postinst" \
+  && grep -Fq 'gen-plymouth-theme --masks' "$package_root/debian/rules" \
+  && grep -Fq 'pack-boot-masks generated/plymouth-masks generated/boot/plymouth.pack' "$package_root/debian/rules" \
+  || fail "the boot splash does not follow the colour and theme"
+python3 -I -m py_compile "$package_root/data/plymouth/lumo-boot-theme" 2>/dev/null \
+  || fail "the boot theme tool does not compile"
+find "$package_root/data/plymouth" -name __pycache__ -exec rm -rf {} +
+bash -n "$package_root/data/grub/lumo-grub-theme" || fail "the grub theme helper does not parse"
+! grep -qi 'ember' "$package_root/data/calamares/branding/lumo/branding.desc" \
+  || fail "the installer still says Ember"
+grep -Fq '/^[0-9.]+$/.test(version) ? ["", ""] : ["«", "»"]' "$package_root/data/calamares/branding/lumo/welcomeq.qml" \
+  || fail "the installer puts quotes around a plain version number"
+grep -Fq 'source: parent.user ? parent.user.picture : ""' "$greeter_qml" \
+  && ! grep -Fq '"file://" + parent.user.picture' "$greeter_qml" \
+  || fail "the login screen breaks the avatar url sddm already gives it"
+tokens_out=$(mktemp)
+python3 "$package_root/tools/gen-qml-tokens" "$tokens_out" >/dev/null
+grep -Fq 'tokens.darkOverride !== null ? tokens.darkOverride : tokens.schemeDark' "$tokens_out" \
+  && grep -Fq '"/kdeglobals"' "$tokens_out" && grep -Fq '"/kdedefaults/kdeglobals"' "$tokens_out" \
+  || fail "M3 does not read light or dark from the colour scheme"
+rm -f "$tokens_out"
+helper="$package_root/data/greeter/lumo-greeter-background"
+grep -Fq 'colour=%s' "$helper" && grep -Fq 'mode=%s' "$helper" || fail "the greeter helper does not record colour and mode"
+plymouth_out=$(mktemp -d)
+(cd "$package_root/tools" && python3 gen-plymouth-theme ../data/icons/lumo-logo.svg ../data/symbols "$plymouth_out") >/dev/null
+[[ -s "$plymouth_out/wave-0.svg" && -s "$plymouth_out/wave-89.svg" && ! -e "$plymouth_out/bullet.svg" ]] \
+  && grep -Fq 'waves[tick % wave_count]' "$plymouth_out/lumo.script" \
+  || fail "the boot splash has no wavy indicator"
+rm -rf "$plymouth_out"
+grep -Fq 'generated/faces/*.png usr/share/lumo/faces' "$package_root/debian/lumo-desktop.install" \
+  || fail "the Lumo face is not built in every colour"
 
 printf 'lumo-desktop source test: OK\n'

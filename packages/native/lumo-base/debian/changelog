@@ -1,8 +1,51 @@
+lumo-base (1.6.5) UNRELEASED; urgency=medium
+
+  * Bring in the upstream Kernora work that was merged locally on
+    2026-10-31 and the owner's fixes after it, with every name already
+    changed to lumo.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
 lumo-base (1.6.4) UNRELEASED; urgency=medium
 
   * Rename the package from kernora-base to lumo-base; depend on lumo-archive.
 
  -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
+kernora-base (1.6.3) UNRELEASED; urgency=medium
+
+  * Bring lspci (pciutils), lsusb (usbutils) and iw, so "what wifi card is
+    this" has an answer when someone reports a hardware problem.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 14:00:00 -0700
+
+kernora-base (1.6.2) UNRELEASED; urgency=medium
+
+  * Depend on base-files 13.8+deb13u7+kernora2.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 12:00:00 -0700
+
+kernora-base (1.6.1) UNRELEASED; urgency=medium
+
+  * fastfetch shows the Kernora logo, ascii art by milanrudis. The compact
+    one is there as a preset: fastfetch -c kernora-small.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 08:30:00 -0700
+
+kernora-base (1.6) UNRELEASED; urgency=medium
+
+  * Debian 13.7: depend on base-files 13.8+deb13u7+kernora1.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 16:00:00 -0700
+
+kernora-base (1.5) UNRELEASED; urgency=medium
+
+  * Depend on everyday command-line tools, so a fresh install and an updated
+    one have them without the terminal: git, curl, wget, htop, fastfetch
+    (the maintained successor of neofetch, which Debian 13 dropped), zip,
+    unzip, 7zip, tree, rsync, lsof, man-db, bash-completion and the SSH
+    client.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:00:00 -0700
 
 kernora-base (1.4) UNRELEASED; urgency=high
 

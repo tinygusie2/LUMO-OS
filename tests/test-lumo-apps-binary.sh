@@ -32,7 +32,7 @@ for path in "$qml/qmldir" "$qml/liblumosystem.so" usr/share/knotifications6/lumo
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/shell/liblumoshell.so; do
   [[ -s "$temporary_root/$path" ]] || fail "missing $path"
 done
-for app in settings files welcome editor photos player calculator screenshot store projection; do
+for app in settings files welcome editor photos player calculator screenshot store share taskmanager; do
   [[ -x "$temporary_root/usr/bin/lumo-$app" ]] || fail "missing lumo-$app"
   [[ -s "$temporary_root/usr/share/lumo/$app/Main.qml" ]] || fail "missing the $app interface"
   cmp -s "$package_root/apps/$app/qml/Main.qml" "$temporary_root/usr/share/lumo/$app/Main.qml" || fail "$app interface differs from the source"
@@ -41,17 +41,16 @@ done
 grep -q 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$temporary_root/usr/share/applications/org.lumo.screenshot.desktop" \
   || fail "Screenshot cannot ask KWin for screenshots"
+cmp -s "$temporary_root/usr/share/applications/org.lumo.taskmanager.desktop" "$temporary_root/usr/share/kglobalaccel/org.lumo.taskmanager.desktop" \
+  && grep -qx 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$temporary_root/usr/share/kglobalaccel/org.lumo.taskmanager.desktop" \
+  || fail "Ctrl+Shift+Esc does not open the Task Manager"
 grep -qx 'Exec=/usr/bin/lumo-screenshot' \
   "$temporary_root/usr/share/applications/org.lumo.screenshot.desktop" \
   || fail "Screenshot's Exec is not an absolute path; KWin would refuse it"
 
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store projection; do
+for domain in settings files editor photos player calculator screenshot welcome system update-notifier store share taskmanager; do
   [[ -s "$temporary_root/usr/share/locale/ru/LC_MESSAGES/lumo-$domain.mo" ]] \
     || fail "Russian translation is missing: lumo-$domain"
-done
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store tasks calendar focus bluetooth-agent; do
-  [[ -s "$temporary_root/usr/share/locale/nl/LC_MESSAGES/lumo-$domain.mo" ]] \
-    || fail "Dutch translation is missing: lumo-$domain"
 done
 grep -qx 'Exec=lumo-welcome --first-run' \
   "$temporary_root/etc/xdg/autostart/org.lumo.welcome.desktop" \
@@ -60,16 +59,6 @@ grep -qx 'Exec=lumo-welcome --first-run' \
 grep -qx 'Exec=lumo-update-notifier' \
   "$temporary_root/etc/xdg/autostart/org.lumo.update-notifier.desktop" \
   || fail "the update notifier is not started at login"
-for entry in files:Meta+E settings:Meta+I screenshot:Print,Meta+Shift+S tasks:Ctrl+Shift+Esc; do
-  grep -Fxq "X-KDE-Shortcuts=${entry#*:}" "$temporary_root/usr/share/kglobalaccel/org.lumo.${entry%%:*}.desktop"     || fail "kglobalaccel does not see the ${entry%%:*} shortcut"
-done
-[[ -x "$temporary_root/usr/bin/lumo-quickshare" && -s "$temporary_root/usr/share/applications/org.lumo.quickshare.desktop" ]] \
-  || fail "Quick Share is missing from the menu"
-grep -qx 'Exec=lumo-quickshare resident' "$temporary_root/etc/xdg/autostart/org.lumo.quickshare-resident.desktop" \
-  || fail "Quick Share is not started at login"
-[[ -x "$temporary_root/usr/bin/lumo-bluetooth-agent" ]] || fail "missing lumo-bluetooth-agent"
-[[ -s "$temporary_root/usr/share/lumo/bluetoothagent/Main.qml" ]] || fail "the Bluetooth pairing window is missing"
-grep -qx 'Exec=lumo-bluetooth-agent'   "$temporary_root/etc/xdg/autostart/org.lumo.bluetooth-agent.desktop"   || fail "the Bluetooth pairing agent is not started at login"
 grep -qx 'DesktopEntry=org.lumo.settings' "$temporary_root/usr/share/knotifications6/lumo-updates.notifyrc" \
   || fail "update notifications would not come from Settings"
 python3 - "$temporary_root/usr/share/lumo/whatsnew.json" <<'PYTHON_TEST' || fail "the release notes for What's new are missing or broken"

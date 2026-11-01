@@ -1,95 +1,400 @@
-lumo-desktop (1.4.57) UNRELEASED; urgency=medium
+lumo-desktop (1.4.58) UNRELEASED; urgency=medium
 
+  * Bring in the upstream Kernora work that was merged locally on
+    2026-10-31 and the owner's fixes after it, with every name already
+    changed to lumo.
   * Rename the package from kernora-desktop to lumo-desktop, and the installer
     branding from kernora-calamares to lumo-calamares. Shell, themes, icons,
     wallpapers, look-and-feel, GRUB and Plymouth themes, services and polkit
     actions now carry the Lumo name.
   * The installer's polkit prompt says "Install Lumo" instead of Kernora OS.
 
- -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
-
-kernora-desktop (1.4.56) UNRELEASED; urgency=medium
-
   * The NVIDIA driver for GeForce GTX 900 and 10 also comes from
     trixie-backports when it has a newer one, so the driver keeps building
     against the newer kernel the image now ships.
 
- -- Kernora Developers <developers@kernora.invalid>  Sat, 31 Oct 2026 23:30:00 +0000
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
+kernora-desktop (1.4.56) UNRELEASED; urgency=medium
+
+  * Merge Kernora OS up to 3db9ab0 into Lumo; Kernora wins on conflicts, Lumo
+    keeps its name, branding, Focus, Project panel, Calendar, PIN unlock,
+    Phone page, screenshot tool, wallpapers and keyboard defaults.
+
+ -- Lumo <lumo@localhost>  Sat, 31 Oct 2026 13:17:28 +0100
+
+kernora-desktop (1.4.55) UNRELEASED; urgency=medium
+
+  * Widget picker: widgets from KDE are cards like Kernora's own now, each
+    with a Material preview drawn for it (clock faces, a month, charts for
+    the system monitor sensors, a folder, sliders, device and network
+    lists, panel pieces on a little panel) and a Pixel style icon, a
+    Material symbol on a circle in the theme colour, next to its name.
+    Kernora's cards get the same icon. Desktop widgets come first, grouped
+    by kind; on a panel the panel widgets lead.
+  * widgets.js maps each known widget to its icon, group and preview;
+    unknown widgets keep their own icon on a Material shape.
+  * Icon theme: Material symbols for ksysguardd, plasmavault,
+    device-notifier, org.kde.plasma.pager, org.kde.plasma.folder,
+    distribute-horizontal-x, filename-divider and draw-freehand, plus
+    analog and digital clock, bar chart, dock and menu symbols.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 20:00:00 -0700
+
+kernora-desktop (1.4.54) UNRELEASED; urgency=medium
+
+  * New live wallpaper Ribbon (org.kernora.ribbon), after a community
+    member's sketch: a dark ribbon with a narrow waist crosses a ground in
+    the theme's colour, and Material shapes ride along it. At the waist
+    each one springs into the next of sixteen shapes (cookies, clovers,
+    sunny, heart, pill, flower, gem, soft burst, triangle, arch, ghost,
+    puffy diamond) while it turns and takes a new tone. The ribbon
+    breathes and a slow ripple runs along its edges.
+  * gen-wallpaper-assets writes Ribbon's palette and morphs.js, the
+    shapes as radii round their centre; the polar sampling moved from
+    gen-loading-shapes into material_shapes.py.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 12:00:00 -0700
+
+kernora-desktop (1.4.53) UNRELEASED; urgency=medium
+
+  * The icon of the new Task Manager (org.kernora.taskmanager): the filled
+    Material symbol "monitoring" on the round tonal container, like the
+    other Kernora apps.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 29 Oct 2026 12:00:00 -0700
+
+kernora-desktop (1.4.52) UNRELEASED; urgency=medium
+
+  * Tooltips in Plasma (quick settings tiles, panel buttons) were light text
+    on the light tooltip in dark mode: the style's tooltip text now always
+    uses inverseOnSurface, matching its inverseSurface background, instead
+    of the Plasma theme's tooltip colours.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 12:00:00 -0700
+
+kernora-desktop (1.4.51) UNRELEASED; urgency=medium
+
+  * Apps that are starting no longer get KDE's spinner over their dock
+    icon: the icon gently pulses until the window shows up, and stays
+    still with reduced motion. Task.qml of the task manager is diverted
+    for it, a copy of plasma-desktop 6.3.6 with only that changed.
+
+ -- Kernora Developers <developers@kernora.invalid>  Mon, 26 Oct 2026 12:00:00 -0700
+
+kernora-desktop (1.4.50) UNRELEASED; urgency=medium
+
+  * Apps can be dragged from the app menu onto the desktop and they're
+    copied right away, no Copy / Move / Link menu. The menu closes after
+    the drop.
+  * App launchers on the desktop are never links any more: a link to an
+    installed launcher gets replaced by a copy (so no link emblem and no
+    italic name), and a copy that matches an installed launcher byte for
+    byte is made executable so it starts without the untrusted warning.
+    Anything else on the desktop is left alone.
+  * Ctrl + mouse wheel over the desktop makes the icons bigger or smaller
+    (the same seven sizes as in the desktop settings), and the size is
+    kept.
+  * Icon theme: about 220 more KDE and freedesktop names drawn with
+    Material Symbols, so menus, dialogs and files stop showing Breeze:
+    file types (text, PDF, office, code, archives, packages, disk images,
+    pictures, video, music, fonts), emblems (link, locked, shared...),
+    select all / none, properties, save as, text formatting, mail, tags,
+    network and sync states, zoom, window actions and more. Crashed
+    processes viewer got a Kernora app icon.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 13:00:00 -0700
+
+kernora-desktop (1.4.49) UNRELEASED; urgency=medium
+
+  * Quick settings work with the panel on any side. With the panel on top
+    the sheet opened above the screen and only its handle showed; on the
+    left or right it covered the panel. Now it drops down under a top
+    panel (drag and scroll the other way round) and sits next to a side
+    panel at the height of the status chip.
+  * In a vertical panel the status chip stacks the icons and shows the
+    time on two lines instead of spilling out of the panel.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 19:30:00 -0700
+
+kernora-desktop (1.4.48) UNRELEASED; urgency=medium
+
+  * Quick Share's progress in notifications is a plain bar, no waves.
+  * m3: MCircularProgress can be flat too (wavy: false).
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 16:30:00 -0700
+
+kernora-desktop (1.4.47) UNRELEASED; urgency=medium
+
+  * Quick Share in quick settings works like ChromeOS: the tile icon turns
+    Quick Share on and off, the tile opens a panel with an On/Off row,
+    Everyone / Hidden and "Visible to everyone, for 10 min" with a
+    countdown. Sublabels: Off, Hidden, Everyone, "Everyone, 9 min".
+  * The Quick Share panel got the M3 Expressive look: the symbol in a
+    spinning cookie shape, "Ready to receive" and the name you appear
+    as, Everyone / Everyone for 10 minutes / Hidden as rows with icons,
+    and Send and receive, which opens the app.
+  * Icons: kernora-quickshare is now the Quick Share symbol (a ring of two
+    arrows), drawn by tools/draw-symbols in the Material Symbols Rounded
+    style, with a filled one for the tile when it's on and the
+    org.kernora.quickshare app icon. Also laptop, tablet, everyone,
+    upload and filled download/upload/timer/hidden/devices symbols.
+  * m3: MShape draws any of the Material shapes, materialshapes.js ships
+    with every copy of the m3 module.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 12:00:00 -0700
+
+kernora-desktop (1.4.46) UNRELEASED; urgency=medium
+
+  * Quick settings: a Quick Share tile. Tap makes this computer visible to
+    everyone for 10 minutes, the arrow opens its settings page.
+  * Icon theme: kernora-quickshare (the share symbol).
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 23 Oct 2026 21:00:00 -0700
+
+kernora-desktop (1.4.45) UNRELEASED; urgency=medium
+
+  * Transparent panel (merged PR #4 by lexaaakorolevv-cyber): the panel is
+    the surface colour at 82% with blur behind, solid/ stays opaque.
+  * Turn on adaptive transparency in the theme, else Plasma ignores the
+    panel's opacity mode and the opaque setting never shows.
+  * The launcher applies panelOpacityRequest from its config to the panel
+    view it sits in, since panel.opacity from a script is broken on 6.3.
+  * Cut the panel shape out of the panel shadow, it showed through as a
+    dark band along the top and in the round ends.
+  * Task buttons are chips inset around the icon instead of full-height
+    boxes, those looked like a glitch on the see-through panel. Hovering
+    the active task keeps the primary tint, pinned apps get a hover chip
+    too (launcher-hover, Plasma never falls back to hover for them).
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 23 Oct 2026 16:30:00 -0700
+
+kernora-desktop (1.4.44) UNRELEASED; urgency=medium
+
+  * No loading screen after signing in: the session splash shows the chosen
+    wallpaper (from /var/lib/kernora/greeter/wallpaper.qml, written by the
+    new kernora-splash-wallpaper) instead of the logo and spinner, and the
+    desktop appears on top of it.
+  * Live wallpapers run on the clock, so the login screen, the splash, the
+    lock screen and the desktop show the same frame. They only grow in when
+    the wallpaper was just switched (IntroAt), not at every login.
+  * The lock screen wallpaper holds still; the desktop holds while it is not
+    shown and glides back to the clock afterwards, so unlocking has no jump.
+  * Login and lock screens slide their clock and card away on success.
+  * Android style swipe on both: they start as a clock, and dragging up
+    (mouse, touch or the wheel) pulls the card in on a spring. A short
+    drag springs back, typing opens it right away, moving the mouse nudges
+    the screen and shows a hint.
+
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 22 Oct 2026 23:50:00 -0700
+
+kernora-desktop (1.4.43) UNRELEASED; urgency=medium
+
+  * Less KDE:
+    - divert the KDE landing page (it offers global themes) and the task
+      switcher picker, like the other theme pickers;
+    - the task icon menu is Kernora's: "Pin to panel" / "Unpin from panel",
+      no widget or panel settings in it (they stay in the panel menu);
+    - the widgets menu drops the KDE store and empty separators.
+  * MMenu sizes itself from its widest row, so no clipped labels.
+  * The volume and brightness OSD is an expressive slider for md3: active
+    track, a handle bar between gaps, inactive track with a stop dot.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 21 Oct 2026 18:00:00 -0700
+
+kernora-desktop (1.4.42) UNRELEASED; urgency=medium
+
+  * More Material 3 Expressive for md3:
+    - emphasized type tokens; the current navigation item uses them;
+    - menus are rounder (16) with a 12 highlight, and the checked item
+      sits on a tertiary pill (QML menus, combo boxes, Kvantum menus);
+    - org.kernora.ui FloatingToolbar, IconButton checkedFill/checkedInk;
+    - shape changes in the shade rows, media card, launcher button, lock
+      screen, logout tiles, button groups and the installer keyboard and
+      finish badge run on the expressive springs.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 23:30:00 -0700
+
+kernora-desktop (1.4.41) UNRELEASED; urgency=medium
+
+  * kernora-calamares starts the installer when the live session logs in;
+    kernora-installer --autostart does nothing outside a live boot.
+  * kconf_update hides Welcome from the menu for people who already went
+    through it.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 21:00:00 -0700
+
+kernora-desktop (1.4.40) UNRELEASED; urgency=medium
+
+  * Quick settings in the Android 16/17 expressive style: an Internet tile
+    that knows about cables, split tiles (the icon toggles, the label opens
+    the details), small round tiles, Internet and Bluetooth panels inside
+    the shade with the networks and devices, and a pencil to move, resize,
+    hide and add tiles. The layout lives in kernora-quicksettingsrc.
+  * Launcher: tiles pop in and squish on springs, emphasized section
+    headers and a connected session button group.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 19:00:00 -0700
+
+kernora-desktop (1.4.39) UNRELEASED; urgency=medium
+
+  * The boot splash follows the colour and the light or dark theme. The
+    build packs white alpha masks of the splash pieces once
+    (gen-plymouth-theme --masks, pack-boot-masks) and kernora-boot-theme
+    paints them in the chosen palette into the kernora-colour Plymouth
+    theme, switches to it and rebuilds the initramfs in the background.
+    Kernora dark keeps the stock kernora theme.
+  * The session splash uses the M3 colours too and shows the same wavy
+    ring as the boot splash.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 15:00:00 -0700
+
+kernora-desktop (1.4.38) UNRELEASED; urgency=medium
+
+  * The boot menu follows the colour and the light or dark theme: every
+    colour gets a light and a dark GRUB theme, kernora-grub-theme copies
+    the chosen one to /boot/grub/themes/kernora and the greeter helper
+    calls it whenever the login screen gets a new colour or mode.
+  * The installer calls the release Kernora OS 1, without Ember.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 12:00:00 -0700
 
 kernora-desktop (1.4.37) UNRELEASED; urgency=medium
 
-  * Two new live wallpapers: Waves (layers of waves rolling towards the shore
-    under a low sun) and Northern Lights (ribbons of light swaying over dark
-    hills). Both move only by translating, rotating and fading shapes that
-    are drawn once, at 25 and 20 frames a second.
-  * Three still wallpapers: Dunes, Bloom and Contour. They draw once, run no
-    clock and take the theme's colour like the live ones.
-  * Every live wallpaper is gentle on battery: on battery it drops to ten
-    frames a second, and in power saving or below 20 % it holds still. The
-    setting is on by default and can be turned off per wallpaper.
+  * Divert the KDE theme pickers (global theme, Plasma style, colours,
+    application style, icons, cursors, window decorations, splash screen,
+    login screen, sound theme), the Breeze decoration settings,
+    lookandfeeltool and Kvantum Manager. Kernora keeps its own look; every
+    real setting is still in Settings.
+  * The dark theme tile opens Wallpaper & style.
+  * Users on the Ocean sounds move to the Kernora sounds once.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 28 Oct 2026 19:00:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 17 Oct 2026 10:00:00 -0700
+
+kernora-desktop (1.4.36) UNRELEASED; urgency=medium
+
+  * Buttons morph on the M3 Expressive springs (new expressiveFast and
+    expressiveDefault tokens, MMorph helper in org.kernora.m3), with a
+    little bounce. Checked buttons turn into rounded squares.
+  * The navigation highlight grows out of the icon on a spring.
+  * md1 and md2 keep their old motion.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 20:00:00 -0700
+
+kernora-desktop (1.4.35) UNRELEASED; urgency=medium
+
+  * Segmented buttons became the expressive connected button group: the
+    chosen button turns into a pill, the pressed one grows a bit and
+    pushes its neighbours. md1 and md2 keep the outlined segments.
+  * New MLoadingIndicator in org.kernora.m3, the shape morphing loading
+    indicator (soft burst, cookie, gem, pill, sun, cookie, oval).
+  * IconButton changes shape when pressed or checked.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 17:00:00 -0700
 
 kernora-desktop (1.4.34) UNRELEASED; urgency=medium
 
-  * Dutch installs and live sessions default to the US-International
-    keyboard with dead keys, like Windows; ' followed by c gives ç.
+  * Progress bars and spinners are the Material 3 Expressive wavy ones:
+    MLinearProgress and MCircularProgress in org.kernora.m3, used by
+    org.kernora.ui LinearProgress and the BusyIndicator of the Qt Quick
+    style, which also gets a ProgressBar. The wave flattens near 0 and
+    100 percent, md1 and md2 keep the flat line.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:05:00 +0000
-kernora-desktop (1.4.36) UNRELEASED; urgency=medium
-
-  * Meta+P and the Display key open Lumo's Project panel instead of the
-    KDE screen switcher, for new and existing accounts.
-
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 20:30:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 12:30:00 -0700
 
 kernora-desktop (1.4.33) UNRELEASED; urgency=medium
 
-  * Icons for Screenshot: freeform selection (kernora-select-freeform),
-    pen (kernora-pen) and highlighter (kernora-highlighter, draw-highlight)
-    from Material Symbols.
+  * The lock screen follows the light and dark theme. Its card, password
+    field, buttons and media pill used the dark palette whatever the theme;
+    only the clock and date stay light over the dimmed wallpaper. M3 now
+    reads light or dark from the Kernora colour scheme name in kdeglobals,
+    with overrides for the login screen.
+  * The login screen takes its colours from M3 with the colour and theme
+    the update notifier syncs; kernora-greeter-background records colour
+    and mode next to the wallpaper and keeps them when called without.
+    Its icons are tinted at run time and the fixed palette.js is gone.
+  * Password entry on the lock and login screens shows Material shapes
+    (MShapeEcho in org.kernora.m3): each character pops in as a circle and
+    turns into the next shape; deleting one shrinks it away, a wrong
+    password shakes them. The boot passphrase prompt uses the same shapes.
+  * The Kernora face is built in every colour (/usr/share/kernora/faces).
+  * Boot splash: Material 3 Expressive's wavy loading indicator, 90
+    pre-rendered frames of a wavy arc that grows, shrinks and turns over a
+    gapped track, instead of the cross-fading shapes.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 19:20:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 16 Oct 2026 01:00:00 -0700
 
 kernora-desktop (1.4.32) UNRELEASED; urgency=medium
 
-  * App icon for Focus (org.kernora.focus).
+  * VLC turns hardware decoding off on computers with the NVIDIA driver.
+    VLC 3 draws video through XWayland there, and VDPAU/VA-API decoding
+    showed green bars at the bottom of videos. A session script adds
+    avcodec-hw=none once to the Debian and Flatpak VLC configs; a decoder
+    the user picked is kept, and so is a later change in VLC's settings.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:54:17 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 20:00:00 -0700
 
 kernora-desktop (1.4.31) UNRELEASED; urgency=medium
 
-  * Reserve desktop icon cells occupied by widgets and reflow on geometry
-    changes, keeping sorted and manual layouts, selected icons and keyboard
-    focus coherent. From upstream Kernora OS.
-  * kernora-calamares: require calamares 3.3.14-1kernora2 and refresh the
-    translated city list when the installer language changes.
+  * Remove the Tower live wallpaper. Desktops that used it move to Kernora
+    Shapes through a Plasma shell update script, kconf_update
+    kernora_tower_to_shapes moves the lock screen, and postinst moves the
+    login screen's theme.conf.user.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:45:00 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Thu, 15 Oct 2026 16:00:00 -0700
+
+kernora-desktop (1.4.30) UNRELEASED; urgency=medium
+
+  * Reduce motion no longer breaks the shell. With animations off Kirigami
+    reports a 1 ms long duration, so M3.motionScale was 0.005 rather than 0:
+    the springs behind the quick settings shade, switches and the volume OSD
+    ran with a 2 ms response and diverged. The shade then stayed an invisible
+    full-screen window that swallowed every click. motionScale is now 0 at
+    1 ms or less, springs pick a stable step for any stiffness and stop on
+    non-finite values, and live wallpapers treat 1 ms as reduced motion.
+  * A widget's toolbar closes when the pointer leaves the widget and its
+    toolbar, and whenever edit mode ends. Plasma 6.3 does not reset an item's
+    edit mode when the layout leaves edit mode, so a toolbar opened before a
+    settings dialog or a move to another window could stay up.
+  * The weather widget scales its reading to the room inside its shape. The
+    cloud shape for overcast skies is a fifth shorter than the others, so
+    the text overflowed it and the widget looked squashed.
+  * Live wallpapers pause only for maximised or full-screen windows on their
+    own screen. The task model's exact screen match failed with mixed
+    scaling; each window's centre is now tested against the screen instead.
+  * Album art in the media widget and the quick settings card is retried
+    when a download fails, instead of staying on the placeholder.
+  * System monitor widgets follow theme changes. Their sensor colours are
+    generated from the accent once and stored; a diverted applet main.qml
+    recolours the generated ones when the accent changes and keeps colours
+    picked by hand.
+  * Restart is in the launcher next to Shut Down, and the shut down dialog
+    offers Restart too.
+  * htop, now part of the base system, gets a Kernora app icon.
+  * The lock screen shows the wallpaper set for it instead of always drawing
+    Shapes over it; Kernora Shapes stays the default through
+    /usr/share/kernora/xdg, added to XDG_CONFIG_DIRS. The login screen shows
+    the wallpaper an administrator last chose: kernora-greeter-background,
+    run through polkit without a password for members of sudo, records it in
+    the theme's theme.conf.user and copies a picture to
+    /var/lib/kernora/greeter.
+
+ -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 18:00:00 -0700
 
 kernora-desktop (1.4.29) UNRELEASED; urgency=medium
 
-  * Dutch colour names in the palettes; the orange default colour is
-    called Lumo.
+  * Reserve desktop icon cells occupied by widgets and reflow on geometry changes.
+  * Keep sorted and manual layouts, selected icons and keyboard focus coherent.
 
- -- Kernora Developers <developers@kernora.invalid>  Wed, 14 Oct 2026 08:21:43 +0000
+ -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 19:25:00 -0700
 
 kernora-desktop (1.4.28) UNRELEASED; urgency=medium
 
-  * Ship Google Sans Flex (SIL OFL 1.1) and make it the typeface of the
-    shell, the apps, the login screen and the splash. GRUB keeps Roboto.
-  * Turn off the bluedevil KDED module, so the Kernora pairing agent is the
-    only Bluetooth agent of the session.
-  * Faster boot and shutdown: GRUB waits 2 seconds instead of 5 unless the
-    timeout was changed, NetworkManager-wait-online is disabled, and
-    services get 15 seconds to stop.
-  * Rename the system to Lumo, with a new logo: an arch around a dot.
-    Package, file and theme names keep "kernora".
-  * Windows-style shortcuts for new accounts: Meta+R runs a command,
-    Meta+N opens notifications, Meta+Tab the overview, Meta+Up and
-    Meta+Down maximise and minimise, Meta+M minimises all windows.
+  * Require Calamares with live QML language switching and synchronized
+    welcome/location language selectors.
+  * Refresh the translated city list when its model changes language.
 
- -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 18:00:00 +0200
+ -- Kernora Developers <developers@kernora.invalid>  Tue, 13 Oct 2026 10:00:00 -0700
 
 kernora-desktop (1.4.27) UNRELEASED; urgency=medium
 

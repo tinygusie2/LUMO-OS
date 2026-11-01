@@ -5,10 +5,11 @@ SHELL := /bin/bash
 	lumo-base-source lumo-base-binary lumo-archive-source \
 	lumo-archive-binary lumo-desktop-source \
 	lumo-desktop-binary lumo-apps-source lumo-apps-binary \
+	lumo-quickshare-source lumo-quickshare-binary quickshare-crates \
 	calamares-source calamares-binary \
 	polkit-kde-agent-1-source polkit-kde-agent-1-binary \
-	development-archive-key archive-key local-archive publish \
-	minimal-rootfs iso-tools librewolf rquickshare live-rootfs iso iso-smoke
+	development-archive-key archive-key local-archive publish publish-demo \
+	minimal-rootfs iso-tools librewolf live-rootfs iso iso-smoke
 
 check:
 	./scripts/check-host
@@ -36,6 +37,7 @@ verify:
 	./tests/test-lumo-base-source.sh
 	./tests/test-lumo-archive-source.sh
 	./tests/test-lumo-desktop-source.sh
+	./tests/test-lumo-quickshare-source.sh
 	./scripts/verify-sources
 
 base-files-source: verify
@@ -74,6 +76,15 @@ lumo-apps-source: verify
 lumo-apps-binary: verify build-rootfs
 	./scripts/build-lumo-apps-binary
 
+quickshare-crates:
+	./scripts/fetch-quickshare-crates
+
+lumo-quickshare-source: verify
+	./scripts/build-lumo-quickshare-source
+
+lumo-quickshare-binary: verify build-rootfs
+	./scripts/build-lumo-quickshare-binary
+
 calamares-source: verify
 	./scripts/build-calamares-source
 
@@ -90,8 +101,8 @@ development-archive-key:
 	./scripts/create-development-archive-key
 
 local-archive: base-files-binary lumo-base-binary lumo-archive-binary lumo-desktop-binary \
-		lumo-apps-binary calamares-binary polkit-kde-agent-1-binary \
-		development-archive-key rquickshare
+		lumo-apps-binary lumo-quickshare-binary calamares-binary polkit-kde-agent-1-binary \
+		development-archive-key
 	./scripts/build-local-archive
 
 minimal-rootfs: local-archive
@@ -103,14 +114,16 @@ iso-tools: signer-keyring
 librewolf:
 	./scripts/fetch-librewolf
 
-rquickshare:
-	./scripts/fetch-rquickshare
-
 archive-key:
 	./scripts/create-archive-key
 
 publish: local-archive
+	./tests/test-publish-updates.sh
 	./scripts/publish-updates
+
+publish-demo: local-archive
+	./tests/test-publish-updates.sh
+	./scripts/publish-updates --demo
 
 live-rootfs: local-archive librewolf
 	./scripts/build-live-rootfs
