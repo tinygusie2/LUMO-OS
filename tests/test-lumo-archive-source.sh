@@ -16,7 +16,7 @@ done
 # shellcheck disable=SC1091
 source "$project_root/configs/project.env"
 
-[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.6" ]] \
+[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.7" ]] \
   || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
@@ -44,7 +44,7 @@ apt="$package_root/apt"
 grep -Fxq 'URIs: https://deb.debian.org/debian' "$apt/debian.sources" || fail "no Debian archive"
 grep -Fxq 'Suites: trixie-security' "$apt/debian.sources" || fail "no Debian security updates"
 grep -Fxq 'Suites: trixie-backports' "$apt/debian.sources" || fail "no trixie-backports for the kernel and Mesa"
-for source in src:linux src:linux-signed-amd64 src:firmware-nonfree src:mesa src:libdrm; do
+for source in src:linux src:linux-signed-amd64 src:linux-base src:firmware-nonfree src:mesa src:libdrm; do
   grep -q "^Package: .*$source\( \|$\)" "$apt/lumo-backports.pref" || fail "$source is not taken from trixie-backports"
 done
 grep -Fxq 'Pin: release n=trixie-backports' "$apt/lumo-backports.pref" || fail "the backports pin names no release"

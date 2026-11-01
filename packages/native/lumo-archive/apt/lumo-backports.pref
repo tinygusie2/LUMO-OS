@@ -1,4 +1,4 @@
-Package: src:linux src:linux-signed-amd64 src:firmware-nonfree src:firmware-free
+Package: src:linux src:linux-signed-amd64 src:linux-base src:firmware-nonfree src:firmware-free
 Pin: release n=trixie-backports
 Pin-Priority: 500
 

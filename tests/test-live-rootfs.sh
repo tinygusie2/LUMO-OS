@@ -274,7 +274,7 @@ compgen -G '/usr/lib/firmware/amdgpu/gc_10_3_6_*' >/dev/null \
   || fail "the AMD Ryzen graphics firmware is missing"
 grep -Fxq 'Suites: trixie-backports' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no kernel or Mesa updates from trixie-backports"
-grep -Fxq 'Package: src:linux src:linux-signed-amd64 src:firmware-nonfree src:firmware-free' /etc/apt/preferences.d/lumo-backports.pref \
+grep -Fxq 'Package: src:linux src:linux-signed-amd64 src:linux-base src:firmware-nonfree src:firmware-free' /etc/apt/preferences.d/lumo-backports.pref \
   || fail "the kernel is not taken from trixie-backports"
 grep -Fq 'origin=Debian Backports,codename=trixie-backports' <<<"$(apt-config dump)" \
   || fail "kernel updates from trixie-backports are not installed automatically"
