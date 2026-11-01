@@ -1,5 +1,6 @@
 data/look-and-feel/org.lumo.desktop usr/share/plasma/look-and-feel
 data/sddm.conf.d/lumo-theme.conf etc/sddm.conf.d
+data/sddm.conf.d/lumo-wayland.conf etc/sddm.conf.d
 data/icons/lumo-logo.svg usr/share/icons/hicolor/scalable/apps
 data/fonts/google-sans-flex/GoogleSansFlex.ttf usr/share/fonts/truetype/google-sans-flex
 data/fonts/google-sans-flex/OFL.txt usr/share/doc/lumo-desktop/google-sans-flex

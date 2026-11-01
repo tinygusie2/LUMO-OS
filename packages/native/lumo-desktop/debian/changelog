@@ -1,3 +1,12 @@
+lumo-desktop (1.4.59) UNRELEASED; urgency=medium
+
+  * The login screen (SDDM) runs on KWin's Wayland compositor instead of an
+    X server, so the step from login to desktop no longer switches display
+    servers and the greeter gets the same scaling and adaptive sync as the
+    session. The X11 packages stay installed as a fallback.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
 lumo-desktop (1.4.57) UNRELEASED; urgency=medium
 
   * Rename the package from kernora-desktop to lumo-desktop, and the installer
