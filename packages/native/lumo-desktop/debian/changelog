@@ -1,3 +1,11 @@
+lumo-desktop (1.4.62) UNRELEASED; urgency=medium
+
+  * Terminal in the menu, on Ctrl+Alt+T and as KDE's terminal now starts
+    Lumo's own Terminal (lumo-terminal from lumo-apps) instead of
+    Alacritty, which the image does not carry.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 22:30:00 +0000
+
 lumo-desktop (1.4.60) UNRELEASED; urgency=medium
 
   * The login screen (SDDM) runs on KWin's Wayland compositor instead of an

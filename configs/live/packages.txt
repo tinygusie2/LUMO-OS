@@ -22,9 +22,9 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-lumo-desktop=1.4.60
-lumo-calamares=1.4.60
-lumo-apps=1.1.68
+lumo-desktop=1.4.62
+lumo-calamares=1.4.62
+lumo-apps=1.1.69
 lumo-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1lumo1
 plymouth

@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.60" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.62" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -253,6 +253,9 @@ grep -Fxq 'gtk-sound-theme-name=lumo' "$package_root/data/skel-config/gtk-3.0/se
   || fail "new accounts do not start with the Lumo sounds"
 sh -n "$package_root/data/kconf_update/lumo-sound-theme.sh" || fail "the sound theme migration does not parse"
 sh -n "$package_root/data/kconf_update/lumo-terminal-entry.sh" || fail "the terminal entry migration does not parse"
+grep -Fxq 'Exec=lumo-terminal' "$package_root/data/applications/org.lumo.terminal.desktop" \
+  && grep -Fq '"TerminalApplication=lumo-terminal",' "$package_root/tools/gen-kdeglobals" \
+  || fail "Terminal does not start the Lumo Terminal"
 sh -n "$package_root/data/kconf_update/lumo-add-widgets-menu.sh" || fail "the widgets menu migration does not parse"
 menu_home=$(mktemp -d)
 XDG_CONFIG_HOME="$menu_home" sh "$package_root/data/kconf_update/lumo-add-widgets-menu.sh"

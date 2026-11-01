@@ -32,7 +32,7 @@ def render() -> str:
         "Theme=lumo",
         "",
         "[General]",
-        "TerminalApplication=alacritty --class org.lumo.terminal",
+        "TerminalApplication=lumo-terminal",
         "TerminalService=org.lumo.terminal.desktop",
         f"font={font(design.KDE_FONT_POINT_SIZE)}",
         f"menuFont={font(design.KDE_FONT_POINT_SIZE)}",

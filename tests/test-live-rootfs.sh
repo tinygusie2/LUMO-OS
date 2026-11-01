@@ -106,8 +106,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.60" ]] \
-  || fail "lumo-desktop 1.4.60 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.62" ]] \
+  || fail "lumo-desktop 1.4.62 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -166,19 +166,19 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.68" ]] \
-  || fail "lumo-apps 1.1.68 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.69" ]] \
+  || fail "lumo-apps 1.1.69 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
 [[ -s /usr/share/flatpak/remotes.d/flathub.flatpakrepo && -s /etc/apt/apt.conf.d/60lumo-store ]] || fail "Store sources missing"
-for app in settings files editor photos player calculator screenshot welcome store; do
+for app in settings files editor photos player calculator screenshot welcome store terminal; do
   [[ -x "/usr/bin/lumo-$app" ]] || fail "Lumo application is missing: $app"
   [[ -s "/usr/share/lumo/$app/Main.qml" ]] || fail "interface of lumo-$app is missing"
 done
-for module in org/lumo/system org/lumo/store org/lumo/m3 org/lumo/ui QtMultimedia \
+for module in org/lumo/system org/lumo/store org/lumo/terminal org/lumo/m3 org/lumo/ui QtMultimedia \
   org/kde/syntaxhighlighting Qt/labs/folderlistmodel QtQuick/Dialogs; do
   [[ -s "$qml_root/$module/qmldir" ]] \
     || fail "QML module used by the Lumo applications is missing: $module"

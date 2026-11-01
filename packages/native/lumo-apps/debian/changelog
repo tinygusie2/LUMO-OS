@@ -1,3 +1,17 @@
+lumo-apps (1.1.69) UNRELEASED; urgency=medium
+
+  * Add Terminal (lumo-terminal), Lumo's own command line. It has tabs
+    like Windows Terminal, a clear prompt that shows the folder, colours
+    from the Lumo theme, and copy and paste the way Windows does it
+    (Ctrl+C copies a selection, Ctrl+V pastes, a right click copies or
+    pastes). Under it runs bash, which also understands the familiar
+    Windows commands: dir, cls, copy, move, ren, del, md, rd, type, cd..,
+    ipconfig, tasklist, taskkill, where, ver and start. help lists them.
+  * The terminal view is drawn by Lumo itself on top of libvterm.
+  * "Open terminal here" in Files opens the new Terminal.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 22:30:00 +0000
+
 lumo-apps (1.1.68) UNRELEASED; urgency=medium
 
   * Remove duplicate Russian translations from lumo-settings and lumo-store

@@ -1,5 +1,24 @@
 [
   {
+    "id": "2026-11-01-1",
+    "date": "2026-11-01",
+    "items": [
+      {
+        "icon": "utilities-terminal",
+        "title": {
+          "en": "A terminal that feels like Command Prompt",
+          "nl": "Een terminal die voelt als de opdrachtprompt",
+          "ru": "Терминал, похожий на командную строку"
+        },
+        "text": {
+          "en": "Terminal is new and made by Lumo: tabs like Windows Terminal, colours from your theme, and Ctrl+C and Ctrl+V for copy and paste. The Windows commands you know still work, such as dir, cls, copy, del and ipconfig; type help to see them all. Open it from the menu or with Ctrl+Alt+T.",
+          "nl": "Terminal is nieuw en door Lumo zelf gemaakt: tabbladen zoals in Windows Terminal, kleuren uit je thema, en Ctrl+C en Ctrl+V om te kopiëren en te plakken. De Windows-opdrachten die je kent werken gewoon, zoals dir, cls, copy, del en ipconfig; typ help om ze allemaal te zien. Open hem via het menu of met Ctrl+Alt+T.",
+          "ru": "Терминал теперь свой, от Lumo: вкладки как в Windows Terminal, цвета вашей темы, Ctrl+C и Ctrl+V для копирования и вставки. Знакомые команды Windows тоже работают: dir, cls, copy, del, ipconfig; введите help, чтобы увидеть все. Откройте его из меню или сочетанием Ctrl+Alt+T."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-29-3",
     "date": "2026-10-29",
     "items": [
