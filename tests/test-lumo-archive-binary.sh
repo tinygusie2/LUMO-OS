@@ -23,6 +23,7 @@ dpkg-deb --control "$deb" "$temporary_root/control"
 for path in \
   etc/apt/sources.list.d/debian.sources \
   etc/apt/preferences.d/lumo-archive.pref \
+  etc/apt/preferences.d/lumo-backports.pref \
   etc/apt/apt.conf.d/21lumo-auto-upgrades \
   etc/apt/apt.conf.d/51lumo-unattended-upgrades \
   usr/lib/systemd/system/apt-daily.timer.d/lumo-live.conf \
@@ -32,6 +33,7 @@ done
 for conffile in \
   /etc/apt/sources.list.d/debian.sources \
   /etc/apt/preferences.d/lumo-archive.pref \
+  /etc/apt/preferences.d/lumo-backports.pref \
   /etc/apt/apt.conf.d/21lumo-auto-upgrades \
   /etc/apt/apt.conf.d/51lumo-unattended-upgrades; do
   grep -Fxq "$conffile" "$temporary_root/control/conffiles" || fail "$conffile is not a conffile"

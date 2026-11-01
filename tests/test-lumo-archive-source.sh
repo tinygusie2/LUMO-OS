@@ -34,6 +34,13 @@ done
 apt="$package_root/apt"
 grep -Fxq 'URIs: https://deb.debian.org/debian' "$apt/debian.sources" || fail "no Debian archive"
 grep -Fxq 'Suites: trixie-security' "$apt/debian.sources" || fail "no Debian security updates"
+grep -Fxq 'Suites: trixie-backports' "$apt/debian.sources" || fail "no trixie-backports for the kernel and Mesa"
+for source in src:linux src:linux-signed-amd64 src:firmware-nonfree src:mesa src:libdrm; do
+  grep -q "^Package: .*$source\( \|$\)" "$apt/lumo-backports.pref" || fail "$source is not taken from trixie-backports"
+done
+grep -Fxq 'Pin: release n=trixie-backports' "$apt/lumo-backports.pref" || fail "the backports pin names no release"
+grep -Fq '"origin=Debian Backports,codename=trixie-backports,label=Debian Backports";' "$apt/51lumo-unattended-upgrades" \
+  || fail "kernel updates from trixie-backports are not installed automatically"
 if grep -rq 'snapshot.debian.org' "$apt"; then
   fail "the installed system must not use the build snapshot"
 fi

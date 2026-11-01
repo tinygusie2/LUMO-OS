@@ -2,7 +2,7 @@
 
 Lumo is a Debian 13 desktop distribution for people coming from Windows,
 forked from Kernora OS. Packages, files and code are called `lumo` too;
-`tests/lint-layout.sh` fails on a new `lumo`, except in copyright lines,
+`tests/lint-layout.sh` fails on a new `kernora`, except in copyright lines,
 old changelog entries and the fork credits in `README.md` and `NOTICE`. The owner writes in Dutch: answer in Dutch,
 but keep code, commit messages, changelogs and docs in English.
 

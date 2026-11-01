@@ -45,8 +45,12 @@ fail() {
 grep -Fxq 'ID=lumo' /usr/lib/os-release || fail "wrong OS identity"
 [[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.4" ]] \
   || fail "lumo-base is not installed"
-[[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == "6.12.107-1" ]] \
-  || fail "wrong kernel metapackage version"
+[[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == *~bpo13+* ]] \
+  || fail "the kernel does not come from trixie-backports"
+for mesa in libgl1-mesa-dri mesa-vulkan-drivers mesa-va-drivers; do
+  [[ "$(dpkg-query -W -f='${Version}' "$mesa" 2>/dev/null)" == *~bpo13+* ]] \
+    || fail "$mesa does not come from trixie-backports"
+done
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"
 [[ "$(readlink -f /sbin/init)" == "/usr/lib/systemd/systemd" ]] \
@@ -273,6 +277,12 @@ for firmware in firmware-amd-graphics firmware-intel-graphics firmware-nvidia-gr
 done
 compgen -G '/usr/lib/firmware/amdgpu/gc_10_3_6_*' >/dev/null \
   || fail "the AMD Ryzen graphics firmware is missing"
+grep -Fxq 'Suites: trixie-backports' /etc/apt/sources.list.d/debian.sources \
+  || fail "the image takes no kernel or Mesa updates from trixie-backports"
+grep -Fxq 'Package: src:linux src:linux-signed-amd64 src:firmware-nonfree src:firmware-free' /etc/apt/preferences.d/lumo-backports.pref \
+  || fail "the kernel is not taken from trixie-backports"
+grep -Fq 'origin=Debian Backports,codename=trixie-backports' <<<"$(apt-config dump)" \
+  || fail "kernel updates from trixie-backports are not installed automatically"
 grep -Fxq 'Suites: trixie-security' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no Debian security updates"
 [[ ! -e /etc/apt/sources.list.d/lumo.sources ]] \

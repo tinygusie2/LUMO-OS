@@ -8,6 +8,14 @@ lumo-desktop (1.4.57) UNRELEASED; urgency=medium
 
  -- Lumo Developers <developers@lumo.invalid>  Thu, 31 Oct 2026 23:45:00 +0000
 
+kernora-desktop (1.4.56) UNRELEASED; urgency=medium
+
+  * The NVIDIA driver for GeForce GTX 900 and 10 also comes from
+    trixie-backports when it has a newer one, so the driver keeps building
+    against the newer kernel the image now ships.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 31 Oct 2026 23:30:00 +0000
+
 kernora-desktop (1.4.37) UNRELEASED; urgency=medium
 
   * Two new live wallpapers: Waves (layers of waves rolling towards the shore
