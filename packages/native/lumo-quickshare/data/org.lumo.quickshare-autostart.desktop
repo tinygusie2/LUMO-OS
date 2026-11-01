@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Quick Share
+Exec=lumo-quickshare
+Icon=org.lumo.quickshare
+NoDisplay=true
+X-KDE-autostart-phase=2
+X-GNOME-Autostart-enabled=true

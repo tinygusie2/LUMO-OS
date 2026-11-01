@@ -39,11 +39,11 @@ fi
 assert_file_line "$package_root/origins/lumo" 'Vendor: Lumo'
 assert_file_line "$package_root/origins/lumo" 'Parent: Debian'
 assert_file_line "$package_root/debian/rules" 'VENDORFILE = lumo'
-assert_file_line "$package_root/etc/debian_version" '13.6'
+assert_file_line "$package_root/etc/debian_version" '13.7'
 
 package_version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$package_version" == "13.8+deb13u6+lumo1" ]] || fail "unexpected package version"
-dpkg --compare-versions "$package_version" gt '13.8+deb13u6' \
+[[ "$package_version" == "13.8+deb13u7+lumo1" ]] || fail "unexpected package version"
+dpkg --compare-versions "$package_version" gt '13.8+deb13u7' \
   || fail "Lumo version does not sort after its Debian base"
 
 distribution=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)

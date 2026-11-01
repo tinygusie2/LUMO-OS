@@ -1,62 +1,80 @@
+/*
+    SPDX-FileCopyrightText: 2026 Kernora Developers
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
+
 import QtQuick
+import QtQuick.Window
+import org.lumo.m3
 
 Rectangle {
     id: root
-    color: "#181210"
+    color: "#000000"
 
     property int stage
 
-    onStageChanged: {
-        if (stage == 5) {
-            outroAnimation.running = true;
-        }
+    Loader {
+        id: choice
+        source: "file:///var/lib/lumo/greeter/wallpaper.qml"
     }
 
-    Item {
-        id: content
+    readonly property string chosen: choice.status === Loader.Ready ? String(choice.item.plugin) : ""
+    readonly property string plugin: /^org\.lumo\.[a-z]+$/.test(chosen) ? chosen : "org.lumo.shapes"
+    readonly property string image: chosen === "org.kde.image" ? String(choice.item.image) : ""
+
+    Rectangle {
+        id: backdrop
         anchors.fill: parent
+        color: M3.surface
+        opacity: 0
 
-        Image {
-            id: logo
-            readonly property real size:
-                Math.round(Math.min(root.width, root.height) * 0.22)
+        NumberAnimation on opacity {
+            from: 0
+            to: 1
+            duration: 450
+            easing.type: Easing.OutCubic
+        }
 
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: -Math.round(root.height * 0.04)
+        Loader {
+            id: scene
+            anchors.fill: parent
+            active: root.image.length === 0 || picture.status === Image.Error
+            source: "file:///usr/share/plasma/wallpapers/" + root.plugin + "/contents/ui/Scene.qml"
 
-            source: "images/lumo.png"
-            sourceSize.width: size
-            sourceSize.height: size
-            width: size
-            height: size
-            smooth: true
+            readonly property real loop: status === Loader.Ready && item.loopSeconds > 0 ? item.loopSeconds : 180
+            readonly property real offset: (Screen.virtualX / 7919 + Screen.virtualY / 104729) % 1
+            property real phase: 0
 
-            RotationAnimator on rotation {
-                from: 0
-                to: 360
-                duration: 6000
-                loops: Animation.Infinite
-                running: true
+            function clockPhase(): real {
+                return (offset + Date.now() / 1000 / loop) % 1;
+            }
+
+            Timer {
+                interval: 100
+                repeat: true
+                running: scene.status === Loader.Ready
+                onTriggered: scene.phase = scene.clockPhase()
+            }
+
+            onLoaded: {
+                item.intro = 1;
+                scene.phase = scene.clockPhase();
+                item.phase = Qt.binding(() => scene.phase);
+            }
+            onStatusChanged: {
+                if (status === Loader.Error && source.toString().indexOf("org.lumo.shapes") < 0) {
+                    source = "file:///usr/share/plasma/wallpapers/org.lumo.shapes/contents/ui/Scene.qml";
+                }
             }
         }
 
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: logo.bottom
-            anchors.topMargin: Math.round(root.height * 0.06)
-            text: "Lumo"
-            color: "#ede0dc"
-            font.family: "Google Sans Flex"
-            font.pixelSize: Math.round(root.height * 0.028)
+        Image {
+            id: picture
+            anchors.fill: parent
+            visible: status === Image.Ready
+            source: root.image.length > 0 ? "file://" + root.image : ""
+            fillMode: Image.PreserveAspectCrop
+            sourceSize.width: width
         }
-    }
-
-    OpacityAnimator {
-        id: outroAnimation
-        target: content
-        from: 1
-        to: 0
-        duration: 400
-        running: false
     }
 }

@@ -2,3 +2,6 @@ Version=6
 
 Id=lumo_sound_theme
 Script=lumo-sound-theme.sh,sh
+
+Id=lumo_sound_theme_without_ocean
+Script=lumo-sound-theme.sh,sh

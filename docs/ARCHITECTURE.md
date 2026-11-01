@@ -24,13 +24,13 @@ the build pipeline in this repository.
 
 The first derived package is the complete Debian `base-files` source tree in
 `packages/derived/base-files`, currently versioned
-`13.8+deb13u6+lumo1`. It is built with Debian package tooling; it is not
+`13.8+deb13u7+lumo1`. It is built with Debian package tooling; it is not
 extracted from, or layered onto, an installer ISO. The fork changes the Lumo
 OS identity and vendor origin while retaining Debian parent and original
 maintainer provenance.
 
 The corresponding immutable upstream source is fetched from Debian snapshot
-`20260901T000000Z`, authenticated, checksummed in `manifests/upstream.lock`, and
+`20261015T000000Z`, authenticated, checksummed in `manifests/upstream.lock`, and
 kept outside Git. `manifests/derived-packages.txt` records the mapping between
 the Debian and Lumo versions.
 
@@ -53,7 +53,7 @@ in `configs/live/packages.txt`.
 
 `packages/native/lumo-base` is a native Debian `3.0 (native)` package,
 version `1.4` and architecture `all`. It has an exact dependency on
-`base-files (= 13.8+deb13u6+lumo1)`, making the Lumo identity package an
+`base-files (= 13.8+deb13u7+lumo1)`, making the Lumo identity package an
 explicit part of the distribution base. Its source-to-binary path is exercised
 by `make lumo-base-source` and `make lumo-base-binary`. It also supplies
 optional hardware workarounds; see [the RTL8852CE workaround](WIFI_REALTEK.md).

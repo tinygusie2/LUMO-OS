@@ -1,0 +1,4 @@
+data/org.lumo.quickshare.desktop usr/share/applications
+data/org.lumo.quickshare-autostart.desktop etc/xdg/autostart
+data/org.lumo.QuickShare.service usr/share/dbus-1/services
+vendor/LICENSES.txt usr/share/doc/lumo-quickshare

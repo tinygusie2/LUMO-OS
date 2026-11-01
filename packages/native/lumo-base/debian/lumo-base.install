@@ -1,1 +1,5 @@
 data/NetworkManager/*.conf usr/share/lumo/workarounds
+data/fastfetch/lumo.txt usr/share/lumo/fastfetch
+data/fastfetch/lumo-small.txt usr/share/lumo/fastfetch
+data/fastfetch/config.jsonc etc/xdg/fastfetch
+data/fastfetch/lumo-small.jsonc usr/share/fastfetch/presets

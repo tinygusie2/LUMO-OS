@@ -62,7 +62,6 @@ for path in \
   usr/share/icons/Lumo/scalable/apps/start-here-kde-symbolic.svg \
   usr/share/icons/Lumo/scalable/apps/start-here-kde.svg \
   usr/share/plasma/look-and-feel/org.lumo.desktop/contents/splash/Splash.qml \
-  usr/share/plasma/look-and-feel/org.lumo.desktop/contents/splash/images/lumo.png \
   usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js \
   etc/xdg/plasmarc \
   usr/share/color-schemes/LumoDark.colors \
@@ -77,6 +76,9 @@ for path in \
   usr/share/icons/Lumo/scalable/status/audio-volume-high.svg \
   usr/share/icons/Lumo/scalable/status/audio-volume-high-symbolic.svg \
   usr/share/icons/Lumo/scalable/actions/system-shutdown.svg \
+  usr/share/icons/Lumo/scalable/categories/ksysguardd.svg \
+  usr/share/icons/Lumo/scalable/categories/lumo-analog-clock.svg \
+  usr/share/icons/Lumo/scalable/devices/device-notifier.svg \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.lumo.launcher.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.lumo.quicksettings.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.lumo.clipboard.mo \
@@ -85,6 +87,11 @@ for path in \
   usr/share/knotifications6/lumo-devices.notifyrc \
   usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/sources/DeviceSource.qml \
   usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/sources/ThemeSource.qml \
+  usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/TileGrid.qml \
+  usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/InternetPanel.qml \
+  usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/BluetoothPanel.qml \
+  usr/share/plasma/plasmoids/org.lumo.quicksettings/contents/ui/PanelRow.qml \
+  usr/share/plasma/plasmoids/org.lumo.launcher/contents/ui/SessionGroup.qml \
   usr/share/plasma/desktoptheme/lumo-md1/metadata.json \
   usr/share/plasma/desktoptheme/lumo-md1-light/colors \
   usr/share/plasma/desktoptheme/lumo-md2/dialogs/background.svg \
@@ -102,12 +109,6 @@ for path in \
   usr/share/plasma/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js \
   usr/share/plasma/wallpapers/org.lumo.shapes/contents/ui/palettes/lumo.qml \
   usr/share/plasma/wallpapers/org.lumo.shapes/contents/ui/palettes/blue-grey.qml \
-  usr/share/plasma/wallpapers/org.lumo.tower/metadata.json \
-  usr/share/plasma/wallpapers/org.lumo.tower/contents/ui/Scene.qml \
-  usr/share/plasma/wallpapers/org.lumo.tower/contents/ui/tower.js \
-  usr/share/plasma/wallpapers/org.lumo.tower/contents/ui/palettes/lumo.qml \
-  usr/share/plasma/wallpapers/org.lumo.tower/contents/ui/palettes/blue-grey.qml \
-  usr/share/plasma/wallpapers/org.lumo.tower/contents/ui/materialshapes.js \
   usr/share/plasma/wallpapers/org.lumo.rhythm/metadata.json \
   usr/share/plasma/wallpapers/org.lumo.rhythm/contents/ui/Scene.qml \
   usr/share/plasma/wallpapers/org.lumo.rhythm/contents/ui/palettes/lumo.qml \
@@ -148,10 +149,19 @@ for path in \
   usr/share/locale/nl/LC_MESSAGES/plasma_wallpaper_org.lumo.aurora.mo \
   usr/share/kconf_update/lumo-marbles-to-pastel.upd \
   usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/lumo_marbles_to_pastel.js \
+  usr/share/kconf_update/lumo-tower-to-shapes.upd \
+  etc/xdg/plasma-workspace/env/lumo-video-decoding.sh \
+  usr/share/kconf_update/lumo-tower-to-shapes.sh \
+  usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/lumo_tower_to_shapes.js \
   usr/share/plasma/wallpapers/org.lumo.pastel/contents/ui/palettes/lumo.qml \
   usr/share/plasma/wallpapers/org.lumo.pastel/contents/ui/palettes/blue-grey.qml \
-  usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.lumo.tower.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.lumo.pastel.mo \
+  usr/share/plasma/wallpapers/org.lumo.ribbon/metadata.json \
+  usr/share/plasma/wallpapers/org.lumo.ribbon/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.lumo.ribbon/contents/ui/morphs.js \
+  usr/share/plasma/wallpapers/org.lumo.ribbon/contents/ui/palettes/lumo.qml \
+  usr/share/plasma/wallpapers/org.lumo.ribbon/contents/ui/palettes/blue-grey.qml \
+  usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.lumo.ribbon.mo \
   usr/share/Kvantum/Lumo/Lumo.kvconfig \
   usr/share/Kvantum/Lumo/Lumo.svg \
   usr/share/Kvantum/Lumo/LumoDark.kvconfig \
@@ -175,6 +185,10 @@ for path in \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/M3.qml \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/ui/qmldir \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/ui/ListItem.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/ui/FloatingToolbar.qml \
+  usr/libexec/lumo-splash-wallpaper \
+  usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/ContextMenu.qml \
+  usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/Task.qml \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/ui/Page.qml \
   usr/share/locale/ru/LC_MESSAGES/lumo-ui.mo \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/M3.qml \
@@ -278,13 +292,77 @@ for path in \
   usr/share/plasma/desktoptheme/lumo-light/colors \
   usr/share/icons/Lumo/scalable/apps/org.lumo.settings.svg \
   usr/share/icons/Lumo/scalable/apps/org.lumo.files.svg \
+  usr/share/icons/Lumo/scalable/apps/org.lumo.taskmanager.svg \
   usr/share/sddm/themes/lumo/Main.qml \
   usr/share/sddm/themes/lumo/metadata.desktop \
-  usr/share/sddm/themes/lumo/palette.js \
-  usr/share/sddm/themes/lumo/icons/login.svg; do
+  usr/share/sddm/themes/lumo/icons/login.svg \
+  usr/share/lumo/faces/lumo.png \
+  usr/share/lumo/faces/light-blue.png \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MShapeEcho.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/materialshapes.js \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MLinearProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MCircularProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/MLinearProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/MCircularProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/ProgressBar.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MLoadingIndicator.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MMorph.qml \
+  usr/libexec/lumo-grub-theme \
+  usr/libexec/lumo-boot-theme \
+  usr/share/lumo/boot/plymouth.pack \
+  usr/share/lumo/grub/lumo-dark/theme.txt \
+  usr/share/lumo/grub/lumo-dark/select_c.png \
+  usr/share/lumo/grub/light-blue-light/theme.txt \
+  usr/share/lumo/grub/green-dark/logo.png \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/MMorph.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/loadingshapes.js \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/loadingshapes.js \
+  usr/share/plymouth/themes/lumo/wave-0.png \
+  usr/share/plymouth/themes/lumo/wave-89.png; do
   [[ -e "$temporary_root/desktop/$path" ]] \
     || fail "desktop package is missing $path"
 done
+[[ ! -e "$temporary_root/desktop/usr/share/sddm/themes/lumo/palette.js" ]] || fail "the login screen still ships a fixed palette"
+grep -Fxq 'MShapeEcho MShapeEcho.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/qmldir" \
+  || fail "the shape echo is not part of org.lumo.m3"
+grep -Fxq 'MLinearProgress MLinearProgress.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/qmldir" \
+  && grep -Fxq 'MCircularProgress MCircularProgress.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/impl/qmldir" \
+  && grep -Fxq 'ProgressBar 1.0 ProgressBar.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/desktop/qmldir" \
+  || fail "the wavy progress indicators are not registered"
+cmp -s "$temporary_root/desktop/usr/share/lumo/grub/lumo-dark/theme.txt" "$temporary_root/desktop/usr/share/grub/themes/lumo/theme.txt" \
+  || fail "the default boot menu and the lumo dark variant differ"
+grep -Fq 'desktop-color: "#f' "$temporary_root/desktop/usr/share/lumo/grub/light-blue-light/theme.txt" \
+  || fail "the light boot menu is not light"
+boot_work=$(mktemp -d)
+python3 -I - "$temporary_root/desktop" "$boot_work" <<'PY' || fail "the boot theme tool does not build a working Plymouth theme"
+import importlib.machinery, importlib.util, pathlib, sys
+root, work = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+loader = importlib.machinery.SourceFileLoader("boot", str(root / "usr/libexec/lumo-boot-theme"))
+spec = importlib.util.spec_from_loader("boot", loader)
+boot = importlib.util.module_from_spec(spec)
+loader.exec_module(boot)
+boot.PACK = root / "usr/share/lumo/boot/plymouth.pack"
+boot.PALETTES = root / "usr/share/lumo/palettes"
+boot.THEMES = work
+stock = root / "usr/share/plymouth/themes/lumo"
+boot.build("lumo", "dark")
+theme = work / boot.NAME
+assert (theme / f"{boot.NAME}.script").read_text() == (stock / "lumo.script").read_text()
+assert sorted(p.name for p in stock.glob("*.png")) == sorted(p.name for p in theme.glob("*.png"))
+boot.build("light-blue", "light")
+theme = work / boot.NAME
+assert (theme / "variant").read_text().strip() == "light-blue-light"
+for png in theme.glob("*.png"):
+    assert png.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n", png
+script = (theme / f"{boot.NAME}.script").read_text()
+assert "@BG@" not in script and "Window.SetBackgroundTopColor(0.976, 0.976, 0.988)" in script, script[:400]
+assert f"ImageDir={work / boot.NAME}" in (theme / f"{boot.NAME}.plymouth").read_text()
+PY
+rm -rf "$boot_work"
+cmp -s "$temporary_root/desktop/usr/share/lumo/faces/lumo.png" "$temporary_root/desktop/usr/share/lumo/avatars/00-lumo.png" \
+  || fail "the Lumo face and the stock Lumo avatar differ"
+cmp -s "$temporary_root/desktop/usr/share/lumo/faces/lumo.png" "$temporary_root/desktop/usr/share/lumo/faces/light-blue.png" \
+  && fail "the Lumo face does not change with the colour"
 
 shell=usr/share/plasma/shells/org.kde.plasma.desktop/contents
 notifications=usr/share/plasma/plasmoids/org.kde.plasma.notifications/contents/ui
@@ -306,6 +384,9 @@ for path in \
   "$shell/explorer/WidgetExplorer.qml" \
   "$shell/explorer/WidgetPreview.qml" \
   "$shell/explorer/WidgetDrag.qml" \
+  "$shell/explorer/WidgetCard.qml" \
+  "$shell/explorer/OtherPreview.qml" \
+  "$shell/explorer/widgets.js" \
   "$shell/explorer/MaterialShape.qml" \
   "$shell/explorer/materialshapes.js" \
   "$shell/views/DesktopEditMode.qml" \
@@ -484,6 +565,7 @@ grep -Fq 'allowDmaBuf: false' "$temporary_root/desktop/usr/share/plasma/plasmoid
 grep -Fq 'source: "LumoWindowThumbnail.qml"' "$temporary_root/desktop/usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/ToolTipInstance.qml" \
   || fail "the task tooltip does not use the Lumo window preview"
 [[ ! -e "$temporary_root/desktop/usr/share/plasma/wallpapers/org.lumo.marbles" ]] || fail "Marble Run is still installed"
+[[ ! -e "$temporary_root/desktop/usr/share/plasma/wallpapers/org.lumo.tower" ]] || fail "Tower is still installed"
 clipboard_ui="$temporary_root/desktop/usr/share/plasma/plasmoids/org.lumo.clipboard/contents/ui"
 [[ -s "$clipboard_ui/EmojiPage.qml" && -s "$clipboard_ui/emoji.js" ]] \
   || fail "the clipboard sheet has no emoji tab"

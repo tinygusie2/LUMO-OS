@@ -1,3 +1,21 @@
+lumo-archive (1.6) UNRELEASED; urgency=medium
+
+  * Bring in the upstream Kernora work that was merged locally on
+    2026-10-31 and the owner's fixes after it, with every name already
+    changed to lumo.
+  * The demo update channel from upstream now uses Lumo's own archive.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
+lumo-archive (1.5) UNRELEASED; urgency=medium
+
+  * Update from Lumo's own archive, tinygusie2.github.io/lumo-updates,
+    signed by the Lumo Archive Signing Key (DF06 884E A586 3BEE 786D
+    BD71 34C2 11B6 09EA CEE3). Its packages are preferred over Debian's,
+    and come in through Settings > Updates.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 14:10:00 +0000
+
 lumo-archive (1.4) UNRELEASED; urgency=medium
 
   * Rename the package from kernora-archive to lumo-archive.
@@ -20,6 +38,14 @@ kernora-archive (1.3) UNRELEASED; urgency=medium
     security updates, so the kernel keeps getting its security fixes.
 
  -- Kernora Developers <developers@kernora.invalid>  Sat, 31 Oct 2026 23:30:00 +0000
+kernora-archive (1.2) UNRELEASED; urgency=medium
+
+  * Demo updates: an opt-in second channel, ember-demo, that gets new
+    Kernora packages before everyone else. Settings > System turns it on
+    and off through /usr/libexec/kernora-update-channel; turning it off
+    keeps the demo versions until a normal update replaces them.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 12:00:00 -0700
 
 kernora-archive (1.1) UNRELEASED; urgency=medium
 

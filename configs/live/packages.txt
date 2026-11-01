@@ -1,4 +1,4 @@
-lumo-base=1.6.4
+lumo-base=1.6.5
 linux-image-amd64
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
@@ -15,13 +15,6 @@ procps
 
 plasma-desktop
 plasma-workspace
-power-profiles-daemon
-cups
-ipp-usb
-sane-airscan
-print-manager
-skanpage
-kdeconnect
 systemsettings
 sddm
 sudo
@@ -29,18 +22,14 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-lumo-desktop=1.4.58
-lumo-calamares=1.4.58
-lumo-apps=1.1.66
-r-quick-share=0.11.5
+lumo-desktop=1.4.59
+lumo-calamares=1.4.59
+lumo-apps=1.1.67
+lumo-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1lumo1
 plymouth
 plymouth-label
 fonts-roboto-unhinted
-wine
-wine64
-gamemode
-mangohud
 mesa-vulkan-drivers
 mesa-va-drivers
 libgl1-mesa-dri

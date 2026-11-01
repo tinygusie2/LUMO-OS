@@ -27,6 +27,7 @@ required_paths=(
   packages/native/lumo-base/debian/changelog
   packages/native/lumo-archive/debian/control
   packages/native/lumo-archive/debian/changelog
+  packages/native/lumo-archive/keyrings/lumo-archive-keyring.asc
   packages/native/lumo-desktop/debian/control
   packages/native/lumo-desktop/debian/changelog
   packages/native/lumo-apps/debian/control
@@ -35,7 +36,7 @@ required_paths=(
   packages/native/lumo-desktop/data/ui/qmldir
   configs/live/lumo-live-language
   packages/native/lumo-desktop/data/calamares/settings.conf
-  packages/native/lumo-desktop/data/wallpaper/org.lumo.tower/metadata.json
+  packages/native/lumo-desktop/data/wallpaper/org.lumo.shapes/metadata.json
   packages/native/lumo-desktop/data/icons/lumo-logo.svg
   packages/native/lumo-desktop/data/symbols.lock
   packages/native/lumo-desktop/data/shell/m3/qmldir
@@ -61,6 +62,7 @@ required_paths=(
   scripts/build-lumo-archive-binary
   scripts/create-archive-key
   scripts/publish-updates
+  tests/test-publish-updates.sh
   scripts/build-lumo-desktop-source
   scripts/build-lumo-desktop-binary
   scripts/create-development-archive-key

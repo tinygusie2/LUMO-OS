@@ -1,0 +1,55 @@
+lumo-quickshare (1.0.3) UNRELEASED; urgency=medium
+
+  * Rename the package from kernora-quickshare to lumo-quickshare.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:00:00 +0000
+
+kernora-quickshare (1.0.2) UNRELEASED; urgency=medium
+
+  * Much less Bluetooth radio time, which can matter for Wi-Fi on cards
+    that do Wi-Fi and Bluetooth on one chip (a tester gets ~10 s Wi-Fi
+    drops while gaming):
+    - the nearby listener scans for Bluetooth LE only. btleplug asked
+      bluez for "auto" discovery, which also runs classic inquiry over and
+      over, and Quick Share only ever needs LE adverts (patches/btleplug);
+    - it only scans while the "someone nearby is sharing" prompt can show
+      up: Quick Share on, hidden, Ask when a device nearby is sharing on.
+      Visible to everyone, the prompt turned off or Quick Share off means
+      no scanning at all;
+    - stopping the listener actually stops the bluez scan now.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sun, 25 Oct 2026 12:00:00 -0700
+
+kernora-quickshare (1.0.1) UNRELEASED; urgency=medium
+
+  * Notifications say what ChromeOS says: "Receive with Quick Share?",
+    "Pixel is sharing an image with you." plus the secure connection ID,
+    "Receiving / Sending ... from / to ...", "Image received from ...",
+    "Failed to send ...", "Device nearby is sharing" with Enable and
+    Dismiss. The progress goes away by itself when it's done.
+  * A single received image gets Copy to clipboard (wl-copy).
+  * A device that can't be reached ends in "Can't share" instead of
+    spinning on Connecting forever: rqs_lib reports failed connects now
+    (10 s TCP timeout) and the daemon gives up after 25 s; the stale entry
+    leaves the device list.
+  * Desktop entries use the new org.kernora.quickshare app icon.
+  * "Device nearby is sharing" stops nagging (a tester got it every few
+    minutes, stacked in history):
+    - rqs_lib only reacts to real Quick Share adverts (0xFE2C with the
+      FC128E model ID, like ChromeOS), not to every Fast Pair gadget;
+    - one notification per sharing phone, gone ~30 s after it stops;
+    - Dismiss or closing it keeps it quiet for 15 minutes (ChromeOS);
+    - new Don't ask again button turns the prompt off.
+  * Quick Share can be switched off completely (SetEnabled), and
+    "visible to everyone for 10 minutes" is its own switch
+    (SetHighVisibility).
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 24 Oct 2026 12:00:00 -0700
+
+kernora-quickshare (1.0.0) UNRELEASED; urgency=medium
+
+  * First version: Quick Share with Android phones and other computers,
+    built on rqs_lib from rquickshare (the core Packet uses). Incoming
+    files ask first, show the PIN and land in Downloads.
+
+ -- Kernora Developers <developers@kernora.invalid>  Fri, 23 Oct 2026 23:00:00 -0700

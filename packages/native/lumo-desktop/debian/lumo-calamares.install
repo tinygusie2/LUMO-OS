@@ -9,3 +9,4 @@ data/installer/lumo-installer usr/bin
 data/installer/org.lumo.installer.policy usr/share/polkit-1/actions
 data/installer/49-lumo-installer.rules usr/share/polkit-1/rules.d
 data/installer/org.lumo.installer.desktop usr/share/applications
+data/installer/org.lumo.installer-autostart.desktop etc/xdg/autostart

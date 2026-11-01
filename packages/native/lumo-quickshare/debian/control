@@ -1,0 +1,26 @@
+Source: lumo-quickshare
+Section: net
+Priority: optional
+Maintainer: Lumo Developers <developers@lumo.invalid>
+Standards-Version: 4.7.4
+Build-Depends:
+ debhelper-compat (= 13),
+ cargo,
+ libdbus-1-dev,
+ pkgconf,
+ protobuf-compiler,
+ rustc
+Rules-Requires-Root: no
+
+Package: lumo-quickshare
+Architecture: amd64
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+ bluez,
+ dbus-user-session,
+ wl-clipboard
+Description: Quick Share for Lumo
+ Sends and receives files with Android phones and other computers nearby
+ over Quick Share, on the same Wi-Fi network. Bluetooth is used to wake
+ the phone up.

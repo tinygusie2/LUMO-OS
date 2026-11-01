@@ -15,6 +15,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.kquickcontrolsaddons 2.0
 
 import org.kde.private.desktopcontainment.folder as Folder
+import org.kde.plasma.plasma5support as P5Support
 import "code/FolderTools.js" as FolderTools
 
 FocusScope {
@@ -140,6 +141,13 @@ FocusScope {
         return -1;
     }
 
+    readonly property bool keepsLaunchers: root.isContainment && Plasmoid.configuration.url === "desktop:/"
+
+    function onlyLaunchers(mimeData) {
+        const urls = mimeData && mimeData.urls ? Array.from(mimeData.urls) : [];
+        return urls.length > 0 && urls.every(url => /^file:\/\/.*\/applications\/[^\/]+\.desktop$/.test(String(url)));
+    }
+
     function drop(target, event, pos) {
         var dropPos = mapToItem(gridView.contentItem, pos.x, pos.y);
         var dropIndex = gridView.indexAt(dropPos.x, dropPos.y);
@@ -147,7 +155,48 @@ FocusScope {
         var dragIndex = gridView.indexAt(dragPos.x, dragPos.y);
 
         if (listener.dragX === -1 || dragIndex !== dropIndex) {
-            dir.drop(target, event, dropItemAt(dropPos), root.isContainment && !Plasmoid.immutable);
+            var row = dropItemAt(dropPos);
+            if (main.keepsLaunchers && row === -1 && main.onlyLaunchers(event.mimeData)) {
+                launcherDrop.mimeData = event.mimeData;
+                launcherDrop.x = event.x;
+                launcherDrop.y = event.y;
+                launcherDrop.buttons = event.buttons;
+                dir.drop(target, launcherDrop, -1, false);
+                launcherTidy.restart();
+                return;
+            }
+            dir.drop(target, event, row, root.isContainment && !Plasmoid.immutable);
+        }
+    }
+
+    QtObject {
+        id: launcherDrop
+        property QtObject mimeData: null
+        property int x: 0
+        property int y: 0
+        property int buttons: Qt.LeftButton
+        property int modifiers: Qt.ControlModifier
+        property int proposedAction: Qt.CopyAction
+        property int possibleActions: Qt.CopyAction
+    }
+
+    P5Support.DataSource {
+        id: launcherHelper
+        engine: "executable"
+        onNewData: sourceName => disconnectSource(sourceName)
+    }
+
+    Timer {
+        id: launcherTidy
+        interval: 1000
+        onTriggered: launcherHelper.connectSource("/usr/libexec/lumo-desktop-launchers")
+    }
+
+    Connections {
+        target: dir
+        enabled: main.keepsLaunchers
+        function onRowsInserted() {
+            launcherTidy.restart();
         }
     }
 
@@ -248,6 +297,22 @@ FocusScope {
         property var cPress: null
         property bool doubleClickInProgress: false
         property bool renameByLabelClickInitiated: false
+        property real zoomPending: 0
+
+        onWheelMoved: wheel => {
+            if (!(wheel.modifiers & Qt.ControlModifier) || root.useListViewMode) {
+                return;
+            }
+            zoomPending += wheel.delta;
+            let size = Plasmoid.configuration.iconSize;
+            while (Math.abs(zoomPending) >= 120) {
+                size = Math.max(0, Math.min(6, size + (zoomPending > 0 ? 1 : -1)));
+                zoomPending -= zoomPending > 0 ? 120 : -120;
+            }
+            if (size !== Plasmoid.configuration.iconSize) {
+                Plasmoid.configuration.iconSize = size;
+            }
+        }
 
         acceptedButtons: {
             if (hoveredItem === null && main.isRootView) {
@@ -1402,6 +1467,9 @@ FocusScope {
     Component.onCompleted: {
         if (backButton === null && root.useListViewMode) {
             backButton = makeBackButton();
+        }
+        if (main.keepsLaunchers) {
+            launcherTidy.restart();
         }
     }
 }

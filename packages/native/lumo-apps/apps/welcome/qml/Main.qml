@@ -5,6 +5,7 @@
 
 pragma ComponentBehavior: Bound
 
+import QtCore
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -43,12 +44,26 @@ AppWindow {
         defaultValue: ""
     }
 
-    function finish(): void {
-        if (!special) {
-            showOnLogin.value = false;
+    function retire(): void {
+        if (special || SystemInfo.live) {
+            return;
         }
+        showOnLogin.value = false;
+        const folder = String(StandardPaths.writableLocation(StandardPaths.ApplicationsLocation)).replace(/^file:\/\//, "");
+        const entry = folder + "/org.lumo.welcome.desktop";
+        Config.write(entry, "Desktop Entry", "Type", "Application", false);
+        Config.write(entry, "Desktop Entry", "Name", "Welcome", false);
+        Config.write(entry, "Desktop Entry", "Icon", "org.lumo.welcome", false);
+        Config.write(entry, "Desktop Entry", "Exec", "lumo-welcome", false);
+        Config.write(entry, "Desktop Entry", "NoDisplay", true);
+    }
+
+    function finish(): void {
+        retire();
         Qt.quit();
     }
+
+    onClosing: retire()
     function handleArguments(args: var): void {}
 
     readonly property bool firstRun: (startArguments || []).indexOf("--first-run") >= 0
@@ -945,8 +960,13 @@ AppWindow {
                 id: thumb
                 Layout.fillWidth: true
                 Layout.preferredHeight: width * 0.62
-                radius: M3.classic ? M3.cornerImage : tile.selected ? 28 : 18
-                Behavior on radius { NumberAnimation { duration: M3.durationMedium2 } }
+                radius: M3.classic ? M3.cornerImage : 18 + 10 * selectMorph.value
+                MMorph {
+                    id: selectMorph
+                    active: tile.selected
+                    dampingRatio: M3.springExpressiveDefaultDamping
+                    response: M3.springExpressiveDefaultResponse
+                }
                 Rectangle { anchors.fill: parent; color: tile.live ? M3.darkScheme.surface : M3.surfaceContainerHigh }
                 Image {
                     anchors.fill: parent
