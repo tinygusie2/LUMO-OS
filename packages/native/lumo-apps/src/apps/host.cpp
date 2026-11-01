@@ -8,6 +8,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QIcon>
+#include <QProcess>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickStyle>
@@ -18,6 +19,8 @@
 #include <KAboutData>
 #include <KDBusService>
 #include <KLocalizedQmlContext>
+
+#include <unistd.h>
 
 namespace Lumo
 {
@@ -30,6 +33,13 @@ static QString interfaceFile(const Application &application)
     }
     return QStandardPaths::locate(QStandardPaths::GenericDataLocation,
                                   QStringLiteral("lumo/%1/Main.qml").arg(QString::fromLatin1(application.folder)));
+}
+
+static bool replacedOnDisk()
+{
+    char target[4096];
+    const ssize_t length = ::readlink("/proc/self/exe", target, sizeof(target) - 1);
+    return length > 0 && QByteArray(target, length).endsWith(" (deleted)");
 }
 
 static QStringList normalised(const QStringList &arguments, const QString &workingDirectory)
@@ -114,7 +124,16 @@ int run(int &argc, char **argv, const Application &application, KLocalizedString
 
     if (service) {
         QObject::connect(service.get(), &KDBusService::activateRequested, &engine,
-                         [&engine](const QStringList &received, const QString &workingDirectory) {
+                         [&engine, &service, &application](const QStringList &received, const QString &workingDirectory) {
+                             if (replacedOnDisk()) {
+                                 const QString program = QStandardPaths::findExecutable(QString::fromLatin1(application.component));
+                                 if (!program.isEmpty()) {
+                                     service->unregister();
+                                     QProcess::startDetached(program, received.mid(1), workingDirectory);
+                                     QCoreApplication::quit();
+                                     return;
+                                 }
+                             }
                              QObject *root = engine.rootObjects().value(0);
                              if (!root) {
                                  return;

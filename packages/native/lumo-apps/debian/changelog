@@ -1,3 +1,14 @@
+lumo-apps (1.1.70) UNRELEASED; urgency=medium
+
+  * A running app whose program was replaced by an update now starts
+    the new program when it is opened again, instead of carrying on with
+    the old one. Screenshot runs in the background from login, and after
+    an update KWin refused it with "This process is not authorized to
+    take a screenshot" because the old process no longer matched
+    /usr/bin/lumo-screenshot.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 23:59:52 +0100
+
 lumo-apps (1.1.69) UNRELEASED; urgency=medium
 
   * Add Terminal (lumo-terminal), Lumo's own command line. It has tabs
