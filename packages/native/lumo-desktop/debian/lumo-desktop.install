@@ -148,3 +148,4 @@ data/greeter/50-lumo-greeter-background.rules usr/share/polkit-1/rules.d
 data/xdg-kscreenlockerrc/kscreenlockerrc usr/share/lumo/xdg
 data/plasma-env/lumo-config-dirs.sh etc/xdg/plasma-workspace/env
 data/plasma-env/lumo-video-decoding.sh etc/xdg/plasma-workspace/env
+data/initramfs/zz-lumo-firmware usr/share/initramfs-tools/hooks
