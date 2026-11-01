@@ -305,6 +305,7 @@ command -v pkexec >/dev/null || fail "pkexec is missing; the installer cannot st
 [[ "$(plymouth-set-default-theme)" == lumo ]] || fail "the boot splash is not the Lumo theme"
 [[ -s /usr/share/plymouth/themes/lumo/lumo.script && -s /usr/share/plymouth/themes/lumo/shape-0.png ]] \
   || fail "the Lumo boot splash is incomplete"
+command -v zstd >/dev/null || fail "zstd is missing; the zstd initramfs cannot be read"
 initrd=$(find /boot -maxdepth 1 -name 'initrd.img-*' | sort | tail -n1)
 lsinitramfs "$initrd" | grep -q 'usr/share/plymouth/themes/lumo/lumo.script' \
   || fail "the initramfs does not carry the Lumo boot splash"
