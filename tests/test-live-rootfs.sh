@@ -166,8 +166,8 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.67" ]] \
-  || fail "lumo-apps 1.1.67 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.68" ]] \
+  || fail "lumo-apps 1.1.68 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
@@ -274,7 +274,7 @@ compgen -G '/usr/lib/firmware/amdgpu/gc_10_3_6_*' >/dev/null \
   || fail "the AMD Ryzen graphics firmware is missing"
 grep -Fxq 'Suites: trixie-backports' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no kernel or Mesa updates from trixie-backports"
-grep -Fxq 'Package: src:linux src:linux-signed-amd64 src:firmware-nonfree src:firmware-free' /etc/apt/preferences.d/lumo-backports.pref \
+grep -Fxq 'Package: src:linux src:linux-signed-amd64 src:linux-base src:firmware-nonfree src:firmware-free' /etc/apt/preferences.d/lumo-backports.pref \
   || fail "the kernel is not taken from trixie-backports"
 grep -Fq 'origin=Debian Backports,codename=trixie-backports' <<<"$(apt-config dump)" \
   || fail "kernel updates from trixie-backports are not installed automatically"
@@ -306,7 +306,7 @@ command -v pkexec >/dev/null || fail "pkexec is missing; the installer cannot st
 [[ -s /usr/share/plymouth/themes/lumo/lumo.script && -s /usr/share/plymouth/themes/lumo/shape-0.png ]] \
   || fail "the Lumo boot splash is incomplete"
 initrd=$(find /boot -maxdepth 1 -name 'initrd.img-*' | sort | tail -n1)
-lsinitramfs "$initrd" | grep -q 'usr/share/plymouth/themes/lumo/lumo.script' \
+lsinitramfs "$initrd" | grep 'usr/share/plymouth/themes/lumo/lumo.script' >/dev/null \
   || fail "the initramfs does not carry the Lumo boot splash"
 command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle archives"
 [[ -x /usr/bin/lumo-installer ]] || fail "the Lumo installer launcher is missing"

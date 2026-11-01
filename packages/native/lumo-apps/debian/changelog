@@ -1,3 +1,12 @@
+lumo-apps (1.1.68) UNRELEASED; urgency=medium
+
+  * Remove duplicate Russian translations from lumo-settings and lumo-store
+    that stopped msgfmt, so Settings and the Store are translated again.
+  * The source test compiles every translation, so a broken .po file fails
+    before the binary build.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:30:00 +0000
+
 lumo-apps (1.1.67) UNRELEASED; urgency=medium
 
   * Bring in the upstream Kernora work that was merged locally on

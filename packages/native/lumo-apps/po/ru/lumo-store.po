@@ -207,8 +207,8 @@ msgstr "Ещё"
 
 #: packages/native/lumo-apps/apps/store/qml/HomePage.qml:38
 msgid ""
-"You are trying Lumo. Apps you install now disappear after a restart, "
-"install Lumo to keep them."
+"You are trying Lumo. Apps you install now disappear after a restart, install "
+"Lumo to keep them."
 msgstr ""
 "Вы пробуете Lumo. Установленные сейчас приложения пропадут после "
 "перезагрузки, установите Lumo, чтобы они остались."
@@ -675,10 +675,6 @@ msgstr "Система"
 #: packages/native/lumo-apps/apps/store/qml/UpdatesPage.qml:175
 msgid "System updates"
 msgstr "Обновления системы"
-
-#: packages/native/lumo-apps/apps/store/qml/UpdatesPage.qml:176
-msgid "Lumo and the apps that come with it update in Settings"
-msgstr "Lumo и встроенные приложения обновляются в Настройках"
 
 #: packages/native/lumo-apps/src/apps/store.cpp:37
 msgctxt "@title application name"

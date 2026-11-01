@@ -1,3 +1,11 @@
+lumo-archive (1.7) UNRELEASED; urgency=medium
+
+  * Take linux-base from trixie-backports too: the backports kernel needs
+    linux-base (>= 4.17~), which trixie does not have, so the live root file
+    system could not be built.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 15:45:00 +0000
+
 lumo-archive (1.6) UNRELEASED; urgency=medium
 
   * Bring in the upstream Kernora work that was merged locally on

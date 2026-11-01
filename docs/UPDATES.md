@@ -44,6 +44,7 @@ such as AMD Radeon RX 9000 and Intel Arc B-series. Lumo takes these from
 packages to 500, so the newer version wins:
 
 - `linux`, `linux-signed-amd64`: the kernel, signed for Secure Boot;
+- `linux-base`: the kernel's install hooks, which the backports kernel needs in a newer version;
 - `firmware-nonfree`, `firmware-free`: firmware for new GPUs and Wi-Fi;
 - `mesa`, `libdrm`: OpenGL, Vulkan and video decoding;
 - `nvidia-graphics-drivers`, `nvidia-graphics-drivers-tesla`: Debian's

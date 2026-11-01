@@ -66,7 +66,9 @@ grep -Fq 'menuentry "Lumo · Русский" --id live-ru {' "$temporary_root/gr
   || fail "the Russian live session is missing"
 grep -Fq '    set default=installed' "$temporary_root/grub.cfg" \
   || fail "an installed system no longer takes boot priority"
-[[ "$(grep -c ' quiet loglevel=3 splash ' "$temporary_root/grub.cfg")" == 2 ]] \
+live_entries=$(grep -c '^menuentry .*--id live-[a-z][a-z] {' "$temporary_root/grub.cfg")
+(( live_entries >= 2 )) || fail "the ISO menu has fewer than two live sessions"
+[[ "$(grep -c ' quiet loglevel=3 splash ' "$temporary_root/grub.cfg")" == "$live_entries" ]] \
   || fail "the live session prints kernel errors over the boot splash"
 
 xorriso -osirrox on -indev "$iso" \
