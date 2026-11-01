@@ -9,11 +9,13 @@
         "Category": "System Information",
         "Description": "Status area and the Material 3 quick settings shade, pulled up from the panel",
         "Description[ru]": "Область состояния и шторка быстрых настроек Material 3, вытягиваемая из панели",
+        "Description[nl]": "Statusgebied en het paneel met snelle instellingen in Material 3, omhoog te trekken uit de taakbalk",
         "Icon": "preferences-system",
         "Id": "org.lumo.quicksettings",
         "License": "GPL-2.0+",
         "Name": "Lumo Quick Settings",
-        "Name[ru]": "Быстрые настройки Lumo"
+        "Name[ru]": "Быстрые настройки Lumo",
+        "Name[nl]": "Lumo Snelle instellingen"
     },
     "X-Plasma-API-Minimum-Version": "6.0"
 }

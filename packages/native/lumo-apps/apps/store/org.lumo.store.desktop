@@ -8,6 +8,7 @@ GenericName[ru]=Магазин приложений
 GenericName[nl]=Appwinkel
 Comment=Find, install and update apps
 Comment[ru]=Поиск, установка и обновление приложений
+Comment[nl]=Apps zoeken, installeren en bijwerken
 Icon=org.lumo.store
 Exec=lumo-store %U
 MimeType=application/vnd.debian.binary-package;application/vnd.flatpak.ref;x-scheme-handler/appstream;

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.lumo.QuickShare
+Exec=/usr/bin/lumo-quickshare

@@ -11,7 +11,7 @@ The upstream suite is never addressed as mutable `stable`. Both suite and
 snapshot timestamp are declared in `configs/upstream/base.env`.
 
 The current values are Debian `trixie`, `amd64`, and snapshot
-`20260901T000000Z` (`2026-09-01T00:00:00Z`). Upstream source file hashes are
+`20261015T000000Z` (`2026-10-15T00:00:00Z`, Debian 13.7). Upstream source file hashes are
 recorded in `manifests/upstream.lock`. The locally extracted `mmdebstrap`
 package is separately pinned by version and SHA-256 in the same configuration
 file.
@@ -42,15 +42,15 @@ The target validates both the repository and the Lumo identity before
 running `dpkg-source`. It produces:
 
 ```text
-_build/source-packages/base-files_13.8+deb13u6+lumo1.dsc
-_build/source-packages/base-files_13.8+deb13u6+lumo1.tar.xz
+_build/source-packages/base-files_13.8+deb13u7+lumo1.dsc
+_build/source-packages/base-files_13.8+deb13u7+lumo1.tar.xz
 ```
 
 ## Native base metapackage
 
 `packages/native/lumo-base` is the distribution's own `3.0 (native)` source
 package. Version `1.0` is an architecture-independent metapackage with an exact
-dependency on `base-files (= 13.8+deb13u6+lumo1)`.
+dependency on `base-files (= 13.8+deb13u7+lumo1)`.
 
 Build its source and binary packages separately with:
 
@@ -90,7 +90,7 @@ This target performs the following operations:
 2. builds the source package;
 3. bootstraps pinned `mmdebstrap` version `1.5.7-1+deb13u1`;
 4. creates or reuses a clean Debian `trixie` `buildd` rootfs from snapshot
-   `20260901T000000Z`;
+   `20261015T000000Z`;
 5. builds the binary in rootless namespaces with
    `dpkg-buildpackage --build=binary --no-sign`;
 6. tests the metadata and installed Lumo identity in the resulting package.
@@ -105,9 +105,9 @@ The cache is treated as read-only during package builds: every build uses a
 temporary extracted copy. The binary results are:
 
 ```text
-_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.deb
-_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.buildinfo
-_build/binary-packages/base-files_13.8+deb13u6+lumo1_amd64.changes
+_build/binary-packages/base-files_13.8+deb13u7+lumo1_amd64.deb
+_build/binary-packages/base-files_13.8+deb13u7+lumo1_amd64.buildinfo
+_build/binary-packages/base-files_13.8+deb13u7+lumo1_amd64.changes
 ```
 
 For debugging or warming the cache independently, the lower-level Make targets
@@ -176,7 +176,7 @@ The installed `/etc/apt/sources.list` contains four declared sources:
 
 1. the embedded development archive at `/usr/share/lumo/archive`, scoped to
    its embedded public key;
-2. Debian `trixie` from snapshot `20260901T000000Z`;
+2. Debian `trixie` from snapshot `20261015T000000Z`;
 3. `trixie-updates` from the same snapshot;
 4. `trixie-security` from the matching Debian security snapshot.
 

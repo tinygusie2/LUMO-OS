@@ -9,11 +9,13 @@
         "Category": "Environment and Weather",
         "Description": "The weather where you are, on a shape that changes with the sky",
         "Description[ru]": "Погода в вашем городе на фигуре, которая меняется вместе с небом",
+        "Description[nl]": "Het weer waar je bent, op een vorm die meeverandert met de lucht",
         "Icon": "weather-few-clouds",
         "Id": "org.lumo.widget.weather",
         "License": "GPL-2.0+",
         "Name": "Weather",
-        "Name[ru]": "Погода"
+        "Name[ru]": "Погода",
+        "Name[nl]": "Weer"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-FormFactors": [

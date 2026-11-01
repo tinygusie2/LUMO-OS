@@ -1,0 +1,4 @@
+Version=6
+
+Id=lumo_welcome_retired
+Script=lumo-welcome-retired.sh,sh

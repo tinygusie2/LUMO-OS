@@ -2,8 +2,10 @@
 Type=Application
 Name=File Chooser
 Name[ru]=Выбор файла
+Name[nl]=Bestandskiezer
 Comment=Lumo's file dialogs
 Comment[ru]=Диалоги открытия и сохранения файлов Lumo
+Comment[nl]=Bestandsvensters van Lumo
 Icon=org.lumo.files
 Exec=false
 NoDisplay=true

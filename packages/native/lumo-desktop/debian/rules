@@ -15,7 +15,7 @@ TOOLS = tools
 SYMBOLS = data/symbols
 APPLETS = launcher:org.lumo.launcher shade:org.lumo.quicksettings clipboard:org.lumo.clipboard
 WIDGETS = clock glance weather battery calendar media photo note
-LIVE_WALLPAPERS = tower rhythm starfall pastel waves aurora
+LIVE_WALLPAPERS = rhythm starfall pastel ribbon waves aurora
 STILL_WALLPAPERS = dunes bloom contour
 COLOURS := $(shell cd $(TOOLS) && python3 -c 'import lumo_design as d; print(" ".join(d.COLOURS))')
 EXTRA_COLOURS := $(filter-out lumo,$(COLOURS))
@@ -30,7 +30,7 @@ override_dh_auto_build:
 	    --output=generated/hicolor/$${size}x$${size}/apps/lumo-logo.png \
 	    $(LOGO); \
 	done
-	install -d generated/branding generated/skel generated/splash
+	install -d generated/branding generated/skel
 	rsvg-convert --width=160 --height=160 \
 	  --output=generated/branding/lumo-logo.png $(LOGO)
 	python3 $(TOOLS)/gen-qm data/calamares/lang/calamares-lumo_ru.ts \
@@ -49,8 +49,12 @@ override_dh_auto_build:
 	  rm $$image; \
 	done
 	rm generated/skel/face.svg
-	rsvg-convert --width=512 --height=512 \
-	  --output=generated/splash/lumo.png $(LOGO)
+	install -d generated/faces
+	set -e; for colour in $(COLOURS); do \
+	  LUMO_COLOUR=$$colour python3 $(TOOLS)/gen-avatar $(LOGO) generated/faces/$$colour.svg; \
+	  rsvg-convert --width=512 --height=512 --output=generated/faces/$$colour.png generated/faces/$$colour.svg; \
+	  rm generated/faces/$$colour.svg; \
+	done
 	python3 $(TOOLS)/fetch-symbols --check
 	python3 $(TOOLS)/gen-icon-theme $(SYMBOLS) generated/icon-theme
 	set -e; for colour in $(EXTRA_COLOURS); do \
@@ -100,6 +104,9 @@ override_dh_auto_build:
 	set -e; for theme in shapes $(LIVE_WALLPAPERS); do \
 	  cp data/wallpaper/common/*.qml generated/wallpapers/org.lumo.$$theme/contents/ui/; \
 	done
+	set -e; for entry in $(APPLETS); do \
+	  cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js generated/plasmoids/$${entry#*:}/contents/ui/m3/; \
+	done
 	set -e; for widget in $(WIDGETS); do \
 	  target=generated/plasmoids/org.lumo.widget.$$widget; \
 	  install -d $$target; \
@@ -107,13 +114,14 @@ override_dh_auto_build:
 	  cp -a data/widgets/common/. $$target/contents/ui/; \
 	  cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js $$target/contents/ui/; \
 	  cp -a data/shell/m3 $$target/contents/ui/m3; \
+	  cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js $$target/contents/ui/m3/; \
 	  python3 $(TOOLS)/gen-qml-tokens $$target/contents/ui/m3/M3.qml; \
 	done
 	cp data/shell/shade/contents/ui/sources/BatterySource.qml generated/plasmoids/org.lumo.widget.glance/contents/ui/
 	cp data/shell/shade/contents/ui/sources/MediaSource.qml data/shell/shade/contents/ui/WavyProgress.qml \
 	  generated/plasmoids/org.lumo.widget.media/contents/ui/
 	install -d generated/explorer
-	cp data/explorer/*.qml data/widgets/common/MaterialShape.qml generated/explorer/
+	cp data/explorer/*.qml data/explorer/*.js data/widgets/common/MaterialShape.qml generated/explorer/
 	cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js generated/explorer/
 	set -e; for colour in $(EXTRA_COLOURS); do \
 	  LUMO_COLOUR=$$colour python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.lumo.shapes/contents/ui; \
@@ -135,6 +143,9 @@ override_dh_auto_build:
 	cp -a data/shell/m3 generated/style/org/lumo/m3
 	sed -i '1i module org.lumo.m3' generated/style/org/lumo/m3/qmldir
 	python3 $(TOOLS)/gen-qml-tokens generated/style/org/lumo/m3/M3.qml
+	cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js generated/style/org/lumo/m3/
+	python3 $(TOOLS)/gen-loading-shapes generated/style/org/lumo/m3/loadingshapes.js
+	cp generated/style/org/lumo/m3/loadingshapes.js generated/style/org/lumo/m3/materialshapes.js generated/style/org/lumo/desktop/impl/
 	cp -a data/ui generated/style/org/lumo/ui
 	python3 $(TOOLS)/gen-translations data/shell/po generated/locale
 	set -e; for colour in $(COLOURS); do \
@@ -147,11 +158,24 @@ override_dh_auto_build:
 	  rsvg-convert --output=$${image%.svg}.png $$image; \
 	  rm $$image; \
 	done
+	python3 $(TOOLS)/gen-plymouth-theme --masks $(LOGO) $(SYMBOLS) generated/plymouth-masks
+	set -e; for image in generated/plymouth-masks/*.svg; do \
+	  rsvg-convert --output=$${image%.svg}.png $$image; \
+	done
+	install -d generated/boot
+	python3 $(TOOLS)/pack-boot-masks generated/plymouth-masks generated/boot/plymouth.pack
 	python3 $(TOOLS)/gen-grub-theme $(LOGO) generated/grub/lumo
 	set -e; for image in generated/grub/lumo/*.svg; do \
 	  rsvg-convert --output=$${image%.svg}.png $$image; \
 	  rm $$image; \
 	done
+	set -e; for colour in $(COLOURS); do for mode in dark light; do \
+	  LUMO_COLOUR=$$colour python3 $(TOOLS)/gen-grub-theme $(LOGO) generated/grub-themes/$$colour-$$mode $$mode >/dev/null; \
+	  for image in generated/grub-themes/$$colour-$$mode/*.svg; do \
+	    rsvg-convert --output=$${image%.svg}.png $$image; \
+	    rm $$image; \
+	  done; \
+	done; done
 	set -e; for face in Regular:16 Medium:16 Regular:24; do \
 	  weight=$${face%%:*}; size=$${face#*:}; \
 	  grub-mkfont --size=$$size --name="Roboto $$weight" \

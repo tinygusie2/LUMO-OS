@@ -15,14 +15,14 @@ for dependency in dpkg-parsechangelog grep; do
 done
 
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$version" == "1.1.65" ]] || fail "unexpected source version"
+[[ "$version" == "1.1.67" ]] || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] || fail "wrong source format"
 [[ -x "$package_root/debian/rules" ]] || fail "debian/rules is not executable"
 grep -Fxq 'Package: lumo-apps' "$package_root/debian/control" || fail "binary stanza is missing"
 
-for app in settings files welcome editor photos player calculator screenshot store focus projection; do
+for app in settings files welcome editor photos player calculator screenshot store share; do
   [[ -s "$package_root/apps/$app/qml/Main.qml" ]] || fail "$app has no interface"
   desktop="$package_root/apps/$app/org.lumo.$app.desktop"
   [[ -s "$desktop" ]] || fail "$app has no desktop entry"
@@ -32,6 +32,13 @@ for app in settings files welcome editor photos player calculator screenshot sto
   grep -q '^Categories=.*KDE' "$desktop" && fail "$app is filed as a KDE application"
   [[ -s "$package_root/src/apps/$app.cpp" ]] || fail "$app has no host"
 done
+grep -Fq 'key: "receive"' "$package_root/apps/share/qml/Main.qml" \
+  && grep -Fq 'key: "send"' "$package_root/apps/share/qml/Main.qml" \
+  || fail "Quick Share has no Receive and Send"
+grep -Fq '"org.lumo.quickshare", true}' "$package_root/src/apps/share.cpp" \
+  || fail "Quick Share does not reuse its window"
+grep -q '^NoDisplay=' "$package_root/apps/share/org.lumo.share.desktop" \
+  && fail "Quick Share is hidden from the app menu"
 grep -Fxq 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$package_root/apps/screenshot/org.lumo.screenshot.desktop" \
   || fail "Screenshot is not allowed to ask KWin for screenshots"
@@ -68,17 +75,6 @@ grep -Fq 'model: Qt.application.screens' "$package_root/apps/screenshot/qml/Main
   && grep -Fq 'LayerShell.Window.screenConfiguration: LayerShell.Window.ScreenFromQWindow' "$package_root/apps/screenshot/qml/Main.qml" \
   && grep -Fxq ' qml6-module-org-kde-layershell,' "$package_root/debian/control" \
   || fail "Screenshot shows one monitor's picture on another"
-grep -Fxq 'X-KDE-Shortcuts=Meta+P,Display' "$package_root/apps/projection/org.lumo.projection.desktop" \
-  && grep -Fq 'displays.setProjection(app.chosen)' "$package_root/apps/projection/qml/Main.qml" \
-  && grep -Fq 'void Displays::setProjection' "$package_root/src/system/displays.cpp" \
-  && grep -Fq 'lumo-projection resident' "$package_root/data/autostart/org.lumo.projection-resident.desktop" \
-  || fail "Meta+P does not open the Project menu"
-grep -Fq 'KScreen::Config::canBeApplied(m_config)' "$package_root/src/system/displays.cpp" \
-  && grep -Fq 'm_pending = true' "$package_root/src/system/displays.cpp" \
-  || fail "Displays sends invalid or overlapping configurations to KWin"
-grep -Fq 'KScreen::Config::outputAdded, this, &Displays::refresh' "$package_root/src/system/displays.cpp" \
-  && grep -Fq 'ensureMode(out);' "$package_root/src/system/displays.cpp" \
-  || fail "a screen that was turned off cannot be turned on again"
 grep -Fq 'new PlasmaQuick::ConfigView(applet)' "$package_root/src/shell/appletsettings.cpp" \
   && grep -Fq 'add_subdirectory(src/shell)' "$package_root/CMakeLists.txt" \
   && grep -Fxq ' libplasma-dev,' "$package_root/debian/control" \
@@ -97,9 +93,109 @@ p = pathlib.Path(sys.argv[1])
 featured = json.loads((p / 'data/store/featured.json').read_text())
 assert all(isinstance(ids, list) and ids and len(ids) == len(set(ids)) for ids in featured.values())
 notes = json.loads((p / 'data/whatsnew.json').read_text())
-assert any(i['icon'] == 'org.lumo.store' for r in notes for i in r['items'])
+assert any('Store' in i['title']['en'] for r in notes for i in r['items'])
+assert not any(i['icon'].startswith('org.lumo.') for r in notes for i in r['items'])
 for release in notes:
     datetime.date.fromisoformat(release.get('date', release['id'][:10]))
 PY
+
+grep -Fq 'readonly property string channelTool: "/usr/libexec/lumo-update-channel"' \
+  "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  && grep -Fq 'Process.run("pkexec", [page.channelTool, "set", on ? "demo" : "stable"]' \
+  "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  && grep -Fq 'checked: page.channelBusy ? page.channelWanted : page.demo' \
+  "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  || fail "Settings cannot turn demo updates on and off"
+grep -q lumo-update-channel "$package_root/apps/settings/qml/pages/UpdatesPage.qml" \
+  && fail "the demo updates switch is back on the updates page"
+grep -Fq 'title: i18n("Early access")' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  || fail "demo updates are not under Early access in System"
+grep -Fq "project(lumo-apps VERSION $version LANGUAGES C CXX)" "$package_root/CMakeLists.txt" \
+  || fail "the CMake project version is not $version"
+grep -Fq 'AppIconSync icons;' "$package_root/src/updatenotifier/main.cpp" \
+  && grep -Fq '"/Lumo/scalable/apps"' "$package_root/src/updatenotifier/appiconsync.cpp" \
+  && grep -Fq 'readEntry("themedApps", false)' "$package_root/src/updatenotifier/appiconsync.cpp" \
+  && grep -Fq 'connect(KSycoca::self(), &KSycoca::databaseChanged' "$package_root/src/updatenotifier/appiconsync.cpp" \
+  && grep -Fq 'service->noDisplay()' "$package_root/src/updatenotifier/appiconsync.cpp" \
+  && grep -Fq 'info.absolutePath().contains(QLatin1String("/apps"))' "$package_root/src/updatenotifier/appiconsync.cpp" \
+  && grep -Fq 'lumo-app-icons --self-test' "$package_root/debian/rules" \
+  || fail "app icons are not made the same size and shape"
+for file in Main AppsPage ProcessesPage PerformancePage TaskPage UsageCard; do
+  [[ -s "$package_root/apps/taskmanager/qml/$file.qml" ]] || fail "Task Manager lacks $file.qml"
+done
+grep -Fq 'Procs.ApplicationDataModel {' "$package_root/apps/taskmanager/qml/Main.qml" \
+  && grep -Fq 'Procs.ProcessDataModel {' "$package_root/apps/taskmanager/qml/ProcessesPage.qml" \
+  && grep -Fq 'Files.exists("file:///proc/" + pid)' "$package_root/apps/taskmanager/qml/Main.qml" \
+  && grep -Fq 'Procs.ProcessController.KillSignal' "$package_root/apps/taskmanager/qml/Main.qml" \
+  && grep -Fq 'sensorId: "gpu/all/totalVram"' "$package_root/apps/taskmanager/qml/PerformancePage.qml" \
+  && grep -Fq 'direction: Charts.XYChart.ZeroAtEnd' "$package_root/apps/taskmanager/qml/UsageCard.qml" \
+  && grep -Fq 'fillMode: Charts.HistoryProxySource.FillFromStart' "$package_root/apps/taskmanager/qml/UsageCard.qml" \
+  && grep -Fq 'return pid > 0 ? [pid] : [];' "$package_root/apps/taskmanager/qml/TaskPage.qml" \
+  && grep -Fq 'onClicked: page.sortKey = key' "$package_root/apps/taskmanager/qml/TaskPage.qml" \
+  || fail "Task Manager can't list, end or chart"
+grep -Fxq 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$package_root/apps/taskmanager/org.lumo.taskmanager.desktop" \
+  && grep -Fq 'DESTINATION ${KDE_INSTALL_DATADIR}/kglobalaccel' "$package_root/CMakeLists.txt" \
+  && grep -q 'share taskmanager' "$package_root/src/apps/CMakeLists.txt" \
+  || fail "Task Manager has no shortcut or is not built"
+for dependency in ksystemstats libksysguard-bin qml6-module-org-kde-ksysguard qml6-module-org-kde-kitemmodels qml6-module-org-kde-quickcharts; do
+  grep -Eq "^ $dependency,?$" "$package_root/debian/control" || fail "Task Manager needs $dependency"
+done
+msgfmt --check -o /dev/null "$package_root/po/ru/lumo-taskmanager.po" || fail "the Task Manager translation is broken"
+grep -Fq 'key: "themedApps"' "$package_root/apps/settings/qml/pages/AppearancePage.qml" \
+  && grep -Fq 'msgid "Themed app icons"' "$package_root/po/ru/lumo-settings.po" \
+  && grep -Eq '^ qt6-svg-plugins,$' "$package_root/debian/control" \
+  || fail "themed app icons cannot be turned on"
+grep -Eq '^ lumo-archive \(>= 1\.6\),$' "$package_root/debian/control" \
+  || fail "lumo-apps does not require the lumo-archive with demo updates"
+grep -Fq 'msgid "Demo updates"' "$package_root/po/ru/lumo-settings.po" \
+  || fail "the demo updates switch is not translated"
+
+grep -Fq 'void Files::setLockScreenPlugin' "$package_root/src/system/files.cpp" \
+  && grep -Fq 'Files.syncGreeterBackground' "$package_root/apps/settings/qml/pages/AppearancePage.qml" \
+  || fail "live wallpapers cannot reach the lock and login screens"
+
+grep -Fq 'GreeterSync greeter;' "$package_root/src/updatenotifier/main.cpp" \
+  && grep -Fq '/usr/libexec/lumo-greeter-background' "$package_root/src/updatenotifier/greetersync.cpp" \
+  && grep -Fq 'plasma-org.kde.plasma.desktop-appletsrc' "$package_root/src/updatenotifier/greetersync.cpp" \
+  || fail "the login screen does not follow wallpapers chosen outside Settings"
+
+grep -Fq 'AvatarSync avatar;' "$package_root/src/updatenotifier/main.cpp" \
+  && grep -Fq 'lumo/faces/%1.png' "$package_root/src/updatenotifier/avatarsync.cpp" \
+  && grep -Fq 'lumo/faces/%1.png' "$package_root/src/system/accounts.cpp" \
+  || fail "the Lumo avatar does not follow the colour"
+grep -Fq 'wallpaper.colour, wallpaper.mode' "$package_root/src/updatenotifier/greetersync.cpp" \
+  || fail "the login screen does not get the colour and theme"
+grep -Fq '"/kdedefaults/kdeglobals"' "$package_root/src/updatenotifier/greetersync.cpp" \
+  || fail "the login screen turns dark after plasma moves the colour scheme to kdedefaults"
+
+grep -Fq 'MLoadingIndicator {' "$package_root/apps/store/qml/AppPage.qml" \
+  || fail "screenshots in Store do not use the loading indicator"
+grep -Fq 'component BusyIndicatorOverlay: MLoadingIndicator {' "$package_root/apps/photos/qml/Main.qml" \
+  || fail "the photo viewer does not use the loading indicator"
+grep -Fq '.filter(m => !internal.includes(m.id) && catalog.resolve(m.id) === null)' "$package_root/apps/settings/qml/pages/ModulesPage.qml" \
+  && grep -Fq '"kcm_activities"' "$package_root/apps/settings/qml/pages/ModulesPage.qml" \
+  || fail "More settings still lists KDE modules Lumo replaces"
+grep -Fq "writeConfig('IntroAt', String(Date.now()));" "$package_root/src/system/files.cpp" \
+  || fail "switching a live wallpaper does not mark it for its intro"
+grep -Fq 'id: selectionBar' "$package_root/apps/files/qml/Main.qml" \
+  && grep -Fq 'active: !fab.collapsed || M3.classic' "$package_root/apps/files/qml/Main.qml" \
+  || fail "Files has no selection toolbar or collapsing button"
+grep -Fq 'FloatingToolbar {' "$package_root/apps/photos/qml/Main.qml" \
+  && grep -Fq 'shown: chrome.shown' "$package_root/apps/photos/qml/Main.qml" \
+  || fail "the photo viewer has no floating toolbar"
+for file in apps/calculator/qml/Main.qml apps/player/qml/Main.qml apps/photos/qml/Main.qml \
+    apps/welcome/qml/Main.qml apps/settings/qml/components/WallpaperTile.qml; do
+  ! grep -Fq 'Behavior on radius' "$package_root/$file" && grep -Fq 'MMorph {' "$package_root/$file" \
+    || fail "$file still changes shape on a plain curve"
+done
+! grep -qi 'ocean' "$package_root/apps/settings/qml/pages/SoundPage.qml" \
+  || fail "Settings still offers the KDE sound theme"
+grep -Fq 'onClosing: retire()' "$package_root/apps/welcome/qml/Main.qml" \
+  && grep -Fq 'Config.write(entry, "Desktop Entry", "NoDisplay", true);' "$package_root/apps/welcome/qml/Main.qml" \
+  || fail "welcome does not leave after its first showing"
+grep -Fq 'readonly property string versionText: SystemInfo.osVersion' "$package_root/apps/settings/qml/pages/AboutPage.qml" \
+  || fail "About still glues the codename onto the version"
+grep -Fq 'indeterminate: Updates.progress <= 0 || Updates.progress >= 100' "$package_root/apps/settings/qml/pages/UpdatesPage.qml" \
+  || fail "the update bar flashes full while packagekit reports 100%"
 
 printf 'lumo-apps source test: OK\n'

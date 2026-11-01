@@ -21,8 +21,10 @@ extract() {
 }
 for app in apps/*/; do
     name=$(basename "$app")
+    [ -f "src/apps/$name.cpp" ] || continue
     extra=""
     [ -d "src/$name" ] && extra=$(find "src/$name" -name '*.cpp' | sort)
+    [ "$name" = files ] && extra="$extra $(find apps/filechooser src/filechooser -name '*.qml' -o -name '*.cpp' | sort)"
     extract "lumo-$name" $(find "$app" -name '*.qml' -o -name '*.js' | sort) "src/apps/$name.cpp" src/apps/host.cpp $extra
 done
 extract lumo-system $(find src/system -name '*.cpp' | sort)

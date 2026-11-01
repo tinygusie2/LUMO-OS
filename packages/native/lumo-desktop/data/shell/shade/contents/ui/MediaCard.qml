@@ -63,12 +63,35 @@ Item {
         }
         Image {
             id: art
+            property int attempt: 0
             anchors.fill: parent
             source: card.backend.mediaArtUrl
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
             sourceSize.width: 480
             visible: status === Image.Ready
+            onStatusChanged: {
+                if (status === Image.Error && attempt < 6) {
+                    artRetry.restart();
+                } else if (status === Image.Ready) {
+                    attempt = 0;
+                }
+            }
+            Timer {
+                id: artRetry
+                interval: 1500 * (art.attempt + 1)
+                onTriggered: {
+                    art.attempt += 1;
+                    art.source = "";
+                    art.source = Qt.binding(() => card.backend.mediaArtUrl);
+                }
+            }
+            Connections {
+                target: card.backend
+                function onMediaArtUrlChanged(): void {
+                    art.attempt = 0;
+                }
+            }
         }
         Rectangle {
             anchors.fill: parent
@@ -193,15 +216,14 @@ Item {
                 Layout.alignment: Qt.AlignVCenter
                 implicitWidth: 56
                 implicitHeight: 56
-                radius: card.backend.mediaPlaying && !M3.classic ? 16 : 28
+                radius: 28 - 12 * playMorph.value
                 color: M3.primaryContainer
                 opacity: card.backend.mediaCanPlayPause ? 1 : 0.38
-                Behavior on radius {
-                    NumberAnimation {
-                        duration: M3.durationLong2
-                        easing.type: Easing.Bezier
-                        easing.bezierCurve: M3.easingEmphasized
-                    }
+                MMorph {
+                    id: playMorph
+                    active: card.backend.mediaPlaying && !M3.classic
+                    dampingRatio: M3.springExpressiveDefaultDamping
+                    response: M3.springExpressiveDefaultResponse
                 }
                 Accessible.role: Accessible.Button
                 Accessible.name: card.backend.mediaPlaying ? i18n("Pause") : i18n("Play")

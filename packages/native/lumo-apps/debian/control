@@ -31,27 +31,35 @@ Rules-Requires-Root: no
 Package: lumo-apps
 Architecture: amd64
 Depends:
+ bluez,
+ libpam-runtime,
  ${misc:Depends},
  ${shlibs:Depends},
  accountsservice,
  appstream,
- bluez,
- libpam-runtime,
  flatpak,
  kde-cli-tools,
- lumo-base (>= 1.6.4),
+ lumo-archive (>= 1.6),
+ lumo-base (>= 1.6.5),
  lumo-desktop (>= 1.4.60),
+ lumo-quickshare (>= 1.0.3),
+ ksystemstats,
  libarchive-tools,
+ libksysguard-bin,
  packagekit,
  pkexec,
+ qt6-svg-plugins,
  plasma-nm,
  plasma-pa,
  plasma-workspace,
  powerdevil,
  qml6-module-org-kde-bluezqt,
  qml6-module-org-kde-kirigami,
+ qml6-module-org-kde-kitemmodels,
+ qml6-module-org-kde-ksysguard,
  qml6-module-org-kde-layershell,
  qml6-module-org-kde-notifications,
+ qml6-module-org-kde-quickcharts,
  qml6-module-org-kde-syntaxhighlighting,
  qml6-module-qt-labs-folderlistmodel,
  qml6-module-qtmultimedia,
@@ -59,7 +67,6 @@ Depends:
  qml6-module-qtquick-dialogs,
  qml6-module-qtquick-layouts,
  qml6-module-qtquick-shapes,
- r-quick-share,
  xdg-desktop-portal,
  xdg-desktop-portal-kde
 Description: Lumo applications
@@ -69,8 +76,9 @@ Description: Lumo applications
     and style, apps, power, input devices, accessibility, privacy, the
     account, date and language, updates and information about the system;
   * Store: find, install, remove and update Flathub and Debian apps;
-  * Quick Share, to send and receive files with Android phones;
   * Files, Text Editor, Photos, Media Player, Calculator and Screenshot;
+  * Task Manager: running apps, background processes and live usage of
+    the processor, memory, graphics card, disk and network;
   * Welcome, the first-run introduction;
   * the file chooser: every program's open and save dialogs, served to
     the session through the desktop portal.

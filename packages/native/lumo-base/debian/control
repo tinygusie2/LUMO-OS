@@ -9,12 +9,31 @@ Package: lumo-base
 Architecture: all
 Depends:
  ${misc:Depends},
- base-files (= 13.8+deb13u6+lumo1),
- lumo-archive (>= 1.4)
+ base-files (= 13.8+deb13u7+lumo1),
+ lumo-archive (>= 1.6),
+ 7zip,
+ bash-completion,
+ curl,
+ fastfetch,
+ git,
+ htop,
+ iw,
+ lsof,
+ man-db,
+ openssh-client,
+ pciutils,
+ rsync,
+ tree,
+ unzip,
+ usbutils,
+ wget,
+ zip
 Description: Lumo base system and hardware defaults
  This package depends on the Lumo-specific packages required by every
  Lumo installation: the system identity and the package archives
- that keep it updated.
+ that keep it updated. It also brings everyday command-line tools: git,
+ curl, wget, htop, fastfetch, archivers, SSH, and lspci, lsusb and iw
+ for checking hardware.
  .
  It also provides optional hardware workarounds, including a NetworkManager
  power-saving example for the Realtek RTL8852CE wireless adapter. Examples

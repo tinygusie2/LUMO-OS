@@ -9,11 +9,13 @@
         "Category": "",
         "Description": "Soft Material shapes in the colours of your theme drift slowly over a calm background",
         "Description[ru]": "Мягкие фигуры Material в цветах вашей темы медленно плывут по спокойному фону",
+        "Description[nl]": "Zachte Material-vormen in de kleuren van je thema drijven langzaam over een rustige achtergrond",
         "Icon": "preferences-desktop-wallpaper",
         "Id": "org.lumo.pastel",
         "License": "GPL-2.0+",
         "Name": "Pastel",
-        "Name[ru]": "Пастель"
+        "Name[ru]": "Пастель",
+        "Name[nl]": "Pastel"
     },
     "X-KDE-ParentApp": "org.kde.plasmashell",
     "X-Plasma-API-Minimum-Version": "6.0"

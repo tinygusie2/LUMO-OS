@@ -107,3 +107,37 @@ msgstr "Vervangen door"
 
 msgid "Replace all"
 msgstr "Alles vervangen"
+
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+msgid "Files or pages to open."
+msgstr "Bestanden of pagina's om te openen."
+
+msgid "The file could not be opened."
+msgstr "Het bestand kon niet worden geopend."
+
+msgid "The file could not be saved. You may not have permission to write there."
+msgstr "Het bestand kon niet worden opgeslagen. Misschien heb je geen toestemming om daar te schrijven."
+
+msgid "New window"
+msgstr "Nieuw venster"
+
+msgid "Open"
+msgstr "Openen"
+
+msgid "Edited"
+msgstr "Bewerkt"
+
+msgid "Undo"
+msgstr "Ongedaan maken"
+
+msgid "Redo"
+msgstr "Opnieuw"
+
+msgid "Find and replace"
+msgstr "Zoeken en vervangen"
+
+msgid "More"
+msgstr "Meer"

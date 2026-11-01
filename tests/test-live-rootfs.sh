@@ -43,7 +43,7 @@ fail() {
 }
 
 grep -Fxq 'ID=lumo' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.4" ]] \
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
   || fail "lumo-base is not installed"
 [[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == *~bpo13+* ]] \
   || fail "the kernel does not come from trixie-backports"
@@ -51,6 +51,17 @@ for mesa in libgl1-mesa-dri mesa-vulkan-drivers mesa-va-drivers; do
   [[ "$(dpkg-query -W -f='${Version}' "$mesa" 2>/dev/null)" == *~bpo13+* ]] \
     || fail "$mesa does not come from trixie-backports"
 done
+for module in kcm_lookandfeel kcm_desktoptheme kcm_colors kcm_style kcm_icons kcm_cursortheme kcm_kwindecoration kcm_splashscreen; do
+  [[ ! -e "/usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/$module.so" ]] \
+    || fail "KDE theme picker $module is still installed"
+done
+[[ ! -e /usr/bin/lookandfeeltool && ! -e /usr/bin/plasma-apply-lookandfeel ]] \
+  || fail "KDE global theme tools are still installed"
+grep -Fxq 'Exec=/usr/bin/lumo-installer --autostart' /etc/xdg/autostart/org.lumo.installer-autostart.desktop \
+  || fail "the live session does not open the installer on login"
+fastfetch_out=$(fastfetch --pipe true 2>/dev/null)
+grep -Fq ',o000000000oo,,' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
+  || fail "fastfetch does not show the Lumo logo with the system info"
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"
 [[ "$(readlink -f /sbin/init)" == "/usr/lib/systemd/systemd" ]] \
@@ -104,20 +115,7 @@ done
 [[ -s /usr/share/plasma/desktoptheme/lumo/widgets/panel-background.svg ]] \
   || fail "Lumo Plasma theme is missing"
 find /usr/share/fonts -name 'Roboto-Regular.ttf' -print -quit | grep -q . \
-  || fail "Roboto, the boot menu typeface, is not installed"
-[[ -s /usr/share/fonts/truetype/google-sans-flex/GoogleSansFlex.ttf ]] \
-  || fail "Google Sans Flex, the shell typeface, is not installed"
-grep -q '^font=Google Sans Flex,' /etc/xdg/kdeglobals \
-  || fail "kdeglobals does not set Google Sans Flex"
-[[ -u /usr/libexec/lumo-pin && "$(stat -c %U /usr/libexec/lumo-pin)" == root ]]   || fail "the PIN check is not a setuid root helper"
-[[ "$(stat -c %a /var/lib/lumo/pin)" == 711 ]] || fail "the PIN store is not private"
-grep -q 'pam_exec.so quiet expose_authtok /usr/libexec/lumo-pin check' /etc/pam.d/common-auth   || fail "the lock screen does not accept a PIN"
-grep -q 'pam_unix.so .*try_first_pass' /etc/pam.d/common-auth   || fail "the password no longer works after the PIN check"
-for tool in wine gamemoderun mangohud; do
-  command -v "$tool" >/dev/null || fail "$tool is not installed"
-done
-[[ -s /usr/share/applications/org.lumo.wine.desktop ]] || fail "Windows programs have no desktop entry to open them"
-grep -q '^application/x-ms-dos-executable=org.lumo.wine.desktop;' /etc/xdg/mimeapps.list   || fail ".exe files do not open with Wine"
+  || fail "Roboto, the shell typeface, is not installed"
 # Every QML module the shell imports must resolve in the image, or the applet
 # (or one of its tiles) fails to load at runtime.
 qml_root=/usr/lib/x86_64-linux-gnu/qt6/qml
@@ -140,8 +138,8 @@ done
   || fail "the default cursor theme is not Lumo's"
 grep -qx 'cursorTheme=lumo_cursors' /etc/xdg/kcminputrc || fail "Plasma does not use the Lumo cursors"
 grep -qx 'Bouncing=false' /etc/xdg/klaunchrc || fail "the bouncing launch icon is still on"
-# The wallpapers are Lumo's own scenes, live and still; no picture wallpapers ship.
-for wallpaper in tower rhythm starfall pastel waves aurora dunes bloom contour; do
+# The wallpapers are Lumo's live ones; no picture wallpapers ship.
+for wallpaper in rhythm starfall pastel ribbon; do
   [[ -s /usr/share/plasma/wallpapers/org.lumo.$wallpaper/contents/ui/Scene.qml ]] \
     || fail "the $wallpaper live wallpaper is missing"
 done
@@ -168,13 +166,10 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.65" ]] \
-  || fail "lumo-apps 1.1.65 is not installed"
-[[ "$(dpkg-query -W -f='${Version}' r-quick-share)" == "0.11.5" && -x /usr/bin/rquickshare ]] \
-  || fail "Quick Share (RQuickShare 0.11.5) is not installed"
-[[ "$(dpkg-divert --listpackage /usr/share/applications/RQuickShare.desktop)" == lumo-apps \
-  && ! -e /usr/share/applications/RQuickShare.desktop ]] \
-  || fail "RQuickShare's own menu entry is not replaced by Quick Share"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.67" ]] \
+  || fail "lumo-apps 1.1.67 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
+  || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
@@ -285,11 +280,13 @@ grep -Fq 'origin=Debian Backports,codename=trixie-backports' <<<"$(apt-config du
   || fail "kernel updates from trixie-backports are not installed automatically"
 grep -Fxq 'Suites: trixie-security' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no Debian security updates"
-[[ ! -e /etc/apt/sources.list.d/lumo.sources ]] \
-  || fail "the image updates from an archive Lumo does not publish"
+grep -Fxq 'Signed-By: /usr/share/keyrings/lumo-archive-keyring.asc' /etc/apt/sources.list.d/lumo.sources \
+  || fail "the image takes no Lumo updates"
 if grep -rqi 'commywork9282-dotcom\|kernora' /etc/apt/sources.list.d /etc/apt/preferences.d; then
   fail "the image updates from the upstream Kernora archive"
 fi
+[[ ! -e /etc/apt/sources.list.d/lumo-demo.sources ]] || fail "demo updates are on in the image"
+[[ "$(/usr/libexec/lumo-update-channel status)" == stable ]] || fail "the image is not on the normal updates"
 [[ -s /usr/share/keyrings/debian-archive-keyring.pgp ]] || fail "the Debian archive keyring is missing"
 [[ "$(dpkg-query -W -f='${Status}' unattended-upgrades)" == 'install ok installed' ]] \
   || fail "unattended-upgrades is not installed"
@@ -314,8 +311,8 @@ lsinitramfs "$initrd" | grep -q 'usr/share/plymouth/themes/lumo/lumo.script' \
 command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle archives"
 [[ -x /usr/bin/lumo-installer ]] || fail "the Lumo installer launcher is missing"
 [[ -s /etc/xdg/autostart/org.lumo.welcome.desktop ]] || fail "Welcome is not started at first login"
-# English, Dutch and Russian are ready for the live session and the installer.
-for locale in en_US.utf8 nl_NL.utf8 ru_RU.utf8; do
+# English and Russian are ready for the live session and the installer.
+for locale in en_US.utf8 ru_RU.utf8; do
   locale -a | grep -Fxq "$locale" || fail "locale is not generated: $locale"
 done
 [[ -x /usr/lib/lumo/live-language ]] || fail "the boot menu language cannot be applied"
@@ -333,7 +330,7 @@ grep -Fxq 'Current=lumo' /etc/sddm.conf.d/lumo-theme.conf \
 grep -Fxq 'DisplayServer=wayland' /etc/sddm.conf.d/lumo-wayland.conf \
   || fail "SDDM does not run on Wayland"
 [[ -x /usr/bin/kwin_wayland ]] || fail "the Wayland login screen has no compositor"
-[[ -s /usr/share/sddm/themes/lumo/Main.qml && -s /usr/share/sddm/themes/lumo/palette.js ]] \
+[[ -s /usr/share/sddm/themes/lumo/Main.qml && -s /usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/m3/MShapeEcho.qml ]] \
   || fail "the Lumo login screen is incomplete"
 grep -Fxq "User=${LIVE_USER:?}" /etc/sddm.conf.d/lumo-autologin.conf \
   || fail "SDDM autologin does not use the live account"
@@ -372,8 +369,7 @@ for directory in (
     for path in directory.glob('*.desktop'):
         entries[path.name] = path
 
-allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop', 'org.kde.skanpage.desktop'}
-allowed |= {name for name in entries if name.startswith('org.kde.kdeconnect')}
+allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop'}
 unexpected = []
 for name, path in sorted(entries.items()):
     parser = configparser.ConfigParser(interpolation=None, strict=False)

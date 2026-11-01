@@ -1,0 +1,172 @@
+# Russian translations for lumo-focus package.
+# Copyright (C) 2026 THE lumo-focus'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the lumo-focus package.
+# Automatically generated, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lumo-focus\n"
+"Report-Msgid-Bugs-To: dev@lumo.invalid\n"
+"POT-Creation-Date: 2026-11-01 14:20+0000\n"
+"PO-Revision-Date: 2026-11-01 14:20+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: apps/focus/qml/Main.qml:23
+msgctxt "@title:window remaining time and phase"
+msgid "%1 · %2"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:23 apps/focus/qml/Main.qml:60
+#: apps/focus/qml/Main.qml:270
+msgid "Focus"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:58 apps/focus/qml/Main.qml:270
+msgid "Break"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:107
+msgid "Focus finished"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:107
+msgid "You stayed focused for %1 round. All apps are allowed again."
+msgid_plural "You stayed focused for %1 rounds. All apps are allowed again."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:110
+msgid "Well done. Your desktop is back to normal."
+msgstr ""
+
+#: apps/focus/qml/Main.qml:120
+msgid "Take %1 minute off."
+msgid_plural "Take %1 minutes off."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:120
+msgid "Time for a break"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:123
+msgid "Back to focus"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:123
+msgid "Round %1 of %2 has started."
+msgstr ""
+
+#: apps/focus/qml/Main.qml:168
+msgid "%1 is blocked until your focus time is over"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:169
+msgid "%1 are blocked until your focus time is over"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:178
+msgid "Focus mode is on"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:251
+msgid "Close distracting apps?"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:252
+msgid "%2 is open. It will be closed when focus starts, so save your work first."
+msgid_plural "%2 are open. They will be closed when focus starts, so save your work first."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:255 apps/focus/qml/Main.qml:357
+msgid "Start focus"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:268
+msgid "Ready to focus"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:269
+msgid "Paused"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:327
+msgid "Round %1 of %2"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:328
+msgid "%1 round"
+msgid_plural "%1 rounds"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:364
+msgid "Pause"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:364
+msgid "Resume"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:371
+msgid "Skip break"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:378
+msgid "Stop"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:387
+msgid "Distracting apps"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:388
+msgid "None chosen yet"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:389
+msgid "%1 app is blocked right now"
+msgid_plural "%1 apps are blocked right now"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:390
+msgid "%1 app is blocked during focus"
+msgid_plural "%1 apps are blocked during focus"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: apps/focus/qml/Main.qml:397
+msgid "Timer"
+msgstr ""
+
+#: apps/focus/qml/Main.qml:398
+msgid "%1 min focus, %2 min break"
+msgstr ""
+
+#: src/apps/focus.cpp:8
+msgctxt "@title application name"
+msgid "Focus"
+msgstr ""
+
+#: src/apps/host.cpp:59
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr ""
+
+#: src/apps/host.cpp:67
+msgid "Files or pages to open."
+msgstr ""
