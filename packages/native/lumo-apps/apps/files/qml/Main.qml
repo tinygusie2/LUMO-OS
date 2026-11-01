@@ -806,7 +806,7 @@ AppWindow {
         }
         QQC2.MenuItem { text: i18n("Select all"); icon.name: "edit-select-all"; onTriggered: app.selectAll() }
         QQC2.MenuSeparator {}
-        QQC2.MenuItem { text: i18n("Open terminal here"); icon.name: "utilities-terminal"; visible: !app.inTrash; onTriggered: Process.startDetached("alacritty", ["--class", "org.lumo.terminal", "--working-directory", app.folderPath]) }
+        QQC2.MenuItem { text: i18n("Open terminal here"); icon.name: "utilities-terminal"; visible: !app.inTrash; onTriggered: Process.startDetached("lumo-terminal", [app.folderPath]) }
         QQC2.MenuItem { text: i18n("Empty the trash"); icon.name: "trash-empty"; visible: app.inTrash; onTriggered: emptyDialog.open() }
         QQC2.MenuItem { text: i18n("Properties"); icon.name: "document-properties"; onTriggered: { app.clearSelection(); app.showProperties(); } }
     }
@@ -837,7 +837,7 @@ AppWindow {
             QQC2.MenuItem { text: i18n("Pictures"); icon.name: "folder-pictures"; onTriggered: app.go(Files.standardFolder("pictures")) }
             QQC2.MenuItem { text: i18n("Trash"); icon.name: "user-trash"; onTriggered: app.go(Files.trashFolder()) }
         }
-        QQC2.MenuItem { text: i18n("Open terminal here"); icon.name: "utilities-terminal"; onTriggered: Process.startDetached("alacritty", ["--class", "org.lumo.terminal", "--working-directory", app.folderPath]) }
+        QQC2.MenuItem { text: i18n("Open terminal here"); icon.name: "utilities-terminal"; onTriggered: Process.startDetached("lumo-terminal", [app.folderPath]) }
     }
 
     Dialog {

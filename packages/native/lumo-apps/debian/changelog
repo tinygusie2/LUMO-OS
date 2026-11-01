@@ -1,3 +1,39 @@
+lumo-apps (1.1.71) UNRELEASED; urgency=medium
+
+  * Terminal: the tab bar keeps its height and the terminal fills the
+    rest of the window; before, the two shared the height and the tab bar
+    sat in the middle.
+  * Terminal ignores upper and lower case, like Windows: cd downloads
+    opens Downloads and Tab completes names in any case. Ignore upper and
+    lower case in the menu turns it off (lumo-terminalrc IgnoreCase).
+
+ -- Lumo Developers <developers@lumo.invalid>  Mon, 02 Nov 2026 00:00:00 +0100
+
+lumo-apps (1.1.70) UNRELEASED; urgency=medium
+
+  * A running app whose program was replaced by an update now starts
+    the new program when it is opened again, instead of carrying on with
+    the old one. Screenshot runs in the background from login, and after
+    an update KWin refused it with "This process is not authorized to
+    take a screenshot" because the old process no longer matched
+    /usr/bin/lumo-screenshot.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 23:59:52 +0100
+
+lumo-apps (1.1.69) UNRELEASED; urgency=medium
+
+  * Add Terminal (lumo-terminal), Lumo's own command line. It has tabs
+    like Windows Terminal, a clear prompt that shows the folder, colours
+    from the Lumo theme, and copy and paste the way Windows does it
+    (Ctrl+C copies a selection, Ctrl+V pastes, a right click copies or
+    pastes). Under it runs bash, which also understands the familiar
+    Windows commands: dir, cls, copy, move, ren, del, md, rd, type, cd..,
+    ipconfig, tasklist, taskkill, where, ver and start. help lists them.
+  * The terminal view is drawn by Lumo itself on top of libvterm.
+  * "Open terminal here" in Files opens the new Terminal.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sun, 01 Nov 2026 22:30:00 +0000
+
 lumo-apps (1.1.68) UNRELEASED; urgency=medium
 
   * Remove duplicate Russian translations from lumo-settings and lumo-store

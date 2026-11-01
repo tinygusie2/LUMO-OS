@@ -1,4 +1,4 @@
-lumo-base=1.6.5
+lumo-base=1.6.6
 linux-image-amd64
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
@@ -22,9 +22,9 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-lumo-desktop=1.4.61
-lumo-calamares=1.4.61
-lumo-apps=1.1.68
+lumo-desktop=1.4.62
+lumo-calamares=1.4.62
+lumo-apps=1.1.71
 lumo-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1lumo1
 plymouth

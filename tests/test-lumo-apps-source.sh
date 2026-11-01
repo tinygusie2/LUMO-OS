@@ -15,7 +15,7 @@ for dependency in dpkg-parsechangelog grep; do
 done
 
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$version" == "1.1.68" ]] || fail "unexpected source version"
+[[ "$version" == "1.1.71" ]] || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] || fail "wrong source format"
@@ -42,6 +42,27 @@ grep -q '^NoDisplay=' "$package_root/apps/share/org.lumo.share.desktop" \
 grep -Fxq 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$package_root/apps/screenshot/org.lumo.screenshot.desktop" \
   || fail "Screenshot is not allowed to ask KWin for screenshots"
+
+[[ -s "$package_root/apps/terminal/qml/Main.qml" ]] || fail "Terminal has no interface"
+[[ -s "$package_root/src/apps/terminal.cpp" ]] || fail "Terminal has no host"
+for file in terminalview.cpp terminalview.h terminalcolours.cpp terminalcolours.h CMakeLists.txt; do
+  [[ -s "$package_root/src/terminal/$file" ]] || fail "Terminal lacks src/terminal/$file"
+done
+grep -Eq '^ libvterm-dev[, ]*$' "$package_root/debian/control" || fail "missing Terminal build dependency: libvterm-dev"
+grep -Fq 'lumo/terminal/lumo.bashrc' "$package_root/src/terminal/terminalview.cpp" \
+  && grep -Fq 'data/terminal/lumo.bashrc' "$package_root/CMakeLists.txt" \
+  || fail "Terminal does not start bash with the Lumo start-up file"
+bash -n "$package_root/data/terminal/lumo.bashrc" || fail "the Terminal start-up file does not parse"
+for command in cls dir copy move ren del md rd type ipconfig tasklist where; do
+  grep -Eq "^alias $command=" "$package_root/data/terminal/lumo.bashrc" || fail "Terminal does not know the Windows command $command"
+done
+grep -Eq '^(taskkill|ver|help)\(\)' "$package_root/data/terminal/lumo.bashrc" || fail "Terminal lacks taskkill, ver or help"
+grep -Fq 'Process.startDetached("lumo-terminal", [app.folderPath])' "$package_root/apps/files/qml/Main.qml" \
+  || fail "Files does not open the Lumo Terminal"
+grep -rq alacritty "$package_root/apps" && fail "an app still starts Alacritty"
+for language in nl ru; do
+  [[ -s "$package_root/po/$language/lumo-terminal.po" ]] || fail "Terminal has no $language translation"
+done
 
 if grep -rEn 'M3\.on[A-Z]' "$package_root/apps" >/dev/null; then
   fail "QML uses an M3.on* role; use the *Content spelling"

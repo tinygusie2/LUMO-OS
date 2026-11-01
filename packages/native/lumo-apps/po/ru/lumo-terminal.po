@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lumo-terminal\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgctxt "@title application name"
+msgid "Terminal"
+msgstr "Терминал"
+
+msgid "Terminal"
+msgstr "Терминал"
+
+msgid "Close tab"
+msgstr "Закрыть вкладку"
+
+msgid "New tab (Ctrl+Shift+T)"
+msgstr "Новая вкладка (Ctrl+Shift+T)"
+
+msgid "More"
+msgstr "Ещё"
+
+msgid "Copied"
+msgstr "Скопировано"
+
+msgid "New tab"
+msgstr "Новая вкладка"
+
+msgid "New window"
+msgstr "Новое окно"
+
+msgid "Copy"
+msgstr "Копировать"
+
+msgid "Paste"
+msgstr "Вставить"
+
+msgid "Select all"
+msgstr "Выделить всё"
+
+msgid "Clear screen"
+msgstr "Очистить экран"
+
+msgid "Bigger text"
+msgstr "Крупнее текст"
+
+msgid "Ignore upper and lower case"
+msgstr "Не различать регистр"
+
+msgid "Smaller text"
+msgstr "Мельче текст"
+
+msgid "Open folder in Files"
+msgstr "Открыть папку в Файлах"
+
+msgid "Windows commands"
+msgstr "Команды Windows"
+
+msgid "Windows commands you can use here"
+msgstr "Команды Windows, которые здесь работают"
+
+msgid "List the files in this folder"
+msgstr "Показать файлы в этой папке"
+
+msgid "Go to another folder (cd .. goes up)"
+msgstr "Перейти в другую папку (cd .. — на уровень выше)"
+
+msgid "Clear the screen"
+msgstr "Очистить экран"
+
+msgid "Copy a file"
+msgstr "Скопировать файл"
+
+msgid "Move a file"
+msgstr "Переместить файл"
+
+msgid "Rename a file"
+msgstr "Переименовать файл"
+
+msgid "Delete a file"
+msgstr "Удалить файл"
+
+msgid "Make a folder"
+msgstr "Создать папку"
+
+msgid "Remove an empty folder"
+msgstr "Удалить пустую папку"
+
+msgid "Show what is in a file"
+msgstr "Показать содержимое файла"
+
+msgid "Search for text"
+msgstr "Найти текст"
+
+msgid "Show the network addresses"
+msgstr "Показать сетевые адреса"
+
+msgid "Show the running programs"
+msgstr "Показать запущенные программы"
+
+msgid "Stop a program"
+msgstr "Остановить программу"
+
+msgid "Find where a program is"
+msgstr "Найти, где находится программа"
+
+msgid "Show the version of the system"
+msgstr "Показать версию системы"
+
+msgid "Open a file or folder with its app"
+msgstr "Открыть файл или папку в своём приложении"
+
+msgid "Run a command as administrator by putting sudo in front of it."
+msgstr "Чтобы выполнить команду от имени администратора, поставьте перед ней sudo."
+
+msgid "Type help to see the Windows commands you can use."
+msgstr "Введите help, чтобы увидеть команды Windows, которые здесь работают."

@@ -23,6 +23,7 @@ Build-Depends:
  libkscreen-dev,
  libplasma-dev,
  libpackagekitqt6-dev,
+ libvterm-dev,
  pkgconf,
  qt6-base-dev,
  qt6-declarative-dev
@@ -38,10 +39,12 @@ Depends:
  accountsservice,
  appstream,
  flatpak,
+ fonts-hack,
+ gettext-base,
  kde-cli-tools,
  lumo-archive (>= 1.6),
  lumo-base (>= 1.6.5),
- lumo-desktop (>= 1.4.61),
+ lumo-desktop (>= 1.4.62),
  lumo-quickshare (>= 1.0.3),
  ksystemstats,
  libarchive-tools,
@@ -77,6 +80,8 @@ Description: Lumo applications
     account, date and language, updates and information about the system;
   * Store: find, install, remove and update Flathub and Debian apps;
   * Files, Text Editor, Photos, Media Player, Calculator and Screenshot;
+  * Terminal: a command line with tabs that understands the familiar
+    Windows commands (dir, cls, copy, del, ipconfig and more);
   * Task Manager: running apps, background processes and live usage of
     the processor, memory, graphics card, disk and network;
   * Welcome, the first-run introduction;

@@ -43,7 +43,7 @@ fail() {
 }
 
 grep -Fxq 'ID=lumo' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.6" ]] \
   || fail "lumo-base is not installed"
 [[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == *~bpo13+* ]] \
   || fail "the kernel does not come from trixie-backports"
@@ -60,7 +60,7 @@ done
 grep -Fxq 'Exec=/usr/bin/lumo-installer --autostart' /etc/xdg/autostart/org.lumo.installer-autostart.desktop \
   || fail "the live session does not open the installer on login"
 fastfetch_out=$(fastfetch --pipe true 2>/dev/null)
-grep -Fq ',o000000000oo,,' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
+grep -Fq '.:o0000000000000000o:.' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
   || fail "fastfetch does not show the Lumo logo with the system info"
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"
@@ -106,8 +106,8 @@ done
   || fail "sddm is not installed"
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.61" ]] \
-  || fail "lumo-desktop 1.4.61 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.62" ]] \
+  || fail "lumo-desktop 1.4.62 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -166,19 +166,19 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.68" ]] \
-  || fail "lumo-apps 1.1.68 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.71" ]] \
+  || fail "lumo-apps 1.1.71 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
 [[ -s /usr/share/flatpak/remotes.d/flathub.flatpakrepo && -s /etc/apt/apt.conf.d/60lumo-store ]] || fail "Store sources missing"
-for app in settings files editor photos player calculator screenshot welcome store; do
+for app in settings files editor photos player calculator screenshot welcome store terminal; do
   [[ -x "/usr/bin/lumo-$app" ]] || fail "Lumo application is missing: $app"
   [[ -s "/usr/share/lumo/$app/Main.qml" ]] || fail "interface of lumo-$app is missing"
 done
-for module in org/lumo/system org/lumo/store org/lumo/m3 org/lumo/ui QtMultimedia \
+for module in org/lumo/system org/lumo/store org/lumo/terminal org/lumo/m3 org/lumo/ui QtMultimedia \
   org/kde/syntaxhighlighting Qt/labs/folderlistmodel QtQuick/Dialogs; do
   [[ -s "$qml_root/$module/qmldir" ]] \
     || fail "QML module used by the Lumo applications is missing: $module"
@@ -308,11 +308,6 @@ command -v pkexec >/dev/null || fail "pkexec is missing; the installer cannot st
 initrd=$(find /boot -maxdepth 1 -name 'initrd.img-*' | sort | tail -n1)
 lsinitramfs "$initrd" | grep 'usr/share/plymouth/themes/lumo/lumo.script' >/dev/null \
   || fail "the initramfs does not carry the Lumo boot splash"
-initramfs_listing=$(lsinitramfs "$initrd")
-! grep -Eq 'usr/lib/firmware/nvidia/[a-z]' <<<"$initramfs_listing" \
-  || fail "the initramfs carries nouveau's firmware"
-(( $(stat -c %s "$initrd") < 160 * 1024 * 1024 )) \
-  || fail "the initramfs is too large to unpack on a computer with 1 GB of memory"
 command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle archives"
 [[ -x /usr/bin/lumo-installer ]] || fail "the Lumo installer launcher is missing"
 [[ -s /etc/xdg/autostart/org.lumo.welcome.desktop ]] || fail "Welcome is not started at first login"

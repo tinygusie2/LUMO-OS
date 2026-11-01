@@ -464,7 +464,8 @@ grep -Fq 'launcher.globalShortcut = "Alt+Space"' \
   "$temporary_root/desktop/usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js" \
   || fail "the Lumo launcher does not open with Alt+Space"
 grep -Fxq 'X-KDE-Shortcuts=Ctrl+Alt+T' "$temporary_root/desktop/usr/share/applications/org.lumo.terminal.desktop" \
-  || fail "Ctrl+Alt+T does not open the terminal"
+  && grep -Fxq 'Exec=lumo-terminal' "$temporary_root/desktop/usr/share/applications/org.lumo.terminal.desktop" \
+  || fail "Ctrl+Alt+T does not open the Lumo Terminal"
 [[ "$(find "$temporary_root/desktop/usr/share/lumo/avatars" -name '*.png' | wc -l)" -eq 15 ]] \
   || fail "the Lumo profile pictures are missing"
 [[ "$(find "$temporary_root/desktop/usr/share/lumo/palettes" -name '*.conf' | wc -l)" -eq 20 ]] \

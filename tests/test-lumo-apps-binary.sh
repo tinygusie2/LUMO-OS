@@ -38,6 +38,10 @@ for app in settings files welcome editor photos player calculator screenshot sto
   cmp -s "$package_root/apps/$app/qml/Main.qml" "$temporary_root/usr/share/lumo/$app/Main.qml" || fail "$app interface differs from the source"
   [[ -s "$temporary_root/usr/share/applications/org.lumo.$app.desktop" ]] || fail "missing the $app desktop entry"
 done
+[[ -x "$temporary_root/usr/bin/lumo-terminal" ]] || fail "missing lumo-terminal"
+cmp -s "$package_root/apps/terminal/qml/Main.qml" "$temporary_root/usr/share/lumo/terminal/Main.qml" || fail "the terminal interface differs from the source"
+cmp -s "$package_root/data/terminal/lumo.bashrc" "$temporary_root/usr/share/lumo/terminal/lumo.bashrc" || fail "missing the terminal start-up file"
+[[ -s "$temporary_root/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/terminal/qmldir" ]] || fail "missing the org.lumo.terminal module"
 grep -q 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$temporary_root/usr/share/applications/org.lumo.screenshot.desktop" \
   || fail "Screenshot cannot ask KWin for screenshots"
@@ -48,7 +52,7 @@ grep -qx 'Exec=/usr/bin/lumo-screenshot' \
   "$temporary_root/usr/share/applications/org.lumo.screenshot.desktop" \
   || fail "Screenshot's Exec is not an absolute path; KWin would refuse it"
 
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store share taskmanager; do
+for domain in settings files editor photos player calculator screenshot welcome system update-notifier store share taskmanager terminal; do
   [[ -s "$temporary_root/usr/share/locale/ru/LC_MESSAGES/lumo-$domain.mo" ]] \
     || fail "Russian translation is missing: lumo-$domain"
 done
