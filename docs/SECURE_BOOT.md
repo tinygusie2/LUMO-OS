@@ -41,6 +41,13 @@ instead, which puts shim at `EFI/BOOT/BOOTX64.EFI`, and sets the debconf
 question `grub2/force_efi_extra_removable` so that later `shim-signed`
 upgrades refresh that copy too.
 
+## Testing
+
+`scripts/smoke-test-iso` also boots the ISO with OVMF's Secure Boot firmware
+and Microsoft's keys (`uefi-secureboot`). An install in that VM was checked
+by hand: the installed system starts with Secure Boot on, both from its own
+boot entry and, with empty NVRAM, from `EFI/BOOT/BOOTX64.EFI`.
+
 ## Not done yet
 
 - The NVIDIA driver for GTX 900 and 10 is built by DKMS and not signed;
