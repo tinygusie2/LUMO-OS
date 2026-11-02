@@ -22,8 +22,8 @@ kwin-x11
 xserver-xorg
 libpam-fprintd
 
-lumo-desktop=1.4.62
-lumo-calamares=1.4.62
+lumo-desktop=1.4.63
+lumo-calamares=1.4.63
 lumo-apps=1.1.71
 lumo-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1lumo1
@@ -57,6 +57,9 @@ grub-common
 grub2-common
 grub-pc-bin
 grub-efi-amd64-bin
+grub-efi-amd64-signed
+shim-signed
+mokutil
 efibootmgr
 os-prober
 dosfstools

@@ -1,3 +1,12 @@
+lumo-desktop (1.4.63) UNRELEASED; urgency=medium
+
+  * Lumo installs and starts with Secure Boot on. The installer no longer
+    copies GRUB alone to the removable EFI path; it runs grub-install
+    --removable, which puts Debian's signed shim there, and asks later
+    shim-signed upgrades to keep that copy up to date.
+
+ -- Lumo Developers <developers@lumo.invalid>  Mon, 02 Nov 2026 14:30:00 +0000
+
 lumo-desktop (1.4.62) UNRELEASED; urgency=medium
 
   * Terminal in the menu, on Ctrl+Alt+T and as KDE's terminal now starts

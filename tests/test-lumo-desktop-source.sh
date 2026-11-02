@@ -17,7 +17,7 @@ done
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
 distribution=$(dpkg-parsechangelog \
   -l"$package_root/debian/changelog" -S Distribution)
-[[ "$version" == "1.4.62" ]] || fail "unexpected source version"
+[[ "$version" == "1.4.63" ]] || fail "unexpected source version"
 [[ "$distribution" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] \
@@ -179,6 +179,10 @@ grep -Fq '<annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/lumo-
 grep -Fxq '  - shellprocess@drivers' "$package_root/data/calamares/settings.conf" \
   && grep -Fq 'lumo-drivers install --target' "$package_root/data/calamares/modules/shellprocess-drivers.conf" \
   || fail "the installer does not install graphics drivers"
+grep -Fxq '  - shellprocess@efifallback' "$package_root/data/calamares/settings.conf" \
+  && grep -Fq 'grub-install --target=x86_64-efi --efi-directory=/boot/efi --removable --no-nvram' "$package_root/data/calamares/modules/shellprocess-efifallback.conf" \
+  && grep -Fxq 'installEFIFallback: false' "$package_root/data/calamares/modules/bootloader.conf" \
+  || fail "the installer does not put shim on the removable EFI path"
 grep -Fxq 'ColorScheme=LumoDark' "$defaults" \
   || fail "look-and-feel does not select the Lumo colour scheme"
 grep -Fxq 'name=lumo' "$defaults" \

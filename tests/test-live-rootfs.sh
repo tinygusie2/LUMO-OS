@@ -104,10 +104,19 @@ for package in $EXCLUDED_PACKAGES; do
 done
 [[ "$(dpkg-query -W -f='${Status}' sddm)" == 'install ok installed' ]] \
   || fail "sddm is not installed"
+for package in shim-signed grub-efi-amd64-signed mokutil; do
+  [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] \
+    || fail "Secure Boot package is not installed: $package"
+done
+for path in /usr/lib/shim/shimx64.efi.signed /usr/lib/shim/mmx64.efi.signed \
+  /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed \
+  /usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed; do
+  [[ -s "$path" ]] || fail "Secure Boot loader is missing: $path"
+done
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.62" ]] \
-  || fail "lumo-desktop 1.4.62 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.63" ]] \
+  || fail "lumo-desktop 1.4.63 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"

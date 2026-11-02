@@ -255,6 +255,7 @@ for path in \
   etc/calamares/modules/unpackfs.conf \
   etc/calamares/modules/removeuser.conf \
   etc/calamares/modules/shellprocess-drivers.conf \
+  etc/calamares/modules/shellprocess-efifallback.conf \
   etc/calamares/branding/lumo/branding.desc \
   etc/calamares/branding/lumo/show.qml \
   etc/calamares/branding/lumo/lumo-logo.png \
