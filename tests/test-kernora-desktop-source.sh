@@ -148,6 +148,8 @@ done
 grep -Fq 'kernora-firewall setup' "$package_root/data/calamares/modules/shellprocess.conf" \
   && grep -Fq 'kernora-sharing setup' "$package_root/data/calamares/modules/shellprocess.conf" \
   || fail "the installer does not set up the firewall and sharing"
+python3 "$package_root/../../../tests/test-pwwdrive-sync.py" >/dev/null \
+  || fail "PWWDrive breaks its sync rules"
 grep -Fxq 'ColorScheme=KernoraDark' "$defaults" \
   || fail "look-and-feel does not select the Kernora colour scheme"
 grep -Fxq 'name=kernora' "$defaults" \

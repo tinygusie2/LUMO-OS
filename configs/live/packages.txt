@@ -50,6 +50,7 @@ samba
 wsdd2
 ufw
 python3
+xdg-utils
 
 kernora-desktop=1.4.29
 kernora-calamares=1.4.29

@@ -1,5 +1,47 @@
 [
   {
+    "id": "2026-11-03",
+    "date": "2026-11-03",
+    "items": [
+      {
+        "icon": "document-revert",
+        "title": { "en": "Restore points", "nl": "Herstelpunten", "ru": "Точки восстановления" },
+        "text": {
+          "en": "On a new installation, Lumo saves the system before every update. Go back in Settings > System, or from the boot menu when Lumo no longer starts.",
+          "nl": "Op een nieuwe installatie bewaart Lumo het systeem vóór elke update. Ga terug via Instellingen > Systeem, of via het opstartmenu als Lumo niet meer start.",
+          "ru": "При новой установке Lumo сохраняет систему перед каждым обновлением. Вернуться можно в Настройки > Система или через меню загрузки, если Lumo не запускается."
+        }
+      },
+      {
+        "icon": "folder-cloud",
+        "title": { "en": "Cloud and network folders", "nl": "Cloud- en netwerkmappen", "ru": "Облачные и сетевые папки" },
+        "text": {
+          "en": "Add OneDrive, Google Drive, Nextcloud, PWWDrive or a Windows PC in Settings > System, and find them in Files.",
+          "nl": "Voeg OneDrive, Google Drive, Nextcloud, PWWDrive of een Windows-pc toe via Instellingen > Systeem, en vind ze terug in Bestanden.",
+          "ru": "Добавьте OneDrive, Google Drive, Nextcloud, PWWDrive или компьютер с Windows в Настройки > Система и открывайте их в «Файлах»."
+        }
+      },
+      {
+        "icon": "security-high",
+        "title": { "en": "A firewall page", "nl": "Een firewallpagina", "ru": "Страница брандмауэра" },
+        "text": {
+          "en": "Settings > System > Firewall shows what may reach this computer. New installations have the firewall on.",
+          "nl": "Instellingen > Systeem > Firewall laat zien wat deze computer mag bereiken. Op nieuwe installaties staat de firewall aan.",
+          "ru": "В разделе Настройки > Система > Брандмауэр видно, что может подключаться к компьютеру. При новой установке брандмауэр включён."
+        }
+      },
+      {
+        "icon": "x-office-calendar",
+        "title": { "en": "Subscribe to calendars", "nl": "Abonneren op agenda's", "ru": "Подписка на календари" },
+        "text": {
+          "en": "Calendar can follow an iCal link from Google Calendar or Outlook.",
+          "nl": "Agenda kan een iCal-link uit Google Agenda of Outlook volgen.",
+          "ru": "Календарь может отслеживать ссылку iCal из Google Календаря или Outlook."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-14",
     "date": "2026-10-14",
     "items": [
