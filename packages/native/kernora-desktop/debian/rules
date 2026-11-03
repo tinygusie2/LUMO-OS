@@ -33,6 +33,8 @@ override_dh_auto_build:
 	  --output=generated/branding/kernora-logo.png $(LOGO)
 	python3 $(TOOLS)/gen-qm data/calamares/lang/calamares-kernora_ru.ts \
 	  generated/branding/lang/calamares-kernora_ru.qm
+	python3 $(TOOLS)/gen-qm data/calamares/lang/calamares-kernora_nl.ts \
+	  generated/branding/lang/calamares-kernora_nl.qm
 	python3 $(TOOLS)/gen-installer-icons $(SYMBOLS) generated/branding/images
 	python3 $(TOOLS)/gen-installer-style data/calamares/stylesheet.qss.in \
 	  generated/branding/stylesheet.qss

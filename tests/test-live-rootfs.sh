@@ -271,7 +271,8 @@ compgen -G '/usr/lib/firmware/amdgpu/gc_10_3_6_*' >/dev/null \
 grep -Fxq 'Suites: trixie-security' /etc/apt/sources.list.d/debian.sources \
   || fail "the image takes no Debian security updates"
 grep -Fxq 'Signed-By: /usr/share/keyrings/kernora-archive-keyring.asc' /etc/apt/sources.list.d/kernora.sources \
-  || fail "the image takes no Kernora updates"
+  || fail "the image takes no Lumo updates"
+grep -Fxq 'URIs: https://tinygusie2.github.io/lumo-updates' /etc/apt/sources.list.d/kernora.sources || fail "the image does not take Lumo updates"
 [[ -s /usr/share/keyrings/debian-archive-keyring.pgp ]] || fail "the Debian archive keyring is missing"
 [[ "$(dpkg-query -W -f='${Status}' unattended-upgrades)" == 'install ok installed' ]] \
   || fail "unattended-upgrades is not installed"

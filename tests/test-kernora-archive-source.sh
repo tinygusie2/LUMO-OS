@@ -16,7 +16,7 @@ done
 # shellcheck disable=SC1091
 source "$project_root/configs/project.env"
 
-[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.1" ]] \
+[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.2" ]] \
   || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"

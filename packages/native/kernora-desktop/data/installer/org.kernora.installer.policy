@@ -5,12 +5,14 @@
 <!-- SPDX-FileCopyrightText: 2026 Kernora Developers
      SPDX-License-Identifier: GPL-3.0-or-later -->
 <policyconfig>
-  <vendor>Kernora OS</vendor>
+  <vendor>Lumo</vendor>
   <action id="org.kernora.installer">
-    <description>Install Kernora OS</description>
-    <description xml:lang="ru">Установка Kernora OS</description>
-    <message>Installing Kernora OS changes the disks of this computer</message>
-    <message xml:lang="ru">Установка Kernora OS изменяет диски этого компьютера</message>
+    <description>Install Lumo</description>
+    <description xml:lang="nl">Lumo installeren</description>
+    <description xml:lang="ru">Установка Lumo</description>
+    <message>Installing Lumo changes the disks of this computer</message>
+    <message xml:lang="nl">Lumo installeren wijzigt de schijven van deze computer</message>
+    <message xml:lang="ru">Установка Lumo изменяет диски этого компьютера</message>
     <icon_name>org.kernora.installer</icon_name>
     <defaults>
       <allow_any>no</allow_any>

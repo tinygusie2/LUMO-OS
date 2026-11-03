@@ -77,7 +77,7 @@ cat > "$staging/index.html" <<HTML
 <title>$DIST_NAME packages</title>
 <body style="font-family: sans-serif; max-width: 40em; margin: 3em auto; line-height: 1.5">
 <h1>$DIST_NAME packages</h1>
-<p>This is the APT archive of $DIST_NAME. Installed systems take their Kernora
+<p>This is the APT archive of $DIST_NAME. Installed systems take their $DIST_NAME
 updates from here on their own; nothing here needs to be downloaded by hand.</p>
 <p>Signing key: <a href="kernora-archive-keyring.asc">kernora-archive-keyring.asc</a><br>
 Fingerprint: <code>$DIST_ARCHIVE_KEY_FINGERPRINT</code></p>
@@ -99,7 +99,7 @@ git -C "$checkout" rm -r --quiet --cached . >/dev/null 2>&1 || true
 find "$checkout" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf -- {} +
 cp -a "$staging/." "$checkout/"
 git -C "$checkout" add --all
-git -C "$checkout" commit --quiet -m "Kernora OS packages for $DIST_CODENAME, $(date --utc +%Y-%m-%d)"
+git -C "$checkout" commit --quiet -m "$DIST_NAME packages for $DIST_CODENAME, $(date --utc +%Y-%m-%d)"
 git -C "$checkout" branch --quiet -M main
 git -C "$checkout" push --quiet --force origin main
 

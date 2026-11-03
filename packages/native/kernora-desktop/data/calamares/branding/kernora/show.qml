@@ -12,20 +12,26 @@ import org.kernora.ui
 Presentation {
     id: presentation
 
-    readonly property bool russian: Qt.locale().name.startsWith("ru")
+    readonly property string language: Qt.locale().name.slice(0, 2)
 
-    readonly property var texts: russian ? [
-        ["Kernora устанавливается", "Это займёт несколько минут. Пока идёт установка, живой системой можно пользоваться как обычно."],
+    readonly property var texts: language === "ru" ? [
+        ["Lumo устанавливается", "Это займёт несколько минут. Пока идёт установка, живой системой можно пользоваться как обычно."],
         ["Всё в одном месте", "«Настройки» собирают вместе Wi-Fi, звук, экраны, аккаунт и обновления — с поиском по любому параметру."],
-        ["Приложения на каждый день", "«Файлы», «Фото», «Медиаплеер», «Текстовый редактор», «Калькулятор» и «Снимок экрана» готовы с первого запуска."],
-        ["Светлая или тёмная", "Оформление выбирается в «Обоях и стиле», а «Фигуры Kernora» спокойно движутся за окнами."],
-        ["На прочной основе", "Kernora собрана из закреплённого снимка Debian и KDE Plasma; обновления приходят через «Настройки»."]
+        ["Приложения на каждый день", "«Файлы», «Фото», «Медиаплеер», «Текстовый редактор», «Календарь» и «Диспетчер задач» готовы с первого запуска."],
+        ["Как в Windows", "Привычные сочетания клавиш, программы для Windows через Wine и перенос файлов с диска Windows."],
+        ["На прочной основе", "Lumo собрана из закреплённого снимка Debian и KDE Plasma; обновления приходят через «Настройки»."]
+    ] : language === "nl" ? [
+        ["Lumo wordt geïnstalleerd", "Dit duurt een paar minuten. Je kunt het live-systeem gewoon blijven gebruiken."],
+        ["Alles op één plek", "Instellingen brengt wifi, geluid, schermen, je account en updates samen, en je kunt naar elke optie zoeken."],
+        ["Apps voor elke dag", "Bestanden, Foto's, Mediaspeler, Teksteditor, Agenda en Taakbeheer staan vanaf de eerste keer klaar."],
+        ["Vertrouwd voor wie van Windows komt", "Dezelfde sneltoetsen, Windows-programma's via Wine, en je bestanden overzetten van een Windows-schijf."],
+        ["Op een stevige basis", "Lumo is gebouwd op een vaste versie van Debian en KDE Plasma; updates komen via Instellingen."]
     ] : [
-        ["Kernora is being installed", "This takes a few minutes. You can keep using the live system while it works."],
+        ["Lumo is being installed", "This takes a few minutes. You can keep using the live system while it works."],
         ["Everything in one place", "Settings brings Wi-Fi, sound, displays, your account and updates together, with search for any option."],
-        ["Apps for every day", "Files, Photos, Media Player, Text Editor, Calculator and Screenshot are ready from the first start."],
-        ["Light or dark", "Pick your look in Wallpaper & style, while Kernora Shapes drift quietly behind your windows."],
-        ["On solid ground", "Kernora is built from a pinned Debian snapshot and KDE Plasma; updates arrive through Settings."]
+        ["Apps for every day", "Files, Photos, Media Player, Text Editor, Calendar and Task Manager are ready from the first start."],
+        ["At home if you come from Windows", "The same shortcuts, Windows programs through Wine, and your files brought over from a Windows drive."],
+        ["On solid ground", "Lumo is built from a pinned Debian snapshot and KDE Plasma; updates arrive through Settings."]
     ]
 
     Rectangle {

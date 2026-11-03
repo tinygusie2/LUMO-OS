@@ -9,7 +9,7 @@ every installation has it.
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
-| Lumo, `commywork9282-dotcom.github.io/kernora-updates` | Lumo's own packages | in Settings > Updates |
+| Lumo, `tinygusie2.github.io/lumo-updates` | Lumo's own packages | in Settings > Updates |
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
@@ -94,12 +94,13 @@ users.
    `configs/live/packages.txt` and the version checks in `tests/`.
 4. Run `make publish`. It builds every package and the local archive. It then
    signs the archive with the Lumo archive key and force-pushes it to the
-   `kernora-updates` repository, which GitHub Pages serves a minute later.
+   `lumo-updates` repository (`DIST_UPDATES_REPOSITORY`), which GitHub Pages
+   serves a minute later.
 
 Systems pick it up at their next check: the daily refresh, or Check in
 Settings > Updates.
 
-`kernora-updates` holds only the current packages. Each publication replaces
+`lumo-updates` holds only the current packages. Each publication replaces
 all of its contents in a single commit, so the repository does not grow.
 
 ## The signing key
@@ -122,6 +123,15 @@ expires on 2029-10-02.
   which exports the public key again, and publish a new `kernora-archive` while
   the old expiry date still holds.
 
+## Systems installed from Kernora OS
+
+Lumo no longer takes packages from the Kernora OS archive
+(`commywork9282-dotcom.github.io/kernora-updates`): its packages have their own
+versions and would replace Lumo's. `kernora-archive` 1.2 points
+`/etc/apt/sources.list.d/kernora.sources` at the Lumo archive and ships the
+Lumo key instead of Kernora's. A Kernora OS system becomes Lumo by installing
+the Lumo packages once; from then on it updates from the Lumo archive.
+
 ## Systems installed before this
 
 The first test ISO (`v1-ember`, 2026-10-03) came before this change: its
@@ -129,7 +139,7 @@ systems still point at the build snapshot and take no updates. To get updates
 there, install `kernora-archive` from the archive once, by hand:
 
 ```sh
-wget https://commywork9282-dotcom.github.io/kernora-updates/pool/main/k/kernora-archive/kernora-archive_1.0_all.deb
-sudo apt install ./kernora-archive_1.0_all.deb
+wget https://tinygusie2.github.io/lumo-updates/pool/main/k/kernora-archive/kernora-archive_1.2_all.deb
+sudo apt install ./kernora-archive_1.2_all.deb
 sudo rm /etc/apt/sources.list
 ```
