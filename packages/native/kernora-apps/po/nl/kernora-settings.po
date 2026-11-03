@@ -2872,3 +2872,108 @@ msgstr "Vóór een update"
 
 msgid "Cancel"
 msgstr "Annuleren"
+
+msgid "Firewall"
+msgstr "Firewall"
+
+msgid "The firewall blocks connections from other computers. Apps can still reach the internet."
+msgstr "De firewall blokkeert verbindingen van andere computers. Apps kunnen gewoon bij internet."
+
+msgid "The firewall could not be changed."
+msgstr "De firewall kon niet worden gewijzigd."
+
+msgid "The firewall is not installed on this system."
+msgstr "De firewall is niet geïnstalleerd op dit systeem."
+
+msgid "Off: other computers can reach this one"
+msgstr "Uit: andere computers kunnen deze bereiken"
+
+msgid "Allowed through"
+msgstr "Toegestaan"
+
+msgid "Lets your phone connect to Lumo"
+msgstr "Laat je telefoon verbinden met Lumo"
+
+msgid "File sharing"
+msgstr "Bestanden delen"
+
+msgid "Lets other computers open your shared folder"
+msgstr "Laat andere computers je gedeelde map openen"
+
+msgid "Block connections from other computers"
+msgstr "Blokkeer verbindingen van andere computers"
+
+msgid "firewall security network block ports incoming"
+msgstr "firewall beveiliging netwerk blokkeren poorten inkomend"
+
+msgid "Cloud & network folders"
+msgstr "Cloud- en netwerkmappen"
+
+msgid "OneDrive, Nextcloud, Windows PCs"
+msgstr "OneDrive, Nextcloud, Windows-pc's"
+
+msgid "onedrive google drive nextcloud cloud smb samba nas network share windows folder"
+msgstr "onedrive google drive nextcloud cloud smb samba nas netwerk delen windows map"
+
+msgid "Added folders appear in Files, next to your own."
+msgstr "Toegevoegde mappen verschijnen in Bestanden, naast je eigen mappen."
+
+msgid "%1 could not be added. Check the details and the connection."
+msgstr "%1 kon niet worden toegevoegd. Controleer de gegevens en de verbinding."
+
+msgid "OneDrive"
+msgstr "OneDrive"
+
+msgid "Google Drive"
+msgstr "Google Drive"
+
+msgid "Nextcloud"
+msgstr "Nextcloud"
+
+msgid "Network folder"
+msgstr "Netwerkmap"
+
+msgid "Your folders"
+msgstr "Jouw mappen"
+
+msgid "Add a folder"
+msgstr "Map toevoegen"
+
+msgid "Sign in opens in your browser"
+msgstr "Inloggen gaat via je browser"
+
+msgid "Your server, with an app password"
+msgstr "Je eigen server, met een app-wachtwoord"
+
+msgid "A Windows PC or a NAS on your network"
+msgstr "Een Windows-pc of NAS in je netwerk"
+
+msgid "Computer name or address"
+msgstr "Computernaam of adres"
+
+msgid "Server address, such as https://cloud.example.com"
+msgstr "Serveradres, zoals https://cloud.example.com"
+
+msgid "User name (optional)"
+msgstr "Gebruikersnaam (optioneel)"
+
+msgid "Share with other computers"
+msgstr "Delen met andere computers"
+
+msgid "Share my Public folder"
+msgstr "Mijn map Public delen"
+
+msgid "Windows PCs can open it with your user name and the sharing password"
+msgstr "Windows-pc's openen hem met je gebruikersnaam en het deelwachtwoord"
+
+msgid "Choose a sharing password below first"
+msgstr "Kies hieronder eerst een deelwachtwoord"
+
+msgid "Choose a sharing password first."
+msgstr "Kies eerst een deelwachtwoord."
+
+msgid "Sharing could not be changed."
+msgstr "Delen kon niet worden gewijzigd."
+
+msgid "Sharing password"
+msgstr "Deelwachtwoord"

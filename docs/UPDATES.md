@@ -106,8 +106,8 @@ all of its contents in a single commit, so the repository does not grow.
 ## The signing key
 
 The Lumo Archive Signing Key is an ed25519 key with fingerprint
-`76EE FBDB 0D37 0DF1 0617 45C3 8AD5 1AE6 FA0E F01C`, created 2026-10-03. It
-expires on 2029-10-02.
+`C828 917B A476 DDE5 AD6C E15B 0289 0CC0 6C4A 93ED`, created 2026-10-13. It
+expires on 2029-10-12.
 
 - The private key lives in `_state/gnupg/archive` on the build machine and is
   never committed. `scripts/create-archive-key` made one backup when it created
@@ -143,3 +143,12 @@ wget https://tinygusie2.github.io/lumo-updates/pool/main/k/kernora-archive/kerno
 sudo apt install ./kernora-archive_1.2_all.deb
 sudo rm /etc/apt/sources.list
 ```
+
+## Restore points
+
+On a system installed on btrfs, snapper makes a restore point before and after
+every package change, whichever way it is installed. Settings > System >
+Restore points and the boot menu go back to one. See
+[APPS.md](APPS.md#restore-points). The packages in `configs/live/packages.txt`
+reach new installations only: a dependency of an existing Lumo package is what
+brings a new package to installed systems.

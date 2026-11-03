@@ -256,3 +256,15 @@ msgstr "Копировать"
 #: apps/welcome/qml/Main.qml:841
 msgid "Okay"
 msgstr "Понятно"
+
+msgid "Prefer Chrome or Edge?"
+msgstr "Предпочитаете Chrome или Edge?"
+
+msgid "Sites that need them work best there. Get either one in the Store"
+msgstr "Сайты, которым они нужны, лучше работают в них. Установите их из магазина"
+
+msgid "Get Chrome"
+msgstr "Установить Chrome"
+
+msgid "Get Edge"
+msgstr "Установить Edge"

@@ -1,0 +1,80 @@
+#!/bin/sh
+set -eu
+
+clean() {
+  printf '%s' "$1" | tr -c 'A-Za-z0-9_-' '-'
+}
+
+unit() {
+  systemd-escape --template=kernora-location@.service "$1"
+}
+
+start() {
+  mkdir -p "$HOME/Locations/$1"
+  systemctl --user enable --now "$(unit "$1")"
+  echo "path=$HOME/Locations/$1"
+}
+
+secret() {
+  IFS= read -r password || true
+  printf '%s' "$password" | rclone obscure -
+}
+
+list() {
+  rclone listremotes | sed 's/:$//' | while read -r name; do
+    kind=$(rclone config show "$name" | sed -n 's/^type = //p')
+    if systemctl --user is-active --quiet "$(unit "$name")"; then state=on; else state=off; fi
+    echo "$name|$kind|$state|$HOME/Locations/$name"
+  done
+}
+
+add() {
+  kind=${1:-}
+  case "$kind" in
+    onedrive)
+      rclone config create OneDrive onedrive >/dev/null
+      start OneDrive
+      ;;
+    drive)
+      rclone config create GoogleDrive drive scope=drive >/dev/null
+      start GoogleDrive
+      ;;
+    nextcloud)
+      server=${2%/}
+      user=$3
+      name=Nextcloud-$(clean "$user")
+      rclone config create "$name" webdav "url=$server/remote.php/dav/files/$user" \
+        vendor=nextcloud "user=$user" "pass=$(secret)" --non-interactive >/dev/null
+      start "$name"
+      ;;
+    smb)
+      host=$2
+      user=${3:-}
+      name=$(clean "$host")
+      if [ -n "$user" ]; then
+        rclone config create "$name" smb "host=$host" "user=$user" "pass=$(secret)" --non-interactive >/dev/null
+      else
+        rclone config create "$name" smb "host=$host" --non-interactive >/dev/null
+      fi
+      start "$name"
+      ;;
+    *)
+      echo "usage: kernora-locations add onedrive|drive|nextcloud SERVER USER|smb HOST [USER]" >&2
+      exit 2
+      ;;
+  esac
+}
+
+remove() {
+  name=$1
+  systemctl --user disable --now "$(unit "$name")" || true
+  rclone config delete "$name"
+  rmdir "$HOME/Locations/$name" 2>/dev/null || true
+}
+
+case "${1:-}" in
+  list) list ;;
+  add) shift; add "$@" ;;
+  remove) remove "${2:?}" ;;
+  *) echo "usage: kernora-locations list|add|remove" >&2; exit 2 ;;
+esac

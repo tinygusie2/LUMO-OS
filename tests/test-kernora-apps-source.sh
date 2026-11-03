@@ -60,6 +60,11 @@ grep -Fq '!SystemInfo.live && Updates.available' "$package_root/apps/settings/qm
 [[ -s "$package_root/apps/settings/qml/pages/RestorePage.qml" ]] \
   && grep -Fq 'page.open("RestorePage.qml"' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
   || fail "Settings has no Restore points page"
+for name in Firewall Locations; do
+  [[ -s "$package_root/apps/settings/qml/pages/${name}Page.qml" ]] \
+    && grep -Fq "${name}Page.qml" "$package_root/apps/settings/qml/components/Catalog.qml" \
+    || fail "Settings has no $name page"
+done
 grep -Fq 'driverReady' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fxq '[Event/driverReady]' "$package_root/data/knotifications/kernora-updates.notifyrc" \
   || fail "nobody is told to restart after a driver install"

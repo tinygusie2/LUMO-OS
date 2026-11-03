@@ -30,6 +30,25 @@ xserver-xorg
 libpam-fprintd
 btrfs-progs
 snapper
+libreoffice-writer
+libreoffice-calc
+libreoffice-impress
+libreoffice-kf6
+libreoffice-l10n-nl
+libreoffice-l10n-ru
+fonts-crosextra-carlito
+fonts-crosextra-caladea
+fonts-liberation
+thunderbird
+thunderbird-l10n-nl
+thunderbird-l10n-ru
+okular
+pdfarranger
+rclone
+fuse3
+samba
+wsdd2
+ufw
 
 kernora-desktop=1.4.29
 kernora-calamares=1.4.29

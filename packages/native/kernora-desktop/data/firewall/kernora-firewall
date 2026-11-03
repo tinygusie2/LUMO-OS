@@ -1,0 +1,60 @@
+#!/bin/sh
+set -eu
+
+state=/var/lib/kernora/firewall
+ufw=/usr/sbin/ufw
+
+ports() {
+  case "$1" in
+    phone) echo 1714:1764/tcp 1714:1764/udp ;;
+    sharing) echo 445/tcp 3702/udp 5355/udp 5357/tcp ;;
+    *) echo "unknown service: $1" >&2; exit 2 ;;
+  esac
+}
+
+allow() {
+  for port in $(ports "$1"); do
+    "$ufw" allow "$port" >/dev/null
+  done
+  mkdir -p "$state"
+  : > "$state/$1"
+}
+
+deny() {
+  for port in $(ports "$1"); do
+    "$ufw" delete allow "$port" >/dev/null || true
+  done
+  rm -f "$state/$1"
+}
+
+setup() {
+  [ -x "$ufw" ] || exit 0
+  "$ufw" default deny incoming >/dev/null
+  "$ufw" default allow outgoing >/dev/null
+  "$ufw" allow 5353/udp >/dev/null
+  allow phone
+  sed -i 's/^ENABLED=.*/ENABLED=yes/' /etc/ufw/ufw.conf
+  systemctl enable ufw
+}
+
+status() {
+  if [ ! -x "$ufw" ]; then
+    echo available=no
+    exit 0
+  fi
+  echo available=yes
+  if grep -q '^ENABLED=yes' /etc/ufw/ufw.conf; then echo enabled=yes; else echo enabled=no; fi
+  for service in phone sharing; do
+    if [ -e "$state/$service" ]; then echo "$service=yes"; else echo "$service=no"; fi
+  done
+}
+
+case "${1:-}" in
+  setup) setup ;;
+  status) status ;;
+  on) "$ufw" --force enable >/dev/null ;;
+  off) "$ufw" disable >/dev/null ;;
+  allow) allow "${2:-}" ;;
+  deny) deny "${2:-}" ;;
+  *) echo "usage: kernora-firewall setup|status|on|off|allow SERVICE|deny SERVICE" >&2; exit 2 ;;
+esac

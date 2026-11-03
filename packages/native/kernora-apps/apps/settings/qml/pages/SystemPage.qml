@@ -72,6 +72,24 @@ SettingsPage {
             onClicked: page.open("RestorePage.qml", {})
         }
         ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Cloud & network folders")
+            subtitle: i18n("OneDrive, Nextcloud, Windows PCs")
+            icon: "folder-cloud"
+            accent: 1
+            chevron: true
+            onClicked: page.open("LocationsPage.qml", {})
+        }
+        ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Firewall")
+            subtitle: i18n("Block connections from other computers")
+            icon: "security-high"
+            accent: 1
+            chevron: true
+            onClicked: page.open("FirewallPage.qml", {})
+        }
+        ListItem {
             title: i18n("Storage")
             subtitle: i18n("Free space, trash")
             icon: "drive-harddisk"

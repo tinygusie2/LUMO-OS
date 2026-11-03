@@ -44,6 +44,10 @@ If an older image leaves an installed system at a black screen, see
 - A Bluetooth pairing agent that shows and asks for pairing codes.
 - Live wallpapers: Lumo Shapes, Tower, Rhythm, Starfall and Pastel.
 - LibreWolf as the browser, from the LibreWolf repository.
+- LibreOffice, Thunderbird, Okular and PDF Arranger, with fonts that keep the
+  layout of Microsoft documents.
+- A firewall that is on from the start, restore points around every update,
+  and cloud and network folders in Files.
 - Calamares as the installer, restyled to match.
 - English, Dutch and Russian. The live session language is chosen in the boot
   menu.

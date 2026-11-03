@@ -1,0 +1,12 @@
+[Unit]
+Description=Location %I
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount %I: %h/Locations/%I --vfs-cache-mode writes --dir-cache-time 1m
+ExecStop=/usr/bin/fusermount3 -uz %h/Locations/%I
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

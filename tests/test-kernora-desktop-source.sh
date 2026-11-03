@@ -141,6 +141,13 @@ grep -Fxq '      subvolume: /@snapshots' "$package_root/data/calamares/modules/m
   && grep -Fxq '  - shellprocess@snapshots' "$package_root/data/calamares/settings.conf" \
   && grep -Fq 'kernora-snapshots setup' "$package_root/data/calamares/modules/shellprocess-snapshots.conf" \
   || fail "the installer does not set up restore points"
+for file in firewall/kernora-firewall locations/kernora-locations locations/kernora-sharing; do
+  sh -n "$package_root/data/$file" || fail "$file is not valid shell"
+  [[ -x "$package_root/data/$file" ]] || fail "$file is not executable"
+done
+grep -Fq 'kernora-firewall setup' "$package_root/data/calamares/modules/shellprocess.conf" \
+  && grep -Fq 'kernora-sharing setup' "$package_root/data/calamares/modules/shellprocess.conf" \
+  || fail "the installer does not set up the firewall and sharing"
 grep -Fxq 'ColorScheme=KernoraDark' "$defaults" \
   || fail "look-and-feel does not select the Kernora colour scheme"
 grep -Fxq 'name=kernora' "$defaults" \

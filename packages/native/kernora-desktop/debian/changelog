@@ -1,5 +1,7 @@
 kernora-desktop (1.4.29) UNRELEASED; urgency=medium
 
+  * Firewall on by default, cloud and network folders, Windows file
+    sharing, and Okular for PDFs.
   * Installer: btrfs with subvolumes is the default, no install option
     is preselected, and restore points are made around every update,
     with a boot menu to start from them.

@@ -3426,3 +3426,111 @@ msgstr "Перед обновлением"
 
 msgid "Cancel"
 msgstr "Отмена"
+
+msgid "Firewall"
+msgstr "Брандмауэр"
+
+msgid "The firewall blocks connections from other computers. Apps can still reach the internet."
+msgstr "Брандмауэр блокирует подключения с других компьютеров. Приложения по-прежнему выходят в интернет."
+
+msgid "The firewall could not be changed."
+msgstr "Не удалось изменить брандмауэр."
+
+msgid "The firewall is not installed on this system."
+msgstr "Брандмауэр не установлен в этой системе."
+
+msgid "Off: other computers can reach this one"
+msgstr "Выключен: другие компьютеры могут подключаться к этому"
+
+msgid "Allowed through"
+msgstr "Разрешено"
+
+msgid "Phone"
+msgstr "Телефон"
+
+msgid "Lets your phone connect to Lumo"
+msgstr "Позволяет телефону подключаться к Lumo"
+
+msgid "File sharing"
+msgstr "Общий доступ к файлам"
+
+msgid "Lets other computers open your shared folder"
+msgstr "Позволяет другим компьютерам открывать общую папку"
+
+msgid "Block connections from other computers"
+msgstr "Блокировать подключения с других компьютеров"
+
+msgid "firewall security network block ports incoming"
+msgstr "брандмауэр безопасность сеть блокировка порты входящие"
+
+msgid "Cloud & network folders"
+msgstr "Облачные и сетевые папки"
+
+msgid "OneDrive, Nextcloud, Windows PCs"
+msgstr "OneDrive, Nextcloud, компьютеры с Windows"
+
+msgid "onedrive google drive nextcloud cloud smb samba nas network share windows folder"
+msgstr "onedrive google drive nextcloud облако smb samba nas сеть общий доступ windows папка"
+
+msgid "Added folders appear in Files, next to your own."
+msgstr "Добавленные папки появятся в «Файлах» рядом с вашими."
+
+msgid "%1 could not be added. Check the details and the connection."
+msgstr "Не удалось добавить %1. Проверьте данные и подключение."
+
+msgid "OneDrive"
+msgstr "OneDrive"
+
+msgid "Google Drive"
+msgstr "Google Drive"
+
+msgid "Nextcloud"
+msgstr "Nextcloud"
+
+msgid "Network folder"
+msgstr "Сетевая папка"
+
+msgid "Your folders"
+msgstr "Ваши папки"
+
+msgid "Add a folder"
+msgstr "Добавить папку"
+
+msgid "Sign in opens in your browser"
+msgstr "Вход откроется в браузере"
+
+msgid "Your server, with an app password"
+msgstr "Ваш сервер с паролем приложения"
+
+msgid "A Windows PC or a NAS on your network"
+msgstr "Компьютер с Windows или NAS в вашей сети"
+
+msgid "Computer name or address"
+msgstr "Имя или адрес компьютера"
+
+msgid "Server address, such as https://cloud.example.com"
+msgstr "Адрес сервера, например https://cloud.example.com"
+
+msgid "User name (optional)"
+msgstr "Имя пользователя (необязательно)"
+
+msgid "Share with other computers"
+msgstr "Общий доступ для других компьютеров"
+
+msgid "Share my Public folder"
+msgstr "Открыть доступ к папке Public"
+
+msgid "Windows PCs can open it with your user name and the sharing password"
+msgstr "Компьютеры с Windows открывают её по вашему имени и паролю доступа"
+
+msgid "Choose a sharing password below first"
+msgstr "Сначала задайте пароль доступа ниже"
+
+msgid "Choose a sharing password first."
+msgstr "Сначала задайте пароль доступа."
+
+msgid "Sharing could not be changed."
+msgstr "Не удалось изменить общий доступ."
+
+msgid "Sharing password"
+msgstr "Пароль доступа"

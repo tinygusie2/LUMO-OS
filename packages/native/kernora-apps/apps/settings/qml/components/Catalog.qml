@@ -95,6 +95,8 @@ QtObject {
             [i18n("Software updates"), "system", "UpdatesPage.qml", i18n("upgrade packages install security")],
             [i18n("Drivers"), "system", "DriversPage.qml", i18n("graphics card video nvidia gpu driver")],
             [i18n("Restore points"), "system", "RestorePage.qml", i18n("restore recovery rollback undo update snapshot system back")],
+            [i18n("Cloud & network folders"), "system", "LocationsPage.qml", i18n("onedrive google drive nextcloud cloud smb samba nas network share windows folder")],
+            [i18n("Firewall"), "system", "FirewallPage.qml", i18n("firewall security network block ports incoming")],
             [i18n("Storage"), "system", "StoragePage.qml", i18n("disk space free trash")],
             [i18n("Bring files from Windows"), "system", "MigratePage.qml", i18n("windows migrate move transfer copy documents pictures wallpaper bookmarks usb old computer")],
             [i18n("More settings"), "system", "ModulesPage.qml", i18n("advanced kde modules shortcuts fonts")],

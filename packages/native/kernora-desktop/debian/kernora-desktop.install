@@ -110,6 +110,12 @@ data/plymouth/plymouth-quit-kernora.conf usr/lib/systemd/system/plymouth-quit.se
 data/plymouth/sddm-plymouth.conf usr/lib/systemd/system/sddm.service.d
 data/drivers/kernora-drivers usr/libexec
 data/snapshots/kernora-snapshots usr/libexec
+data/firewall/kernora-firewall usr/libexec
+data/firewall/org.kernora.firewall.policy usr/share/polkit-1/actions
+data/locations/kernora-locations usr/libexec
+data/locations/kernora-sharing usr/libexec
+data/locations/org.kernora.sharing.policy usr/share/polkit-1/actions
+data/locations/kernora-location@.service usr/lib/systemd/user
 data/snapshots/41_kernora_snapshots etc/grub.d
 data/snapshots/81kernora-snapshots etc/apt/apt.conf.d
 data/snapshots/hooks/kernora-snapshot usr/share/initramfs-tools/hooks

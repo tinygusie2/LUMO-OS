@@ -30,8 +30,8 @@ of the shell: the same tokens, components, symbols and motion.
 | Welcome (`kernora-welcome`) | Plasma Welcome | Runs at the first logins of an installed system (`--first-run`, closes in the live session) until finished. |
 | File chooser (`kernora-filechooser`) | KDE's file dialog | Every program's open, save and folder dialogs; see below. |
 
-The web browser is LibreWolf, which also opens PDFs; `/etc/xdg/mimeapps.list`
-(kernora-desktop) makes it the default for the web and PDFs and keeps
+The web browser is LibreWolf; PDFs open in Okular; `/etc/xdg/mimeapps.list`
+(kernora-desktop) makes it the default for the web and keeps
 pictures with Photos and JSON and XML with the Text Editor, as LibreWolf
 claims those types too. It is not a Debian package: `scripts/fetch-librewolf`
 downloads the version pinned in `configs/upstream/librewolf.env` after
@@ -106,6 +106,41 @@ High (0.5 s), Normal (1 s), Low (4 s) or Paused and is kept in
 Shortcuts: Delete ends the selected task, Shift+Delete forces it, Ctrl+F
 searches by name or PID, Ctrl+N runs a new task, F5 refreshes, Ctrl+1 to
 Ctrl+5 switch pages.
+
+### Everyday apps
+
+LibreOffice (Writer, Calc, Impress, with Dutch and Russian), Thunderbird, Okular
+and PDF Arranger are in the image. Carlito, Caladea and Liberation stand in for
+Calibri, Cambria, Arial and Times New Roman, so Microsoft documents keep their
+layout. Okular opens PDFs and fills in and signs them; PDF Arranger merges and
+splits them.
+
+Calendar > Subscribe to a calendar reads an iCal link from Google Calendar or
+Outlook every hour (`subscriptions` in `events.json`; the events carry
+`subscription`). It is read-only: signing in to Google or Microsoft needs a
+registered application, which Lumo does not have. Thunderbird syncs both ways.
+
+### Cloud & network folders
+
+Files lists local folders only, so Settings > Cloud & network folders
+(`LocationsPage.qml`) mounts everything through rclone with FUSE:
+`kernora-locations` adds OneDrive, Google Drive, Nextcloud or an SMB server to
+`~/.config/rclone/rclone.conf`, and the user unit `kernora-location@.service`
+mounts it at `~/Locations/<name>`, also after the next login. The page adds a
+bookmark, so it shows up in Files and the file chooser. OneDrive and Google
+Drive use rclone's shared client ID, which those services rate-limit.
+
+Sharing the Public folder goes through `kernora-sharing` (pkexec,
+`org.kernora.sharing`): it sets a Samba password, writes
+`/etc/samba/kernora-share.conf`, starts `smbd` and `wsdd2` and opens the
+firewall. The installer turns these services off until then.
+
+### Firewall
+
+Settings > System > Firewall (`FirewallPage.qml`) runs
+`kernora-firewall` through pkexec (`org.kernora.firewall`), a wrapper around
+ufw. The installer turns it on: nothing comes in except mDNS and KDE Connect,
+everything goes out. File sharing opens its ports only when it is turned on.
 
 ## Advanced settings
 
