@@ -352,7 +352,7 @@ for directory in (
     for path in directory.glob('*.desktop'):
         entries[path.name] = path
 
-allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop', 'org.kde.skanpage.desktop'}
+allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop', 'org.kde.skanpage.desktop', 'org.kde.okular.desktop'}
 allowed |= {name for name in entries if name.startswith('org.kde.kdeconnect')}
 unexpected = []
 for name, path in sorted(entries.items()):
