@@ -135,6 +135,21 @@ Sharing the Public folder goes through `kernora-sharing` (pkexec,
 `/etc/samba/kernora-share.conf`, starts `smbd` and `wsdd2` and opens the
 firewall. The installer turns these services off until then.
 
+### PWWDrive
+
+`kernora-pwwdrive` is the Linux counterpart of the PWWDrive Windows app
+(`drive/desktop` in the PWWPlanner repository) and follows its rules: it keeps
+`~/PWWDrive` equal to PWWDrive, moves anything it replaces or removes to
+`.pwwdrive-prullenbak` or the PWWDrive trash, keeps both versions of a conflict,
+and stops when at least 10 files and 30% of the known files vanish on one side.
+Settings > Cloud & network folders links it through
+`drive.pwwplanner.nl/desktop-koppelen`, which hands the Firebase refresh token
+to `127.0.0.1:47290` in the URL fragment. The token is in
+`~/.local/share/pwwdrive/config.json` (mode 600). The user timer
+`kernora-pwwdrive.timer` syncs every 30 seconds. Windows' status icons and
+Explorer menu have no counterpart. `tests/test-pwwdrive-sync.py` runs these
+rules against a fake server.
+
 ### Firewall
 
 Settings > System > Firewall (`FirewallPage.qml`) runs

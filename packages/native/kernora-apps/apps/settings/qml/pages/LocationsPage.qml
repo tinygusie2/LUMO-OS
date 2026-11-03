@@ -27,10 +27,22 @@ SettingsPage {
     property string form: ""
     property bool working: false
     property string problem: ""
+    readonly property string pww: "/usr/libexec/kernora-pwwdrive"
+    property var drive: ({})
 
     Places { id: places }
 
     function refresh(): void {
+        Process.run(page.pww, ["status"], (code, output) => {
+            const values = {};
+            for (const line of output.split("\n")) {
+                const at = line.indexOf("=");
+                if (at > 0) {
+                    values[line.slice(0, at)] = line.slice(at + 1);
+                }
+            }
+            page.drive = values;
+        });
         Process.run(page.tool, ["list"], (code, output) => {
             page.locations = output.split("\n").filter(line => line.length > 0).map(line => {
                 const parts = line.split("|");
@@ -62,6 +74,21 @@ SettingsPage {
         }, secret + "\n");
     }
 
+    function pair(): void {
+        page.working = true;
+        page.problem = "";
+        Process.run(page.pww, ["pair"], (code, output) => {
+            page.working = false;
+            const match = output.match(/^path=(.*)$/m);
+            if (code === 0 && match) {
+                places.addBookmark(Qt.url("file://" + match[1]), "PWWDrive");
+            } else {
+                page.problem = i18n("%1 could not be added. Check the details and the connection.", "PWWDrive");
+            }
+            page.refresh();
+        });
+    }
+
     function kindName(kind: string): string {
         return kind === "onedrive" ? i18n("OneDrive")
              : kind === "drive" ? i18n("Google Drive")
@@ -84,6 +111,39 @@ SettingsPage {
         width: parent.width
         visible: page.working
         indeterminate: true
+    }
+
+    Group {
+        title: "PWWDrive"
+
+        ListItem {
+            title: page.drive.paired === "yes" ? i18n("Linked as %1", page.drive.email) : i18n("Link PWWDrive")
+            subtitle: page.drive.status === "paused" ? i18n("Paused: many files disappeared. Check the folder, then sync.")
+                : page.drive.status === "error" ? i18n("Could not sync. Lumo tries again by itself.")
+                : page.drive.status === "signed-out" ? i18n("Signed out. Link PWWDrive again.")
+                : page.drive.paired === "yes" ? i18n("Your PWWDrive folder stays up to date")
+                : i18n("Keeps a PWWDrive folder up to date, as on Windows")
+            icon: "folder-cloud"
+            iconStyle: "plain"
+            enabled: !page.working
+            onClicked: page.drive.paired === "yes" ? Process.openUrl(Qt.url("file://" + page.drive.path)) : page.pair()
+        }
+        ListItem {
+            visible: page.drive.status === "paused"
+            title: i18n("Sync anyway")
+            subtitle: i18n("Moves the missing files to the trash on the other side")
+            icon: "view-refresh"
+            iconStyle: "plain"
+            onClicked: Process.run(page.pww, ["allow"], () => page.refresh())
+        }
+        ListItem {
+            visible: page.drive.paired === "yes"
+            title: i18n("Unlink PWWDrive")
+            subtitle: i18n("Your files stay in the folder")
+            icon: "edit-delete"
+            iconStyle: "plain"
+            onClicked: Process.run(page.pww, ["unpair"], () => page.refresh())
+        }
     }
 
     Group {

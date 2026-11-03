@@ -3534,3 +3534,36 @@ msgstr "Не удалось изменить общий доступ."
 
 msgid "Sharing password"
 msgstr "Пароль доступа"
+
+msgid "Linked as %1"
+msgstr "Подключено как %1"
+
+msgid "Link PWWDrive"
+msgstr "Подключить PWWDrive"
+
+msgid "Paused: many files disappeared. Check the folder, then sync."
+msgstr "Пауза: исчезло много файлов. Проверьте папку и запустите синхронизацию."
+
+msgid "Could not sync. Lumo tries again by itself."
+msgstr "Не удалось синхронизировать. Lumo повторит попытку сам."
+
+msgid "Signed out. Link PWWDrive again."
+msgstr "Вы вышли. Подключите PWWDrive снова."
+
+msgid "Your PWWDrive folder stays up to date"
+msgstr "Папка PWWDrive обновляется автоматически"
+
+msgid "Keeps a PWWDrive folder up to date, as on Windows"
+msgstr "Поддерживает папку PWWDrive в актуальном состоянии, как в Windows"
+
+msgid "Sync anyway"
+msgstr "Всё равно синхронизировать"
+
+msgid "Moves the missing files to the trash on the other side"
+msgstr "Перемещает отсутствующие файлы в корзину на другой стороне"
+
+msgid "Unlink PWWDrive"
+msgstr "Отключить PWWDrive"
+
+msgid "Your files stay in the folder"
+msgstr "Файлы останутся в папке"

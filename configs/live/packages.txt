@@ -49,6 +49,7 @@ fuse3
 samba
 wsdd2
 ufw
+python3
 
 kernora-desktop=1.4.29
 kernora-calamares=1.4.29

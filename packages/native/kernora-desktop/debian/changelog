@@ -1,5 +1,6 @@
 kernora-desktop (1.4.29) UNRELEASED; urgency=medium
 
+  * PWWDrive: kernora-pwwdrive syncs ~/PWWDrive, as the Windows app does.
   * Firewall on by default, cloud and network folders, Windows file
     sharing, and Okular for PDFs.
   * Installer: btrfs with subvolumes is the default, no install option

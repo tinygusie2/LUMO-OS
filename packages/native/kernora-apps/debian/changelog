@@ -1,5 +1,6 @@
 kernora-apps (1.1.37) UNRELEASED; urgency=medium
 
+  * Settings > Cloud & network folders links PWWDrive.
   * Settings: Firewall and Cloud & network folders. Calendar subscribes
     to iCal links. Welcome offers Chrome and Edge.
   * Settings > System > Restore points: go back to before an update.

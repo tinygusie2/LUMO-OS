@@ -2977,3 +2977,36 @@ msgstr "Delen kon niet worden gewijzigd."
 
 msgid "Sharing password"
 msgstr "Deelwachtwoord"
+
+msgid "Linked as %1"
+msgstr "Gekoppeld als %1"
+
+msgid "Link PWWDrive"
+msgstr "PWWDrive koppelen"
+
+msgid "Paused: many files disappeared. Check the folder, then sync."
+msgstr "Gepauzeerd: er zijn veel bestanden verdwenen. Controleer de map en sync daarna."
+
+msgid "Could not sync. Lumo tries again by itself."
+msgstr "Synchroniseren lukte niet. Lumo probeert het zelf opnieuw."
+
+msgid "Signed out. Link PWWDrive again."
+msgstr "Uitgelogd. Koppel PWWDrive opnieuw."
+
+msgid "Your PWWDrive folder stays up to date"
+msgstr "Je PWWDrive-map blijft bijgewerkt"
+
+msgid "Keeps a PWWDrive folder up to date, as on Windows"
+msgstr "Houdt een PWWDrive-map bij, net als op Windows"
+
+msgid "Sync anyway"
+msgstr "Toch synchroniseren"
+
+msgid "Moves the missing files to the trash on the other side"
+msgstr "Verplaatst de ontbrekende bestanden aan de andere kant naar de prullenbak"
+
+msgid "Unlink PWWDrive"
+msgstr "PWWDrive ontkoppelen"
+
+msgid "Your files stay in the folder"
+msgstr "Je bestanden blijven in de map staan"
