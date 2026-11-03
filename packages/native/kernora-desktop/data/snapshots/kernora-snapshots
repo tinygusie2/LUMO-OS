@@ -29,7 +29,7 @@ setup() {
   sed -i 's/^SNAPPER_CONFIGS=.*/SNAPPER_CONFIGS="root"/' /etc/default/snapper
   chmod 0750 /.snapshots
   systemctl enable snapper-cleanup.timer kernora-snapshots.service
-  systemctl disable snapper-timeline.timer
+  systemctl disable snapper-timeline.timer snapper-boot.timer
 }
 
 status() {
