@@ -1,5 +1,12 @@
 kernora-desktop (1.4.29) UNRELEASED; urgency=medium
 
+  * Secure Boot: the installer and the upgrade put shim, not GRUB, in
+    EFI/boot/bootx64.efi, so Lumo still starts with Secure Boot on when
+    the firmware has lost its Lumo boot entry.
+  * NVIDIA driver with Secure Boot on: kernora-drivers makes a signing
+    key for DKMS and queues it for enrolment with a one-time password,
+    so Secure Boot can stay on (needed for Easy Anti-Cheat Linux v2).
+    Depends on mokutil and openssl.
   * Dutch colour names in the palettes; the orange default colour is
     called Lumo.
 

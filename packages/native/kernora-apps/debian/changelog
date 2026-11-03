@@ -1,5 +1,8 @@
 kernora-apps (1.1.37) UNRELEASED; urgency=medium
 
+  * Settings › Drivers: with Secure Boot on, show the password and steps
+    to confirm the driver signing key instead of asking to turn Secure
+    Boot off.
   * What's new in Dutch, with a note for Lumo test build 3.
   * Settings > Wallpaper & style: colour names in the system language,
     read from name_<language> in the palette.

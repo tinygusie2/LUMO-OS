@@ -53,8 +53,8 @@ driver is purged again and the computer keeps using nouveau.
 The automatic check skips:
 
 - the live session;
-- computers with Secure Boot on (the DKMS module would not load until its key
-  is enrolled);
+- computers with Secure Boot on, because the key has to be confirmed at the
+  next boot (see below); Settings installs the driver there;
 - a driver the user removed in Settings;
 - a failed attempt, for a day.
 
@@ -64,6 +64,30 @@ the automatic install off.
 State lives in `/var/lib/kernora/drivers/state`: `installing`, `installed`,
 `failed`, `offline`, `secureboot`, `removing` or `removed`, plus the device,
 its name from `pci.ids` and the time.
+
+## Secure Boot
+
+With Secure Boot on, the kernel loads only signed modules. Lumo signs the
+NVIDIA module with its own key, so Secure Boot can stay on. That matters for
+games whose anti-cheat requires it, such as Fortnite with Easy Anti-Cheat
+Linux v2.
+
+- Before the driver is installed, `kernora-drivers` makes the key DKMS signs
+  with: `/var/lib/dkms/mok.key` (root only) and `/var/lib/dkms/mok.pub`
+  (DER), an RSA 2048 certificate called "Lumo driver signing key". DKMS signs
+  every module it builds with it, also after kernel updates. The installer
+  makes the key too, so modules built there are signed.
+- After DKMS built the module, `mokutil --import` queues the key with a
+  one-time eight-digit password, kept in `/var/lib/kernora/drivers/enroll`.
+  The installer does not queue it, because nobody would see the password;
+  Settings then shows "Set up Secure Boot".
+- `kernora-drivers status` reports `mok=none|enrolled|pending|missing` and,
+  while the key is pending, `mokpassword=`. Settings shows the password and
+  the steps: at the next boot MokManager appears; choose Enroll MOK,
+  Continue, Yes, type the password and choose Reboot.
+- Once `mokutil --test-key` reports the key as enrolled, the boot check
+  deletes the password file. Removing the driver withdraws a key that is
+  still pending.
 
 ## Testing without the hardware
 

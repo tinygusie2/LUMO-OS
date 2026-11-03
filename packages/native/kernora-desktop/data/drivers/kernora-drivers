@@ -12,6 +12,9 @@ nvidia_preferences=/etc/apt/preferences.d/kernora-nvidia.pref
 debian_sources=/etc/apt/sources.list.d/kernora-nvidia-debian.sources
 modprobe_options=/etc/modprobe.d/kernora-nvidia.conf
 driver_packages=(nvidia-open nvidia-driver nvidia-kernel-open-dkms nvidia-kernel-dkms)
+mok_key=/var/lib/dkms/mok.key
+mok_cert=/var/lib/dkms/mok.pub
+enroll_file=$state_dir/enroll
 
 device=
 family=none
@@ -62,6 +65,44 @@ automatic() {
 
 secure_boot() {
   mokutil --sb-state 2>/dev/null | grep -q 'SecureBoot enabled'
+}
+
+key_enrolled() {
+  [[ -r $mok_cert ]] && mokutil --test-key "$mok_cert" 2>&1 | grep -q 'already enrolled'
+}
+
+key_pending() {
+  [[ -r $mok_cert ]] && mokutil --list-new 2>/dev/null | grep -q .
+}
+
+prepare_key() {
+  [[ -s $mok_key && -s $mok_cert ]] && return 0
+  mkdir -p "${mok_key%/*}"
+  openssl req -new -x509 -nodes -days 36500 -subj "/CN=Lumo driver signing key/" \
+    -newkey rsa:2048 -keyout "$mok_key" -outform DER -out "$mok_cert" > /dev/null 2>&1 || return 1
+  chmod 600 "$mok_key"
+}
+
+enroll_key() {
+  key_enrolled && { rm -f "$enroll_file"; return 0; }
+  local password
+  password=$(shuf -i 10000000-99999999 -n 1)
+  mokutil --revoke-import > /dev/null 2>&1 || true
+  printf '%s\n%s\n' "$password" "$password" | mokutil --import "$mok_cert" > /dev/null || return 1
+  printf '%s\n' "$password" > "$enroll_file"
+  chmod 644 "$enroll_file"
+}
+
+mok_state() {
+  if ! secure_boot; then
+    echo none
+  elif key_enrolled; then
+    echo enrolled
+  elif [[ -s $enroll_file ]] && key_pending; then
+    echo pending
+  else
+    echo missing
+  fi
 }
 
 live_session() {
@@ -168,12 +209,17 @@ install_driver() {
   fi
   if driver_installed; then
     echo "kernora-drivers: the driver for ${gpu_name:-$device} is already installed"
+    if [[ $target == no ]] && secure_boot && ! key_enrolled; then
+      enroll_key || { record failed; return 1; }
+      printf '%s\n' "$gpu_name" > "$ready"
+      echo "kernora-drivers: confirm the signing key after the restart"
+    fi
     record installed
     return 0
   fi
-  if [[ $target == no ]] && secure_boot; then
-    echo "kernora-drivers: Secure Boot is on; the driver would not load"
-    record secureboot
+  if { [[ $target == yes ]] || secure_boot; } && ! prepare_key; then
+    echo "kernora-drivers: the signing key could not be made" >&2
+    record failed
     return 1
   fi
   if ! online; then
@@ -186,7 +232,8 @@ install_driver() {
   add_sources
   local packages=(linux-headers-amd64 nvidia-open)
   [[ $family == legacy ]] && packages=(linux-headers-amd64 nvidia-driver)
-  if apt_update && apt_get install "${packages[@]}" && module_built; then
+  if apt_update && apt_get install "${packages[@]}" && module_built \
+    && { [[ $target == yes ]] || ! secure_boot || enroll_key; }; then
     apt_get clean
     printf 'options nvidia-drm modeset=1 fbdev=1\n' > "$modprobe_options"
     record installed
@@ -204,6 +251,7 @@ install_driver() {
 }
 
 automatic_install() {
+  [[ -e $enroll_file ]] && key_enrolled && rm -f "$enroll_file"
   automatic || exit 0
   live_session && exit 0
   find_gpu
@@ -232,15 +280,20 @@ print_status() {
   [[ -e $ready ]] && status=ready
   local version=
   [[ $installed == yes ]] && version=$(dpkg-query -W -f='${Version}\n' nvidia-kernel-open-dkms nvidia-kernel-dkms 2>/dev/null | grep -m 1 . | cut -d- -f1)
-  printf 'device=%s\nname=%s\nfamily=%s\ninstalled=%s\nversion=%s\nautomatic=%s\nsecureboot=%s\nstatus=%s\ntime=%s\nlive=%s\n' \
+  local mok=none password=
+  [[ $boot == yes && $installed == yes ]] && mok=$(mok_state)
+  [[ $mok == pending ]] && password=$(head -n 1 "$enroll_file" 2>/dev/null)
+  printf 'device=%s\nname=%s\nfamily=%s\ninstalled=%s\nversion=%s\nautomatic=%s\nsecureboot=%s\nstatus=%s\ntime=%s\nlive=%s\nmok=%s\nmokpassword=%s\n' \
     "$device" "$gpu_name" "$family" "$installed" "$version" "$automatic_flag" "$boot" "${status:-}" \
-    "$(read_state time)" "$(live_session && echo yes || echo no)"
+    "$(read_state time)" "$(live_session && echo yes || echo no)" "$mok" "$password"
 }
 
 remove_driver() {
   find_gpu
   record removing
   purge_driver
+  secure_boot && key_pending && mokutil --revoke-import > /dev/null 2>&1
+  rm -f "$enroll_file"
   update-initramfs -u -k all
   rm -f "$ready"
   record removed

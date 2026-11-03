@@ -1881,8 +1881,20 @@ msgstr "%1 gebruikt het NVIDIA-stuurprogramma %2."
 msgid "%1 uses the NVIDIA driver."
 msgstr "%1 gebruikt het NVIDIA-stuurprogramma."
 
-msgid "The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off in the computer's firmware settings, then try again."
-msgstr "Het NVIDIA-stuurprogramma kan niet laden zolang Secure Boot aan staat. Zet Secure Boot uit in de firmware-instellingen van de computer en probeer het opnieuw."
+msgid "Restart and confirm the key"
+msgstr "Herstart en bevestig de sleutel"
+
+msgid "The driver is waiting for Secure Boot"
+msgstr "Het stuurprogramma wacht op Secure Boot"
+
+msgid "Secure Boot is on, so Lumo signed the driver with its own key. After the restart a blue screen appears: choose Enroll MOK, Continue and Yes, type the password %1 and choose Reboot."
+msgstr "Secure Boot staat aan, dus Lumo heeft het stuurprogramma met een eigen sleutel ondertekend. Na de herstart verschijnt een blauw scherm: kies Enroll MOK, Continue en Yes, typ het wachtwoord %1 en kies Reboot."
+
+msgid "Secure Boot is on and the key Lumo signs the driver with is not confirmed yet. Set it up and confirm the key after a restart."
+msgstr "Secure Boot staat aan en de sleutel waarmee Lumo het stuurprogramma ondertekent is nog niet bevestigd. Stel hem in en bevestig de sleutel na een herstart."
+
+msgid "Set up Secure Boot"
+msgstr "Secure Boot instellen"
 
 msgid "Check the internet connection and try again."
 msgstr "Controleer de internetverbinding en probeer het opnieuw."

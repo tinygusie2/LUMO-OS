@@ -35,7 +35,8 @@ SettingsPage {
     readonly property bool ready: info.status === "ready"
     readonly property bool failed: info.status === "failed" && !busy
     readonly property bool offline: info.status === "offline" && !busy
-    readonly property bool blocked: info.secureboot === "yes" && !installed
+    readonly property bool enrolling: info.mok === "pending" && !busy
+    readonly property bool unsigned: info.mok === "missing" && !busy
     readonly property string card: (info.name || "").length > 0 ? info.name : i18n("NVIDIA graphics card")
 
     function refresh(): void {
@@ -92,6 +93,12 @@ SettingsPage {
         if (removing) {
             return i18n("Removing the driver…");
         }
+        if (enrolling) {
+            return i18n("Restart and confirm the key");
+        }
+        if (unsigned) {
+            return i18n("The driver is waiting for Secure Boot");
+        }
         if (ready) {
             return i18n("Restart to use the driver");
         }
@@ -126,6 +133,12 @@ SettingsPage {
         if (removing) {
             return i18n("Lumo is removing the NVIDIA driver.");
         }
+        if (enrolling) {
+            return i18n("Secure Boot is on, so Lumo signed the driver with its own key. After the restart a blue screen appears: choose Enroll MOK, Continue and Yes, type the password %1 and choose Reboot.", info.mokpassword);
+        }
+        if (unsigned) {
+            return i18n("Secure Boot is on and the key Lumo signs the driver with is not confirmed yet. Set it up and confirm the key after a restart.");
+        }
         if (ready) {
             return i18n("The driver for %1 is installed. It starts working after a restart.", page.card);
         }
@@ -133,9 +146,6 @@ SettingsPage {
             return (info.version || "").length > 0
                 ? i18n("%1 uses the NVIDIA driver %2.", page.card, info.version)
                 : i18n("%1 uses the NVIDIA driver.", page.card);
-        }
-        if (blocked) {
-            return i18n("The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off in the computer's firmware settings, then try again.");
         }
         if (failed) {
             return i18n("Check the internet connection and try again.");
@@ -156,11 +166,11 @@ SettingsPage {
         width: parent.width
         implicitHeight: content.implicitHeight + 48
         radius: M3.classic ? M3.cornerCard : 28
-        color: page.failed || page.blocked ? M3.errorContainer
-             : page.ready ? M3.tertiaryContainer : M3.surfaceContainerHigh
+        color: page.failed || page.unsigned ? M3.errorContainer
+             : page.ready || page.enrolling ? M3.tertiaryContainer : M3.surfaceContainerHigh
 
-        readonly property color ink: page.failed || page.blocked ? M3.errorContainerContent
-             : page.ready ? M3.tertiaryContainerContent : M3.surfaceContent
+        readonly property color ink: page.failed || page.unsigned ? M3.errorContainerContent
+             : page.ready || page.enrolling ? M3.tertiaryContainerContent : M3.surfaceContent
 
         ColumnLayout {
             id: content
@@ -174,8 +184,8 @@ SettingsPage {
                 spacing: 16
                 IconCircle {
                     size: 56
-                    icon: page.failed || page.blocked ? "dialog-error"
-                        : page.ready ? "system-reboot"
+                    icon: page.failed || page.unsigned ? "dialog-error"
+                        : page.ready || page.enrolling ? "system-reboot"
                         : page.installed || !page.hasCard ? "dialog-positive" : "cpu"
                     accent: 1
                 }
@@ -208,7 +218,7 @@ SettingsPage {
                 spacing: 8
                 visible: page.supported && !page.busy && page.info.live !== "yes"
                 QQC2.Button {
-                    visible: page.ready
+                    visible: page.ready || page.enrolling
                     text: i18n("Restart")
                     icon.name: "system-reboot"
                     highlighted: true
@@ -216,8 +226,15 @@ SettingsPage {
                 }
                 QQC2.Button {
                     visible: !page.installed
-                    text: page.failed || page.blocked ? i18n("Try again") : i18n("Install now")
+                    text: page.failed ? i18n("Try again") : i18n("Install now")
                     icon.name: "download"
+                    highlighted: true
+                    onClicked: page.request("install")
+                }
+                QQC2.Button {
+                    visible: page.unsigned
+                    text: i18n("Set up Secure Boot")
+                    icon.name: "security-high"
                     highlighted: true
                     onClicked: page.request("install")
                 }

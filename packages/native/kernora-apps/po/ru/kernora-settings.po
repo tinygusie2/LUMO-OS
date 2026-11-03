@@ -3304,8 +3304,20 @@ msgstr "%1 работает с драйвером NVIDIA %2."
 msgid "%1 uses the NVIDIA driver."
 msgstr "%1 работает с драйвером NVIDIA."
 
-msgid "The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off in the computer's firmware settings, then try again."
-msgstr "Драйвер NVIDIA не загрузится, пока включён Secure Boot. Выключите Secure Boot в настройках BIOS/UEFI и попробуйте снова."
+msgid "Restart and confirm the key"
+msgstr "Перезагрузите и подтвердите ключ"
+
+msgid "The driver is waiting for Secure Boot"
+msgstr "Драйвер ждёт настройки Secure Boot"
+
+msgid "Secure Boot is on, so Lumo signed the driver with its own key. After the restart a blue screen appears: choose Enroll MOK, Continue and Yes, type the password %1 and choose Reboot."
+msgstr "Secure Boot включён, поэтому Lumo подписала драйвер своим ключом. После перезагрузки появится синий экран: выберите Enroll MOK, Continue и Yes, введите пароль %1 и выберите Reboot."
+
+msgid "Secure Boot is on and the key Lumo signs the driver with is not confirmed yet. Set it up and confirm the key after a restart."
+msgstr "Secure Boot включён, а ключ, которым Lumo подписывает драйвер, ещё не подтверждён. Настройте его и подтвердите ключ после перезагрузки."
+
+msgid "Set up Secure Boot"
+msgstr "Настроить Secure Boot"
 
 msgid "Check the internet connection and try again."
 msgstr "Проверьте подключение к интернету и попробуйте снова."

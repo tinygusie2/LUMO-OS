@@ -7,6 +7,11 @@ if [ "$1" = configure ]; then
     if dpkg --compare-versions "$2" lt 1.4.28         && [ -e /usr/lib/systemd/system/NetworkManager-wait-online.service ]; then
         systemctl disable NetworkManager-wait-online.service >/dev/null 2>&1 || true
     fi
+    esp=/boot/efi/EFI
+    if [ -f "$esp/kernora/shimx64.efi" ] && [ -f "$esp/boot/bootx64.efi" ]         && cmp -s "$esp/boot/bootx64.efi" "$esp/kernora/grubx64.efi"; then
+        echo "grub-efi-amd64 grub2/force_efi_extra_removable boolean true" | debconf-set-selections || true
+        cp "$esp/kernora/grubx64.efi" "$esp/kernora/mmx64.efi" "$esp/boot/"             && cp "$esp/kernora/shimx64.efi" "$esp/boot/bootx64.efi" || true
+    fi
     if [ -e /boot/grub/grub.cfg ] && command -v update-grub >/dev/null 2>&1; then
         update-grub || true
     fi
