@@ -64,7 +64,7 @@ grub_entries() {
     echo "  menuentry 'Lumo $date' {"
     echo "    insmod btrfs"
     echo "    search --no-floppy --fs-uuid --set=root $uuid"
-    echo "    linux $path/boot/$kernel root=UUID=$uuid ro rootflags=subvol=@snapshots/$number/snapshot kernora.snapshot=$number quiet splash"
+    echo "    linux $path/boot/$kernel root=UUID=$uuid ro rootflags=subvol=@snapshots/$number/snapshot kernora.snapshot=$number ${GRUB_CMDLINE_LINUX:-} ${GRUB_CMDLINE_LINUX_DEFAULT:-}"
     echo "    initrd $path/boot/initrd.img-$version"
     echo "  }"
   done
