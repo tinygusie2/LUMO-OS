@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<!-- SPDX-FileCopyrightText: 2026 Kernora Developers
+     SPDX-License-Identifier: GPL-2.0-or-later -->
+<policyconfig>
+  <vendor>Kernora OS</vendor>
+  <action id="org.kernora.snapshots">
+    <description>Restore the system</description>
+    <description xml:lang="ru">Восстановление системы</description>
+    <message>Going back to a restore point replaces the system</message>
+    <message xml:lang="ru">Возврат к точке восстановления заменяет систему</message>
+    <icon_name>document-revert</icon_name>
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>no</allow_inactive>
+      <allow_active>auth_admin</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/kernora-snapshots</annotate>
+  </action>
+</policyconfig>

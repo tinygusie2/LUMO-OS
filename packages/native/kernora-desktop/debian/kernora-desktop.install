@@ -109,6 +109,13 @@ generated/grub/kernora usr/share/grub/themes
 data/plymouth/plymouth-quit-kernora.conf usr/lib/systemd/system/plymouth-quit.service.d
 data/plymouth/sddm-plymouth.conf usr/lib/systemd/system/sddm.service.d
 data/drivers/kernora-drivers usr/libexec
+data/snapshots/kernora-snapshots usr/libexec
+data/snapshots/41_kernora_snapshots etc/grub.d
+data/snapshots/81kernora-snapshots etc/apt/apt.conf.d
+data/snapshots/hooks/kernora-snapshot usr/share/initramfs-tools/hooks
+data/snapshots/local-bottom/kernora-snapshot usr/share/initramfs-tools/scripts/local-bottom
+data/snapshots/kernora-snapshots.service usr/lib/systemd/system
+data/snapshots/org.kernora.snapshots.policy usr/share/polkit-1/actions
 data/drivers/nvidia-archive-keyring.gpg usr/share/kernora
 data/drivers/kernora-drivers.service usr/lib/systemd/system
 data/drivers/kernora-drivers.timer usr/lib/systemd/system

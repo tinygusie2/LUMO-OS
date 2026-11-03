@@ -218,6 +218,30 @@ After installation the live-only pieces are removed (autologin, the boot
 marker, the boot-menu language service), and Welcome opens at the first
 login of the new account.
 
+The installer preselects nothing on its disk page, so erasing a disk is always
+a choice. New systems use btrfs (ext4 stays available) with the subvolumes
+`@`, `@home`, `@cache`, `@log` and `@snapshots` (`modules/mount.conf`).
+
+### Restore points
+
+After the update and driver steps, `shellprocess@snapshots` runs
+`kernora-snapshots setup`, which writes snapper's `root` configuration when `/`
+and `/.snapshots` are btrfs and does nothing otherwise. Snapper's APT hook then
+makes a restore point before and after every package change, also from Settings
+and automatic updates. Lumo keeps the last 10 and makes no timed ones. `/home`
+is not part of a restore point.
+
+- **Boot menu:** `grub-btrfs` is not in Debian, so `/etc/grub.d/41_kernora_snapshots`
+  writes a Restore points submenu, refreshed after every APT run
+  (`81kernora-snapshots`). An entry boots the read-only snapshot with
+  `kernora.snapshot=N`; the initramfs script `local-bottom/kernora-snapshot`
+  puts a tmpfs overlay over it, so nothing is kept.
+- **Settings > System > Restore points** (`RestorePage.qml`) runs
+  `kernora-snapshots restore N` through pkexec (`org.kernora.snapshots`). It
+  renames `@` to `@.previous-<time>`, removing an older one, and makes a new
+  `@` from the snapshot. `kernora-snapshots.service` refreshes the boot menu at
+  the next start.
+
 The boot menu starts the live session in English (the default) or Russian
 (`kernora.lang=`), which the installer inherits.
 

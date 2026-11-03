@@ -1,5 +1,8 @@
 kernora-desktop (1.4.29) UNRELEASED; urgency=medium
 
+  * Installer: btrfs with subvolumes is the default, no install option
+    is preselected, and restore points are made around every update,
+    with a boot menu to start from them.
   * Secure Boot: the installer and the upgrade put shim, not GRUB, in
     EFI/boot/bootx64.efi, so Lumo still starts with Secure Boot on when
     the firmware has lost its Lumo boot entry.

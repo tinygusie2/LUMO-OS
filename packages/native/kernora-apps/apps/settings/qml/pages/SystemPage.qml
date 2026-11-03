@@ -63,6 +63,15 @@ SettingsPage {
             onClicked: page.open("DriversPage.qml", {})
         }
         ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Restore points")
+            subtitle: i18n("Go back to before an update")
+            icon: "document-revert"
+            accent: 1
+            chevron: true
+            onClicked: page.open("RestorePage.qml", {})
+        }
+        ListItem {
             title: i18n("Storage")
             subtitle: i18n("Free space, trash")
             icon: "drive-harddisk"

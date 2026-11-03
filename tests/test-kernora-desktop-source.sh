@@ -129,6 +129,18 @@ grep -Fq '<annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/kerno
 grep -Fxq '  - shellprocess@drivers' "$package_root/data/calamares/settings.conf" \
   && grep -Fq 'kernora-drivers install --target' "$package_root/data/calamares/modules/shellprocess-drivers.conf" \
   || fail "the installer does not install graphics drivers"
+snapshots="$package_root/data/snapshots"
+sh -n "$snapshots/kernora-snapshots" || fail "kernora-snapshots is not valid shell"
+for file in kernora-snapshots 41_kernora_snapshots hooks/kernora-snapshot local-bottom/kernora-snapshot; do
+  [[ -x "$snapshots/$file" ]] || fail "$file is not executable"
+done
+grep -Fxq 'initialPartitioningChoice: none' "$package_root/data/calamares/modules/partition.conf" \
+  && grep -Fxq 'defaultFileSystemType: "btrfs"' "$package_root/data/calamares/modules/partition.conf" \
+  || fail "the installer preselects erasing the disk or does not default to btrfs"
+grep -Fxq '      subvolume: /@snapshots' "$package_root/data/calamares/modules/mount.conf" \
+  && grep -Fxq '  - shellprocess@snapshots' "$package_root/data/calamares/settings.conf" \
+  && grep -Fq 'kernora-snapshots setup' "$package_root/data/calamares/modules/shellprocess-snapshots.conf" \
+  || fail "the installer does not set up restore points"
 grep -Fxq 'ColorScheme=KernoraDark' "$defaults" \
   || fail "look-and-feel does not select the Kernora colour scheme"
 grep -Fxq 'name=kernora' "$defaults" \

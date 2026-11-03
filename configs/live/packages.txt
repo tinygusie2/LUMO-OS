@@ -28,6 +28,8 @@ sudo
 kwin-x11
 xserver-xorg
 libpam-fprintd
+btrfs-progs
+snapper
 
 kernora-desktop=1.4.29
 kernora-calamares=1.4.29

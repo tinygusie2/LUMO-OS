@@ -1,5 +1,6 @@
 kernora-apps (1.1.37) UNRELEASED; urgency=medium
 
+  * Settings > System > Restore points: go back to before an update.
   * Settings › Drivers: with Secure Boot on, show the password and steps
     to confirm the driver signing key instead of asking to turn Secure
     Boot off.

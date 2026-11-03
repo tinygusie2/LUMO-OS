@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh the restore points in the boot menu
+ConditionPathExists=/var/lib/kernora/snapshots-refresh
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/kernora-snapshots menu
+ExecStartPost=/usr/bin/rm -f /var/lib/kernora/snapshots-refresh
+
+[Install]
+WantedBy=multi-user.target

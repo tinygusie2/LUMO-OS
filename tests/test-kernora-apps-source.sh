@@ -57,6 +57,9 @@ grep -Fq '!SystemInfo.live && Updates.available' "$package_root/apps/settings/qm
 [[ -s "$package_root/apps/settings/qml/pages/DriversPage.qml" ]] \
   && grep -Fq 'page.open("DriversPage.qml"' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
   || fail "Settings has no Drivers page"
+[[ -s "$package_root/apps/settings/qml/pages/RestorePage.qml" ]] \
+  && grep -Fq 'page.open("RestorePage.qml"' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  || fail "Settings has no Restore points page"
 grep -Fq 'driverReady' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fxq '[Event/driverReady]' "$package_root/data/knotifications/kernora-updates.notifyrc" \
   || fail "nobody is told to restart after a driver install"

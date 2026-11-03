@@ -3360,3 +3360,69 @@ msgstr "Lumo удаляет драйвер NVIDIA."
 
 msgid "The NVIDIA driver is removed and stops being used after a restart."
 msgstr "Драйвер NVIDIA удалён и перестанет использоваться после перезагрузки."
+
+msgid "Restore points"
+msgstr "Точки восстановления"
+
+msgid "Go back to before an update"
+msgstr "Вернуться к состоянию до обновления"
+
+msgid "restore recovery rollback undo update snapshot system back"
+msgstr "восстановление откат обновление система назад"
+
+msgid "Lumo saves the system before every update. Your own files are not changed."
+msgstr "Lumo сохраняет систему перед каждым обновлением. Ваши файлы не меняются."
+
+msgid "Restart to finish"
+msgstr "Перезагрузите компьютер, чтобы завершить"
+
+msgid "The system could not be restored"
+msgstr "Не удалось восстановить систему"
+
+msgid "You started from a restore point"
+msgstr "Вы запустили систему из точки восстановления"
+
+msgid "Go back to %1?"
+msgstr "Вернуться к %1?"
+
+msgid "Restore points are off"
+msgstr "Точки восстановления отключены"
+
+msgid "Choose a restore point"
+msgstr "Выберите точку восстановления"
+
+msgid "No restore points yet"
+msgstr "Точек восстановления пока нет"
+
+msgid "Lumo starts from the restore point after the restart. The previous system is kept until the next time you restore."
+msgstr "После перезагрузки Lumo запустится из точки восстановления. Прежняя система хранится до следующего восстановления."
+
+msgid "Nothing was changed."
+msgstr "Ничего не изменилось."
+
+msgid "What you change now is lost at the next restart. If everything works, keep this version."
+msgstr "Изменения будут потеряны при следующей перезагрузке. Если всё работает, сохраните эту версию."
+
+msgid "Programs and system settings go back to that moment. Your documents and other files stay as they are."
+msgstr "Программы и системные настройки вернутся к этому моменту. Документы и другие файлы останутся без изменений."
+
+msgid "They need a system installed on btrfs."
+msgstr "Для них система должна быть установлена на btrfs."
+
+msgid "If Lumo no longer starts, you find these under Restore points in the boot menu."
+msgstr "Если Lumo не запускается, они есть в меню загрузки в разделе «Точки восстановления»."
+
+msgid "The first one is made at the next update."
+msgstr "Первая будет создана при следующем обновлении."
+
+msgid "Keep this version"
+msgstr "Сохранить эту версию"
+
+msgid "Go back"
+msgstr "Вернуться"
+
+msgid "Before an update"
+msgstr "Перед обновлением"
+
+msgid "Cancel"
+msgstr "Отмена"

@@ -1,0 +1,1 @@
+DPkg::Post-Invoke { "if [ -x /usr/libexec/kernora-snapshots ]; then /usr/libexec/kernora-snapshots menu || true; fi"; };

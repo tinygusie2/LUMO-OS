@@ -2806,3 +2806,69 @@ msgstr "Gebruik 4 tot 12 cijfers. De pincode werkt op het vergrendelscherm en he
 
 msgid "4 to 12 digits"
 msgstr "4 tot 12 cijfers"
+
+msgid "Restore points"
+msgstr "Herstelpunten"
+
+msgid "Go back to before an update"
+msgstr "Terug naar vóór een update"
+
+msgid "restore recovery rollback undo update snapshot system back"
+msgstr "herstel herstelpunt terugzetten ongedaan update systeem terug"
+
+msgid "Lumo saves the system before every update. Your own files are not changed."
+msgstr "Lumo bewaart het systeem vóór elke update. Je eigen bestanden worden niet gewijzigd."
+
+msgid "Restart to finish"
+msgstr "Start opnieuw om af te ronden"
+
+msgid "The system could not be restored"
+msgstr "Het systeem kon niet worden hersteld"
+
+msgid "You started from a restore point"
+msgstr "Je bent gestart vanaf een herstelpunt"
+
+msgid "Go back to %1?"
+msgstr "Terug naar %1?"
+
+msgid "Restore points are off"
+msgstr "Herstelpunten staan uit"
+
+msgid "Choose a restore point"
+msgstr "Kies een herstelpunt"
+
+msgid "No restore points yet"
+msgstr "Nog geen herstelpunten"
+
+msgid "Lumo starts from the restore point after the restart. The previous system is kept until the next time you restore."
+msgstr "Na het opnieuw starten gebruikt Lumo het herstelpunt. Het vorige systeem blijft bewaard tot je de volgende keer herstelt."
+
+msgid "Nothing was changed."
+msgstr "Er is niets gewijzigd."
+
+msgid "What you change now is lost at the next restart. If everything works, keep this version."
+msgstr "Wat je nu wijzigt, is na opnieuw starten weg. Werkt alles, bewaar dan deze versie."
+
+msgid "Programs and system settings go back to that moment. Your documents and other files stay as they are."
+msgstr "Programma's en systeeminstellingen gaan terug naar dat moment. Je documenten en andere bestanden blijven zoals ze zijn."
+
+msgid "They need a system installed on btrfs."
+msgstr "Daarvoor moet het systeem op btrfs zijn geïnstalleerd."
+
+msgid "If Lumo no longer starts, you find these under Restore points in the boot menu."
+msgstr "Start Lumo niet meer, dan vind je deze onder Herstelpunten in het opstartmenu."
+
+msgid "The first one is made at the next update."
+msgstr "Het eerste wordt bij de volgende update gemaakt."
+
+msgid "Keep this version"
+msgstr "Bewaar deze versie"
+
+msgid "Go back"
+msgstr "Ga terug"
+
+msgid "Before an update"
+msgstr "Vóór een update"
+
+msgid "Cancel"
+msgstr "Annuleren"

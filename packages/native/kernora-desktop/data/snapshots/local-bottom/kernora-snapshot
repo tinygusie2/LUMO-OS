@@ -1,0 +1,12 @@
+#!/bin/sh
+case "${1:-}" in
+  prereqs) exit 0 ;;
+esac
+grep -q 'kernora\.snapshot=' /proc/cmdline || exit 0
+modprobe overlay
+mkdir -p /lower /cow
+mount -n -o move "${rootmnt:?}" /lower
+mount -t tmpfs tmpfs /cow
+mkdir -p /cow/upper /cow/work
+mount -t overlay overlay -o lowerdir=/lower,upperdir=/cow/upper,workdir=/cow/work "${rootmnt:?}"
+sed -i '/^[^#[:space:]]*[[:space:]]\/[[:space:]]/d' "${rootmnt:?}/etc/fstab"
