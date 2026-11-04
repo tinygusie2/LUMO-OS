@@ -105,6 +105,7 @@ TMPDIR="$work_tmp" "$tool" \
   --include="$include" \
   --include="$librewolf_deb" \
   --keyring="$keyring_dir" \
+  --aptopt='Acquire::Retries "20"' \
   --aptopt='Acquire::Check-Valid-Until "false"' \
   --aptopt='Acquire::Languages "none"' \
   --aptopt='APT::Sandbox::User "root"' \
