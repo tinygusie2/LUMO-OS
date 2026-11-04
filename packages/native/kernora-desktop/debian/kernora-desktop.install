@@ -104,6 +104,7 @@ data/taskmanager/KernoraWindowThumbnail.qml usr/share/plasma/plasmoids/org.kde.p
 generated/plymouth/kernora usr/share/plymouth/themes
 data/plymouth/plymouthd.defaults usr/share/plymouth
 data/grub/kernora.cfg etc/default/grub.d
+data/grub/11_kernora_windows etc/grub.d
 data/boot/kernora-timeouts.conf usr/lib/systemd/system.conf.d
 generated/grub/kernora usr/share/grub/themes
 data/plymouth/plymouth-quit-kernora.conf usr/lib/systemd/system/plymouth-quit.service.d

@@ -13,6 +13,15 @@
         }
       },
       {
+        "icon": "system-reboot",
+        "title": { "en": "Choose Windows or Lumo", "nl": "Kies Windows of Lumo", "ru": "Выбор Windows или Lumo" },
+        "text": {
+          "en": "If Windows is on this PC, the boot menu shows it and waits until you choose. There is no countdown.",
+          "nl": "Staat Windows op deze pc, dan toont het opstartmenu het en wacht het tot jij kiest. Er is geen aftelling.",
+          "ru": "Если на этом компьютере есть Windows, меню загрузки показывает её и ждёт вашего выбора. Обратного отсчёта нет."
+        }
+      },
+      {
         "icon": "folder-cloud",
         "title": { "en": "Cloud and network folders", "nl": "Cloud- en netwerkmappen", "ru": "Облачные и сетевые папки" },
         "text": {

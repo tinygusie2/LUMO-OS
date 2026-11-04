@@ -303,6 +303,7 @@ for path in \
   usr/share/plymouth/themes/kernora/entry.png \
   usr/share/plymouth/plymouthd.defaults \
   etc/default/grub.d/kernora.cfg \
+  etc/grub.d/11_kernora_windows \
   usr/lib/systemd/system/plymouth-quit.service.d/plymouth-quit-kernora.conf \
   usr/lib/systemd/system/sddm.service.d/sddm-plymouth.conf \
   usr/share/grub/themes/kernora/theme.txt \

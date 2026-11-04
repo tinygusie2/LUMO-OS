@@ -99,6 +99,14 @@ grep -Fxq 'Theme=org.kernora.desktop' "$defaults" \
 grep -Fq 'loglevel=3' "$package_root/data/grub/kernora.cfg" \
   && grep -Fq 'update-grub' "$package_root/debian/kernora-desktop.postinst" \
   || fail "installed systems print kernel errors over the boot splash"
+windows_menu="$package_root/data/grub/11_kernora_windows"
+[[ -x "$windows_menu" ]] || fail "11_kernora_windows is not executable"
+sh -n "$windows_menu" || fail "11_kernora_windows is not valid shell"
+grep -Fxq 'data/grub/11_kernora_windows etc/grub.d' "$package_root/debian/kernora-desktop.install" \
+  && sh "$windows_menu" | grep -Fxq '    set timeout=-1' \
+  && sh "$windows_menu" | grep -Fq '/EFI/Microsoft/Boot/bootmgfw.efi' \
+  && ! sh "$windows_menu" | grep -Fq 'search ' \
+  || fail "the boot menu does not wait for a choice when Windows is present"
 grep -Fq 'Keys.onReturnPressed: event => event.accepted = true' "$package_root/data/widgets/common/CityPicker.qml" \
   || fail "Enter in the city search closes the widget settings"
 grep -Fq 'property Timer watch' "$package_root/data/widgets/common/WeatherModel.qml" \

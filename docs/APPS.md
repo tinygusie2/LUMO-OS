@@ -292,6 +292,13 @@ is not part of a restore point.
   `@` from the snapshot. `kernora-snapshots.service` refreshes the boot menu at
   the next start.
 
+On UEFI, `/etc/grub.d/11_kernora_windows` looks at every start for
+`/EFI/Microsoft/Boot/bootmgfw.efi` on all disks. If it is there, the boot menu
+has a Windows entry and waits without a countdown; Lumo stays the first entry.
+Without Windows the usual 2 seconds apply. `os-prober` stays off, so there is no
+second Windows entry. It uses `[ -f ]` because `search` prints an error when
+Windows is missing. Windows installed in BIOS mode is not detected.
+
 The boot menu starts the live session in English (the default) or Russian
 (`kernora.lang=`), which the installer inherits.
 
