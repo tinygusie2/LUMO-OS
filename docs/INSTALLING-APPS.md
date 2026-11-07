@@ -1,12 +1,12 @@
 # Installing applications
 
-Kernora Store combines Debian's AppStream catalogue with Flathub. APT searches only the configured APT repositories, and package names can differ from the names displayed in the Store. Installing a Flatpak does not add its application to Debian's repositories.
+Lumo Store combines Debian's AppStream catalogue with Flathub. APT searches only the configured APT repositories, and package names can differ from the names displayed in the Store. Installing a Flatpak does not add its application to Debian's repositories.
 
 Archive package `kernora-archive 1.3` enables Debian `main`, `contrib`, `non-free` and `non-free-firmware`. It also enables `i386` for new amd64 installations and upgrades from older archive packages. No applications are installed merely by enabling these sources. Later archive upgrades preserve an administrator's decision to remove `i386`.
 
 ## Steam
 
-After installing the Kernora update, refresh the package lists and use Debian's package name:
+After installing the Lumo update, refresh the package lists and use Debian's package name:
 
 ```sh
 sudo apt update
@@ -31,9 +31,9 @@ sudo apt update
 sudo apt install proton-vpn-gnome-desktop
 ```
 
-Stop if downloading or verifying the checksum fails. Check the official instructions for a newer release rather than skipping verification. Installing the release package explicitly adds Proton's repository and signing key; Kernora does not add that third-party source by default.
+Stop if downloading or verifying the checksum fails. Check the official instructions for a newer release rather than skipping verification. Installing the release package explicitly adds Proton's repository and signing key; Lumo does not add that third-party source by default.
 
-Proton officially supports its Linux app on GNOME. Kernora uses Plasma. Resolving the package dependencies on Debian is distinct from testing VPN login, key storage, connectivity and the kill switch in a Kernora session.
+Proton officially supports its Linux app on GNOME. Lumo uses Plasma. Resolving the package dependencies on Debian is distinct from testing VPN login, key storage, connectivity and the kill switch in a Lumo session.
 
 ## If APT still cannot find a package
 

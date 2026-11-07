@@ -283,7 +283,7 @@ SettingsPage {
 
         ListItem {
             title: i18n("Themed app icons")
-            subtitle: i18n("Apps without a Kernora icon take on the colour too")
+            subtitle: i18n("Apps without a Lumo icon take on the colour too")
             icon: "preferences-desktop-icons"
             iconStyle: "plain"
             checkable: true

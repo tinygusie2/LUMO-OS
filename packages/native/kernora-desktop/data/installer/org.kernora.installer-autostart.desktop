@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Name=Install Kernora
-Name[ru]=Установить Kernora
+Name=Install Lumo
+Name[ru]=Установить Lumo
 Icon=org.kernora.installer
 Exec=/usr/bin/kernora-installer --autostart
 NoDisplay=true

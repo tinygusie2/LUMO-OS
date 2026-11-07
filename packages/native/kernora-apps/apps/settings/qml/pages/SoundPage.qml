@@ -219,7 +219,7 @@ SettingsPage {
 
         ListItem {
             title: i18n("Sounds")
-            subtitle: i18n("Kernora")
+            subtitle: i18n("Lumo")
             icon: "preferences-desktop-sound"
             iconStyle: "plain"
             trailing: Component {

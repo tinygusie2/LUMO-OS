@@ -17,7 +17,7 @@ are saved the normal way, and automatic placement never overwrites them.
 Only the desktop itself is affected, not folder popups. Log out and back in
 after updating.
 
-The packaged FolderView starts from the file in Kernora's Plasma 6.3.6 image
+The packaged FolderView starts from the file in Lumo's Plasma 6.3.6 image
 (SHA256 `b308111803d996819972c879986a11da84b9cda199aa6bfce0dc6480307e3bf6`).
 Clicking and the context menu work the same as before. The KDE license
 headers are kept and Debian copyright lists the KDE authors. The original file

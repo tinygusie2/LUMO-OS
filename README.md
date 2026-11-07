@@ -112,6 +112,9 @@ Taken in a VM with the default colour and dark theme.
   ([docs/DRIVERS.md](docs/DRIVERS.md))
 - Quick Share with Android phones: send and receive files over Wi-Fi, no
   app needed on the phone ([docs/QUICKSHARE.md](docs/QUICKSHARE.md))
+- Android apps (demo channel for now): turn Android on in Settings, then
+  open any .apk file. Each app gets its own window
+  ([docs/ANDROID.md](docs/ANDROID.md))
 - Calamares as the installer, restyled to match
 - English and Russian. You pick the live session language in the boot menu
 - updates: Debian security updates (kernel too) and LibreWolf install by

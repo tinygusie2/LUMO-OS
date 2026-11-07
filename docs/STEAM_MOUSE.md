@@ -1,6 +1,6 @@
 # CS2: cursor escapes to the second monitor
 
-Reported setup: Steam installed from Kernora Store, CS2 in fullscreen, two
+Reported setup: Steam installed from Lumo Store, CS2 in fullscreen, two
 monitors. Moving the mouse towards the other monitor and shooting can click
 outside the game. I don't know the Steam source (Flatpak or Debian), the GPU,
 the game build or launch options yet, so I'm not assuming any of that.

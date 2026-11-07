@@ -1,7 +1,7 @@
 # CPU temperature widget
 
 The new desktop applet is `org.kernora.widget.cputemperature`. The existing
-Plasma applet model discovers its metadata; Kernora's WidgetExplorer orders it
+Plasma applet model discovers its metadata; Lumo's WidgetExplorer orders it
 after Batteries. The search uses the normal model, including translated names
 and descriptions. WidgetPreview uses the same TemperatureCard component as the
 actual widget and labels its sample readings as a preview.

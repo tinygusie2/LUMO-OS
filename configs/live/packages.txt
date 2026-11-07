@@ -1,4 +1,4 @@
-kernora-base=1.6.3
+kernora-base=1.6.4
 linux-image-amd64=6.12.111-1
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
@@ -52,10 +52,10 @@ ufw
 python3
 xdg-utils
 
-kernora-desktop=1.4.69.1
-kernora-calamares=1.4.69.1
-kernora-apps=1.1.80.1
-kernora-quickshare=1.0.2
+kernora-desktop=1.4.73
+kernora-calamares=1.4.73
+kernora-apps=1.1.85
+kernora-quickshare=1.0.3
 polkit-kde-agent-1=4:6.3.6-1kernora1
 plymouth
 plymouth-label

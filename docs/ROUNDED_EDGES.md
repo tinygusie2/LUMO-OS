@@ -8,7 +8,7 @@ mask the 52-pixel fixture had 200 intermediate edge pixels in the baseline
 capture, while retaining an opaque centre and a clean exterior.
 
 Avatar masks now use `maskThresholdMin: 0.5` and `maskSpreadAtMin: 1.0`, matching
-Kernora's existing RoundedClip component. The change covers the shared Avatar
+Lumo's existing RoundedClip component. The change covers the shared Avatar
 (Settings and launcher), SDDM, the lock screen and the logout/power menu.
 The original pictures are not resized or rewritten by this fix.
 
@@ -25,7 +25,7 @@ Relevant Qt 6.8 references:
 
 ## Validation
 
-`tests/rounded-edges/run.sh` renders the actual sources in a Kernora graphical
+`tests/rounded-edges/run.sh` renders the actual sources in a Lumo graphical
 session. Its opaque SVG separates the mask from any alpha already baked into
 a picture. Pixel checks cover three avatar sizes, two icon container sizes and
 two press-effect sizes. A lifecycle check presses and releases twice, requiring

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Android apps
+Name[ru]=Android-приложения
+Comment=Android apps on Lumo
+Comment[ru]=Приложения Android в Lumo
+Exec=waydroid show-full-ui
+Icon=org.kernora.android
+NoDisplay=true

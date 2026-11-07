@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 cmake_minimum_required(VERSION 3.25)
-project(kernora-apps VERSION 1.1.81 LANGUAGES C CXX)
+project(kernora-apps VERSION 1.1.85 LANGUAGES C CXX)
 
 set(QT_MIN_VERSION 6.8)
 set(KF_MIN_VERSION 6.13)
@@ -20,9 +20,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS
-    Core Gui Qml Quick QuickControls2 Widgets DBus Network)
+    Core Gui Qml Quick QuickControls2 Widgets DBus Network Svg)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS
-    Config CoreAddons DBusAddons I18n KIO Notifications Service WindowSystem)
+    Archive Config CoreAddons DBusAddons I18n KIO Notifications Service WindowSystem)
 find_package(KF6BluezQt ${KF_MIN_VERSION} REQUIRED)
 find_package(KF6Screen REQUIRED)
 find_package(PackageKitQt6 REQUIRED)
@@ -42,7 +42,7 @@ add_subdirectory(src/updatenotifier)
 add_subdirectory(src/bluetoothagent)
 add_subdirectory(src/pin)
 
-set(KERNORA_APPS settings files welcome editor photos player calculator screenshot store share tasks calendar)
+set(KERNORA_APPS settings files welcome editor photos player calculator screenshot store share tasks calendar drivers apkinstaller appsplash androiddialog)
 foreach(app ${KERNORA_APPS})
     install(DIRECTORY apps/${app}/qml/ DESTINATION ${KDE_INSTALL_DATADIR}/kernora/${app})
     install(FILES apps/${app}/org.kernora.${app}.desktop DESTINATION ${KDE_INSTALL_APPDIR})

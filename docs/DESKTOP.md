@@ -138,7 +138,7 @@ the generation. Brown, grey and blue grey carry their own chroma (24, 0 and
   `contents/ui/palettes/<colour>.qml`. Each scene loads the one named by
   `M3.colour` with a `Loader`, so the wallpaper changes colour with the
   theme. Shapes rotates its families around the seed; Rhythm, Starfall and
-  Pastel turn their palette by the seed's hue difference from Kernora's,
+  Pastel turn their palette by the seed's hue difference from Lumo's,
   except families marked fixed (Starfall's night sky, Pastel's accents).
 * **Switching.** `Appearance.setColour(colour)` runs the same steps as a
   change of generation with the colour's themes, and then
@@ -158,7 +158,7 @@ has no network) and `fetch-symbols --check` verifies them during the build.
 * Every drawing is re-gridded onto 24×24 and wrapped in the Breeze
   colour-scheme stylesheet, so Plasma recolours it with the palette.
 * Aliases, including every `-symbolic` spelling, are symlinks.
-* Kernora's own applications get a themed icon from `APP_ICONS`: the filled
+* Lumo's own applications get a themed icon from `APP_ICONS`: the filled
   symbol on a round tonal container, as a Pixel themes its app icons. System
   Settings (`preferences-system`, `systemsettings`) is drawn that way.
 * Every other app icon is redrawn per user so all of them have the same size
@@ -176,7 +176,7 @@ has no network) and `fetch-symbols --check` verifies them during the build.
 
 `AppIconSync` runs in the session service `kernora-update-notifier` (also in
 the live session) and writes `~/.local/share/icons/Kernora/scalable/apps/<icon>.svg`
-for every visible app whose icon Kernora doesn't draw. The user directory has
+for every visible app whose icon Lumo doesn't draw. The user directory has
 no `index.theme`, so it joins the system `Kernora` theme and every
 `Kernora-<colour>` theme that inherits it, ahead of Breeze and hicolor. So the
 dock, the app menu, the desktop, Alt+Tab and every other place get the new
@@ -187,7 +187,7 @@ icon without changes of their own.
   Flatpak exports included), or `pixmaps`. Icons from other contexts are never
   overridden, so a service that borrows an action icon doesn't change it
   everywhere.
-* A round icon is fitted to the Kernora circle (radius 22 of 48). Anything else
+* A round icon is fitted to the Lumo circle (radius 22 of 48). Anything else
   sits at 68 % on a white circle of the same size, like ChromeOS.
 * With "Themed app icons" on (`kernorarc` `[Icons] themedApps`, Settings ›
   Wallpaper & style › Colour, off by default) the icon becomes a glyph in the
@@ -244,7 +244,20 @@ to the inactive side when the active part is too short), a stop indicator, and
 a value bubble while held. It shows its own value until the backend catches up,
 so a slow audio or backlight service never makes the handle jump back.
 
-### Panel (`look-and-feel/.../org.kde.plasma.desktop-layout.js`)
+### Panel (`data/panel/layout.js`)
+
+The panel is Plasma's `org.kde.plasma.desktop.defaultPanel` template, diverted,
+so Add Panel → Default Panel gives the same panel as the first login, where
+the look-and-feel layout loads it with `loadTemplate`.
+
+A second panel gets no shortcuts, because the first one keeps them. KGlobalAccel
+also keeps the keys of a deleted widget: `activate widget N` stays registered
+and the key can't go to a new widget. When a shortcut is missing, the template
+sets `reclaimShortcuts` on the launcher, which runs `kernora-panel-shortcuts`
+3 seconds later and once more after 70 seconds, when a deleted panel's Undo has
+run out. The helper unregisters those entries one by one and gives the keys
+back. `Component.cleanUp` is not an option: with no tray loaded it would also
+drop the entry that keeps Klipper off Meta+V.
 
 One floating, full-width panel: launcher, centred tasks, the system tray, the
 notifications bell and the quick settings chip, plus the clipboard applet,
@@ -421,20 +434,20 @@ then drops them, which keeps it from ever collapsing into an icon.
 
 ### Widget picker and edit mode
 
-Kernora replaces Plasma's widget explorer
-(`data/explorer/WidgetExplorer.qml`, diverted): a search bar, a Kernora
+Lumo replaces Plasma's widget explorer
+(`data/explorer/WidgetExplorer.qml`, diverted): a search bar, a Lumo
 section and an "Other widgets" section, both made of the same cards
 (`WidgetCard.qml`). A card shows a preview drawn in Material, the widget's
 name next to a Pixel style icon (a Material symbol on a circle in the theme
 colour) and a tick when the widget is in use (the tick removes it again).
-Kernora's previews live in `WidgetPreview.qml`; the widgets that come with
+Lumo's previews live in `WidgetPreview.qml`; the widgets that come with
 Plasma get theirs from `OtherPreview.qml`, picked by the table in
 `widgets.js`, which also gives each one its icon and a group (time, system
 monitor, files, media, system, input, panel). Widgets the table does not
 know keep their own icon on a Material shape. A tap adds a widget, dragging
 it (`WidgetDrag.qml`, MIME `text/x-plasmoidservicename`) drops it where it
-should go. On a panel the Kernora widgets give way to the panel applets and
-the panel group comes first. The Kernora cards come in a fixed order, the
+should go. On a panel the Lumo widgets give way to the panel applets and
+the panel group comes first. The Lumo cards come in a fixed order, the
 clock first. Plasma 6 hides
 "Add or Manage Widgets…" from the desktop's right-click menu; the
 `kernora_add_widgets_menu` kconf_update script turns it back on

@@ -14,7 +14,7 @@ app page. Nothing gets installed just from opening a file or a page.
 
 The Installed page also lists apps you installed some other way, as long as
 there's metadata for them. Flatpak apps and runtimes update in the Store,
-Debian and Kernora updates stay in Settings. If checking for updates fails,
+Debian and Lumo updates stay in Settings. If checking for updates fails,
 the Store keeps the last list and shows a retry button instead of pretending
 everything is fine.
 
@@ -48,7 +48,7 @@ Animations follow the desktop animation speed and there's not a lot of
 them: tabs slide their underline, pages fade in, rows scroll smoothly.
 
 To preview QML changes against an installed Store backend, close the Store
-and run this in a Kernora session:
+and run this in a Lumo session:
 
 ```sh
 KERNORA_QML_STORE=/absolute/path/to/packages/native/kernora-apps/apps/store/qml kernora-store
@@ -60,7 +60,7 @@ KERNORA_QML_STORE=/absolute/path/to/packages/native/kernora-apps/apps/store/qml 
 build the packages and check the Store module, launcher, dependencies, remote
 file and the Russian translation.
 
-Catalogue smoke test, in a throwaway Kernora session with both catalogues
+Catalogue smoke test, in a throwaway Lumo session with both catalogues
 downloaded:
 
 ```sh

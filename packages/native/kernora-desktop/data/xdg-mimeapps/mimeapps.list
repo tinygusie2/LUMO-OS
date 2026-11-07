@@ -15,3 +15,4 @@ application/x-msdownload=org.kernora.wine.desktop;
 application/x-msi=org.kernora.wine.desktop;
 application/x-ms-shortcut=org.kernora.wine.desktop;
 text/xml=org.kernora.editor.desktop;
+application/vnd.android.package-archive=org.kernora.apkinstaller.desktop;

@@ -22,7 +22,7 @@ with `locale -a`; a zero generator exit status alone is insufficient. It does
 not change language or format preferences. Repeated runs make no changes when
 the catalog and generated locales are complete. No login hook is installed.
 
-The root cause was reproduced in a disposable Debian/Kernora QEMU session with
+The root cause was reproduced in a disposable Debian/Lumo QEMU session with
 the installed Calamares module. Before repair, the actual rewrite recorded
 `# Missing: en_PH.UTF-8`, Bash warned, and `locale charmap` returned
 `ANSI_X3.4-1968`. After repair, `en_PH.UTF-8` and `fil_PH.UTF-8` returned `UTF-8`

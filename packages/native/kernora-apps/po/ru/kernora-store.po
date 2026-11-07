@@ -141,9 +141,9 @@ msgstr ""
 "не из проверенного источника, и получит полный доступ к компьютеру."
 
 #: packages/native/kernora-apps/apps/store/qml/AppPage.qml:362
-msgid "You are trying Kernora. Apps you install now disappear after a restart."
+msgid "You are trying Lumo. Apps you install now disappear after a restart."
 msgstr ""
-"Вы пробуете Kernora. Установленные сейчас приложения пропадут после "
+"Вы пробуете Lumo. Установленные сейчас приложения пропадут после "
 "перезагрузки."
 
 #: packages/native/kernora-apps/apps/store/qml/AppPage.qml:449
@@ -243,11 +243,11 @@ msgstr "Ещё"
 
 #: packages/native/kernora-apps/apps/store/qml/HomePage.qml:38
 msgid ""
-"You are trying Kernora. Apps you install now disappear after a restart, "
-"install Kernora to keep them."
+"You are trying Lumo. Apps you install now disappear after a restart, "
+"install Lumo to keep them."
 msgstr ""
-"Вы пробуете Kernora. Установленные сейчас приложения пропадут после "
-"перезагрузки, установите Kernora, чтобы они остались."
+"Вы пробуете Lumo. Установленные сейчас приложения пропадут после "
+"перезагрузки, установите Lumo, чтобы они остались."
 
 #: packages/native/kernora-apps/apps/store/qml/HomePage.qml:119
 msgid ""
@@ -465,8 +465,8 @@ msgid "Lumo and the apps that come with it update in Settings"
 msgstr "Lumo и встроенные приложения обновляются в Настройках"
 
 #: packages/native/kernora-apps/apps/store/qml/UpdatesPage.qml:232
-msgid "Kernora and the apps that come with it update in Settings"
-msgstr "Kernora и встроенные приложения обновляются в Настройках"
+msgid "Lumo and the apps that come with it update in Settings"
+msgstr "Lumo и встроенные приложения обновляются в Настройках"
 
 #: packages/native/kernora-apps/apps/store/qml/UpdatesPage.qml:236
 msgid "Open Settings"

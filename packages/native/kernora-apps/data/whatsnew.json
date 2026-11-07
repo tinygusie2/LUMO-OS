@@ -1,5 +1,78 @@
 [
   {
+    "id": "2026-11-06-5",
+    "date": "2026-11-06",
+    "items": [
+      {
+        "icon": "kernora-drivers",
+        "title": {
+          "en": "New Drivers app",
+          "ru": "Новое приложение «Драйверы»"
+        },
+        "text": {
+          "en": "See every device in your computer and which driver it uses. Install drivers for NVIDIA cards, Broadcom Wi-Fi, printers and scanners, update drivers and firmware, and save a hardware report when you need help.",
+          "ru": "Здесь видно все устройства компьютера и их драйверы. Можно установить драйверы для видеокарт NVIDIA, Wi-Fi Broadcom, принтеров и сканеров, обновить драйверы и прошивки и сохранить отчёт об оборудовании, если нужна помощь."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-06-4",
+    "date": "2026-11-06",
+    "items": [
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "New panels look like Lumo",
+          "ru": "Новые панели теперь как в Lumo"
+        },
+        "text": {
+          "en": "The default panel in the Add Panel menu is now the Lumo panel. If you delete your panel and add a new one, its keyboard shortcuts come back on their own.",
+          "ru": "Стандартная панель из меню добавления теперь такая же, как панель Lumo. Если удалить панель и добавить новую, сочетания клавиш вернутся сами."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-06-3",
+    "date": "2026-11-06",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Video plays in Android apps",
+          "ru": "Видео в приложениях Android"
+        },
+        "text": {
+          "en": "YouTube and other video apps now show the picture instead of a black window.",
+          "ru": "YouTube и другие приложения с видео теперь показывают картинку, а не чёрное окно."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Clicks go to the right Android app",
+          "ru": "Клики попадают в нужное приложение"
+        },
+        "text": {
+          "en": "With several Android apps open, clicks and the mouse wheel now reach the window under the pointer, not the app you opened last.",
+          "ru": "Когда открыто несколько приложений Android, клики и колесо мыши теперь попадают в окно под курсором, а не в приложение, открытое последним."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Better fullscreen and resizing",
+          "ru": "Полный экран и размер окна работают лучше"
+        },
+        "text": {
+          "en": "Android apps stay in fullscreen when they restart their screen, and the picture follows the window while you resize it.",
+          "ru": "Приложения Android больше не выпадают из полного экрана, а при изменении размера картинка следует за окном."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-11-06-2",
     "date": "2026-11-06",
     "items": [
@@ -50,6 +123,34 @@
     ]
   },
   {
+    "id": "2026-11-05-4",
+    "date": "2026-11-05",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android windows stay open",
+          "ru": "Окна Android больше не пропадают"
+        },
+        "text": {
+          "en": "Games and apps with a fixed size now open in a normal window and no longer hide your other Android apps. A rare freeze when opening a new window is fixed too.",
+          "ru": "Игры и приложения с фиксированным размером теперь открываются в обычном окне и не прячут другие приложения Android. Заодно исправлено редкое зависание при открытии нового окна."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Every Android app gets its own button",
+          "ru": "У каждого приложения Android своя кнопка"
+        },
+        "text": {
+          "en": "A freshly installed app now opens with its own icon on the panel instead of sharing one button with Google Play.",
+          "ru": "Только что установленное приложение открывается со своим значком на панели и не делит одну кнопку с Google Play."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-11-05-3",
     "date": "2026-11-05",
     "items": [
@@ -77,8 +178,75 @@
           "ru": "Понятные имена Bluetooth-устройств"
         },
         "text": {
-          "en": "Pairing now picks up device names as they arrive and starts searching when your adapter is ready. Named devices stay in a stable list; devices that have not provided a name remain accessible under “Show devices without names”. Your custom names are kept. Failed searches can be retried, and leaving the page releases only Kernora’s own search session.",
-          "ru": "При сопряжении названия обновляются по мере получения, а поиск запускается, когда адаптер готов. Именованные устройства отображаются в стабильном списке; остальные доступны через «Показать устройства без имени». Ваши собственные названия сохраняются. Неудачный поиск можно повторить, а при уходе со страницы освобождается только поисковая сессия Kernora."
+          "en": "Pairing now picks up device names as they arrive and starts searching when your adapter is ready. Named devices stay in a stable list; devices that have not provided a name remain accessible under “Show devices without names”. Your custom names are kept. Failed searches can be retried, and leaving the page releases only Lumo’s own search session.",
+          "ru": "При сопряжении названия обновляются по мере получения, а поиск запускается, когда адаптер готов. Именованные устройства отображаются в стабильном списке; остальные доступны через «Показать устройства без имени». Ваши собственные названия сохраняются. Неудачный поиск можно повторить, а при уходе со страницы освобождается только поисковая сессия Lumo."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-04-4",
+    "date": "2026-11-04",
+    "items": [
+      {
+        "icon": "preferences-desktop-theme",
+        "title": {
+          "en": "A lighter look for windows",
+          "ru": "Новый лёгкий вид окон"
+        },
+        "text": {
+          "en": "Every window now has a thin title bar with its icon and title on the left, and quiet buttons, like on a Chromebook.",
+          "ru": "У всех окон теперь тонкая полоса заголовка с иконкой и названием слева и спокойные кнопки, как на Chromebook."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps ask in a Lumo window",
+          "ru": "Android-приложения спрашивают в окне Lumo"
+        },
+        "text": {
+          "en": "When an Android app asks for a permission, the question now opens as a Lumo window with the app's icon.",
+          "ru": "Когда Android-приложение просит разрешение, вопрос теперь открывается окном Lumo с иконкой приложения."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-04-3",
+    "date": "2026-11-04",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps in real Lumo windows",
+          "ru": "Android-приложения в настоящих окнах Lumo"
+        },
+        "text": {
+          "en": "Android apps now open in the same windows as the rest of Lumo, like on a Chromebook. Windows move and resize smoothly, every button in an app can be clicked, nothing is see-through any more, and closing or covering one app leaves the others alone. Apps that support it open large, so YouTube shows a proper grid of sharp previews.",
+          "ru": "Android-приложения теперь открываются в таких же окнах, как всё остальное в Lumo, как на Chromebook. Окна плавно двигаются и меняют размер, все кнопки в приложениях нажимаются, ничего не просвечивает, а если закрыть или перекрыть одно приложение, другие не пропадают. Приложения, которые это умеют, открываются большими, поэтому в YouTube теперь нормальная сетка с чёткими превью."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps explain why they can't open",
+          "ru": "Android-приложения объясняют, почему не открываются"
+        },
+        "text": {
+          "en": "Android apps only run in a Wayland session. If you signed in with X11, they used to fail without a reason. Now Lumo tells you and offers to sign out, and Wayland is used next time.",
+          "ru": "Android-приложения работают только в сеансе Wayland. Если вы вошли через X11, раньше они просто не открывались. Теперь Lumo об этом сообщает и предлагает выйти из системы, а в следующий раз включается Wayland."
+        }
+      },
+      {
+        "icon": "preferences-system-time",
+        "title": {
+          "en": "The right time in Android apps",
+          "ru": "Правильное время в Android-приложениях"
+        },
+        "text": {
+          "en": "Android apps now use the same time zone as your computer, so clocks, reminders and chats show the right time.",
+          "ru": "Android-приложения теперь используют тот же часовой пояс, что и компьютер, поэтому в часах, напоминаниях и чатах время верное."
         }
       }
     ]
@@ -206,6 +374,209 @@
     ]
   },
   {
+    "id": "2026-11-02-1",
+    "date": "2026-11-02",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Steadier Android apps that use less memory",
+          "ru": "Android-приложения стабильнее и берут меньше памяти"
+        },
+        "text": {
+          "en": "Android apps keep the size they open with, so games and sign-ins are no longer interrupted. Phone apps you don't need on a computer stay off, which saves about half a gigabyte, and Android hands all its memory back half an hour after you close the last app.",
+          "ru": "Android-приложения больше не меняют размер после запуска, поэтому игры и вход в аккаунт не прерываются. Ненужные на компьютере телефонные приложения выключены, это экономит около полугигабайта, а через полчаса после закрытия последнего приложения Android полностью освобождает память."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-01-4",
+    "date": "2026-11-01",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps start on more computers",
+          "ru": "Android-приложения запускаются на большем числе компьютеров"
+        },
+        "text": {
+          "en": "On some computers and in virtual machines, Android apps stayed see-through and never opened. Lumo now notices this and switches Android to drawing on the processor by itself. Setting up Google Play is simpler too: open it and sign in.",
+          "ru": "На некоторых компьютерах и в виртуальных машинах Android-приложения оставались прозрачными и не открывались. Теперь Lumo замечает это и сама переключает Android на отрисовку процессором. И настроить Google Play стало проще: откройте его и войдите."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-01-3",
+    "date": "2026-11-01",
+    "items": [
+      {
+        "icon": "video-display",
+        "title": {
+          "en": "Android apps on every monitor",
+          "ru": "Android-приложения на всех мониторах"
+        },
+        "text": {
+          "en": "With more than one monitor, drag an Android app by its title bar to any of them. New apps open on your main monitor.",
+          "ru": "Если мониторов несколько, Android-приложение можно перетащить за заголовок на любой из них. Новые приложения открываются на основном мониторе."
+        }
+      },
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Downloads go on in the background",
+          "ru": "Загрузки идут в фоне"
+        },
+        "text": {
+          "en": "Android used to fall asleep a minute after its last window closed, and Google Play stopped downloading. Now it keeps going for half an hour.",
+          "ru": "Раньше Android засыпал через минуту после закрытия последнего окна, и Google Play переставал скачивать. Теперь загрузки продолжаются ещё полчаса."
+        }
+      },
+      {
+        "icon": "preferences-desktop-feedback",
+        "title": {
+          "en": "Report a problem with Android apps",
+          "ru": "Сообщить о проблеме с Android-приложениями"
+        },
+        "text": {
+          "en": "If an Android app misbehaves, open Settings, Android apps, Report a problem. It saves a file with what Android logged that you can send to us.",
+          "ru": "Если Android-приложение ведёт себя странно, откройте Настройки, Android-приложения, «Сообщить о проблеме». Появится файл с журналами Android, который можно отправить нам."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-01-2",
+    "date": "2026-11-01",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Apps made for phones",
+          "ru": "Приложения для телефонов"
+        },
+        "text": {
+          "en": "Most apps on Google Play are built only for phone processors. Android apps now run them on your computer too: Lumo adds what they need by itself, so they install from Google Play and from APK files like any other app.",
+          "ru": "Большинство приложений в Google Play собраны только под процессоры телефонов. Теперь они работают и на компьютере: Lumo сама добавляет всё нужное, и такие приложения ставятся из Google Play и из APK-файлов, как любые другие."
+        }
+      },
+      {
+        "icon": "video-display",
+        "title": {
+          "en": "Android apps on NVIDIA graphics",
+          "ru": "Android-приложения на видеокартах NVIDIA"
+        },
+        "text": {
+          "en": "On computers where the screen runs on an NVIDIA graphics card, Android apps opened as black windows. They now draw on the processor there and show up as they should.",
+          "ru": "На компьютерах, где экран подключён к видеокарте NVIDIA, Android-приложения открывались чёрными окнами. Теперь там они рисуются силами процессора и отображаются как надо."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-11-01-1",
+    "date": "2026-11-01",
+    "items": [
+      {
+        "icon": "input-keyboard",
+        "title": {
+          "en": "Android apps type in your layout",
+          "ru": "Android-приложения печатают в вашей раскладке"
+        },
+        "text": {
+          "en": "Android apps used to type only in English. Now they use the same keyboard layouts as Lumo and switch along with it, so you can write in Russian, Ukrainian or any other layout you have.",
+          "ru": "Раньше Android-приложения печатали только по-английски. Теперь у них те же раскладки, что и в Lumo, и они переключаются вместе с ней, так что можно писать по-русски, по-украински и на любой другой вашей раскладке."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-31-4",
+    "date": "2026-10-31",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps without the extras",
+          "ru": "Android-приложения без лишнего"
+        },
+        "text": {
+          "en": "Android apps no longer pop up an on-screen keyboard: you type with your own keyboard, like in any other app. Android doesn't ask you to finish setting up the device anymore, and its \"isn't responding\" windows stay out of the way.",
+          "ru": "Android-приложения больше не открывают экранную клавиатуру: вы печатаете на своей, как в любой другой программе. Android больше не просит завершить настройку устройства, а его окна «приложение не отвечает» не мешают."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-31-3",
+    "date": "2026-10-31",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps open like computer apps",
+          "ru": "Android-приложения открываются как программы для компьютера"
+        },
+        "text": {
+          "en": "Android apps now open in wide windows sized for a computer and match the scale of the rest of Lumo, and Android calls this computer Lumo Laptop or Lumo PC instead of a tablet. Setting them up shows the progress from the very first second and tells you when everything is ready, and Settings takes you through signing in to Google Play in two steps.",
+          "ru": "Android-приложения теперь открываются в широких окнах размером для компьютера и совпадают по масштабу с остальной Lumo, а сам Android называет этот компьютер Lumo Laptop или Lumo PC, а не планшетом. Настройка показывает прогресс с первой секунды и сообщает, когда всё готово, а вход в Google Play в Настройках разбит на два шага."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-31-2",
+    "date": "2026-10-31",
+    "items": [
+      {
+        "icon": "kernora-google-play",
+        "title": {
+          "en": "Google Play is the recommended choice",
+          "ru": "Google Play — рекомендуемый вариант"
+        },
+        "text": {
+          "en": "When you set up Android apps, Google Play and APK files together now come first and are picked for you, so apps install the way they do on an Android phone. Installing an APK file also looks like it does on Android now: the app, its version and two clear buttons.",
+          "ru": "При настройке Android-приложений вариант «Google Play и APK-файлы» теперь стоит первым и выбран сразу, так что приложения ставятся так же, как на телефоне Android. Установка APK-файла тоже выглядит как на Android: приложение, его версия и две понятные кнопки."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-31-1",
+    "date": "2026-10-31",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps set up much faster",
+          "ru": "Android-приложения настраиваются намного быстрее"
+        },
+        "text": {
+          "en": "Setting up Android apps used to depend on one download server, and a slow one could make it take hours. Now Lumo downloads from several servers at once and leaves the slow ones behind, and Settings shows how much time is left. Updates for Android apps download the same way.",
+          "ru": "Раньше настройка Android-приложений зависела от одного сервера, и медленный сервер мог растянуть её на часы. Теперь Lumo качает сразу с нескольких серверов и не ждёт медленные, а в Настройках видно, сколько осталось. Обновления для Android-приложений качаются так же."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-30-1",
+    "date": "2026-10-30",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps (demo)",
+          "ru": "Android-приложения (демо)"
+        },
+        "text": {
+          "en": "Lumo runs apps made for Android phones now. Set them up once in Settings, Android apps: pick APK files or Google Play, and Lumo downloads everything they need. Then open any .apk file to install an app. Each one gets its own window in your colours, sits with your other apps and keeps itself up to date. This is an early demo, so tell us what works and what doesn't.",
+          "ru": "Lumo теперь запускает приложения для телефонов на Android. Один раз настройте их в Настройках, раздел «Android-приложения»: выберите APK-файлы или Google Play, и Lumo сама скачает всё нужное. Потом откройте любой .apk-файл, чтобы установить приложение. Каждое открывается в своём окне в ваших цветах, стоит рядом с остальными приложениями и обновляется само. Это ранняя демо-версия, расскажите нам, что работает, а что нет."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-10-29-3",
     "date": "2026-10-29",
     "items": [
@@ -216,8 +587,8 @@
           "ru": "Превью для каждого виджета"
         },
         "text": {
-          "en": "In the widget list, the widgets that came with KDE are now cards like Kernora's own: each one shows a small Material preview of what it looks like, and its icon sits on a circle in your colour, like on Pixel. Desktop widgets come first, the panel ones further down.",
-          "ru": "В списке виджетов виджеты из KDE теперь выглядят как карточки Kernora: у каждого маленькое превью в стиле Material, а значок стоит на круге вашего цвета, как на Pixel. Сначала идут виджеты для рабочего стола, ниже — для панели."
+          "en": "In the widget list, the widgets that came with KDE are now cards like Lumo's own: each one shows a small Material preview of what it looks like, and its icon sits on a circle in your colour, like on Pixel. Desktop widgets come first, the panel ones further down.",
+          "ru": "В списке виджетов виджеты из KDE теперь выглядят как карточки Lumo: у каждого маленькое превью в стиле Material, а значок стоит на круге вашего цвета, как на Pixel. Сначала идут виджеты для рабочего стола, ниже — для панели."
         }
       }
     ]
@@ -267,8 +638,8 @@
           "ru": "Значки приложений одного размера"
         },
         "text": {
-          "en": "Icons of apps from Flathub and Debian now match Kernora's own: round icons fill the same circle, the others sit on a white circle, in the dock, the app menu, on the desktop and everywhere else.",
-          "ru": "Значки приложений из Flathub и Debian теперь выглядят как значки Kernora: круглые занимают тот же круг, остальные стоят на белом круге. В доке, в меню приложений, на рабочем столе и везде."
+          "en": "Icons of apps from Flathub and Debian now match Lumo's own: round icons fill the same circle, the others sit on a white circle, in the dock, the app menu, on the desktop and everywhere else.",
+          "ru": "Значки приложений из Flathub и Debian теперь выглядят как значки Lumo: круглые занимают тот же круг, остальные стоят на белом круге. В доке, в меню приложений, на рабочем столе и везде."
         }
       },
       {
@@ -452,8 +823,8 @@
           "ru": "Quick Share с телефоном"
         },
         "text": {
-          "en": "Send photos and files between an Android phone and Kernora, no cables or apps. On the phone, share and pick this computer; Kernora asks first and saves to Downloads. To send from Kernora, right-click a file in Files. Both need to be on the same Wi-Fi. The Quick Share tile in quick settings makes the computer visible for 10 minutes.",
-          "ru": "Фото и файлы между Android-телефоном и Kernora без кабелей и приложений. На телефоне нажмите «Поделиться» и выберите этот компьютер: Kernora сначала спросит и сохранит всё в «Загрузки». Чтобы отправить с компьютера, нажмите правой кнопкой на файл в Файлах. Оба устройства должны быть в одной сети Wi-Fi. Плитка Quick Share в быстрых настройках делает компьютер видимым на 10 минут."
+          "en": "Send photos and files between an Android phone and Lumo, no cables or apps. On the phone, share and pick this computer; Lumo asks first and saves to Downloads. To send from Lumo, right-click a file in Files. Both need to be on the same Wi-Fi. The Quick Share tile in quick settings makes the computer visible for 10 minutes.",
+          "ru": "Фото и файлы между Android-телефоном и Lumo без кабелей и приложений. На телефоне нажмите «Поделиться» и выберите этот компьютер: Lumo сначала спросит и сохранит всё в «Загрузки». Чтобы отправить с компьютера, нажмите правой кнопкой на файл в Файлах. Оба устройства должны быть в одной сети Wi-Fi. Плитка Quick Share в быстрых настройках делает компьютер видимым на 10 минут."
         }
       }
     ]
@@ -525,8 +896,8 @@
           "ru": "Меньше KDE"
         },
         "text": {
-          "en": "More settings only lists what Kernora has no page of its own for, the widgets menu no longer sends you to the KDE store, and the panel icon menu simply says Pin to panel.",
-          "ru": "«Ещё настройки» показывают только то, для чего в Kernora нет своей страницы, меню виджетов больше не ведёт в магазин KDE, а меню значка на панели просто предлагает закрепить его на панели."
+          "en": "More settings only lists what Lumo has no page of its own for, the widgets menu no longer sends you to the KDE store, and the panel icon menu simply says Pin to panel.",
+          "ru": "«Ещё настройки» показывают только то, для чего в Lumo нет своей страницы, меню виджетов больше не ведёт в магазин KDE, а меню значка на панели просто предлагает закрепить его на панели."
         }
       }
     ]
@@ -570,8 +941,8 @@
           "ru": "Приветствие только один раз"
         },
         "text": {
-          "en": "Welcome greets you on the first login after installing Kernora and then leaves the app menu. On the live USB the installer now opens by itself.",
-          "ru": "Приветствие встречает вас при первом входе после установки Kernora и потом пропадает из меню приложений. На загрузочной флешке установщик теперь открывается сам."
+          "en": "Welcome greets you on the first login after installing Lumo and then leaves the app menu. On the live USB the installer now opens by itself.",
+          "ru": "Приветствие встречает вас при первом входе после установки Lumo и потом пропадает из меню приложений. На загрузочной флешке установщик теперь открывается сам."
         }
       }
     ]
@@ -639,12 +1010,12 @@
       {
         "icon": "kernora-logo",
         "title": {
-          "en": "Just Kernora OS 1",
-          "ru": "Просто Kernora OS 1"
+          "en": "Just Lumo 1",
+          "ru": "Просто Lumo 1"
         },
         "text": {
-          "en": "The system is now called simply Kernora OS 1, without Ember in the name.",
-          "ru": "Система теперь называется просто Kernora OS 1, без Ember в названии."
+          "en": "The system is now called simply Lumo 1, without Ember in the name.",
+          "ru": "Система теперь называется просто Lumo 1, без Ember в названии."
         }
       }
     ]
@@ -656,8 +1027,8 @@
       {
         "icon": "preferences-desktop-theme",
         "title": {
-          "en": "One Kernora look",
-          "ru": "Единый вид Kernora"
+          "en": "One Lumo look",
+          "ru": "Единый вид Lumo"
         },
         "text": {
           "en": "The old KDE theme pickers are gone from More settings, so the system can't slip back into the KDE look by accident. Colours, the dark theme, wallpapers, fonts and cursor size are all in Settings.",
@@ -746,12 +1117,12 @@
       {
         "icon": "utilities-terminal",
         "title": {
-          "en": "Kernora in fastfetch",
-          "ru": "Kernora в fastfetch"
+          "en": "Lumo in fastfetch",
+          "ru": "Lumo в fastfetch"
         },
         "text": {
-          "en": "Run fastfetch in the terminal and you get the Kernora spiral instead of the Debian one. The ASCII art was drawn by milanrudis from the community. For narrow windows there is a compact version: fastfetch -c kernora-small.",
-          "ru": "Запустите fastfetch в терминале, и вместо логотипа Debian появится спираль Kernora. ASCII-арт нарисовал milanrudis из сообщества. Для узких окон есть компактная версия: fastfetch -c kernora-small."
+          "en": "Run fastfetch in the terminal and you get the Lumo spiral instead of the Debian one. The ASCII art was drawn by milanrudis from the community. For narrow windows there is a compact version: fastfetch -c kernora-small.",
+          "ru": "Запустите fastfetch в терминале, и вместо логотипа Debian появится спираль Lumo. ASCII-арт нарисовал milanrudis из сообщества. Для узких окон есть компактная версия: fastfetch -c kernora-small."
         }
       }
     ]
@@ -767,8 +1138,8 @@
           "ru": "Экран блокировки в ваших цветах"
         },
         "text": {
-          "en": "The lock screen and the login screen follow your light or dark theme and colour, and the Kernora profile picture changes colour with the rest of the system.",
-          "ru": "Экран блокировки и экран входа следуют вашей светлой или тёмной теме и цвету, а картинка профиля Kernora меняет цвет вместе с системой."
+          "en": "The lock screen and the login screen follow your light or dark theme and colour, and the Lumo profile picture changes colour with the rest of the system.",
+          "ru": "Экран блокировки и экран входа следуют вашей светлой или тёмной теме и цвету, а картинка профиля Lumo меняет цвет вместе с системой."
         }
       },
       {
@@ -789,8 +1160,8 @@
           "ru": "Мягкий запуск"
         },
         "text": {
-          "en": "While Kernora starts, a wavy Material 3 Expressive ring spins under the logo.",
-          "ru": "Пока Kernora загружается, под логотипом крутится волнистое кольцо Material 3 Expressive."
+          "en": "While Lumo starts, a wavy Material 3 Expressive ring spins under the logo.",
+          "ru": "Пока Lumo загружается, под логотипом крутится волнистое кольцо Material 3 Expressive."
         }
       }
     ]
@@ -845,8 +1216,8 @@
           "ru": "Внутри теперь Debian 13.7"
         },
         "text": {
-          "en": "Kernora now builds on Debian 13.7 with its latest fixes and a newer Linux 6.12 kernel.",
-          "ru": "Kernora теперь основана на Debian 13.7 со всеми свежими исправлениями и более новым ядром Linux 6.12."
+          "en": "Lumo now builds on Debian 13.7 with its latest fixes and a newer Linux 6.12 kernel.",
+          "ru": "Lumo теперь основана на Debian 13.7 со всеми свежими исправлениями и более новым ядром Linux 6.12."
         }
       },
       {
@@ -856,8 +1227,8 @@
           "ru": "Обои «Башня» убраны"
         },
         "text": {
-          "en": "The Tower live wallpaper is gone. If you used it, your desktop, lock screen and login screen now show Kernora Shapes.",
-          "ru": "Живых обоев «Башня» больше нет. Если они у вас стояли, на рабочем столе, экране блокировки и входа теперь «Фигуры Kernora»."
+          "en": "The Tower live wallpaper is gone. If you used it, your desktop, lock screen and login screen now show Lumo Shapes.",
+          "ru": "Живых обоев «Башня» больше нет. Если они у вас стояли, на рабочем столе, экране блокировки и входа теперь «Фигуры Lumo»."
         }
       }
     ]

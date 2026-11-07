@@ -42,7 +42,7 @@ assert_file_line "$package_root/debian/rules" 'VENDORFILE = kernora'
 assert_file_line "$package_root/etc/debian_version" '13.7'
 
 package_version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$package_version" == "13.8+deb13u7+kernora2" ]] || fail "unexpected package version"
+[[ "$package_version" == "13.8+deb13u7+kernora2+lumo1" ]] || fail "unexpected package version"
 dpkg --compare-versions "$package_version" gt '13.8+deb13u7' \
   || fail "Kernora version does not sort after its Debian base"
 

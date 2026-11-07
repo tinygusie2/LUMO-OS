@@ -3007,8 +3007,8 @@ msgid "The KDE sounds"
 msgstr "Звуки KDE"
 
 #: apps/settings/qml/pages/SoundPage.qml:227
-msgid "Kernora"
-msgstr "Kernora"
+msgid "Lumo"
+msgstr "Lumo"
 
 #: apps/settings/qml/pages/SoundPage.qml:255
 msgid "Listen"
@@ -3500,8 +3500,8 @@ msgstr "Демо-обновления"
 msgid "Themed app icons"
 msgstr "Тематические значки приложений"
 
-msgid "Apps without a Kernora icon take on the colour too"
-msgstr "Приложения без значка Kernora тоже окрашиваются в цвет темы"
+msgid "Apps without a Lumo icon take on the colour too"
+msgstr "Приложения без значка Lumo тоже окрашиваются в цвет темы"
 
 msgid "Early access"
 msgstr "Ранний доступ"
@@ -3524,10 +3524,10 @@ msgstr ""
 "ошибки"
 
 msgid ""
-"When a graphics card needs a driver, Kernora installs it and asks you to "
+"When a graphics card needs a driver, Lumo installs it and asks you to "
 "restart"
 msgstr ""
-"Если видеокарте нужен драйвер, Kernora установит его и попросит "
+"Если видеокарте нужен драйвер, Lumo установит его и попросит "
 "перезагрузить компьютер"
 
 msgid "Graphics card drivers"
@@ -3931,3 +3931,528 @@ msgstr ""
 
 msgid "Show devices without names (%1)"
 msgstr "Показать устройства без имени (%1)"
+
+#: apps/settings/qml/components/Catalog.qml:21
+msgid "APK files, Google Play"
+msgstr "APK-файлы, Google Play"
+
+#: apps/settings/qml/components/Catalog.qml:21
+#: apps/settings/qml/pages/AndroidPage.qml:20
+msgid "Android apps"
+msgstr "Приложения Android"
+
+#: apps/settings/qml/components/Catalog.qml:27
+#: apps/settings/qml/pages/AboutPage.qml:19
+#: apps/settings/qml/pages/SystemPage.qml:153
+msgid "About Lumo"
+msgstr "О Lumo"
+
+#: apps/settings/qml/components/Catalog.qml:66
+msgid "Install an APK file"
+msgstr "Установить APK-файл"
+
+#: apps/settings/qml/components/Catalog.qml:66
+msgid "apk android app install phone"
+msgstr "apk android приложение установить телефон андроид"
+
+#: apps/settings/qml/components/Catalog.qml:67
+#: apps/settings/qml/pages/AndroidPage.qml:406
+msgid "Google Play"
+msgstr "Google Play"
+
+#: apps/settings/qml/components/Catalog.qml:67
+msgid "play store google services register device"
+msgstr "play маркет google сервисы регистрация устройство"
+
+#: apps/settings/qml/components/Catalog.qml:68
+#: apps/settings/qml/pages/AndroidPage.qml:510
+msgid "Remove Android apps"
+msgstr "Удалить Android-приложения"
+
+#: apps/settings/qml/components/Catalog.qml:68
+msgid "android delete uninstall space"
+msgstr "android андроид удалить место"
+
+#: apps/settings/qml/components/Catalog.qml:98
+msgid ""
+"graphics card video nvidia gpu driver firmware printer scanner device "
+"hardware wifi"
+msgstr ""
+"прошивка принтер сканер устройство оборудование вайфай видеокарта видео "
+"графика nvidia gpu драйвер"
+
+#: apps/settings/qml/pages/AboutPage.qml:169
+msgid "Licences, authors and copyrights of the software in Lumo"
+msgstr "Лицензии, авторы и авторские права программ в Lumo"
+
+#: apps/settings/qml/pages/AndroidPage.qml:83
+msgid "%1 GB"
+msgstr "%1 ГБ"
+
+#: apps/settings/qml/pages/AndroidPage.qml:84
+msgid "%1 MB"
+msgstr "%1 МБ"
+
+#: apps/settings/qml/pages/AndroidPage.qml:93
+msgid "Code copied. Paste it on Google's page."
+msgstr "Код скопирован. Вставьте его на странице Google."
+
+#: apps/settings/qml/pages/AndroidPage.qml:103
+msgid "The code isn't ready yet. Try again in a minute."
+msgstr "Код ещё не готов. Попробуйте через минуту."
+
+#: apps/settings/qml/pages/AndroidPage.qml:138
+msgid "Removing Android apps…"
+msgstr "Удаление Android-приложений…"
+
+#: apps/settings/qml/pages/AndroidPage.qml:140
+msgid "Updating…"
+msgstr "Обновление…"
+
+#: apps/settings/qml/pages/AndroidPage.qml:142
+msgid "Almost ready…"
+msgstr "Почти готово…"
+
+#: apps/settings/qml/pages/AndroidPage.qml:144
+msgid "Setting up Android apps…"
+msgstr "Настройка Android-приложений…"
+
+#: apps/settings/qml/pages/AndroidPage.qml:148
+msgid "Android apps couldn't be set up"
+msgstr "Не удалось настроить Android-приложения"
+
+#: apps/settings/qml/pages/AndroidPage.qml:148
+msgid "No internet connection"
+msgstr "Нет подключения к интернету"
+
+#: apps/settings/qml/pages/AndroidPage.qml:157
+msgid "Every Android app and its data are being deleted from this computer."
+msgstr "Все Android-приложения и их данные удаляются с компьютера."
+
+#: apps/settings/qml/pages/AndroidPage.qml:159
+msgid "Android apps are getting an update. They open again once it's done."
+msgstr ""
+"Android-приложения обновляются. Они снова откроются, когда обновление "
+"закончится."
+
+#: apps/settings/qml/pages/AndroidPage.qml:161
+msgid "Getting ready"
+msgstr "Подготовка"
+
+#: apps/settings/qml/pages/AndroidPage.qml:165
+msgid "%1 of %2"
+msgstr "%1 из %2"
+
+#: apps/settings/qml/pages/AndroidPage.qml:168
+msgid "About %1 minute left"
+msgid_plural "About %1 minutes left"
+msgstr[0] "Осталось около %1 минуты"
+msgstr[1] "Осталось около %1 минут"
+msgstr[2] "Осталось около %1 минут"
+
+#: apps/settings/qml/pages/AndroidPage.qml:170
+msgid "Less than a minute left"
+msgstr "Осталось меньше минуты"
+
+#: apps/settings/qml/pages/AndroidPage.qml:172
+#: apps/settings/qml/pages/AndroidPage.qml:175
+msgid "This takes a few minutes"
+msgstr "Это займёт несколько минут"
+
+#: apps/settings/qml/pages/AndroidPage.qml:179
+msgid ""
+"Everything apps need is downloaded from the internet. Connect to a network "
+"and try again."
+msgstr ""
+"Всё нужное для приложений скачивается из интернета. Подключитесь к сети и "
+"попробуйте ещё раз."
+
+#: apps/settings/qml/pages/AndroidPage.qml:180
+msgid ""
+"Check the internet connection and that there is enough free space, then try "
+"again."
+msgstr ""
+"Проверьте подключение к интернету и свободное место на диске, затем "
+"попробуйте ещё раз."
+
+#: apps/settings/qml/pages/AndroidPage.qml:258
+msgid "Android apps work once Lumo is installed on this computer."
+msgstr ""
+"Android-приложения заработают, когда Lumo будет установлена на компьютер."
+
+#: apps/settings/qml/pages/AndroidPage.qml:259
+msgid "Apps for phones and tablets, each in its own window."
+msgstr "Приложения для телефонов и планшетов, каждое в своём окне."
+
+#: apps/settings/qml/pages/AndroidPage.qml:332
+msgid "Get apps from"
+msgstr "Откуда брать приложения"
+
+#: apps/settings/qml/pages/AndroidPage.qml:333
+msgid ""
+"Needs about 3 GB of space. Banking apps and games with anti-cheat don't work "
+"here."
+msgstr ""
+"Нужно около 3 ГБ места. Банковские приложения и игры с античитом здесь не "
+"работают."
+
+#: apps/settings/qml/pages/AndroidPage.qml:339
+msgid "Google Play and APK files"
+msgstr "Google Play и APK-файлы"
+
+#: apps/settings/qml/pages/AndroidPage.qml:340
+msgid "Like on an Android phone · about 1.4 GB to download"
+msgstr "Как на телефоне Android · скачается около 1,4 ГБ"
+
+#: apps/settings/qml/pages/AndroidPage.qml:344
+msgid "APK files only"
+msgstr "Только APK-файлы"
+
+#: apps/settings/qml/pages/AndroidPage.qml:345
+msgid "No Google services · about 1 GB to download"
+msgstr "Без сервисов Google · скачается около 1 ГБ"
+
+#: apps/settings/qml/pages/AndroidPage.qml:357
+msgid "Set up"
+msgstr "Настроить"
+
+#: apps/settings/qml/pages/AndroidPage.qml:364
+msgid "Your apps"
+msgstr "Ваши приложения"
+
+#: apps/settings/qml/pages/AndroidPage.qml:382
+msgid "Uninstall"
+msgstr "Удалить"
+
+#: apps/settings/qml/pages/AndroidPage.qml:392
+msgid "Open an APK file to install an app"
+msgstr "Откройте APK-файл, чтобы установить приложение"
+
+#: apps/settings/qml/pages/AndroidPage.qml:392
+msgid "Open an APK file, or get apps from Google Play"
+msgstr "Откройте APK-файл или найдите приложения в Google Play"
+
+#: apps/settings/qml/pages/AndroidPage.qml:398
+msgid "Install an app from an APK file"
+msgstr "Установить приложение из APK-файла"
+
+#: apps/settings/qml/pages/AndroidPage.qml:407
+msgid "Find and install apps"
+msgstr "Поиск и установка приложений"
+
+#: apps/settings/qml/pages/AndroidPage.qml:440
+msgid "Finish setting up Google Play"
+msgstr "Завершите настройку Google Play"
+
+#: apps/settings/qml/pages/AndroidPage.qml:441
+msgid ""
+"Google asks to register computers that run Android apps. You only do this "
+"once."
+msgstr ""
+"Google просит зарегистрировать компьютер, на котором работают Android-"
+"приложения. Это нужно сделать один раз."
+
+#: apps/settings/qml/pages/AndroidPage.qml:445
+msgid "Register this computer"
+msgstr "Зарегистрируйте компьютер"
+
+#: apps/settings/qml/pages/AndroidPage.qml:446
+msgid "Getting the code, this takes a minute the first time…"
+msgstr "Получаем код, в первый раз это займёт минуту…"
+
+#: apps/settings/qml/pages/AndroidPage.qml:447
+msgid ""
+"Opens Google's page with the code copied. Paste it there and press Register."
+msgstr ""
+"Откроется страница Google, а код уже будет скопирован. Вставьте его и "
+"нажмите «Зарегистрировать»."
+
+#: apps/settings/qml/pages/AndroidPage.qml:460
+msgid "Again"
+msgstr "Ещё раз"
+
+#: apps/settings/qml/pages/AndroidPage.qml:460
+msgid "Register"
+msgstr "Зарегистрировать"
+
+#: apps/settings/qml/pages/AndroidPage.qml:466
+msgid "Sign in to Google Play"
+msgstr "Войдите в Google Play"
+
+#: apps/settings/qml/pages/AndroidPage.qml:467
+msgid ""
+"Google can take a few minutes to accept the code. If Google Play says this "
+"device isn't certified, wait a little and try again."
+msgstr ""
+"Google принимает код несколько минут. Если Google Play пишет, что устройство "
+"не сертифицировано, подождите немного и попробуйте снова."
+
+#: apps/settings/qml/pages/AndroidPage.qml:479
+msgid "Open"
+msgstr "Открыть"
+
+#: apps/settings/qml/pages/AndroidPage.qml:490
+msgid "Open apps faster"
+msgstr "Открывать приложения быстрее"
+
+#: apps/settings/qml/pages/AndroidPage.qml:491
+msgid ""
+"Keeps Android apps ready from the moment you sign in. Uses about 1 GB of "
+"memory."
+msgstr ""
+"Android-приложения готовы к запуску сразу после входа в систему. Занимает "
+"около 1 ГБ памяти."
+
+#: apps/settings/qml/pages/AndroidPage.qml:503
+msgid "Android apps and their data"
+msgstr "Android-приложения и их данные"
+
+#: apps/settings/qml/pages/AndroidPage.qml:511
+msgid "Deletes every Android app and its data"
+msgstr "Удаляет все Android-приложения и их данные"
+
+#: apps/settings/qml/pages/AndroidPage.qml:521
+msgid "Remove Android apps?"
+msgstr "Удалить Android-приложения?"
+
+#: apps/settings/qml/pages/AndroidPage.qml:522
+msgid ""
+"Every Android app and all of its data are deleted from this computer. You "
+"can set them up again later."
+msgstr ""
+"Все Android-приложения и их данные будут удалены с компьютера. Их можно "
+"будет настроить снова."
+
+#: apps/settings/qml/pages/DriversPage.qml:20
+msgid ""
+"Lumo finds the drivers your hardware needs and installs them by itself."
+msgstr ""
+"Lumo сама находит и устанавливает драйверы, которые нужны вашему "
+"оборудованию."
+
+#: apps/settings/qml/pages/DriversPage.qml:112
+msgid "Your graphics card works with the drivers built into Lumo."
+msgstr "Ваша видеокарта работает со встроенными драйверами Lumo."
+
+#: apps/settings/qml/pages/DriversPage.qml:115
+msgid "Lumo could not start this. Install the latest updates and try again."
+msgstr ""
+"Не получилось запустить. Установите последние обновления и попробуйте снова."
+
+#: apps/settings/qml/pages/DriversPage.qml:121
+msgid ""
+"NVIDIA no longer makes a driver for this card. It keeps working with the "
+"open driver built into Lumo."
+msgstr ""
+"NVIDIA больше не выпускает драйвер для этой видеокарты. Она продолжит "
+"работать со встроенным открытым драйвером Lumo."
+
+#: apps/settings/qml/pages/DriversPage.qml:124
+msgid ""
+"Lumo is downloading the driver for %1 and installing it. It takes a few "
+"minutes, and you can keep working."
+msgstr ""
+"Lumo скачивает и устанавливает драйвер для %1. Это займёт несколько "
+"минут, можно продолжать работать."
+
+#: apps/settings/qml/pages/DriversPage.qml:127
+msgid "Lumo is removing the NVIDIA driver."
+msgstr "Lumo удаляет драйвер NVIDIA."
+
+#: apps/settings/qml/pages/DriversPage.qml:138
+msgid ""
+"The NVIDIA driver cannot load while Secure Boot is on. Turn Secure Boot off "
+"in the computer's firmware settings, then try again."
+msgstr ""
+"Драйвер NVIDIA не загрузится, пока включён Secure Boot. Выключите Secure "
+"Boot в настройках BIOS/UEFI и попробуйте снова."
+
+#: apps/settings/qml/pages/FontsPage.qml:158
+msgid "Restore the Lumo fonts"
+msgstr "Вернуть шрифты Lumo"
+
+#: apps/settings/qml/pages/LegalPage.qml:20
+msgid ""
+"Lumo is free software, made from the work of many open-source "
+"projects. Their authors and licences are listed here."
+msgstr ""
+"Lumo — свободная система, созданная из труда многих проектов с "
+"открытым кодом. Здесь перечислены их авторы и лицензии."
+
+#: apps/settings/qml/pages/LegalPage.qml:31
+#: apps/settings/qml/pages/LegalPage.qml:34
+msgid "Lumo"
+msgstr "Lumo"
+
+#: apps/settings/qml/pages/LegalPage.qml:35
+msgid ""
+"The Lumo shell, apps and design: GNU General Public License 2.0 or later"
+msgstr ""
+"Оболочка, приложения и оформление Lumo: GNU General Public License 2.0 "
+"или новее"
+
+#: apps/settings/qml/pages/SystemPage.qml:91
+msgid "Install and update drivers, see your devices"
+msgstr "Установка и обновление драйверов, ваши устройства"
+
+#: apps/settings/qml/pages/UpdatesPage.qml:95
+msgid ""
+"You are trying Lumo from the installation medium, and nothing installed "
+"here is kept. Install Lumo: when the computer is online, the installer "
+"brings the new system up to date by itself."
+msgstr ""
+"Сейчас Lumo запущена с установочного носителя, и всё, что здесь "
+"устанавливается, не сохранится. Установите Lumo: если компьютер подключён "
+"к интернету, установщик сам обновит новую систему."
+
+#: apps/settings/qml/pages/UpdatesPage.qml:102
+msgid "Install Lumo"
+msgstr "Установить Lumo"
+
+#: src/apps/host.cpp:59
+msgctxt "@info:credit"
+msgid "© 2026 Lumo"
+msgstr "© 2026 Lumo"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "The report couldn't be saved. Try again."
+msgstr "Не удалось сохранить отчёт. Попробуйте ещё раз."
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Saved as %1. Send this file to Lumo's developers."
+msgstr "Сохранено как %1. Отправьте этот файл разработчикам Lumo."
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Report a problem"
+msgstr "Сообщить о проблеме"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Collecting what Android apps have logged…"
+msgstr "Собираем записи Android-приложений…"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Saves Android's logs in a file you can send to Lumo's developers"
+msgstr ""
+"Сохраняет журналы Android в файл, который можно отправить разработчикам "
+"Lumo"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Open Google Play and sign in with your Google account."
+msgstr "Откройте Google Play и войдите в свой аккаунт Google."
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Android apps can't open right now"
+msgstr "Android-приложения сейчас не откроются"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Switch to Wayland"
+msgstr "Перейдите на Wayland"
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid ""
+"Android apps only run in a Wayland session, and you're signed in with X11. "
+"Sign out, and Wayland is used next time."
+msgstr ""
+"Android-приложения работают только в сеансе Wayland, а вы вошли через X11. "
+"Выйдите из системы: в следующий раз включится Wayland."
+
+#: apps/settings/qml/pages/AndroidPage.qml
+msgid "Sign out"
+msgstr "Выйти"
+
+#~ msgid ""
+#~ "Before you sign in to the Play Store, register this computer with Google: "
+#~ "copy the device ID and paste it on Google's page."
+#~ msgstr ""
+#~ "Перед входом в Play Маркет зарегистрируйте компьютер в Google: скопируйте "
+#~ "идентификатор устройства и вставьте его на странице Google."
+
+#~ msgid "Register with Google"
+#~ msgstr "Регистрация в Google"
+
+#~ msgid "Device ID: %1"
+#~ msgstr "Идентификатор устройства: %1"
+
+#~ msgid "Shows the device ID and opens Google's page"
+#~ msgstr "Показывает идентификатор устройства и открывает страницу Google"
+
+#~ msgid "Device ID copied"
+#~ msgstr "Идентификатор скопирован"
+
+#~ msgid "Open Google Play once, then try again"
+#~ msgstr "Откройте Google Play один раз и попробуйте снова"
+
+#~ msgid "About %1 minute left. You can keep using the computer."
+#~ msgid_plural "About %1 minutes left. You can keep using the computer."
+#~ msgstr[0] "Осталось около %1 минуты. Компьютером можно пользоваться."
+#~ msgstr[1] "Осталось около %1 минут. Компьютером можно пользоваться."
+#~ msgstr[2] "Осталось около %1 минут. Компьютером можно пользоваться."
+
+#~ msgid "Less than a minute left. You can keep using the computer."
+#~ msgstr "Осталось меньше минуты. Компьютером можно пользоваться."
+
+#~ msgid "This takes a few minutes. You can keep using the computer."
+#~ msgstr "Это займёт несколько минут. Компьютером можно пользоваться."
+
+#~ msgid "Where your apps come from"
+#~ msgstr "Откуда приложения"
+
+#~ msgid "Install apps from APK files and from open app stores like F-Droid."
+#~ msgstr ""
+#~ "Установка приложений из APK-файлов и открытых магазинов вроде F-Droid."
+
+#~ msgid "About 1 GB to download"
+#~ msgstr "Загрузка около 1 ГБ"
+
+#~ msgid ""
+#~ "APK files plus the Play Store and Google services. Google asks you to "
+#~ "register this computer once."
+#~ msgstr ""
+#~ "APK-файлы, Play Маркет и сервисы Google. Google попросит один раз "
+#~ "зарегистрировать компьютер."
+
+#~ msgid "Downloading Android… %1%"
+#~ msgstr "Загрузка Android… %1%"
+
+#~ msgid "Unpacking Android…"
+#~ msgstr "Распаковка Android…"
+
+#~ msgid "Choose Android"
+#~ msgstr "Выберите Android"
+
+#~ msgid "Android"
+#~ msgstr "Android"
+
+#~ msgid "Turn on"
+#~ msgstr "Включить"
+
+#~ msgid "Running"
+#~ msgstr "Работает"
+
+#~ msgid "Starts by itself when you open an Android app"
+#~ msgstr "Запускается сам, когда вы открываете приложение Android"
+
+#~ msgid "Android settings"
+#~ msgstr "Настройки Android"
+
+#~ msgid "Language, accounts and app permissions inside Android"
+#~ msgstr "Язык, аккаунты и разрешения приложений внутри Android"
+
+#~ msgid "Uninstall %1?"
+#~ msgstr "Удалить «%1»?"
+
+#~ msgid "The app and its data are deleted from this computer."
+#~ msgstr "Приложение и его данные будут удалены с компьютера."
+
+#~ msgid "%1 couldn't be uninstalled"
+#~ msgstr "Не удалось удалить «%1»"
+
+#~ msgid "Kernora Shapes"
+#~ msgstr "Фигуры Kernora"
+
+#~ msgid ""
+#~ "Every generation of Material, drawn in the Kernora colours: shapes, "
+#~ "depth, buttons and the quick settings change with it."
+#~ msgstr ""
+#~ "Любое поколение Material в цветах Kernora: вместе с ним меняются формы, "
+#~ "тени, кнопки и быстрые настройки."

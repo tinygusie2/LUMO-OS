@@ -1,8 +1,8 @@
 # Quick Share
 
-Kernora talks Google's Quick Share (ex Nearby Share), so an Android phone can
+Lumo talks Google's Quick Share (ex Nearby Share), so an Android phone can
 send files to the computer and the other way around, without installing
-anything on the phone. Two Kernora machines can do it too.
+anything on the phone. Two Lumo machines can do it too.
 
 ## How it works
 

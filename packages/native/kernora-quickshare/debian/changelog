@@ -1,3 +1,9 @@
+kernora-quickshare (1.0.3) UNRELEASED; urgency=medium
+
+  * Call the system Lumo.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 07 Nov 2026 12:00:00 +0100
+
 kernora-quickshare (1.0.2) UNRELEASED; urgency=medium
 
   * Much less Bluetooth radio time, which can matter for Wi-Fi on cards

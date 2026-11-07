@@ -1,6 +1,6 @@
 # Updates
 
-An installed Kernora system updates from four APT archives, five with demo
+An installed Lumo system updates from four APT archives, five with demo
 updates on. The `kernora-archive` package sets them up, and `kernora-base`
 depends on it, so every installation has it.
 
@@ -9,8 +9,8 @@ depends on it, so every installation has it.
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
-| Kernora, `tinygusie2.github.io/lumo-updates` | Kernora's own packages | in Settings > Updates |
-| Kernora demo, same site, `ember-demo` | new Kernora packages before everyone else, only with Demo updates on | in Settings > Updates, after turning it on in Settings > System |
+| Lumo, `tinygusie2.github.io/lumo-updates` | Lumo's own packages | in Settings > Updates |
+| Lumo demo, same site, `ember-demo` | new Lumo packages before everyone else, only with Demo updates on | in Settings > Updates, after turning it on in Settings > System |
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
@@ -20,7 +20,7 @@ Both the Debian archive and its security updates include `main`, `contrib`,
 `non-free` and `non-free-firmware`. Archive package 1.3 enables `i386` on new
 amd64 installations and upgrades from earlier archive versions, so 32-bit
 application dependencies can be resolved. Later upgrades preserve an
-administrator’s decision to remove `i386`. Kernora’s own repositories are
+administrator’s decision to remove `i386`. Lumo’s own repositories are
 scoped to `amd64`; Debian supplies both native and 32-bit packages.
 
 The image ships the firmware that graphics
@@ -63,7 +63,7 @@ creates it), it asks once per boot for a restart, with a "Restart" button that
 opens the session's restart prompt.
 
 The events are in `kernora-updates.notifyrc`, so the notification server draws
-them like any other Kernora notification. What has been announced is kept in
+them like any other Lumo notification. What has been announced is kept in
 `~/.local/state/kernora-update-notifierstaterc`. In the live session the
 notifier only keeps the app icons in shape (docs/DESKTOP.md, Other apps'
 icons) and checks no updates.
@@ -122,7 +122,7 @@ users.
 3. If the ISO should carry the new version, update the pins in
    `configs/live/packages.txt` and the version checks in `tests/`.
 4. Run `make publish`. It builds every package and the local archive, runs
-   `tests/test-publish-updates.sh`, then signs the archive with the Kernora
+   `tests/test-publish-updates.sh`, then signs the archive with the Lumo
    archive key and force-pushes it to the `lumo-updates` repository, which
    GitHub Pages serves a minute later. The demo suite there is kept, only the
    demo packages the new normal ones caught up with are dropped.
@@ -184,13 +184,13 @@ expires on 2029-10-12.
   which exports the public key again, and publish a new `kernora-archive` while
   the old expiry date still holds.
 
-## Systems installed from Kernora OS
+## Systems installed from Lumo
 
-Lumo no longer takes packages from the Kernora OS archive
+Lumo no longer takes packages from the Lumo archive
 (`tinygusie2.github.io/lumo-updates`): its packages have their own
 versions and would replace Lumo's. `kernora-archive` 1.2 points
 `/etc/apt/sources.list.d/kernora.sources` at the Lumo archive and ships the
-Lumo key instead of Kernora's. A Kernora OS system becomes Lumo by installing
+Lumo key instead of Lumo's. A Lumo system becomes Lumo by installing
 the Lumo packages once; from then on it updates from the Lumo archive.
 
 ## Systems installed before this

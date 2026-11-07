@@ -1,3 +1,9 @@
+kernora-base (1.6.4) UNRELEASED; urgency=medium
+
+  * Lumo: depend on the Lumo base-files 13.8+deb13u7+kernora2+lumo1.
+
+ -- Kernora Developers <developers@kernora.invalid>  Sat, 07 Nov 2026 12:00:00 +0100
+
 kernora-base (1.6.3) UNRELEASED; urgency=medium
 
   * Bring lspci (pciutils), lsusb (usbutils) and iw, so "what wifi card is

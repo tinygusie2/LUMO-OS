@@ -30,7 +30,7 @@ grep -Fxq 'Architecture: all' "$control" || fail "package is not architecture-al
 grep -Fxq 'Section: admin' "$control" || fail "wrong archive section"
 grep -Fxq 'Standards-Version: 4.7.4' "$control" \
   || fail "wrong Standards-Version"
-grep -Fxq ' base-files (= 13.8+deb13u7+kernora2),' "$control" \
+grep -Fxq ' base-files (= 13.8+deb13u7+kernora2+lumo1),' "$control" \
   || fail "base-files dependency is not pinned to the Kernora build"
 grep -Eq '^ kernora-archive \(>= 1\.0\),?$' "$control" \
   || fail "the package archives are not part of the base system"

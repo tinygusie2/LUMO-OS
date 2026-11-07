@@ -229,7 +229,7 @@ Item {
                     role: "bodyMedium"
                     color: M3.surfaceVariantContent
                     wrapMode: Text.Wrap
-                    text: i18n("Kernora and the apps that come with it update in Settings")
+                    text: i18n("Lumo and the apps that come with it update in Settings")
                 }
                 MButton {
                     variant: "text"

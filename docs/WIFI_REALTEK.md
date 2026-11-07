@@ -97,7 +97,7 @@ delete firmware or turn off ASPM for everyone based on one report.
 
 ## What I tested
 
-1.3: upgrading from 1.2 in a Kernora VM (Linux 6.12.107, NetworkManager
+1.3: upgrading from 1.2 in a Lumo VM (Linux 6.12.107, NetworkManager
 1.52.1). NetworkManager loaded the policy, an empty file in `/etc` masked it,
 a custom one overrode it, saved profiles kept their settings and the active
 connection didn't drop.

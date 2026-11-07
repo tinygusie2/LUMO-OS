@@ -4,7 +4,7 @@
 
 The Live GRUB menu has stable entry ids: `live-en`, `live-ru` and
 `live-safe`. English is first and it's the default, Russian is right under
-it. Safe graphics boots in English too. If the ISO finds an installed Kernora
+it. Safe graphics boots in English too. If the ISO finds an installed Lumo
 on the disk, the `installed` entry still wins.
 
 The Live language service applies the chosen kernel argument before login,
