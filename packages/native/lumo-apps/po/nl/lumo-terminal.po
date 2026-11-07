@@ -1,0 +1,120 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: lumo-terminal\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "@title application name"
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Close tab"
+msgstr "Tabblad sluiten"
+
+msgid "New tab (Ctrl+Shift+T)"
+msgstr "Nieuw tabblad (Ctrl+Shift+T)"
+
+msgid "More"
+msgstr "Meer"
+
+msgid "Copied"
+msgstr "Gekopieerd"
+
+msgid "New tab"
+msgstr "Nieuw tabblad"
+
+msgid "New window"
+msgstr "Nieuw venster"
+
+msgid "Copy"
+msgstr "Kopiëren"
+
+msgid "Paste"
+msgstr "Plakken"
+
+msgid "Select all"
+msgstr "Alles selecteren"
+
+msgid "Clear screen"
+msgstr "Scherm wissen"
+
+msgid "Bigger text"
+msgstr "Grotere tekst"
+
+msgid "Ignore upper and lower case"
+msgstr "Hoofdletters negeren"
+
+msgid "Smaller text"
+msgstr "Kleinere tekst"
+
+msgid "Open folder in Files"
+msgstr "Map openen in Bestanden"
+
+msgid "Windows commands"
+msgstr "Windows-opdrachten"
+
+msgid "Windows commands you can use here"
+msgstr "Windows-opdrachten die je hier kunt gebruiken"
+
+msgid "List the files in this folder"
+msgstr "Toon de bestanden in deze map"
+
+msgid "Go to another folder (cd .. goes up)"
+msgstr "Ga naar een andere map (cd .. gaat omhoog)"
+
+msgid "Clear the screen"
+msgstr "Wis het scherm"
+
+msgid "Copy a file"
+msgstr "Kopieer een bestand"
+
+msgid "Move a file"
+msgstr "Verplaats een bestand"
+
+msgid "Rename a file"
+msgstr "Geef een bestand een andere naam"
+
+msgid "Delete a file"
+msgstr "Verwijder een bestand"
+
+msgid "Make a folder"
+msgstr "Maak een map"
+
+msgid "Remove an empty folder"
+msgstr "Verwijder een lege map"
+
+msgid "Show what is in a file"
+msgstr "Toon wat er in een bestand staat"
+
+msgid "Search for text"
+msgstr "Zoek naar tekst"
+
+msgid "Show the network addresses"
+msgstr "Toon de netwerkadressen"
+
+msgid "Show the running programs"
+msgstr "Toon de programma's die draaien"
+
+msgid "Stop a program"
+msgstr "Stop een programma"
+
+msgid "Find where a program is"
+msgstr "Zoek waar een programma staat"
+
+msgid "Show the version of the system"
+msgstr "Toon de versie van het systeem"
+
+msgid "Open a file or folder with its app"
+msgstr "Open een bestand of map met de bijbehorende app"
+
+msgid "Run a command as administrator by putting sudo in front of it."
+msgstr "Voer een opdracht uit als beheerder door er sudo voor te zetten."
+
+msgid "Type help to see the Windows commands you can use."
+msgstr "Typ help om te zien welke Windows-opdrachten je kunt gebruiken."

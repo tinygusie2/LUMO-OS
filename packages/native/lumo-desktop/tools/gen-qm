@@ -17,6 +17,7 @@ TAG_END, TAG_TRANSLATION, TAG_SOURCE, TAG_CONTEXT, TAG_COMMENT = 1, 3, 6, 7, 8
 
 EQ, BETWEEN, NOT, MOD_10, MOD_100, AND, NEWRULE = 0x01, 0x04, 0x08, 0x10, 0x20, 0xFD, 0xFF
 RULES = {
+    "nl": bytes([EQ, 1]),
     "ru": bytes([MOD_10 | EQ, 1, AND, MOD_100 | NOT | EQ, 11, NEWRULE,
                  MOD_10 | BETWEEN, 2, 4, AND, MOD_100 | NOT | BETWEEN, 10, 19]),
     "uk": bytes([MOD_10 | EQ, 1, AND, MOD_100 | NOT | EQ, 11, NEWRULE,

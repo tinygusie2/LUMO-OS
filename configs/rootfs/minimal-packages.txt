@@ -1,1 +1,1 @@
-lumo-base=1.6.5
+lumo-base=1.6.6

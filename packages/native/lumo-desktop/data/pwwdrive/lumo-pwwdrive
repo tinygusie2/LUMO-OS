@@ -1,0 +1,531 @@
+#!/usr/bin/python3
+import fcntl
+import http.server
+import json
+import math
+import os
+import re
+import secrets
+import shutil
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+import uuid
+from datetime import datetime
+
+SERVER = os.environ.get("PWWDRIVE_URL", "https://drive.pwwplanner.nl").rstrip("/")
+TOKEN_URL = os.environ.get("PWWDRIVE_TOKEN_URL", "https://securetoken.googleapis.com/v1/token")
+PORT = int(os.environ.get("PWWDRIVE_POORT", "47290"))
+APP_DIR = os.environ.get("PWWDRIVE_APPDIR", os.path.expanduser("~/.local/share/pwwdrive"))
+ROOT = os.environ.get("PWWDRIVE_MAP", os.path.expanduser("~/PWWDrive"))
+CONFIG = os.path.join(APP_DIR, "config.json")
+STATE = os.path.join(APP_DIR, "staat.json")
+STATUS = os.path.join(APP_DIR, "status.json")
+ALLOW = os.path.join(APP_DIR, "toestaan")
+TRASH = ".pwwdrive-prullenbak"
+IGNORE = re.compile(r"^(\.pwwdrive-|desktop\.ini$|thumbs\.db$|\.ds_store$|~\$|.*\.tmp$|.*\.pwwdrive-tmp$)", re.I)
+
+
+class ApiError(Exception):
+    def __init__(self, message, status=0, signed_out=False):
+        super().__init__(message)
+        self.status = status
+        self.signed_out = signed_out
+
+
+class TooManyGone(Exception):
+    pass
+
+
+def read_json(path, fallback):
+    try:
+        with open(path, encoding="utf-8") as stream:
+            return json.load(stream)
+    except (OSError, ValueError):
+        return fallback
+
+
+def write_json(path, value, mode=0o600):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    temporary = path + ".new"
+    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, mode)
+    with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+        json.dump(value, stream)
+    os.replace(temporary, path)
+
+
+def text(value):
+    return "" if value is None else str(value)
+
+
+def version(item):
+    return text(item.get("path")) + "|" + text(item.get("size")) + "|" + text(item.get("date"))
+
+
+def safe_name(name):
+    clean = re.sub(r'[<>:"/\\|?*\x00-\x1f]', "_", name or "")
+    clean = re.sub(r"[. ]+$", "", clean)
+    return clean or "_"
+
+
+def parent_of(rel):
+    return rel.rsplit("/", 1)[0] if "/" in rel else ""
+
+
+def absolute(rel):
+    return os.path.join(ROOT, *rel.split("/"))
+
+
+def mtime_of(path):
+    return math.floor(os.stat(path).st_mtime * 1000)
+
+
+class Server:
+    def __init__(self, config):
+        self.config = config
+        self.token = None
+        self.token_until = 0
+
+    def api_key(self):
+        key = self.config.get("apiKey")
+        if not key:
+            with urllib.request.urlopen(SERVER + "/api/firebase-config", timeout=30) as response:
+                key = json.load(response)["apiKey"]
+            self.config["apiKey"] = key
+            write_json(CONFIG, self.config)
+        return key
+
+    def id_token(self):
+        if self.token and time.time() < self.token_until:
+            return self.token
+        refresh = self.config.get("refresh")
+        if not refresh:
+            raise ApiError("not paired", 401, True)
+        body = urllib.parse.urlencode({"grant_type": "refresh_token", "refresh_token": refresh}).encode()
+        request = urllib.request.Request(TOKEN_URL + "?key=" + self.api_key(), data=body)
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                data = json.load(response)
+        except urllib.error.HTTPError as error:
+            raise ApiError("session expired", 401, True) from error
+        self.token = data["id_token"]
+        self.token_until = time.time() + int(data["expires_in"]) - 300
+        renewed = data.get("refresh_token")
+        if renewed and renewed != refresh:
+            self.config["refresh"] = renewed
+            write_json(CONFIG, self.config)
+        return self.token
+
+    def send(self, method, path, data=None, headers=None):
+        request = urllib.request.Request(SERVER + path, data=data, method=method, headers=headers or {})
+        request.add_header("Authorization", "Bearer " + self.id_token())
+        try:
+            return urllib.request.urlopen(request, timeout=300)
+        except urllib.error.HTTPError as error:
+            raise ApiError(f"{method} {path} -> {error.code}", error.code) from error
+
+    def json(self, method, path, body=None):
+        data = None if body is None else json.dumps(body).encode()
+        headers = {"Content-Type": "application/json"} if body is not None else {}
+        with self.send(method, path, data, headers) as response:
+            content = response.read()
+        return json.loads(content) if content else None
+
+    def upload(self, path, file_path, folder_id):
+        boundary = uuid.uuid4().hex
+        parts = b""
+        if folder_id is not None:
+            parts += f'--{boundary}\r\nContent-Disposition: form-data; name="folderId"\r\n\r\n{folder_id}\r\n'.encode()
+        name = os.path.basename(file_path).replace('"', "")
+        parts += (f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="{name}"\r\n'
+                  "Content-Type: application/octet-stream\r\n\r\n").encode()
+        with open(file_path, "rb") as stream:
+            parts += stream.read()
+        parts += f"\r\n--{boundary}--\r\n".encode()
+        headers = {"Content-Type": "multipart/form-data; boundary=" + boundary}
+        with self.send("POST", path, parts, headers) as response:
+            return json.load(response)
+
+    def download(self, path, target):
+        temporary = target + ".pwwdrive-tmp"
+        with self.send("GET", path) as response, open(temporary, "wb") as stream:
+            shutil.copyfileobj(response, stream)
+        if os.path.lexists(target):
+            os.unlink(temporary)
+            raise OSError("a file already exists at " + target)
+        os.rename(temporary, target)
+
+
+def scan_local():
+    found = {}
+
+    def walk(folder, rel):
+        try:
+            entries = list(os.scandir(folder))
+        except OSError:
+            return
+        for entry in entries:
+            if IGNORE.match(entry.name) or entry.is_symlink():
+                continue
+            child = rel + "/" + entry.name if rel else entry.name
+            if entry.is_dir():
+                walk(entry.path, child)
+            elif entry.is_file():
+                info = entry.stat()
+                found[child] = {"size": info.st_size, "mtime": math.floor(info.st_mtime * 1000)}
+
+    walk(ROOT, "")
+    return found
+
+
+def fetch_remote(server):
+    folders = server.json("GET", "/api/file-folders")
+    files = server.json("GET", "/api/files")
+    by_id = {text(folder["id"]): folder for folder in folders}
+    paths = {}
+
+    def path_of(identifier):
+        if not identifier:
+            return ""
+        if identifier in paths:
+            return paths[identifier]
+        folder = by_id.get(identifier)
+        if folder is None:
+            return ""
+        parent = path_of(text(folder.get("parentId")))
+        name = safe_name(folder.get("naam"))
+        paths[identifier] = parent + "/" + name if parent else name
+        return paths[identifier]
+
+    for folder in folders:
+        path_of(text(folder["id"]))
+    remote = {}
+    for item in files:
+        folder = paths.get(text(item.get("folderId")), "")
+        name = safe_name(item.get("name"))
+        rel = folder + "/" + name if folder else name
+        if rel in remote:
+            stem, extension = os.path.splitext(name)
+            name = f"{stem} ({item['id']}){extension}"
+            rel = folder + "/" + name if folder else name
+        remote[rel] = item
+    return remote, {path: identifier for identifier, path in paths.items()}
+
+
+def ensure_folder(server, rel, folders):
+    if not rel:
+        return None
+    if rel in folders:
+        return folders[rel]
+    parent = ensure_folder(server, parent_of(rel), folders)
+    created = server.json("POST", "/api/file-folders", {
+        "name": rel.rsplit("/", 1)[-1],
+        "parentId": None if parent is None else int(parent),
+    })
+    folders[rel] = text(created["id"])
+    return folders[rel]
+
+
+def trash_path(rel, label=None):
+    folder = os.path.join(ROOT, TRASH)
+    os.makedirs(folder, exist_ok=True)
+    name = datetime.now().strftime("%Y-%m-%d %H%M%S") + " " + rel.replace("/", "_")
+    stem, extension = os.path.splitext(name)
+    if label:
+        name = f"{stem} ({label}){extension}"
+        stem = f"{stem} ({label})"
+    path = os.path.join(folder, name)
+    number = 2
+    while os.path.lexists(path):
+        path = os.path.join(folder, f"{stem} {number}{extension}")
+        number += 1
+    return path
+
+
+def conflict_name(rel):
+    stem, extension = os.path.splitext(rel)
+    return f"{stem} (conflict {datetime.now():%Y-%m-%d}){extension}"
+
+
+def row(item, size, mtime):
+    return {"id": item["id"], "versie": version(item), "size": size, "mtime": mtime}
+
+
+def fetch_file(server, rel, item):
+    target = absolute(rel)
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    if os.path.lexists(target):
+        os.rename(target, trash_path(rel, "vorige versie"))
+    server.download("/api/user-file/" + urllib.parse.quote(text(item["path"]), safe=""), target)
+    return row(item, os.path.getsize(target), mtime_of(target))
+
+
+def sync_round(server, allow, log):
+    os.makedirs(ROOT, exist_ok=True)
+    state = read_json(STATE, {})
+    old = state.get("bestanden", {})
+    old_folders = set(state.get("mappen", []))
+    remote, folders = fetch_remote(server)
+    local = scan_local()
+
+    gone_folders = {
+        path for path in folders
+        if not os.path.isdir(absolute(path))
+        and (path in old_folders or any(key.startswith(path + "/") for key in old))
+    }
+    for path in list(folders):
+        if not os.path.isdir(absolute(path)) and any(path.startswith(gone + "/") for gone in gone_folders):
+            gone_folders.add(path)
+
+    if not allow:
+        gone_remote = sum(1 for rel in old if rel not in remote and rel in local)
+        gone_local = sum(1 for rel in old if rel in remote and rel not in local)
+        limit = max(10, math.ceil(len(old) * 0.3))
+        if gone_remote >= limit:
+            raise TooManyGone(f"{gone_remote} files disappeared from PWWDrive")
+        if gone_local >= limit:
+            raise TooManyGone(f"{gone_local} files disappeared from the folder")
+
+    for path in folders:
+        if path not in gone_folders:
+            os.makedirs(absolute(path), exist_ok=True)
+
+    new = {}
+    restore = []
+    for rel in set(remote) | set(local) | set(old):
+        item = remote.get(rel)
+        here = local.get(rel)
+        known = old.get(rel)
+        local_changed = bool(here and known and (here["size"] != known["size"] or here["mtime"] != known["mtime"]))
+        remote_changed = bool(item and known and version(item) != known.get("versie"))
+        if known and known.get("kapot") and item and not here and not remote_changed:
+            new[rel] = known
+            continue
+        try:
+            if item and here and not known:
+                if int(item["size"]) == here["size"]:
+                    new[rel] = row(item, here["size"], here["mtime"])
+                else:
+                    os.rename(absolute(rel), absolute(conflict_name(rel)))
+                    new[rel] = fetch_file(server, rel, item)
+                    log("conflict, both kept: " + rel)
+            elif item and not here and not known:
+                new[rel] = fetch_file(server, rel, item)
+                log("down " + rel)
+            elif here and not item and not known:
+                folder = ensure_folder(server, parent_of(rel), folders)
+                new[rel] = row(server.upload("/api/files", absolute(rel), folder), here["size"], here["mtime"])
+                log("up " + rel)
+            elif item and here:
+                if remote_changed and local_changed:
+                    os.rename(absolute(rel), absolute(conflict_name(rel)))
+                    new[rel] = fetch_file(server, rel, item)
+                    log("conflict, both kept: " + rel)
+                elif remote_changed:
+                    new[rel] = fetch_file(server, rel, item)
+                    log("down " + rel)
+                elif local_changed:
+                    quoted = urllib.parse.quote(text(item["path"]), safe="")
+                    server.download("/api/user-file/" + quoted, trash_path(rel, "vorige versie uit PWWDrive"))
+                    uploaded = server.upload("/api/files/" + quoted + "/overwrite", absolute(rel), None)
+                    new[rel] = row(uploaded, here["size"], here["mtime"])
+                    log("up " + rel)
+                else:
+                    new[rel] = dict(known, versie=version(item))
+            elif item and not here:
+                if remote_changed:
+                    new[rel] = fetch_file(server, rel, item)
+                else:
+                    server.json("DELETE", "/api/files/" + text(item["id"]))
+                    log("to PWWDrive trash: " + rel)
+            elif here and not item:
+                if local_changed:
+                    folder = ensure_folder(server, parent_of(rel), folders)
+                    new[rel] = row(server.upload("/api/files", absolute(rel), folder), here["size"], here["mtime"])
+                    log("up (restored) " + rel)
+                else:
+                    os.rename(absolute(rel), trash_path(rel))
+                    log("to local trash: " + rel)
+        except ApiError as error:
+            if error.signed_out:
+                raise
+            if item and not here and known and not remote_changed and error.status == 409:
+                new[rel] = known
+                restore.append(rel)
+            elif item and not here and error.status == 404:
+                missing = dict(known or {"size": -1, "mtime": -1})
+                missing.update(id=item["id"], versie=version(item), kapot=True)
+                new[rel] = missing
+                log("skipped, missing on the server: " + rel)
+            else:
+                log(f"error at {rel}: {error}")
+                if known:
+                    new[rel] = known
+        except OSError as error:
+            log(f"skipped {rel}: {error}")
+            if known:
+                new[rel] = known
+
+    for rel in restore:
+        try:
+            new[rel] = fetch_file(server, rel, remote[rel])
+        except (ApiError, OSError):
+            pass
+
+    known_folders = set(folders)
+    for path in sorted(gone_folders, key=len, reverse=True):
+        try:
+            server.json("DELETE", "/api/file-folders/" + folders[path])
+            known_folders.discard(path)
+            log("folder to PWWDrive trash: " + path)
+        except ApiError as error:
+            if error.signed_out:
+                raise
+            os.makedirs(absolute(path), exist_ok=True)
+    write_json(STATE, {"bestanden": new, "mappen": sorted(known_folders)})
+
+
+def set_status(value, detail=""):
+    write_json(STATUS, {"status": value, "detail": detail, "time": int(time.time())})
+
+
+def command_sync(_arguments):
+    config = read_json(CONFIG, {})
+    if not config.get("refresh"):
+        return 0
+    os.makedirs(APP_DIR, exist_ok=True)
+    with open(os.path.join(APP_DIR, "lock"), "w", encoding="utf-8") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError:
+            return 0
+        allow = os.path.exists(ALLOW)
+        try:
+            sync_round(Server(config), allow, print)
+            set_status("ok")
+        except TooManyGone as error:
+            set_status("paused", str(error))
+            print(error)
+            return 1
+        except ApiError as error:
+            if error.signed_out:
+                config["refresh"] = None
+                write_json(CONFIG, config)
+                set_status("signed-out")
+            else:
+                set_status("error", str(error))
+            print(error)
+            return 1
+        except (OSError, ValueError) as error:
+            set_status("error", str(error))
+            print(error)
+            return 1
+        if allow:
+            os.unlink(ALLOW)
+    return 0
+
+
+def command_pair(_arguments):
+    expected = secrets.token_hex(16)
+    result = {}
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def log_message(self, *_args):
+            pass
+
+        def reply(self, code, kind, body):
+            self.send_response(code)
+            self.send_header("Content-Type", kind)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        def allowed(self):
+            return self.headers.get("Host") in (f"127.0.0.1:{PORT}", f"localhost:{PORT}")
+
+        def do_GET(self):
+            if not self.allowed() or not self.path.startswith("/klaar"):
+                self.reply(403, "text/plain", b"")
+                return
+            page = ('<!doctype html><meta charset="utf-8"><title>PWWDrive</title>'
+                    '<body style="font:16px system-ui;display:grid;place-items:center;height:90vh">'
+                    "<p>PWWDrive is gekoppeld aan Lumo. Je kunt dit tabblad sluiten.</p>"
+                    "<script>fetch('/token',{method:'POST',body:location.hash.slice(1)});"
+                    "history.replaceState(null,'','/klaar')</script>")
+            self.reply(200, "text/html; charset=utf-8", page.encode())
+
+        def do_POST(self):
+            length = min(int(self.headers.get("Content-Length") or 0), 65536)
+            values = urllib.parse.parse_qs(self.rfile.read(length).decode())
+            if (not self.allowed() or self.path != "/token"
+                    or values.get("state", [""])[0] != expected or not values.get("refresh")):
+                self.reply(400, "text/plain", b"")
+                return
+            result["refresh"] = values["refresh"][0]
+            result["email"] = values.get("email", [""])[0]
+            self.reply(200, "text/plain", b"ok")
+
+    listener = http.server.HTTPServer(("127.0.0.1", PORT), Handler)
+    listener.timeout = 5
+    subprocess.Popen(["xdg-open", f"{SERVER}/desktop-koppelen?poort={PORT}&state={expected}"])
+    deadline = time.time() + 300
+    while "refresh" not in result and time.time() < deadline:
+        listener.handle_request()
+    listener.server_close()
+    if "refresh" not in result:
+        return 1
+    config = read_json(CONFIG, {})
+    config.update(result)
+    write_json(CONFIG, config)
+    os.makedirs(ROOT, exist_ok=True)
+    subprocess.run(["systemctl", "--user", "enable", "--now", "lumo-pwwdrive.timer"], check=False)
+    print("path=" + ROOT)
+    return 0
+
+
+def command_unpair(_arguments):
+    config = read_json(CONFIG, {})
+    config.pop("refresh", None)
+    config.pop("email", None)
+    write_json(CONFIG, config)
+    for path in (STATE, STATUS):
+        if os.path.exists(path):
+            os.unlink(path)
+    subprocess.run(["systemctl", "--user", "disable", "--now", "lumo-pwwdrive.timer"], check=False)
+    return 0
+
+
+def command_status(_arguments):
+    config = read_json(CONFIG, {})
+    status = read_json(STATUS, {})
+    print("paired=" + ("yes" if config.get("refresh") else "no"))
+    print("email=" + text(config.get("email")))
+    print("status=" + text(status.get("status")))
+    print("detail=" + text(status.get("detail")))
+    print("path=" + ROOT)
+    return 0
+
+
+def command_allow(_arguments):
+    os.makedirs(APP_DIR, exist_ok=True)
+    with open(ALLOW, "w", encoding="utf-8"):
+        pass
+    return command_sync([])
+
+
+COMMANDS = {
+    "sync": command_sync,
+    "pair": command_pair,
+    "unpair": command_unpair,
+    "status": command_status,
+    "allow": command_allow,
+}
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:
+        print("usage: lumo-pwwdrive " + "|".join(COMMANDS), file=sys.stderr)
+        sys.exit(2)
+    sys.exit(COMMANDS[sys.argv[1]](sys.argv[2:]))

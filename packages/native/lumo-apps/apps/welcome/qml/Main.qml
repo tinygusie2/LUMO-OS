@@ -531,6 +531,26 @@ AppWindow {
                 }
                 ListItem {
                     Layout.fillWidth: true
+                    title: i18n("Prefer Chrome or Edge?")
+                    subtitle: i18n("Sites that need them work best there. Get either one in the Store")
+                    icon: "internet-web-browser"
+                    accent: 2
+                    interactive: false
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+                    QQC2.Button {
+                        text: i18n("Get Chrome")
+                        onClicked: Process.openUrl(Qt.url("appstream:com.google.Chrome"))
+                    }
+                    QQC2.Button {
+                        text: i18n("Get Edge")
+                        onClicked: Process.openUrl(Qt.url("appstream:com.microsoft.Edge"))
+                    }
+                }
+                ListItem {
+                    Layout.fillWidth: true
                     title: i18n("Coming from Windows?")
                     subtitle: i18n("Bring your documents, pictures, wallpaper and bookmarks from a Windows drive or a USB stick")
                     icon: "folder-download"

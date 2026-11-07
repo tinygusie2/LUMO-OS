@@ -5,8 +5,10 @@
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as QQC2
 import org.lumo.m3
 import org.lumo.ui
+import org.lumo.system
 import "kinds.js" as Kinds
 
 Item {
@@ -18,6 +20,19 @@ Item {
     required property bool fileIsDir
     required property var fileModified
     required property var fileSize
+
+    property bool selectionEnabled: false
+    property bool selectionMode: false
+    property bool dragEnabled: false
+    property bool dropEnabled: false
+    property bool dragStarted: false
+    property point pressPoint
+    signal clicked(var mouse)
+    signal selectionToggled()
+    signal selectionHeld()
+    signal dragRequested()
+    signal tabRequested()
+    signal filesDropped(var urls, url destination, int actions, point position)
 
     property bool list: false
     property bool selected: false
@@ -32,6 +47,24 @@ Item {
 
     readonly property string kind: Kinds.kindOf(fileName, fileIsDir)
     readonly property bool thumbnail: !fileIsDir && Kinds.hasThumbnail(fileName)
+    property string appIcon: ""
+    readonly property Component preview: thumbnail ? picture : (appIcon.length > 0 ? packageIcon : symbol)
+
+    function loadAppIcon(): void {
+        appIcon = "";
+        if (kind !== "android") {
+            return;
+        }
+        const wanted = String(fileUrl);
+        Android.iconOf(fileUrl, icon => {
+            if (String(root.fileUrl) === wanted) {
+                root.appIcon = icon;
+            }
+        });
+    }
+
+    onFileUrlChanged: loadAppIcon()
+    Component.onCompleted: loadAppIcon()
 
     opacity: cut ? 0.5 : 1
 
@@ -92,6 +125,25 @@ Item {
         }
     }
 
+    Component {
+        id: packageIcon
+        Rectangle {
+            radius: root.list ? width / 2 : (M3.classic ? M3.cornerImage : 16)
+            color: root.list ? "transparent" : M3.surfaceContainerHighest
+            Image {
+                anchors.centerIn: parent
+                width: root.list ? parent.width : Math.round(parent.height * 0.72)
+                height: width
+                source: root.appIcon
+                sourceSize: Qt.size(192, 192)
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
+                smooth: true
+                mipmap: true
+            }
+        }
+    }
+
     ColumnLayout {
         visible: !root.list
         anchors.fill: parent
@@ -101,7 +153,7 @@ Item {
         Loader {
             Layout.fillWidth: true
             Layout.preferredHeight: width * 0.78
-            sourceComponent: root.thumbnail ? picture : symbol
+            sourceComponent: root.preview
         }
         MText {
             Layout.fillWidth: true
@@ -123,13 +175,13 @@ Item {
         visible: root.list
         anchors.fill: parent
         anchors.leftMargin: 12
-        anchors.rightMargin: 16
+        anchors.rightMargin: root.selectionEnabled ? 52 : 16
         spacing: 16
 
         Loader {
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
-            sourceComponent: root.thumbnail ? picture : symbol
+            sourceComponent: root.preview
         }
         MText {
             Layout.fillWidth: true
@@ -152,18 +204,58 @@ Item {
         anchors.fill: parent
         anchors.margins: root.list ? 0 : 4
         hoverEnabled: true
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        acceptedButtons: Qt.LeftButton | Qt.RightButton | (root.selectionEnabled ? Qt.MiddleButton : Qt.NoButton)
         cursorShape: Qt.PointingHandCursor
-        onPressed: event => root.pressed(event)
+        onPressed: event => {
+            root.dragStarted = false;
+            root.pressPoint = Qt.point(event.x, event.y);
+            root.pressed(event);
+        }
+        onPositionChanged: event => {
+            if (root.dragEnabled && pressedButtons === Qt.LeftButton && !root.dragStarted
+                && Math.hypot(event.x - root.pressPoint.x, event.y - root.pressPoint.y) >= Qt.styleHints.startDragDistance) {
+                root.dragStarted = true;
+                root.dragRequested();
+            }
+        }
+        onPressAndHold: event => {
+            if (root.selectionEnabled && !root.dragStarted && event.button === Qt.LeftButton) {
+                root.selectionHeld();
+                root.dragStarted = true;
+            }
+        }
         onDoubleClicked: event => {
-            if (event.button === Qt.LeftButton) {
+            if (event.button === Qt.LeftButton && !root.selectionMode && !root.dragStarted) {
                 root.activated();
             }
         }
         onClicked: event => {
+            if (root.dragStarted) return;
             if (event.button === Qt.RightButton) {
                 root.menuRequested(event.x, event.y);
+            } else if (event.button === Qt.MiddleButton && root.fileIsDir) {
+                root.tabRequested();
+            } else {
+                root.clicked(event);
             }
         }
+    }
+    FileDropArea {
+        anchors.fill: parent
+        enabled: root.dropEnabled && root.fileIsDir
+        destination: root.fileUrl
+        onFilesDropped: (urls, destination, actions, position) => root.filesDropped(urls, destination, actions, position)
+    }
+    QQC2.CheckBox {
+        objectName: "fileSelection"
+        anchors.right: parent.right
+        anchors.top: root.list ? undefined : parent.top
+        anchors.verticalCenter: root.list ? parent.verticalCenter : undefined
+        anchors.margins: 6
+        visible: root.selectionEnabled && (root.selectionMode || root.selected || mouse.containsMouse || hovered)
+        checked: root.selected
+        text: ""
+        Accessible.name: i18n("Select %1", root.fileName)
+        onClicked: root.selectionToggled()
     }
 }

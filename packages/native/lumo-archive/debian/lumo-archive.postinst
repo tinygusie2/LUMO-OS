@@ -5,6 +5,11 @@ if [ "$1" = configure ] && [ -e /etc/apt/sources.list.d/lumo-demo.sources ]; the
     install -m 0644 /usr/share/lumo/apt/lumo-demo.sources /etc/apt/sources.list.d/lumo-demo.sources
 fi
 
+if [ "$1" = configure ] && [ "$(dpkg --print-architecture)" = amd64 ] &&
+    { [ -z "${2:-}" ] || dpkg --compare-versions "$2" lt 1.8; }; then
+    dpkg --add-architecture i386
+fi
+
 #DEBHELPER#
 
 exit 0

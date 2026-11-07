@@ -4,7 +4,7 @@ set -Eeuo pipefail
 # shellcheck source=lib/common.sh
 source "$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/lib/common.sh"
 
-for dependency in date env find grub-mkrescue install mksquashfs mktemp mv \
+for dependency in date env find grub-mkimage install mksquashfs mktemp mv \
   sha256sum sort tar touch xorriso xz; do
   require_command "$dependency"
 done
@@ -67,6 +67,51 @@ tar --extract --no-same-owner --directory="$kernel_tree" --file="$rootfs_tar" \
 mkdir -p "$iso_tree/boot/grub/themes"
 cp -R "$kernel_tree/$theme_member" "$iso_tree/boot/grub/themes/lumo"
 chmod -R u=rwX,go=rX "$iso_tree/boot/grub/themes/lumo"
+efi_members=(
+  ./usr/lib/shim/shimx64.efi.signed
+  ./usr/lib/shim/mmx64.efi.signed
+  ./usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed
+  ./usr/lib/grub/x86_64-efi
+)
+tar --extract --no-same-owner --directory="$kernel_tree" --file="$rootfs_tar" \
+  "${efi_members[@]}"
+for member in "${efi_members[@]:0:3}"; do
+  [[ -s "$kernel_tree/$member" ]] \
+    || die "the live rootfs has no ${member#./}"
+done
+mkdir -p "$iso_tree/boot/grub/x86_64-efi" "$iso_tree/boot/grub/i386-pc"
+cp "$kernel_tree"/usr/lib/grub/x86_64-efi/*.mod \
+  "$kernel_tree"/usr/lib/grub/x86_64-efi/*.lst "$iso_tree/boot/grub/x86_64-efi/"
+cp /usr/lib/grub/i386-pc/*.mod /usr/lib/grub/i386-pc/*.lst \
+  "$iso_tree/boot/grub/i386-pc/"
+grub-mkimage \
+  --directory=/usr/lib/grub/i386-pc \
+  --prefix=/boot/grub \
+  --output="$iso_tree/boot/grub/i386-pc/eltorito.img" \
+  --format=i386-pc-eltorito \
+  --compression=auto \
+  biosdisk iso9660
+
+mtools_bin="$PROJECT_ROOT/_state/tools/mtools/usr/bin"
+efi_image="$iso_tree/efi.img"
+"$mtools_bin/mformat" -i "$efi_image" -C -T 16384 -h 64 -s 32 -N 0 \
+  -v LUMO_EFI ::
+"$mtools_bin/mmd" -i "$efi_image" ::/EFI ::/EFI/BOOT
+"$mtools_bin/mcopy" -m -i "$efi_image" \
+  "$kernel_tree/usr/lib/shim/shimx64.efi.signed" ::/EFI/BOOT/BOOTX64.EFI
+"$mtools_bin/mcopy" -m -i "$efi_image" \
+  "$kernel_tree/usr/lib/shim/mmx64.efi.signed" ::/EFI/BOOT/mmx64.efi
+"$mtools_bin/mcopy" -m -i "$efi_image" \
+  "$kernel_tree/usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed" \
+  ::/EFI/BOOT/grubx64.efi
+mkdir -p "$iso_tree/EFI/BOOT"
+install -m 0644 "$kernel_tree/usr/lib/shim/shimx64.efi.signed" \
+  "$iso_tree/EFI/BOOT/BOOTX64.EFI"
+install -m 0644 "$kernel_tree/usr/lib/shim/mmx64.efi.signed" \
+  "$iso_tree/EFI/BOOT/mmx64.efi"
+install -m 0644 "$kernel_tree/usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed" \
+  "$iso_tree/EFI/BOOT/grubx64.efi"
+
 printf '%s\n' "Lumo ${DIST_VERSION} (${DIST_CODENAME}) amd64 live" \
   > "$iso_tree/.disk/info"
 printf '%s\n' "$SNAPSHOT_TIMESTAMP" > "$iso_tree/.disk/snapshot"
@@ -80,15 +125,20 @@ iso_name="lumo-${DIST_VERSION}-${DIST_CODENAME}-live-${BASE_ARCH}.iso"
 iso="$output_dir/$iso_name"
 temporary_iso="$output_dir/.$iso_name.tmp"
 mkdir -p "$output_dir"
-PATH="$PROJECT_ROOT/_state/tools/mtools/usr/bin:$PATH" \
-  grub-mkrescue \
-    --compress=xz \
-    --output="$temporary_iso" \
-    "$iso_tree" \
-    -- \
-    -volid LUMO_1_EMBER \
-    -volume_date uuid "$iso_date" \
-    -volume_date all_file_dates "$iso_date"
+xorriso -as mkisofs \
+  -r -V LUMO_1_EMBER \
+  -b boot/grub/i386-pc/eltorito.img \
+  -no-emul-boot -boot-load-size 4 -boot-info-table --grub2-boot-info \
+  --grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img \
+  -eltorito-alt-boot \
+  -e efi.img -no-emul-boot \
+  -efi-boot-part --efi-boot-image \
+  --protective-msdos-label \
+  -o "$temporary_iso" \
+  "$iso_tree" \
+  -- \
+  -volume_date uuid "$iso_date" \
+  -volume_date all_file_dates "$iso_date"
 mv -- "$temporary_iso" "$iso"
 (
   cd "$output_dir"

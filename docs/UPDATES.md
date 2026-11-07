@@ -22,8 +22,14 @@ The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.e
 Only the installed system points at the live archives: `build-live-rootfs` removes
 the build's `sources.list` and its copy of the Lumo archive.
 
-Both the Debian archive and its security updates come with the `main` and
-`non-free-firmware` components. The image ships the firmware that graphics
+Both the Debian archive and its security updates include `main`, `contrib`,
+`non-free` and `non-free-firmware`. Archive package 1.3 enables `i386` on new
+amd64 installations and upgrades from earlier archive versions, so 32-bit
+application dependencies can be resolved. Later upgrades preserve an
+administrator’s decision to remove `i386`. Lumo’s own repositories are
+scoped to `amd64`; Debian supplies both native and 32-bit packages.
+
+The image ships the firmware that graphics
 cards, Wi-Fi, Bluetooth and laptop sound need, and CPU microcode
 (`configs/live/packages.txt`: AMD, Intel and NVIDIA graphics, Intel, Realtek,
 Qualcomm, MediaTek and Broadcom Wi-Fi, SOF sound); without it AMD's integrated
@@ -163,6 +169,21 @@ Settings > Updates.
 publication replaces all of its contents in a single commit, so the
 repository does not grow.
 
+### Shared changes when demo is ahead
+
+APT selects the higher package version across enabled suites. A new stable
+package with a lower version than an installed demo package does not reach
+that system, even when the stable package contains a new feature. Backport
+shared features and fixes to the current demo source too, raise its versions,
+and publish that build with `make publish-demo`. Keep experimental demo code
+out of the stable build. Include the shared What's New entry in both builds,
+retaining each channel's history.
+
+Before announcing delivery to both channels, test the upgrade candidates from
+both the previous stable and previous demo versions and check that each
+selected package contains the feature. An empty-status APT test alone does
+not cover machines that already have newer demo packages installed.
+
 ### Demo first
 
 `make publish-demo` builds the same way but leaves the normal updates exactly
@@ -180,9 +201,9 @@ when a package changed but kept the version it is published with.
 
 ## The signing key
 
-The Lumo Archive Signing Key has fingerprint
-`DF06 884E A586 3BEE 786D BD71 34C2 11B6 09EA CEE3`, created 2026-11-01 with
-`scripts/create-archive-key`; it expires after three years.
+The Lumo Archive Signing Key is an ed25519 key with fingerprint
+`C828 917B A476 DDE5 AD6C E15B 0289 0CC0 6C4A 93ED`, created 2026-10-13. It
+expires on 2029-10-12.
 
 - The private key lives in `_state/gnupg/archive` on the owner's build
   machine and is never committed. Its one backup,
@@ -196,10 +217,32 @@ The Lumo Archive Signing Key has fingerprint
   --quick-set-expire <fingerprint> 3y`, run `scripts/create-archive-key`
   again to export it, and publish a new `lumo-archive`.
 
-## Systems installed before the rename
+## Systems installed from Lumo
 
-Systems installed from an image with the `kernora-*` packages cannot move to
-the `lumo-*` packages through an update, because no archive offers them.
-Install them again from a new image. The boot menu of a new image still finds
-and starts such an installation (`configs/live/grub.cfg` looks for both
-`/usr/share/lumo` and `/usr/share/kernora`).
+Lumo no longer takes packages from the Lumo archive
+(`tinygusie2.github.io/lumo-updates`): its packages have their own
+versions and would replace Lumo's. `lumo-archive` 1.2 points
+`/etc/apt/sources.list.d/lumo.sources` at the Lumo archive and ships the
+Lumo key instead of Lumo's. A Lumo system becomes Lumo by installing
+the Lumo packages once; from then on it updates from the Lumo archive.
+
+## Systems installed before this
+
+The first test ISO (`v1-ember`, 2026-10-03) came before this change: its
+systems still point at the build snapshot and take no updates. To get updates
+there, install `lumo-archive` from the archive once, by hand:
+
+```sh
+wget https://tinygusie2.github.io/lumo-updates/pool/main/k/lumo-archive/lumo-archive_1.2_all.deb
+sudo apt install ./lumo-archive_1.2_all.deb
+sudo rm /etc/apt/sources.list
+```
+
+## Restore points
+
+On a system installed on btrfs, snapper makes a restore point before and after
+every package change, whichever way it is installed. Settings > System >
+Restore points and the boot menu go back to one. See
+[APPS.md](APPS.md#restore-points). The packages in `configs/live/packages.txt`
+reach new installations only: a dependency of an existing Lumo package is what
+brings a new package to installed systems.

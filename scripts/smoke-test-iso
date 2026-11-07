@@ -25,6 +25,7 @@ run_boot_test() {
   local log="$logs/iso-${firmware}.log"
   local temporary_root pid marker_seen=0
   local -a firmware_args=()
+  local machine="q35,accel=$accel"
 
   temporary_root=$(mktemp -d /tmp/lumo-qemu.XXXXXX)
   if [[ "$firmware" == "uefi" ]]; then
@@ -37,13 +38,26 @@ run_boot_test() {
       -drive if=pflash,format=raw,unit=0,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd
       -drive "if=pflash,format=raw,unit=1,file=$temporary_root/OVMF_VARS_4M.fd"
     )
+  elif [[ "$firmware" == "uefi-secureboot" ]]; then
+    [[ -s /usr/share/OVMF/OVMF_CODE_4M.secboot.fd ]] \
+      || die "OVMF_CODE_4M.secboot.fd is missing"
+    [[ -s /usr/share/OVMF/OVMF_VARS_4M.ms.fd ]] \
+      || die "OVMF_VARS_4M.ms.fd is missing"
+    cp /usr/share/OVMF/OVMF_VARS_4M.ms.fd "$temporary_root/OVMF_VARS_4M.fd"
+    machine="q35,accel=$accel,smm=on"
+    firmware_args=(
+      -global driver=cfi.pflash01,property=secure,value=on
+      -drive if=pflash,format=raw,unit=0,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.secboot.fd
+      -drive "if=pflash,format=raw,unit=1,file=$temporary_root/OVMF_VARS_4M.fd"
+    )
   fi
 
   : > "$log"
   qemu-system-x86_64 \
-    -machine "q35,accel=$accel" \
+    -machine "$machine" \
     -cpu max \
-    -m 1024 \
+    -m 4096 \
+    -smp 4 \
     -boot once=d \
     -drive "file=$iso,media=cdrom,readonly=on" \
     "${firmware_args[@]}" \
@@ -54,7 +68,7 @@ run_boot_test() {
     -no-shutdown &
   pid=$!
 
-  for ((second = 0; second < 90; second += 1)); do
+  for ((second = 0; second < 300; second += 1)); do
     if grep -Fq 'LUMO_BOOT_OK' "$log"; then
       marker_seen=1
       break
@@ -75,3 +89,4 @@ run_boot_test() {
 
 run_boot_test bios
 run_boot_test uefi
+run_boot_test uefi-secureboot

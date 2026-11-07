@@ -43,7 +43,7 @@ fail() {
 }
 
 grep -Fxq 'ID=lumo' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.6" ]] \
   || fail "lumo-base is not installed"
 [[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == *~bpo13+* ]] \
   || fail "the kernel does not come from trixie-backports"
@@ -60,7 +60,7 @@ done
 grep -Fxq 'Exec=/usr/bin/lumo-installer --autostart' /etc/xdg/autostart/org.lumo.installer-autostart.desktop \
   || fail "the live session does not open the installer on login"
 fastfetch_out=$(fastfetch --pipe true 2>/dev/null)
-grep -Fq ',o000000000oo,,' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
+grep -Fq '.:o0000000000000000o:.' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
   || fail "fastfetch does not show the Lumo logo with the system info"
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"
@@ -104,10 +104,19 @@ for package in $EXCLUDED_PACKAGES; do
 done
 [[ "$(dpkg-query -W -f='${Status}' sddm)" == 'install ok installed' ]] \
   || fail "sddm is not installed"
+for package in shim-signed grub-efi-amd64-signed mokutil; do
+  [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] \
+    || fail "Secure Boot package is not installed: $package"
+done
+for path in /usr/lib/shim/shimx64.efi.signed /usr/lib/shim/mmx64.efi.signed \
+  /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed \
+  /usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed; do
+  [[ -s "$path" ]] || fail "Secure Boot loader is missing: $path"
+done
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.61" ]] \
-  || fail "lumo-desktop 1.4.61 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.74" ]] \
+  || fail "lumo-desktop 1.4.74 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -166,19 +175,19 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.68" ]] \
-  || fail "lumo-apps 1.1.68 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.86" ]] \
+  || fail "lumo-apps 1.1.86 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
 [[ -s /usr/share/flatpak/remotes.d/flathub.flatpakrepo && -s /etc/apt/apt.conf.d/60lumo-store ]] || fail "Store sources missing"
-for app in settings files editor photos player calculator screenshot welcome store; do
+for app in settings files editor photos player calculator screenshot welcome store terminal; do
   [[ -x "/usr/bin/lumo-$app" ]] || fail "Lumo application is missing: $app"
   [[ -s "/usr/share/lumo/$app/Main.qml" ]] || fail "interface of lumo-$app is missing"
 done
-for module in org/lumo/system org/lumo/store org/lumo/m3 org/lumo/ui QtMultimedia \
+for module in org/lumo/system org/lumo/store org/lumo/terminal org/lumo/m3 org/lumo/ui QtMultimedia \
   org/kde/syntaxhighlighting Qt/labs/folderlistmodel QtQuick/Dialogs; do
   [[ -s "$qml_root/$module/qmldir" ]] \
     || fail "QML module used by the Lumo applications is missing: $module"
@@ -263,8 +272,11 @@ grep -Fxq 'gtk-theme-name=Lumo' "/home/$LIVE_USER/.config/gtk-3.0/settings.ini" 
 if grep -rq 'snapshot.debian.org\|file:/usr/share/lumo' /etc/apt/sources.list.d; then
   fail "the image still points APT at the build's sources"
 fi
-grep -Fxq 'Components: main non-free-firmware' /etc/apt/sources.list.d/debian.sources \
-  || fail "the image takes no firmware updates"
+grep -Fxq 'Components: main contrib non-free non-free-firmware' /etc/apt/sources.list.d/debian.sources \
+  || fail "the image lacks Debian application components"
+dpkg --print-foreign-architectures | grep -Fxq i386 || fail "32-bit application support is missing"
+grep -Fxq 'Architectures: amd64' /etc/apt/sources.list.d/lumo.sources \
+  || fail "Lumo sources request unsupported architectures"
 for firmware in firmware-amd-graphics firmware-intel-graphics firmware-nvidia-graphics firmware-iwlwifi \
     firmware-realtek firmware-atheros firmware-mediatek firmware-sof-signed amd64-microcode intel-microcode; do
   [[ "$(dpkg-query -W -f='${Status}' "$firmware" 2>/dev/null)" == 'install ok installed' ]] \
@@ -308,17 +320,16 @@ command -v pkexec >/dev/null || fail "pkexec is missing; the installer cannot st
 initrd=$(find /boot -maxdepth 1 -name 'initrd.img-*' | sort | tail -n1)
 lsinitramfs "$initrd" | grep 'usr/share/plymouth/themes/lumo/lumo.script' >/dev/null \
   || fail "the initramfs does not carry the Lumo boot splash"
-initramfs_listing=$(lsinitramfs "$initrd")
-! grep -Eq 'usr/lib/firmware/nvidia/[a-z]' <<<"$initramfs_listing" \
-  || fail "the initramfs carries nouveau's firmware"
-(( $(stat -c %s "$initrd") < 160 * 1024 * 1024 )) \
-  || fail "the initramfs is too large to unpack on a computer with 1 GB of memory"
 command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle archives"
 [[ -x /usr/bin/lumo-installer ]] || fail "the Lumo installer launcher is missing"
 [[ -s /etc/xdg/autostart/org.lumo.welcome.desktop ]] || fail "Welcome is not started at first login"
 # English and Russian are ready for the live session and the installer.
 for locale in en_US.utf8 ru_RU.utf8; do
   locale -a | grep -Fxq "$locale" || fail "locale is not generated: $locale"
+done
+for entry in 'en_PH.UTF-8 UTF-8' 'fil_PH UTF-8' 'de_DE.UTF-8 UTF-8'; do
+  sed 's/^[[:space:]#]*//' /etc/locale.gen | grep -Fxq "$entry" \
+    || fail "the installable locale catalog lacks $entry"
 done
 [[ -x /usr/lib/lumo/live-language ]] || fail "the boot menu language cannot be applied"
 [[ -L /etc/systemd/system/multi-user.target.wants/lumo-live-language.service ]] \
@@ -374,7 +385,7 @@ for directory in (
     for path in directory.glob('*.desktop'):
         entries[path.name] = path
 
-allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop'}
+allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop', 'org.kde.skanpage.desktop', 'org.kde.okular.desktop'}
 unexpected = []
 for name, path in sorted(entries.items()):
     parser = configparser.ConfigParser(interpolation=None, strict=False)

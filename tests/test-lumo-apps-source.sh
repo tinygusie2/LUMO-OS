@@ -15,7 +15,7 @@ for dependency in dpkg-parsechangelog grep; do
 done
 
 version=$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)
-[[ "$version" == "1.1.68" ]] || fail "unexpected source version"
+[[ "$version" == "1.1.86" ]] || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
 [[ "$(<"$package_root/debian/source/format")" == "3.0 (native)" ]] || fail "wrong source format"
@@ -43,6 +43,27 @@ grep -Fxq 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$package_root/apps/screenshot/org.lumo.screenshot.desktop" \
   || fail "Screenshot is not allowed to ask KWin for screenshots"
 
+[[ -s "$package_root/apps/terminal/qml/Main.qml" ]] || fail "Terminal has no interface"
+[[ -s "$package_root/src/apps/terminal.cpp" ]] || fail "Terminal has no host"
+for file in terminalview.cpp terminalview.h terminalcolours.cpp terminalcolours.h CMakeLists.txt; do
+  [[ -s "$package_root/src/terminal/$file" ]] || fail "Terminal lacks src/terminal/$file"
+done
+grep -Eq '^ libvterm-dev[, ]*$' "$package_root/debian/control" || fail "missing Terminal build dependency: libvterm-dev"
+grep -Fq 'lumo/terminal/lumo.bashrc' "$package_root/src/terminal/terminalview.cpp" \
+  && grep -Fq 'data/terminal/lumo.bashrc' "$package_root/CMakeLists.txt" \
+  || fail "Terminal does not start bash with the Lumo start-up file"
+bash -n "$package_root/data/terminal/lumo.bashrc" || fail "the Terminal start-up file does not parse"
+for command in cls dir copy move ren del md rd type ipconfig tasklist where; do
+  grep -Eq "^alias $command=" "$package_root/data/terminal/lumo.bashrc" || fail "Terminal does not know the Windows command $command"
+done
+grep -Eq '^(taskkill|ver|help)\(\)' "$package_root/data/terminal/lumo.bashrc" || fail "Terminal lacks taskkill, ver or help"
+grep -Fq 'Process.startDetached("lumo-terminal", [app.folderPath])' "$package_root/apps/files/qml/Main.qml" \
+  || fail "Files does not open the Lumo Terminal"
+grep -rq alacritty "$package_root/apps" && fail "an app still starts Alacritty"
+for language in nl ru; do
+  [[ -s "$package_root/po/$language/lumo-terminal.po" ]] || fail "Terminal has no $language translation"
+done
+
 if grep -rEn 'M3\.on[A-Z]' "$package_root/apps" >/dev/null; then
   fail "QML uses an M3.on* role; use the *Content spelling"
 fi
@@ -61,9 +82,43 @@ grep -Fq '!SystemInfo.live && Updates.available' "$package_root/apps/settings/qm
   || fail "Settings downloads updates in the live session"
 [[ "$(grep -c 'Default Applications' "$package_root/src/system/defaultapps.cpp")" -ge 2 ]] \
   || fail "Settings shows a stale default app after choosing one"
-[[ -s "$package_root/apps/settings/qml/pages/DriversPage.qml" ]] \
-  && grep -Fq 'page.open("DriversPage.qml"' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
-  || fail "Settings has no Drivers page"
+[[ ! -e "$package_root/apps/settings/qml/pages/DriversPage.qml" ]] \
+  && grep -Fq 'Process.launchApplication("org.lumo.drivers.desktop")' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  && grep -Fq '"org.lumo.drivers.desktop"' "$package_root/apps/settings/qml/components/Catalog.qml" \
+  || fail "Settings does not open the Drivers app"
+for page in Main DriversPage DevicesPage DevicePage NvidiaPage UpdatesPage JobBar; do
+  [[ -s "$package_root/apps/drivers/qml/$page.qml" ]] || fail "Drivers has no $page"
+done
+[[ -s "$package_root/src/apps/drivers.cpp" && -s "$package_root/po/ru/lumo-drivers.po" ]] \
+  && grep -Fq 'Icon=org.lumo.drivers' "$package_root/apps/drivers/org.lumo.drivers.desktop" \
+  && grep -Eq 'set\(LUMO_APPS .* drivers ' "$package_root/CMakeLists.txt" \
+  && grep -Fq 'lumo-desktop (>= 1.4.74)' "$package_root/debian/control" \
+  || fail "the Drivers app is not packaged"
+python3 - "$package_root" <<'PY' || fail "a Drivers string has no translation"
+import re
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+po = (root / "po/ru/lumo-drivers.po").read_text()
+known = set(re.findall(r'^msgid "(.*)"$', po, re.MULTILINE))
+strings = set()
+for page in (root / "apps/drivers/qml").glob("*.qml"):
+    text = page.read_text()
+    strings.update(re.findall(r'\bi18np?\(\s*"((?:[^"\\]|\\.)*)"', text))
+    strings.update(re.findall(r'\bi18nc\(\s*"(?:[^"\\]|\\.)*",\s*"((?:[^"\\]|\\.)*)"', text))
+missing = sorted(strings - known)
+if missing:
+    sys.exit(f"untranslated: {missing}")
+PY
+[[ -s "$package_root/apps/settings/qml/pages/RestorePage.qml" ]] \
+  && grep -Fq 'page.open("RestorePage.qml"' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
+  || fail "Settings has no Restore points page"
+for name in Firewall Locations; do
+  [[ -s "$package_root/apps/settings/qml/pages/${name}Page.qml" ]] \
+    && grep -Fq "${name}Page.qml" "$package_root/apps/settings/qml/components/Catalog.qml" \
+    || fail "Settings has no $name page"
+done
 grep -Fq 'driverReady' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fxq '[Event/driverReady]' "$package_root/data/knotifications/lumo-updates.notifyrc" \
   || fail "nobody is told to restart after a driver install"
@@ -148,8 +203,8 @@ grep -Fq 'key: "themedApps"' "$package_root/apps/settings/qml/pages/AppearancePa
   && grep -Fq 'msgid "Themed app icons"' "$package_root/po/ru/lumo-settings.po" \
   && grep -Eq '^ qt6-svg-plugins,$' "$package_root/debian/control" \
   || fail "themed app icons cannot be turned on"
-grep -Eq '^ lumo-archive \(>= 1\.6\),$' "$package_root/debian/control" \
-  || fail "lumo-apps does not require the lumo-archive with demo updates"
+grep -Eq '^ lumo-archive \(>= 1\.8\),$' "$package_root/debian/control" \
+  || fail "lumo-apps does not require the lumo-archive with Debian's contrib and non-free components"
 grep -Fq 'msgid "Demo updates"' "$package_root/po/ru/lumo-settings.po" \
   || fail "the demo updates switch is not translated"
 
@@ -200,5 +255,63 @@ grep -Fq 'readonly property string versionText: SystemInfo.osVersion' "$package_
   || fail "About still glues the codename onto the version"
 grep -Fq 'indeterminate: Updates.progress <= 0 || Updates.progress >= 100' "$package_root/apps/settings/qml/pages/UpdatesPage.qml" \
   || fail "the update bar flashes full while packagekit reports 100%"
+
+grep -Fq '{ id: "android", title: i18n("Android apps")' "$package_root/apps/settings/qml/components/Catalog.qml" \
+  && grep -Fq 'readonly property string tool: "/usr/libexec/lumo-android"' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq 'page.request(page.choice === "gapps" ? "setup-gapps" : "setup-vanilla")' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  || fail "Settings cannot turn Android on"
+grep -Fxq 'MimeType=application/vnd.android.package-archive;' "$package_root/apps/apkinstaller/org.lumo.apkinstaller.desktop" \
+  && grep -Fq 'Android.inspect(url)' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -Fq 'Android.install(app.file, app.apk.package' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -q ' drivers apkinstaller appsplash androiddialog)' "$package_root/src/apps/CMakeLists.txt" \
+  || fail "the APK installer is missing"
+grep -Fq 'adaptive-icon' "$package_root/src/system/apk.cpp" \
+  && grep -Fq 'QSvgRenderer renderer(vectorToSvg(elements));' "$package_root/src/system/apk.cpp" \
+  && grep -Fq 'KF6::Archive' "$package_root/src/system/CMakeLists.txt" \
+  || fail "the APK reader cannot draw app icons"
+for dependency in libkf6archive-dev qt6-svg-dev qt6-image-formats-plugins; do
+  grep -Eq "^ $dependency,?$" "$package_root/debian/control" || fail "the APK reader needs $dependency"
+done
+msgfmt --check -o /dev/null "$package_root/po/ru/lumo-apkinstaller.po" || fail "the APK installer translation is broken"
+grep -Fq 'QGuiApplication::setDesktopFileName(QStringLiteral("waydroid.") + argument);' "$package_root/src/apps/appsplash.cpp" \
+  && grep -Fq 'MLoadingIndicator {' "$package_root/apps/appsplash/qml/Main.qml" \
+  && msgfmt --check -o /dev/null "$package_root/po/ru/lumo-appsplash.po" \
+  || fail "Android apps open without their splash"
+grep -Fq 'flags: Qt.Dialog | Qt.FramelessWindowHint' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -Fq 'app.startSystemMove();' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  || fail "the APK installer is not a Material dialog"
+grep -Fq 'android: ["apk"]' "$package_root/apps/files/qml/kinds.js" \
+  && grep -Fq 'Android.iconOf(fileUrl' "$package_root/apps/files/qml/FileItem.qml" \
+  && grep -Fq 'void Android::iconOf(' "$package_root/src/system/android.cpp" \
+  || fail "Files does not show the icons of APK files"
+! grep -Fq 'Android.openSettings()' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq '"lumo-android.service"' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  || fail "Settings still opens Android's own settings or has no faster start"
+grep -Fq 'msgid "Android apps"' "$package_root/po/ru/lumo-settings.po" \
+  || fail "the Android page is not translated"
+grep -Fq 'info.remaining' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fxq 'msgstr "Осталось меньше минуты"' "$package_root/po/ru/lumo-settings.po" \
+  || fail "Settings does not show how long the Android apps download takes"
+grep -Fq 'property string choice: "gapps"' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq 'recommended: true' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fxq 'msgstr "Google Play и APK-файлы"' "$package_root/po/ru/lumo-settings.po" \
+  && ! grep -Fq 'MShape' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -Fq 'readonly property string step' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -Fq 'waitForPackage(package, callback, InstallChecks)' "$package_root/src/system/android.cpp" \
+  && grep -Fxq 'msgstr "Установить приложение?"' "$package_root/po/ru/lumo-apkinstaller.po" \
+  || fail "Google Play is not the recommended choice or the installer does not follow Android's"
+! grep -Fq 'registerWithGoogle' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq 'Open Google Play and sign in with your Google account.' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq 'info.bytes_total' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fxq 'msgstr "Завершите настройку Google Play"' "$package_root/po/ru/lumo-settings.po" \
+  || fail "Settings does not walk through Google Play or show the whole setup progress"
+python3 -c 'import json, sys; e = json.load(open(sys.argv[1]))[0]; sys.exit(not (e["id"] == "2026-11-07" and e["items"][0]["icon"] == "lumo-android"))' "$package_root/data/whatsnew.json" \
+  || fail "What's new does not lead with Android apps"
+grep -Fq 'readonly property bool runs: apk.compatible || android.arm !== "unsupported"' "$package_root/apps/apkinstaller/qml/Main.qml" \
+  && grep -Fq 'msgstr "Почти готово"' "$package_root/po/ru/lumo-apkinstaller.po" \
+  || fail "The installer still refuses apps made for ARM processors"
+grep -Fq 'Process.run("pkexec", [page.tool, "report"]' "$package_root/apps/settings/qml/pages/AndroidPage.qml" \
+  && grep -Fq 'msgstr "Сообщить о проблеме"' "$package_root/po/ru/lumo-settings.po" \
+  || fail "Settings cannot save a report about Android apps"
 
 printf 'lumo-apps source test: OK\n'

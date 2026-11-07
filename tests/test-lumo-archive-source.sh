@@ -9,14 +9,14 @@ fail() {
   exit 1
 }
 
-for dependency in dpkg-parsechangelog gpg grep; do
+for dependency in dpkg-parsechangelog gpg grep python3; do
   command -v "$dependency" >/dev/null 2>&1 \
     || fail "required command not found: $dependency"
 done
 # shellcheck disable=SC1091
 source "$project_root/configs/project.env"
 
-[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.7" ]] \
+[[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Version)" == "1.8" ]] \
   || fail "unexpected source version"
 [[ "$(dpkg-parsechangelog -l"$package_root/debian/changelog" -S Distribution)" == "UNRELEASED" ]] \
   || fail "development package must remain UNRELEASED"
@@ -100,4 +100,10 @@ for timer in apt-daily apt-daily-upgrade; do
     || fail "$timer runs in the live session"
 done
 
+grep -Fxq 'Components: main contrib non-free non-free-firmware' "$apt/debian.sources" \
+  || fail "Debian application components are missing"
+for source in lumo.sources lumo-demo.sources; do
+  grep -Fxq 'Architectures: amd64' "$apt/$source" || fail "$source requests unsupported i386 indices"
+done
+python3 "$project_root/tests/test-lumo-archive-postinst.py"
 printf 'lumo-archive source test: OK\n'

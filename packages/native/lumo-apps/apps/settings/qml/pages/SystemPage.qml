@@ -86,13 +86,39 @@ SettingsPage {
             onClicked: page.open("UpdatesPage.qml", {})
         }
         ListItem {
-            visible: !SystemInfo.live
             title: i18n("Drivers")
-            subtitle: i18n("Graphics card drivers")
-            icon: "cpu"
+            subtitle: i18n("Install and update drivers, see your devices")
+            icon: "lumo-drivers"
             accent: 1
             chevron: true
-            onClicked: page.open("DriversPage.qml", {})
+            onClicked: Process.launchApplication("org.lumo.drivers.desktop")
+        }
+        ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Restore points")
+            subtitle: i18n("Go back to before an update")
+            icon: "document-revert"
+            accent: 1
+            chevron: true
+            onClicked: page.open("RestorePage.qml", {})
+        }
+        ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Cloud & network folders")
+            subtitle: i18n("OneDrive, Nextcloud, Windows PCs")
+            icon: "folder-cloud"
+            accent: 1
+            chevron: true
+            onClicked: page.open("LocationsPage.qml", {})
+        }
+        ListItem {
+            visible: !SystemInfo.live
+            title: i18n("Firewall")
+            subtitle: i18n("Block connections from other computers")
+            icon: "security-high"
+            accent: 1
+            chevron: true
+            onClicked: page.open("FirewallPage.qml", {})
         }
         ListItem {
             title: i18n("Storage")

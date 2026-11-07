@@ -166,3 +166,17 @@ msgstr "© 2026 Lumo"
 
 msgid "Files or pages to open."
 msgstr "Bestanden of pagina's om te openen."
+msgid "Subscribe to a calendar…"
+msgstr "Abonneren op een agenda…"
+
+msgid "Remove subscribed calendars"
+msgstr "Geabonneerde agenda's verwijderen"
+
+msgid "Paste the iCal link from Google Calendar or Outlook. Lumo reads it every hour; changes are made in Google or Outlook."
+msgstr "Plak de iCal-link uit Google Agenda of Outlook. Lumo leest die elk uur; wijzigen doe je in Google of Outlook."
+
+msgid "iCal link"
+msgstr "iCal-link"
+
+msgid "This calendar could not be read"
+msgstr "Deze agenda kon niet worden gelezen"

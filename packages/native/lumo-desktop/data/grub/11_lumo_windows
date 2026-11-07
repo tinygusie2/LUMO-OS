@@ -1,0 +1,24 @@
+#!/bin/sh
+cat <<'MENU'
+if [ "$grub_platform" = efi ]; then
+  insmod part_gpt
+  insmod fat
+  insmod chain
+  insmod regexp
+  for device in (*); do
+    if [ -z "$lumo_windows" ]; then
+      if [ -f "$device/EFI/Microsoft/Boot/bootmgfw.efi" ]; then
+        set lumo_windows="$device"
+      fi
+    fi
+  done
+  if [ -n "$lumo_windows" ]; then
+    set timeout_style=menu
+    set timeout=-1
+    menuentry 'Windows' --class windows --class os {
+      set root=$lumo_windows
+      chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+    }
+  fi
+fi
+MENU

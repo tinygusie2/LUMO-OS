@@ -1,0 +1,6 @@
+---
+type: job
+name: lumolocales
+interface: python
+script: main.py
+noconfig: true

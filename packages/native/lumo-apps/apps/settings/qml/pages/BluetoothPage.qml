@@ -13,6 +13,7 @@ import org.lumo.m3
 import org.lumo.ui
 import org.lumo.system
 import "../components"
+import "../components/BluetoothNames.js" as BluetoothNames
 
 SettingsPage {
     id: page
@@ -33,7 +34,7 @@ SettingsPage {
 
     readonly property var paired: {
         const all = Array.from(manager.devices);
-        return all.filter(d => d.paired).sort((a, b) => (b.connected - a.connected) || a.name.localeCompare(b.name));
+        return all.filter(d => d.paired).sort((a, b) => (b.connected - a.connected) || BluetoothNames.compareDevices(a, b));
     }
 
     function deviceIcon(device: var): string {
@@ -103,7 +104,7 @@ SettingsPage {
             delegate: ListItem {
                 id: deviceRow
                 required property var modelData
-                title: modelData.name
+                title: BluetoothNames.deviceName(modelData) || i18n("Unnamed Bluetooth device")
                 subtitle: page.deviceStatus(modelData)
                 icon: page.deviceIcon(modelData)
                 accent: modelData.connected ? 0 : -1

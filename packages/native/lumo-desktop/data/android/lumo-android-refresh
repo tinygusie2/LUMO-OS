@@ -1,0 +1,11 @@
+#!/bin/sh
+# SPDX-FileCopyrightText: 2026 Kernora Developers
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+if [ "${1:-}" = check ]; then
+    exec /usr/libexec/lumo-android graphics-check
+fi
+if [ "${1:-}" = wayland ]; then
+    exec /usr/libexec/lumo-android use-wayland
+fi
+exec /usr/libexec/lumo-android refresh

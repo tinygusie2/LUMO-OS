@@ -44,12 +44,26 @@ for path in \
   /live/initrd.img \
   /live/filesystem.squashfs \
   /live/filesystem.packages \
-  /.disk/info; do
+  /.disk/info \
+  /efi.img \
+  /EFI/BOOT/BOOTX64.EFI \
+  /EFI/BOOT/grubx64.efi \
+  /EFI/BOOT/mmx64.efi; do
   xorriso -indev "$iso" -find "$path" -type f -- \
     > "$temporary_root/find.txt" 2>&1
   grep -Fq "$path" "$temporary_root/find.txt" || fail "missing ISO path: $path"
 done
 
+grep -Fq 'GPT partition path :   2  /efi.img' "$temporary_root/system-area.txt" \
+  || fail "the ISO has no EFI system partition for USB sticks"
+xorriso -osirrox on -indev "$iso" \
+  -extract /efi.img "$temporary_root/efi.img" \
+  -extract /EFI/BOOT/BOOTX64.EFI "$temporary_root/BOOTX64.EFI" \
+  > "$temporary_root/extract-efi.txt" 2>&1
+grep -aFq 'Microsoft Corporation UEFI CA' "$temporary_root/BOOTX64.EFI" \
+  || fail "the ISO does not boot through shim signed by Microsoft"
+grep -aFq 'Microsoft Corporation UEFI CA' "$temporary_root/efi.img" \
+  || fail "the EFI boot image does not start shim"
 xorriso -osirrox on -indev "$iso" \
   -extract /boot/grub/grub.cfg "$temporary_root/grub.cfg" \
   > "$temporary_root/extract-grub.txt" 2>&1

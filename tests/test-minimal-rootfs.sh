@@ -34,7 +34,7 @@ grep -Fxq 'Parent: Debian' /etc/dpkg/origins/lumo \
 
 [[ "$(dpkg-query -W -f='${Version}' base-files)" \
   == "13.8+deb13u7+lumo1" ]] || fail "wrong base-files version"
-[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.5" ]] \
+[[ "$(dpkg-query -W -f='${Version}' lumo-base)" == "1.6.6" ]] \
   || fail "lumo-base is not installed"
 
 grep -Fq 'signed-by=/usr/share/keyrings/lumo-development-archive-keyring.gpg' \

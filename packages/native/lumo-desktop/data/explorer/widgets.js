@@ -16,6 +16,7 @@ var widgets = {
     "org.lumo.widget.weather": { icon: "weather-few-clouds" },
     "org.lumo.widget.calendar": { icon: "view-calendar" },
     "org.lumo.widget.battery": { icon: "battery-full" },
+    "org.lumo.widget.cputemperature": { icon: "cpu" },
     "org.lumo.widget.media": { icon: "media-playback-start" },
     "org.lumo.widget.photo": { icon: "image-x-generic" },
     "org.lumo.widget.note": { icon: "note" },
