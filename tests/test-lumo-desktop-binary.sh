@@ -63,6 +63,8 @@ for path in \
   usr/share/icons/Lumo/scalable/apps/start-here-kde.svg \
   usr/share/plasma/look-and-feel/org.lumo.desktop/contents/splash/Splash.qml \
   usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js \
+  usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js \
+  usr/libexec/lumo-panel-shortcuts \
   etc/xdg/plasmarc \
   usr/share/color-schemes/LumoDark.colors \
   usr/share/color-schemes/LumoLight.colors \
@@ -367,6 +369,22 @@ cmp -s "$temporary_root/desktop/usr/share/lumo/faces/lumo.png" "$temporary_root/
 
 shell=usr/share/plasma/shells/org.kde.plasma.desktop/contents
 notifications=usr/share/plasma/plasmoids/org.kde.plasma.notifications/contents/ui
+cmp "$package_root/data/ui/Avatar.qml" "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/lumo/ui/Avatar.qml" \
+  || fail "the installed avatar lacks the current edge rendering fix"
+state_layers=0
+while IFS= read -r path; do
+  cmp "$package_root/data/shell/m3/MStateLayer.qml" "$path" \
+    || fail "a bundled press effect differs from the current source: $path"
+  state_layers=$((state_layers + 1))
+done < <(find "$temporary_root/desktop" -name MStateLayer.qml -type f)
+(( state_layers >= 3 )) || fail "the shared press effects are not packaged"
+for pair in \
+  "lockscreen/LockScreen.qml:$shell/lockscreen/LockScreen.qml" \
+  "sddm-theme/lumo/Main.qml:usr/share/sddm/themes/lumo/Main.qml" \
+  "look-and-feel/org.lumo.desktop/contents/logout/Logout.qml:usr/share/plasma/look-and-feel/org.lumo.desktop/contents/logout/Logout.qml"; do
+  cmp "$package_root/data/${pair%%:*}" "$temporary_root/desktop/${pair#*:}" \
+    || fail "a packaged account picture differs from its source: $pair"
+done
 for path in \
   "$shell/lockscreen/LockScreen.qml" \
   "$shell/lockscreen/LumoMediaControls.qml" \
@@ -410,6 +428,7 @@ for path in \
   usr/share/plymouth/themes/lumo/entry.png \
   usr/share/plymouth/plymouthd.defaults \
   etc/default/grub.d/lumo.cfg \
+  etc/grub.d/11_lumo_windows \
   usr/lib/systemd/system/plymouth-quit.service.d/plymouth-quit-lumo.conf \
   usr/lib/systemd/system/sddm.service.d/sddm-plymouth.conf \
   usr/share/grub/themes/lumo/theme.txt \
@@ -461,8 +480,8 @@ find "$temporary_root/desktop/usr/share/plymouth/themes/lumo" -name '*.svg' | gr
   && fail "the boot splash still carries SVGs Plymouth cannot read"
 grep -Fxq 'X-KDE-Shortcuts=Alt+F2,Search,Meta+R' "$temporary_root/desktop/usr/share/kglobalaccel/org.kde.krunner.desktop" \
   || fail "KRunner still takes Alt+Space from the Lumo launcher"
-grep -Fq 'launcher.globalShortcut = "Alt+Space"' \
-  "$temporary_root/desktop/usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js" \
+grep -Fq 'addWidget("org.lumo.launcher", "Alt+Space")' \
+  "$temporary_root/desktop/usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js" \
   || fail "the Lumo launcher does not open with Alt+Space"
 grep -Fxq 'X-KDE-Shortcuts=Ctrl+Alt+T' "$temporary_root/desktop/usr/share/applications/org.lumo.terminal.desktop" \
   && grep -Fxq 'Exec=lumo-terminal' "$temporary_root/desktop/usr/share/applications/org.lumo.terminal.desktop" \
@@ -510,12 +529,42 @@ if grep -Ev '^(#.*|activate(-await|-noawait)? .+|interest(-await|-noawait)? .+|)
 fi
 dpkg-deb -c "$desktop_deb" | grep -E '^-rwxr-xr-x .* \./usr/share/initramfs-tools/hooks/zz-lumo-firmware$' >/dev/null \
   || fail "the initramfs firmware hook is not installed executable"
+[[ -x "$temporary_root/desktop/usr/libexec/lumo-android" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-session" ]] \
+  && [[ -x "$temporary_root/desktop/usr/bin/waydroid" ]] \
+  && [[ -s "$temporary_root/desktop/usr/lib/systemd/system/lumo-android@.service" ]] \
+  && [[ -s "$temporary_root/desktop/usr/lib/systemd/user/lumo-android.service" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/lumo/apt/lumo-android.sources" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/polkit-1/actions/org.lumo.android.policy" ]] \
+  && grep -Fxq 'NoDisplay=true' "$temporary_root/desktop/usr/share/applications/Waydroid.desktop" \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-sync" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-fetch" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-windows" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-keyboard" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-device" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-refresh" ]] \
+  && [[ -s "$temporary_root/desktop/usr/lib/systemd/user/lumo-android-done.path" ]] \
+  && [[ -L "$temporary_root/desktop/usr/lib/systemd/user/default.target.wants/lumo-android-done.path" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/lumo/android/LumoCaption.apk" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/lumo/android/LumoShell.apk" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/lumo/android/wayland-protocols.json" ]] \
+  && [[ -x "$temporary_root/desktop/usr/libexec/lumo-android-display" ]] \
+  && [[ -s "$temporary_root/desktop/usr/lib/systemd/system/lumo-android-update.timer" ]] \
+  && [[ -L "$temporary_root/desktop/usr/lib/systemd/user/default.target.wants/lumo-android-sync.path" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/applications/waydroid.com.android.permissioncontroller.desktop" ]] \
+  && [[ -s "$temporary_root/desktop/usr/share/applications/waydroid.market.desktop" ]] \
+  || fail "the Android tools are incomplete"
+for icon in apps/org.lumo.android.svg apps/waydroid.svg apps/org.lumo.apkinstaller.svg actions/lumo-google-play.svg \
+    categories/lumo-android.svg mimetypes/application-vnd.android.package-archive.svg; do
+  find "$temporary_root/desktop/usr/share/icons" -path "*/$icon" -print -quit | grep -q . \
+    || fail "the icon theme has no $icon"
+done
 [[ "$(readlink "$temporary_root/desktop/usr/share/kglobalaccel/org.lumo.terminal.desktop")" == */applications/org.lumo.terminal.desktop ]] \
   || fail "kglobalaccel does not see the terminal's launch shortcut"
 grep -Fxq 'Icon=org.lumo.terminal' "$temporary_root/desktop/etc/skel/.local/share/applications/Alacritty.desktop" \
   || fail "a terminal started without its class shows the Wayland icon"
-grep -Fq 'clipboard.globalShortcut = "Meta+V"' \
-  "$temporary_root/desktop/usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js" \
+grep -Fq 'addWidget("org.lumo.clipboard", "Meta+V")' \
+  "$temporary_root/desktop/usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js" \
   || fail "the Lumo clipboard does not open with Meta+V"
 grep -Fxq 'show-on-mouse-pos=none,Meta+V,Show Clipboard Items at Mouse Position' \
   "$temporary_root/desktop/etc/skel/.config/kglobalshortcutsrc" \
@@ -535,10 +584,10 @@ grep -Fq 'i18n("Dark Theme")' "$shade_sheet" && grep -Fq 'i18n("Screenshot")' "$
   || fail "quick settings lack the Dark Theme and Screenshot tiles"
 grep -Fxq 'X-KDE-Shortcuts=Meta+Ctrl+Alt+Shift+Space' "$temporary_root/desktop/usr/share/kglobalaccel/org.kde.plasma.emojier.desktop" \
   || fail "the emoji selector still takes Meta+. from the Lumo emoji tab"
-grep -Fq 'emoji.globalShortcut = "Meta+."' \
-  "$temporary_root/desktop/usr/share/plasma/look-and-feel/org.lumo.desktop/contents/layouts/org.kde.plasma.desktop-layout.js" \
+grep -Fq 'addWidget("org.lumo.clipboard", "Meta+.")' \
+  "$temporary_root/desktop/usr/share/plasma/layout-templates/org.kde.plasma.desktop.defaultPanel/contents/layout.js" \
   || fail "the Lumo emoji tab does not open with Meta+."
-for widget in clock glance weather battery calendar media photo note; do
+for widget in clock glance weather battery cputemperature calendar media photo note; do
   widget_root="$temporary_root/desktop/usr/share/plasma/plasmoids/org.lumo.widget.$widget"
   for path in metadata.json contents/ui/main.qml contents/ui/m3/M3.qml contents/ui/materialshapes.js \
       contents/ui/MaterialShape.qml contents/config/main.xml; do
@@ -548,6 +597,21 @@ for widget in clock glance weather battery calendar media photo note; do
     "$widget_root/metadata.json" || fail "the $widget widget has no Russian name"
   grep -q 'name="placed"' "$widget_root/contents/config/main.xml" \
     || fail "the $widget widget does not remember that it was placed"
+done
+cpu_widget="$temporary_root/desktop/usr/share/plasma/plasmoids/org.lumo.widget.cputemperature"
+for file in contents/ui/main.qml contents/ui/ConfigGeneral.qml contents/config/config.qml contents/config/main.xml metadata.json; do
+  cmp "$package_root/data/widgets/cputemperature/$file" "$cpu_widget/$file" \
+    || fail "the CPU temperature widget differs from source: $file"
+done
+cmp "$package_root/data/widgets/common/TemperatureCard.qml" "$cpu_widget/contents/ui/TemperatureCard.qml" \
+  || fail "the CPU temperature card is missing or stale"
+cmp "$package_root/data/widgets/common/TemperatureCard.qml" "$temporary_root/desktop/$shell/explorer/TemperatureCard.qml" \
+  || fail "the widget menu lacks the CPU temperature preview component"
+[[ -s "$temporary_root/desktop/usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.lumo.widget.cputemperature.mo" ]] \
+  || fail "the CPU temperature widget is not translated"
+for dependency in qml6-module-org-kde-ksysguard ksystemstats; do
+  dpkg-deb --field "$desktop_deb" Depends | grep -Fq "$dependency" \
+    || fail "the CPU temperature widget lacks dependency $dependency"
 done
 for widget in glance weather; do
   [[ -s "$temporary_root/desktop/usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.lumo.widget.$widget.mo" ]] \
@@ -594,6 +658,7 @@ for file in lockscreen/LockScreen.qml osd/Osd.qml configuration/AppletConfigurat
     org.kde.desktopcontainment/contents/ui ConfigLocation.qml ConfigIcons.qml ConfigFilter.qml ConfigOverlay.qml FolderView.qml \
     explorer/WidgetExplorer.qml views/DesktopEditMode.qml panelconfiguration/PanelRepresentation.qml \
     org.kde.plasma.panelspacer/contents/ui/main.qml \
+    org.kde.plasma.desktop.defaultPanel/contents/layout.js \
     org.kde.plasma.notifications/contents/ui main.qml \
     org.kde.plasma.taskmanager/contents/ui Badge.qml ToolTipInstance.qml kglobalaccel/org.kde.krunner.desktop \
     kglobalaccel/org.kde.plasma.emojier.desktop plymouth/plymouthd.defaults; do
@@ -631,5 +696,21 @@ if comm -12 "$temporary_root/desktop.list" "$temporary_root/installer.list" \
   | grep -q .; then
   fail "the two binary packages ship an overlapping path"
 fi
+
+[[ -x "$temporary_root/desktop/usr/libexec/lumo-locales" ]] \
+  || fail "locale repair helper is missing"
+cmp "$package_root/data/locales/lumo-locales" "$temporary_root/desktop/usr/libexec/lumo-locales" \
+  || fail "the packaged locale helper differs from the tested source"
+[[ -s "$temporary_root/installer/etc/calamares/modules/lumolocales/main.py" ]] \
+  || fail "installer locale preparation is missing"
+dpkg-deb --ctrl-tarfile "$desktop_deb" | tar -xO ./postinst 2>/dev/null | grep -Fq '/usr/libexec/lumo-locales' \
+  || fail "upgrades do not repair missing selected locales"
+cmp "$package_root/data/calamares/modules/lumolocales/module.desc" "$temporary_root/installer/etc/calamares/modules/lumolocales/module.desc" \
+  || fail "the packaged locale module descriptor differs from its source"
+
+for locale_file in settings.conf modules/lumolocales/main.py; do
+  cmp "$package_root/data/calamares/$locale_file" "$temporary_root/installer/etc/calamares/$locale_file" \
+    || fail "installer locale integration differs from its source: $locale_file"
+done
 
 printf 'lumo-desktop binary test: OK\n'

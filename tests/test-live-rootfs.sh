@@ -115,8 +115,8 @@ for path in /usr/lib/shim/shimx64.efi.signed /usr/lib/shim/mmx64.efi.signed \
 done
 
 # The Lumo Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.63" ]] \
-  || fail "lumo-desktop 1.4.63 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-desktop)" == "1.4.74" ]] \
+  || fail "lumo-desktop 1.4.74 is not installed"
 for applet in org.lumo.launcher org.lumo.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Lumo shell applet is missing: $applet"
@@ -175,8 +175,8 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Lumo applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.71" ]] \
-  || fail "lumo-apps 1.1.71 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' lumo-apps)" == "1.1.86" ]] \
+  || fail "lumo-apps 1.1.86 is not installed"
 [[ "$(dpkg-query -W -f='${Version}' lumo-quickshare)" == "1.0.3" ]] \
   || fail "lumo-quickshare 1.0.3 is not installed"
 for package in flatpak appstream; do
@@ -272,8 +272,11 @@ grep -Fxq 'gtk-theme-name=Lumo' "/home/$LIVE_USER/.config/gtk-3.0/settings.ini" 
 if grep -rq 'snapshot.debian.org\|file:/usr/share/lumo' /etc/apt/sources.list.d; then
   fail "the image still points APT at the build's sources"
 fi
-grep -Fxq 'Components: main non-free-firmware' /etc/apt/sources.list.d/debian.sources \
-  || fail "the image takes no firmware updates"
+grep -Fxq 'Components: main contrib non-free non-free-firmware' /etc/apt/sources.list.d/debian.sources \
+  || fail "the image lacks Debian application components"
+dpkg --print-foreign-architectures | grep -Fxq i386 || fail "32-bit application support is missing"
+grep -Fxq 'Architectures: amd64' /etc/apt/sources.list.d/lumo.sources \
+  || fail "Lumo sources request unsupported architectures"
 for firmware in firmware-amd-graphics firmware-intel-graphics firmware-nvidia-graphics firmware-iwlwifi \
     firmware-realtek firmware-atheros firmware-mediatek firmware-sof-signed amd64-microcode intel-microcode; do
   [[ "$(dpkg-query -W -f='${Status}' "$firmware" 2>/dev/null)" == 'install ok installed' ]] \
@@ -323,6 +326,10 @@ command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle arc
 # English and Russian are ready for the live session and the installer.
 for locale in en_US.utf8 ru_RU.utf8; do
   locale -a | grep -Fxq "$locale" || fail "locale is not generated: $locale"
+done
+for entry in 'en_PH.UTF-8 UTF-8' 'fil_PH UTF-8' 'de_DE.UTF-8 UTF-8'; do
+  sed 's/^[[:space:]#]*//' /etc/locale.gen | grep -Fxq "$entry" \
+    || fail "the installable locale catalog lacks $entry"
 done
 [[ -x /usr/lib/lumo/live-language ]] || fail "the boot menu language cannot be applied"
 [[ -L /etc/systemd/system/multi-user.target.wants/lumo-live-language.service ]] \
@@ -378,7 +385,7 @@ for directory in (
     for path in directory.glob('*.desktop'):
         entries[path.name] = path
 
-allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop'}
+allowed = {'systemsettings.desktop', 'kdesystemsettings.desktop', 'org.kde.skanpage.desktop', 'org.kde.okular.desktop'}
 unexpected = []
 for name, path in sorted(entries.items()):
     parser = configparser.ConfigParser(interpolation=None, strict=False)

@@ -218,3 +218,14 @@ msgstr "© 2026 Lumo"
 
 msgid "Files or pages to open."
 msgstr "Bestanden of pagina's om te openen."
+msgid "Prefer Chrome or Edge?"
+msgstr "Liever Chrome of Edge?"
+
+msgid "Sites that need them work best there. Get either one in the Store"
+msgstr "Sites die ze nodig hebben werken daar het best. Installeer ze via de Store"
+
+msgid "Get Chrome"
+msgstr "Chrome installeren"
+
+msgid "Get Edge"
+msgstr "Edge installeren"

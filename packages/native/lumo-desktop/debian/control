@@ -3,7 +3,7 @@ Section: x11
 Priority: optional
 Maintainer: Lumo Developers <developers@lumo.invalid>
 Standards-Version: 4.7.4
-Build-Depends: debhelper-compat (= 13), fonts-roboto-unhinted, grub-common, librsvg2-bin, python3
+Build-Depends: debhelper-compat (= 13), fonts-roboto-unhinted, gcc, grub-common, librsvg2-bin, openssl, python3
 Rules-Requires-Root: no
 
 Package: lumo-desktop
@@ -13,10 +13,16 @@ Depends:
  breeze-gtk-theme,
  fonts-roboto-unhinted,
  kwin-common,
+ mokutil,
+ openssl,
+ locales,
+ python3,
  plasma-desktop,
  plasma-workspace,
  qml6-module-org-kde-desktop,
  qml6-module-org-kde-kirigami,
+ qml6-module-org-kde-ksysguard,
+ ksystemstats,
  qml6-module-qtquick-effects,
  qml6-module-qt-labs-folderlistmodel,
  qml6-module-qtquick-layouts,
@@ -24,6 +30,11 @@ Depends:
  qml6-module-qtquick-templates,
  qt-style-kvantum
 Recommends:
+ python3,
+ rclone,
+ fuse3,
+ ufw,
+ xdg-utils,
  plymouth,
  plymouth-label
 Description: Lumo desktop appearance and shell

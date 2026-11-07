@@ -2,10 +2,25 @@
 set -e
 
 if [ "$1" = configure ]; then
+    /usr/libexec/lumo-locales
     update-alternatives --install /usr/share/icons/default/index.theme x-cursor-theme \
         /usr/share/icons/lumo_cursors/cursor.theme 100
     if dpkg --compare-versions "$2" lt 1.4.28         && [ -e /usr/lib/systemd/system/NetworkManager-wait-online.service ]; then
         systemctl disable NetworkManager-wait-online.service >/dev/null 2>&1 || true
+    fi
+    esp=/boot/efi/EFI
+    if [ -f "$esp/lumo/shimx64.efi" ] && [ -f "$esp/boot/bootx64.efi" ]         && cmp -s "$esp/boot/bootx64.efi" "$esp/lumo/grubx64.efi"; then
+        echo "grub-efi-amd64 grub2/force_efi_extra_removable boolean true" | debconf-set-selections || true
+        cp "$esp/lumo/grubx64.efi" "$esp/lumo/mmx64.efi" "$esp/boot/"             && cp "$esp/lumo/shimx64.efi" "$esp/boot/bootx64.efi" || true
+    fi
+    if [ -f /boot/efi/EFI/Microsoft/Boot/bootmgfw.efi ] && [ ! -e /var/lib/lumo/local-rtc ]; then
+        mkdir -p /var/lib/lumo
+        if [ -e /etc/adjtime ]; then
+            sed -i 's/^UTC$/LOCAL/' /etc/adjtime
+        else
+            printf '0.0 0 0.0\n0\nLOCAL\n' > /etc/adjtime
+        fi
+        touch /var/lib/lumo/local-rtc
     fi
     if [ -d /boot/grub ]; then
         /usr/libexec/lumo-grub-theme || true
@@ -18,6 +33,9 @@ if [ "$1" = configure ]; then
         sed -i 's/^wallpaper=org\.lumo\.tower$/wallpaper=org.lumo.shapes/' "$greeter"
     fi
     /usr/libexec/lumo-splash-wallpaper || true
+    if [ -s /var/lib/waydroid/waydroid.cfg ]; then
+        /usr/libexec/lumo-android refresh || true
+    fi
     /usr/libexec/lumo-boot-theme || true
     if dpkg --compare-versions "$2" lt 1.4.61 && [ -x /usr/sbin/update-initramfs ]; then
         dpkg-trigger --no-await update-initramfs || update-initramfs -u || true

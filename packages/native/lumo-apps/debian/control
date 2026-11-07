@@ -12,6 +12,7 @@ Build-Depends:
  libappstreamqt-dev,
  libflatpak-dev,
  libkf6bluezqt-dev,
+ libkf6archive-dev,
  libkf6config-dev,
  libkf6coreaddons-dev,
  libkf6dbusaddons-dev,
@@ -26,7 +27,8 @@ Build-Depends:
  libvterm-dev,
  pkgconf,
  qt6-base-dev,
- qt6-declarative-dev
+ qt6-declarative-dev,
+ qt6-svg-dev
 Rules-Requires-Root: no
 
 Package: lumo-apps
@@ -42,15 +44,16 @@ Depends:
  fonts-hack,
  gettext-base,
  kde-cli-tools,
- lumo-archive (>= 1.6),
+ lumo-archive (>= 1.8),
  lumo-base (>= 1.6.5),
- lumo-desktop (>= 1.4.63),
+ lumo-desktop (>= 1.4.74),
  lumo-quickshare (>= 1.0.3),
  ksystemstats,
  libarchive-tools,
  libksysguard-bin,
  packagekit,
  pkexec,
+ qt6-image-formats-plugins,
  qt6-svg-plugins,
  plasma-nm,
  plasma-pa,
@@ -84,6 +87,8 @@ Description: Lumo applications
     Windows commands (dir, cls, copy, del, ipconfig and more);
   * Task Manager: running apps, background processes and live usage of
     the processor, memory, graphics card, disk and network;
+  * Android App Installer: installs Android apps from APK files;
+  * Drivers: installs and updates drivers and lists every device;
   * Welcome, the first-run introduction;
   * the file chooser: every program's open and save dialogs, served to
     the session through the desktop portal.

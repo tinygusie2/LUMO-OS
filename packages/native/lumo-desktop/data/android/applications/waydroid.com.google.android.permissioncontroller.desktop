@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=App permissions
+Name[ru]=Разрешения приложений
+Icon=org.lumo.android
+Exec=true
+NoDisplay=true

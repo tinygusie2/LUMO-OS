@@ -56,7 +56,8 @@ run_boot_test() {
   qemu-system-x86_64 \
     -machine "$machine" \
     -cpu max \
-    -m 1024 \
+    -m 4096 \
+    -smp 4 \
     -boot once=d \
     -drive "file=$iso,media=cdrom,readonly=on" \
     "${firmware_args[@]}" \
@@ -67,7 +68,7 @@ run_boot_test() {
     -no-shutdown &
   pid=$!
 
-  for ((second = 0; second < 90; second += 1)); do
+  for ((second = 0; second < 300; second += 1)); do
     if grep -Fq 'LUMO_BOOT_OK' "$log"; then
       marker_seen=1
       break

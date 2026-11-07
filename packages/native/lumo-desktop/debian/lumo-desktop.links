@@ -1,3 +1,5 @@
 usr/lib/x86_64-linux-gnu/qt6/plugins/kf6/kirigami/platform/org.kde.desktop.so usr/lib/x86_64-linux-gnu/qt6/plugins/kf6/kirigami/platform/org.lumo.desktop.so
 usr/share/applications/org.lumo.terminal.desktop usr/share/kglobalaccel/org.lumo.terminal.desktop
 etc/skel/.face etc/skel/.face.icon
+usr/lib/systemd/user/lumo-android-sync.path usr/lib/systemd/user/default.target.wants/lumo-android-sync.path
+usr/lib/systemd/user/lumo-android-done.path usr/lib/systemd/user/default.target.wants/lumo-android-done.path

@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+
+share=/etc/samba/lumo-share.conf
+main=/etc/samba/smb.conf
+
+status() {
+  if [ ! -x /usr/sbin/smbd ]; then
+    echo available=no
+    exit 0
+  fi
+  echo available=yes
+  if [ -e "$share" ]; then echo enabled=yes; else echo enabled=no; fi
+}
+
+enable_share() {
+  user=$(getent passwd "${PKEXEC_UID:?}" | cut -d: -f1)
+  home=$(getent passwd "$PKEXEC_UID" | cut -d: -f6)
+  [ -n "$user" ] && [ -n "$home" ]
+  IFS= read -r password
+  [ -n "$password" ]
+  printf '%s\n%s\n' "$password" "$password" | smbpasswd -a -s "$user" >/dev/null
+  smbpasswd -e "$user" >/dev/null
+  install -d -o "$user" -m 0755 "$home/Public"
+  cat > "$share" <<CONF
+[Public]
+path = $home/Public
+valid users = $user
+read only = no
+CONF
+  grep -Fxq "include = $share" "$main" || echo "include = $share" >> "$main"
+  systemctl enable --now smbd wsdd2
+  systemctl reload smbd || true
+  /usr/libexec/lumo-firewall allow sharing
+}
+
+disable_share() {
+  systemctl disable --now smbd wsdd2 || true
+  sed -i "\\#^include = $share\$#d" "$main"
+  rm -f "$share"
+  /usr/libexec/lumo-firewall deny sharing
+}
+
+setup() {
+  systemctl disable smbd nmbd wsdd2 samba-ad-dc 2>/dev/null || true
+}
+
+case "${1:-}" in
+  status) status ;;
+  enable) enable_share ;;
+  disable) disable_share ;;
+  setup) setup ;;
+  *) echo "usage: lumo-sharing status|enable|disable|setup" >&2; exit 2 ;;
+esac

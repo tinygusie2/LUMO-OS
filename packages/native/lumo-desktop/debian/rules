@@ -14,7 +14,7 @@ THEME_APPS = generated/icon-theme/scalable/apps
 TOOLS = tools
 SYMBOLS = data/symbols
 APPLETS = launcher:org.lumo.launcher shade:org.lumo.quicksettings clipboard:org.lumo.clipboard
-WIDGETS = clock glance weather battery calendar media photo note
+WIDGETS = clock glance weather battery cputemperature calendar media photo note
 LIVE_WALLPAPERS = rhythm starfall pastel ribbon waves aurora
 STILL_WALLPAPERS = dunes bloom contour
 COLOURS := $(shell cd $(TOOLS) && python3 -c 'import lumo_design as d; print(" ".join(d.COLOURS))')
@@ -35,6 +35,8 @@ override_dh_auto_build:
 	  --output=generated/branding/lumo-logo.png $(LOGO)
 	python3 $(TOOLS)/gen-qm data/calamares/lang/calamares-lumo_ru.ts \
 	  generated/branding/lang/calamares-lumo_ru.qm
+	python3 $(TOOLS)/gen-qm data/calamares/lang/calamares-lumo_nl.ts \
+	  generated/branding/lang/calamares-lumo_nl.qm
 	python3 $(TOOLS)/gen-installer-icons $(SYMBOLS) generated/branding/images
 	python3 $(TOOLS)/gen-installer-style data/calamares/stylesheet.qss.in \
 	  generated/branding/stylesheet.qss
@@ -121,7 +123,7 @@ override_dh_auto_build:
 	cp data/shell/shade/contents/ui/sources/MediaSource.qml data/shell/shade/contents/ui/WavyProgress.qml \
 	  generated/plasmoids/org.lumo.widget.media/contents/ui/
 	install -d generated/explorer
-	cp data/explorer/*.qml data/explorer/*.js data/widgets/common/MaterialShape.qml generated/explorer/
+	cp data/explorer/*.qml data/explorer/*.js data/widgets/common/MaterialShape.qml data/widgets/common/TemperatureCard.qml generated/explorer/
 	cp generated/wallpapers/org.lumo.shapes/contents/ui/materialshapes.js generated/explorer/
 	set -e; for colour in $(EXTRA_COLOURS); do \
 	  LUMO_COLOUR=$$colour python3 $(TOOLS)/gen-wallpaper-assets generated/wallpapers/org.lumo.shapes/contents/ui; \
@@ -136,6 +138,13 @@ override_dh_auto_build:
 	    LUMO_COLOUR=$$colour LUMO_GENERATION=$$generation python3 $(TOOLS)/gen-gtk-theme generated/gtk-themes; \
 	  done; \
 	done
+	python3 $(TOOLS)/gen-android-overlay generated/android/LumoCaption.apk
+	python3 $(TOOLS)/gen-android-overlay generated/android/LumoShell.apk shell
+	$(CC) -std=c11 -Wall -Wextra -O2 -fPIC -shared -nostdlib -ffreestanding -fno-builtin \
+	  -fno-stack-protector -fcf-protection=none -fno-asynchronous-unwind-tables \
+	  -Wl,-soname,liblumo-android-layers.so -Wl,--hash-style=gnu -Wl,-z,noexecstack \
+	  -Wl,-z,now -Wl,--build-id=none \
+	  -o generated/android/liblumo-android-layers.so data/android/lumo-android-layers.c
 	install -d generated/style/org/lumo
 	cp -a data/style/org.lumo.desktop generated/style/org/lumo/desktop
 	cp -a data/shell/m3 generated/style/org/lumo/desktop/impl
@@ -187,8 +196,11 @@ override_dh_auto_build:
 	cp -a data/sddm-theme/lumo generated/sddm/lumo
 	python3 $(TOOLS)/gen-greeter-palette $(SYMBOLS) generated/sddm/lumo
 
+override_dh_installsystemduser:
+	dh_installsystemduser --no-enable
+
 override_dh_installsystemd:
-	dh_installsystemd -plumo-desktop lumo-drivers.timer lumo-panic-report.service
+	dh_installsystemd -plumo-desktop lumo-drivers.timer lumo-panic-report.service lumo-android-update.timer
 
 override_dh_auto_clean:
 	rm -rf generated $(TOOLS)/__pycache__

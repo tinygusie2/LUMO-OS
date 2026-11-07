@@ -1,0 +1,19 @@
+[Unit]
+Description=Android apps
+PartOf=graphical-session.target
+After=graphical-session.target lumo-android-display.service
+BindsTo=lumo-android-display.service
+ConditionPathExists=/var/lib/waydroid/waydroid.cfg
+
+[Service]
+Type=dbus
+BusName=id.waydro.Session
+ExecStartPre=-/usr/libexec/lumo-android-session --prepare
+ExecStartPre=-/usr/bin/pkexec /usr/libexec/lumo-android-refresh
+ExecStart=/usr/bin/env WAYLAND_DISPLAY=lumo-android-0 /usr/bin/waydroid.waydroid session start
+ExecStartPost=/bin/sh -c '/usr/libexec/lumo-android-session --sync-after-boot > /dev/null 2>&1 &'
+ExecStop=/usr/bin/waydroid.waydroid session stop
+TimeoutStopSec=30
+
+[Install]
+WantedBy=graphical-session.target

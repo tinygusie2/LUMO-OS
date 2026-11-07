@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh the restore points in the boot menu
+ConditionPathExists=/var/lib/lumo/snapshots-refresh
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/lumo-snapshots menu
+ExecStartPost=/usr/bin/rm -f /var/lib/lumo/snapshots-refresh
+
+[Install]
+WantedBy=multi-user.target

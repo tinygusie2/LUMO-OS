@@ -1,0 +1,8 @@
+[Unit]
+Description=Sync PWWDrive
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/lumo-pwwdrive sync
+Nice=10
+IOSchedulingClass=idle

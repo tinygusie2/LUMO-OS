@@ -1,5 +1,63 @@
 [
   {
+    "id": "2026-11-07",
+    "date": "2026-11-07",
+    "items": [
+      {
+        "icon": "lumo-android",
+        "title": {
+          "en": "Android apps",
+          "nl": "Android-apps",
+          "ru": "Приложения Android"
+        },
+        "text": {
+          "en": "Turn on Android in Settings > Android apps, then open an APK file or use Google Play. Android apps open in Lumo windows.",
+          "nl": "Zet Android aan in Instellingen > Android-apps en open daarna een APK-bestand of gebruik Google Play. Android-apps openen in Lumo-vensters.",
+          "ru": "Включите Android в Настройки > Приложения Android, затем откройте APK-файл или используйте Google Play. Приложения Android открываются в окнах Lumo."
+        }
+      },
+      {
+        "icon": "system-reboot",
+        "title": {
+          "en": "Choose Windows or Lumo",
+          "nl": "Kies Windows of Lumo",
+          "ru": "Выбор Windows или Lumo"
+        },
+        "text": {
+          "en": "If Windows is on this PC, the boot menu shows it and waits until you choose. There is no countdown.",
+          "nl": "Staat Windows op deze pc, dan toont het opstartmenu het en wacht het tot jij kiest. Er is geen aftelling.",
+          "ru": "Если на этом компьютере есть Windows, меню загрузки показывает её и ждёт вашего выбора. Обратного отсчёта нет."
+        }
+      },
+      {
+        "icon": "preferences-system-time",
+        "title": {
+          "en": "Windows keeps the right time",
+          "nl": "Windows houdt de juiste tijd",
+          "ru": "Windows показывает верное время"
+        },
+        "text": {
+          "en": "With Windows on the same computer, Lumo keeps the computer clock in local time, so Windows no longer runs an hour behind.",
+          "nl": "Staat Windows op dezelfde computer, dan houdt Lumo de klok op lokale tijd, zodat Windows niet meer een uur achterloopt.",
+          "ru": "Если на компьютере есть Windows, Lumo хранит время часов как местное, и Windows больше не отстаёт на час."
+        }
+      },
+      {
+        "icon": "cpu",
+        "title": {
+          "en": "Drivers app, CPU temperature and Files tabs",
+          "nl": "Drivers-app, processortemperatuur en tabbladen in Bestanden",
+          "ru": "Драйверы, температура процессора и вкладки в файлах"
+        },
+        "text": {
+          "en": "A new Drivers app installs and updates drivers and shows every device. Files has tabs, there is a CPU temperature widget, and Quick Settings has Power Mode and Gaming Mode.",
+          "nl": "Een nieuwe Drivers-app installeert en werkt stuurprogramma's bij en toont elk apparaat. Bestanden heeft tabbladen, er is een widget voor de processortemperatuur en Snelle instellingen heeft Energiestand en Gamemodus.",
+          "ru": "Новое приложение «Драйверы» устанавливает и обновляет драйверы и показывает все устройства. В «Файлах» есть вкладки, появился виджет температуры процессора, а в быстрых настройках — режим питания и игровой режим."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-11-02",
     "date": "2026-11-02",
     "items": [

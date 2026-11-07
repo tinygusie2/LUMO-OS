@@ -30,6 +30,7 @@ AppWindow {
     readonly property url file: Qt.url("file://" + folder + "/events.json")
 
     property var events: []
+    property var subscriptions: []
     property string view: "month"
     property date cursor: new Date()
     property date today: new Date()
@@ -61,6 +62,7 @@ AppWindow {
         try {
             const data = JSON.parse(result.text);
             events = Array.isArray(data.events) ? data.events : [];
+            subscriptions = Array.isArray(data.subscriptions) ? data.subscriptions : [];
         } catch (e) {
             events = [];
         }
@@ -68,7 +70,7 @@ AppWindow {
 
     function save(): void {
         Process.run("mkdir", ["-p", folder], () => {
-            Files.writeText(app.file, JSON.stringify({ version: 1, events: app.events }, null, 1));
+            Files.writeText(app.file, JSON.stringify({ version: 1, events: app.events, subscriptions: app.subscriptions }, null, 1));
         });
     }
 
@@ -93,6 +95,47 @@ AppWindow {
         events = events.concat(found);
         save();
         showMessage(i18np("%1 event imported", "%1 events imported", found.length), "", null);
+    }
+
+    function subscribe(link: string): void {
+        const url = link.trim().replace(/^webcal:/i, "https:");
+        if (!/^https:\/\//i.test(url)) {
+            showMessage(i18n("This calendar could not be read"), "", null);
+            return;
+        }
+        if (subscriptions.indexOf(url) < 0) {
+            subscriptions = subscriptions.concat([url]);
+        }
+        fetchSubscription(url);
+    }
+
+    function fetchSubscription(url: string): void {
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = () => {
+            if (request.readyState !== XMLHttpRequest.DONE) {
+                return;
+            }
+            if (request.status !== 200) {
+                if (!app.remindersOnly) {
+                    showMessage(i18n("This calendar could not be read"), "", null);
+                }
+                return;
+            }
+            const found = Cal.parseIcs(request.responseText);
+            for (const event of found) {
+                event.subscription = url;
+            }
+            app.events = app.events.filter(e => e.subscription !== url).concat(found);
+            app.save();
+        };
+        request.open("GET", url);
+        request.send();
+    }
+
+    function removeSubscriptions(): void {
+        subscriptions = [];
+        events = events.filter(e => !e.subscription);
+        save();
     }
 
     function exportFile(): void {
@@ -201,6 +244,44 @@ AppWindow {
         onAccepted: app.importFile(selectedFile)
     }
 
+    Timer {
+        interval: 3600000
+        running: app.subscriptions.length > 0
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: app.subscriptions.forEach(url => app.fetchSubscription(url))
+    }
+
+    QQC2.Dialog {
+        id: subscribeDialog
+        anchors.centerIn: parent
+        width: Math.min(480, parent.width - 32)
+        modal: true
+        title: i18n("Subscribe to a calendar…")
+        standardButtons: QQC2.Dialog.Ok | QQC2.Dialog.Cancel
+        onAccepted: {
+            app.subscribe(subscribeLink.text);
+            subscribeLink.text = "";
+        }
+
+        ColumnLayout {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            spacing: 12
+            MText {
+                Layout.fillWidth: true
+                role: "bodyMedium"
+                wrapMode: Text.Wrap
+                text: i18n("Paste the iCal link from Google Calendar or Outlook. Lumo reads it every hour; changes are made in Google or Outlook.")
+            }
+            QQC2.TextField {
+                id: subscribeLink
+                Layout.fillWidth: true
+                placeholderText: i18n("iCal link")
+            }
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 16
@@ -255,6 +336,8 @@ AppWindow {
                     id: moreMenu
                     QQC2.MenuItem { text: i18n("Import .ics file…"); onTriggered: importDialog.open() }
                     QQC2.MenuItem { text: i18n("Export to Documents"); onTriggered: app.exportFile() }
+                    QQC2.MenuItem { text: i18n("Subscribe to a calendar…"); onTriggered: subscribeDialog.open() }
+                    QQC2.MenuItem { text: i18n("Remove subscribed calendars"); visible: app.subscriptions.length > 0; height: visible ? implicitHeight : 0; onTriggered: app.removeSubscriptions() }
                 }
             }
         }

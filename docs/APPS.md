@@ -24,13 +24,15 @@ of the shell: the same tokens, components, symbols and motion.
 | Media Player (`lumo-player`) | Elisa, Dragon | Qt Multimedia over FFmpeg; video with auto-hiding controls, music with a queue from the folder. |
 | Calculator (`lumo-calculator`) | KCalc | Own expression parser (no `eval`), scientific functions, history. |
 | Task Manager (`lumo-taskmanager`) | System Monitor | Apps (ksysguard's `ApplicationDataModel`, one row per app cgroup), background processes (`ProcessDataModel`, the user's own or all) and Performance (CPU, memory, graphics, disk and network charts from ksystemstats through KQuickCharts). Ending sends SIGTERM through `ProcessController` (KAuth for other users' processes) and offers Force quit (SIGKILL) when the process is still there after five seconds. Ctrl+Shift+Esc and Ctrl+Esc open it (the entry is installed into `/usr/share/kglobalaccel`). |
+| Drivers (`lumo-drivers`) | Settings' Drivers page | Install and remove drivers, every device and its driver, driver and firmware updates, a hardware report. See docs/DRIVERS.md |
+| Android App Installer (`lumo-apkinstaller`) | Waydroid's "Install in Waydroid" | Opens `.apk` files: reads name, version and icon from the APK itself, warns about ARM-only apps and newer Android, then installs through Waydroid. Settings › Android apps turns Android on and off ([ANDROID.md](ANDROID.md)). |
 | Screenshot (`lumo-screenshot`) | Spectacle | KWin ScreenShot2 (the desktop entry must name `/usr/bin/lumo-screenshot`), area/screen/window, saved and copied. Bound to Print. |
 | Terminal (`lumo-terminal`) | Konsole | Its own terminal view (`org.lumo.terminal`, a `QQuickPaintedItem` on libvterm with a pty from `forkpty`), tabs, 10 000 lines of history, colours read from `~/.config/alacritty/lumo-colors.toml` (written by Settings when the theme changes) or `/usr/share/lumo/terminal/{dark,light}.toml`, and Windows-style copy and paste: Ctrl+C copies a selection and otherwise interrupts, Ctrl+V pastes, a right click copies or pastes. bash starts with `/usr/share/lumo/terminal/lumo.bashrc`, which loads the user's `~/.bashrc`, sets the `folder>` prompt, reports the folder (OSC 7) and title, and adds the Windows commands (`dir`, `cls`, `copy`, `move`, `ren`, `del`, `md`, `rd`, `type`, `cd..`, `ipconfig`, `tasklist`, `taskkill`, `where`, `ver`, `start`; `help` lists them, translated through the `lumo-terminal` domain). "Ignore upper and lower case" in the menu (`lumo-terminalrc` `[General]` `IgnoreCase`, on by default) is read at every prompt: it turns on readline's `completion-ignore-case` and `nocaseglob`, and `cd downloads` finds `Downloads`, one folder at a time, when the exact name does not exist. Other login shells run without it. Ctrl+Alt+T opens it (the entry is in lumo-desktop and linked into `/usr/share/kglobalaccel`); Ctrl+Shift+T and Ctrl+Shift+W open and close tabs, Ctrl+plus and Ctrl+minus change the text size. |
 | Welcome (`lumo-welcome`) | Plasma Welcome | Runs at the first logins of an installed system (`--first-run`, closes in the live session) until finished. |
 | File chooser (`lumo-filechooser`) | KDE's file dialog | Every program's open, save and folder dialogs; see below. |
 
-The web browser is LibreWolf, which also opens PDFs; `/etc/xdg/mimeapps.list`
-(lumo-desktop) makes it the default for the web and PDFs and keeps
+The web browser is LibreWolf; PDFs open in Okular; `/etc/xdg/mimeapps.list`
+(lumo-desktop) makes it the default for the web and keeps
 pictures with Photos and JSON and XML with the Text Editor, as LibreWolf
 claims those types too. It is not a Debian package: `scripts/fetch-librewolf`
 downloads the version pinned in `configs/upstream/librewolf.env` after
@@ -62,6 +64,99 @@ The KDE applications in the
 "Replaces" column are pinned out of the image
 (`configs/live/excluded-packages.txt`); System Settings stays installed for
 the modules it carries, behind the diverted command.
+
+### Task Manager
+
+Task Manager follows Windows Task Manager, with five pages in a side bar:
+
+- **Processes** groups processes the way Windows does. *Apps* are the
+  programs you started: a process belongs to an app when its systemd unit is
+  an `app-<desktop id>-….scope` or `app-<desktop id>@….service` (how Plasma
+  starts programs), and the app's name and icon come from its desktop entry.
+  Everything else of yours is a *background process* (apps started at login,
+  `@autostart`, are counted here, as Windows does with tray apps); processes
+  of other users and of the system are *system processes*. An app with more
+  than one process expands to show them. Columns: status, CPU, memory (the
+  private part, `RssAnon`), disk (`/proc/<pid>/io`, only readable for your own
+  processes) with the totals above them and a colour that deepens with use.
+  Click a column to sort, click it again to reverse.
+- **Performance** has a tile with a small graph per CPU, memory, disk, network
+  adapter and graphics card. CPU shows speed, processes, threads, up time,
+  cores, sockets, logical processors (with a graph each), virtualisation and
+  L3 cache; memory shows in use, available, committed, cached and swap; disks
+  show active time and read and write speed; network adapters show send and
+  receive, the IP addresses and link speed; graphics shows how busy the card
+  is and its memory where the driver reports it (`amdgpu`).
+- **Startup apps** turns login items on and off (unchanged).
+- **Details** lists every process with PID, status, user, CPU, memory,
+  threads and priority.
+- **Services** lists the system's and your systemd services
+  (`systemctl list-units --output=json`) and starts, stops and restarts them;
+  system services ask for the administrator password through polkit.
+
+The context menu (right-click or long press) and the buttons above the list
+offer *End task* (SIGTERM to every process of the row), *Force end* (SIGKILL),
+*Efficiency mode* (nice 19 on every thread; turning it off sets nice 0),
+*Go to details*, *Open file location*, *Search online* and *Properties*.
+Ending another user's process or lowering a nice value runs `pkexec kill` or
+`pkexec renice`, so it asks for the administrator password. *Run new task*
+starts a program, opens a folder or an internet address. *Update speed* is
+High (0.5 s), Normal (1 s), Low (4 s) or Paused and is kept in
+`lumo-tasksrc`, as is the last page. Graphs show the last 60 samples.
+
+Shortcuts: Delete ends the selected task, Shift+Delete forces it, Ctrl+F
+searches by name or PID, Ctrl+N runs a new task, F5 refreshes, Ctrl+1 to
+Ctrl+5 switch pages.
+
+### Everyday apps
+
+LibreOffice (Writer, Calc, Impress, with Dutch and Russian), Thunderbird, Okular
+and PDF Arranger are in the image. Carlito, Caladea and Liberation stand in for
+Calibri, Cambria, Arial and Times New Roman, so Microsoft documents keep their
+layout. Okular opens PDFs and fills in and signs them; PDF Arranger merges and
+splits them.
+
+Calendar > Subscribe to a calendar reads an iCal link from Google Calendar or
+Outlook every hour (`subscriptions` in `events.json`; the events carry
+`subscription`). It is read-only: signing in to Google or Microsoft needs a
+registered application, which Lumo does not have. Thunderbird syncs both ways.
+
+### Cloud & network folders
+
+Files lists local folders only, so Settings > Cloud & network folders
+(`LocationsPage.qml`) mounts everything through rclone with FUSE:
+`lumo-locations` adds OneDrive, Google Drive, Nextcloud or an SMB server to
+`~/.config/rclone/rclone.conf`, and the user unit `lumo-location@.service`
+mounts it at `~/Locations/<name>`, also after the next login. The page adds a
+bookmark, so it shows up in Files and the file chooser. OneDrive and Google
+Drive use rclone's shared client ID, which those services rate-limit.
+
+Sharing the Public folder goes through `lumo-sharing` (pkexec,
+`org.lumo.sharing`): it sets a Samba password, writes
+`/etc/samba/lumo-share.conf`, starts `smbd` and `wsdd2` and opens the
+firewall. The installer turns these services off until then.
+
+### PWWDrive
+
+`lumo-pwwdrive` is the Linux counterpart of the PWWDrive Windows app
+(`drive/desktop` in the PWWPlanner repository) and follows its rules: it keeps
+`~/PWWDrive` equal to PWWDrive, moves anything it replaces or removes to
+`.pwwdrive-prullenbak` or the PWWDrive trash, keeps both versions of a conflict,
+and stops when at least 10 files and 30% of the known files vanish on one side.
+Settings > Cloud & network folders links it through
+`drive.pwwplanner.nl/desktop-koppelen`, which hands the Firebase refresh token
+to `127.0.0.1:47290` in the URL fragment. The token is in
+`~/.local/share/pwwdrive/config.json` (mode 600). The user timer
+`lumo-pwwdrive.timer` syncs every 30 seconds. Windows' status icons and
+Explorer menu have no counterpart. `tests/test-pwwdrive-sync.py` runs these
+rules against a fake server.
+
+### Firewall
+
+Settings > System > Firewall (`FirewallPage.qml`) runs
+`lumo-firewall` through pkexec (`org.lumo.firewall`), a wrapper around
+ufw. The installer turns it on: nothing comes in except mDNS and KDE Connect,
+everything goes out. File sharing opens its ports only when it is turned on.
 
 ## Advanced settings
 
@@ -175,6 +270,38 @@ marker, the boot-menu language service), and Welcome opens at the first
 login of the new account.
 
 The boot menu starts the live session in Russian or English
+The installer preselects nothing on its disk page, so erasing a disk is always
+a choice. New systems use btrfs (ext4 stays available) with the subvolumes
+`@`, `@home`, `@cache`, `@log` and `@snapshots` (`modules/mount.conf`).
+
+### Restore points
+
+After the update and driver steps, `shellprocess@snapshots` runs
+`lumo-snapshots setup`, which writes snapper's `root` configuration when `/`
+and `/.snapshots` are btrfs and does nothing otherwise. Snapper's APT hook then
+makes a restore point before and after every package change, also from Settings
+and automatic updates. Lumo keeps the last 10 and makes no timed ones. `/home`
+is not part of a restore point.
+
+- **Boot menu:** `grub-btrfs` is not in Debian, so `/etc/grub.d/41_lumo_snapshots`
+  writes a Restore points submenu, refreshed after every APT run
+  (`81lumo-snapshots`). An entry boots the read-only snapshot with
+  `lumo.snapshot=N`; the initramfs script `local-bottom/lumo-snapshot`
+  puts a tmpfs overlay over it, so nothing is kept.
+- **Settings > System > Restore points** (`RestorePage.qml`) runs
+  `lumo-snapshots restore N` through pkexec (`org.lumo.snapshots`). It
+  renames `@` to `@.previous-<time>`, removing an older one, and makes a new
+  `@` from the snapshot. `lumo-snapshots.service` refreshes the boot menu at
+  the next start.
+
+On UEFI, `/etc/grub.d/11_lumo_windows` looks at every start for
+`/EFI/Microsoft/Boot/bootmgfw.efi` on all disks. If it is there, the boot menu
+has a Windows entry and waits without a countdown; Lumo stays the first entry.
+Without Windows the usual 2 seconds apply. `os-prober` stays off, so there is no
+second Windows entry. It uses `[ -f ]` because `search` prints an error when
+Windows is missing. Windows installed in BIOS mode is not detected.
+
+The boot menu starts the live session in English (the default) or Russian
 (`lumo.lang=`), which the installer inherits.
 
 ## Translations

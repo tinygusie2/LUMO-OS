@@ -52,4 +52,11 @@ grep -Fq lumo-demo "$temporary_root/control/conffiles" && fail "the demo sources
 [[ "$("$temporary_root/root/usr/libexec/lumo-update-channel" status)" =~ ^(demo|stable)$ ]] \
   || fail "lumo-update-channel status does not answer"
 
+cmp "$package_root/apt/debian.sources" "$temporary_root/root/etc/apt/sources.list.d/debian.sources"
+cmp <(sed '/^#/d; /^[[:space:]]*$/d' "$package_root/debian/lumo-archive.postinst") \
+    <(sed '/^#/d; /^[[:space:]]*$/d' "$temporary_root/control/postinst")
+for source in lumo.sources lumo-demo.sources; do
+    if [[ $source == lumo.sources ]]; then installed=etc/apt/sources.list.d; else installed=usr/share/lumo/apt; fi
+    cmp "$package_root/apt/$source" "$temporary_root/root/$installed/$source"
+done
 printf 'lumo-archive binary test: OK\n'

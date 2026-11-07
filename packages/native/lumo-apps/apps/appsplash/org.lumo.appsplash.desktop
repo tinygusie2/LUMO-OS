@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Android apps
+Name[ru]=Android-приложения
+Icon=org.lumo.android
+Exec=lumo-appsplash
+NoDisplay=true

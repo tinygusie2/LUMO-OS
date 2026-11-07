@@ -350,7 +350,9 @@ Item {
         awake: i18n("Keep Awake"),
         dark: i18n("Dark Theme"),
         screenshot: i18n("Screenshot"),
-        quickshare: i18n("Quick Share")
+        quickshare: i18n("Quick Share"),
+        power: i18n("Power Mode"),
+        gaming: i18n("Gaming Mode")
     })
 
     readonly property var tileComponents: ({
@@ -364,7 +366,9 @@ Item {
         awake: awakeTile,
         dark: darkTile,
         screenshot: screenshotTile,
-        quickshare: quickshareTile
+        quickshare: quickshareTile,
+        power: powerTile,
+        gaming: gamingTile
     })
 
     Component {
@@ -532,6 +536,30 @@ Item {
             hasDetails: true
             onToggled: QuickShare.setEnabled(!QuickShare.enabled)
             onDetailsRequested: root.detail = "quickshare"
+        }
+    }
+    Component {
+        id: powerTile
+        MTile {
+            icon: root.backend.powerIcon
+            title: i18n("Power Mode")
+            subtitle: root.backend.powerSubtitle
+            available: root.backend.powerAvailable && !root.backend.gamingOn
+            checked: root.backend.powerProfile === "performance"
+            hasDetails: true
+            onToggled: root.backend.nextPowerProfile()
+            onDetailsRequested: { root.backend.openSettings("kcm_powerdevilprofilesconfig"); root.requestClose(); }
+        }
+    }
+    Component {
+        id: gamingTile
+        MTile {
+            icon: "applications-games"
+            title: i18n("Gaming Mode")
+            subtitle: root.backend.gamingOn ? i18n("Performance, no notifications") : i18n("Off")
+            available: root.backend.powerAvailable
+            checked: root.backend.gamingOn
+            onToggled: root.backend.toggleGaming()
         }
     }
     Component {

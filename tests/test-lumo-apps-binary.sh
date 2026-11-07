@@ -102,4 +102,11 @@ grep -q 'dpkg-divert --package lumo-apps --remove --rename' "$control/postrm" \
   || fail "the systemsettings diversion is not removed with the package"
 find "$control" -depth -delete
 
+for file in pages/BluetoothPage.qml pages/BluetoothPairPage.qml pages/BluetoothDevicePage.qml components/BluetoothNames.js components/BluetoothPairRow.qml; do
+  cmp "$package_root/apps/settings/qml/$file" "$temporary_root/usr/share/lumo/settings/$file" \
+    || fail "Bluetooth interface differs from the tested source: $file"
+done
+grep -l 'BluetoothDiscovery' "$temporary_root/$qml/"*.qmltypes >/dev/null \
+  || fail "the Bluetooth discovery controller is not registered in QML"
+
 printf 'lumo-apps binary test: OK\n'

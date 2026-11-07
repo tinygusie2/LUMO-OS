@@ -1,3 +1,15 @@
+lumo-apps (1.1.86) UNRELEASED; urgency=medium
+
+  * Bring in the Kernora apps from the lumo-kernora-sync branch: the
+    Android App Installer, the Android dialogs and app splash, the Drivers
+    app, the Android, Restore points, Cloud and network folders and
+    Firewall pages in Settings, and tabs, group selection and drag and
+    drop in Files.
+  * Require lumo-desktop 1.4.74 and lumo-archive 1.8.
+  * Versions skip 1.1.72 to 1.1.85: kernora-apps 1.1.85 is published.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sat, 07 Nov 2026 18:00:00 +0000
+
 lumo-apps (1.1.71) UNRELEASED; urgency=medium
 
   * Terminal: the tab bar keeps its height and the terminal fills the

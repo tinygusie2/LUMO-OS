@@ -1,3 +1,17 @@
+lumo-desktop (1.4.74) UNRELEASED; urgency=medium
+
+  * Bring in the Kernora work from the lumo-kernora-sync branch with every
+    name changed to lumo: Android apps through Waydroid in Lumo windows,
+    APK files, the Drivers tools and catalog, restore points, the CPU
+    temperature widget, Power Mode and Gaming Mode in Quick Settings, the
+    cloud, network folder and firewall tools and the locale repair.
+  * The boot menu shows Windows next to Lumo and waits until you choose.
+  * With Windows on the same disk, keep the hardware clock in local time
+    so Windows no longer runs an hour behind.
+  * Versions skip 1.4.64 to 1.4.73: kernora-desktop 1.4.73 is published.
+
+ -- Lumo Developers <developers@lumo.invalid>  Sat, 07 Nov 2026 18:00:00 +0000
+
 lumo-desktop (1.4.63) UNRELEASED; urgency=medium
 
   * Lumo installs and starts with Secure Boot on. The installer no longer
