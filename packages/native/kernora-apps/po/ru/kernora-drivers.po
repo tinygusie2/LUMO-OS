@@ -452,3 +452,19 @@ msgid_plural "%1 packages"
 msgstr[0] "%1 пакет"
 msgstr[1] "%1 пакета"
 msgstr[2] "%1 пакетов"
+
+msgid "Restart and confirm the key"
+msgstr "Перезагрузите и подтвердите ключ"
+
+msgid "Set up Secure Boot"
+msgstr "Настроить Secure Boot"
+
+msgid "The driver is waiting for Secure Boot"
+msgstr "Драйвер ждёт настройки Secure Boot"
+
+msgid "Secure Boot is on and the key Lumo signs the driver with is not confirmed yet. Set it up and confirm the key after a restart."
+msgstr "Secure Boot включён, а ключ, которым Lumo подписывает драйвер, ещё не подтверждён. Настройте его и подтвердите ключ после перезагрузки."
+
+#, kde-format
+msgid "Secure Boot is on, so Lumo signed the driver with its own key. After the restart a blue screen appears: choose Enroll MOK, Continue and Yes, type the password %1 and choose Reboot."
+msgstr "Secure Boot включён, поэтому Lumo подписала драйвер своим ключом. После перезагрузки появится синий экран: выберите Enroll MOK, Continue и Yes, введите пароль %1 и выберите Reboot."

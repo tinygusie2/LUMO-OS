@@ -55,7 +55,7 @@ xdg-utils
 kernora-desktop=1.4.73
 kernora-calamares=1.4.73
 kernora-apps=1.1.85
-kernora-quickshare=1.0.3
+kernora-quickshare=1.0.2
 polkit-kde-agent-1=4:6.3.6-1kernora1
 plymouth
 plymouth-label

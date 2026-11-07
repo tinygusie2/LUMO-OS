@@ -144,7 +144,7 @@ grep -q kernora-update-channel "$package_root/apps/settings/qml/pages/UpdatesPag
   && fail "the demo updates switch is back on the updates page"
 grep -Fq 'title: i18n("Early access")' "$package_root/apps/settings/qml/pages/SystemPage.qml" \
   || fail "demo updates are not under Early access in System"
-grep -Fq "project(kernora-apps VERSION $version LANGUAGES CXX)" "$package_root/CMakeLists.txt" \
+grep -Fq "project(kernora-apps VERSION $version LANGUAGES C CXX)" "$package_root/CMakeLists.txt" \
   || fail "the CMake project version is not $version"
 grep -Fq 'AppIconSync icons;' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fq '"/Kernora/scalable/apps"' "$package_root/src/updatenotifier/appiconsync.cpp" \
@@ -154,27 +154,6 @@ grep -Fq 'AppIconSync icons;' "$package_root/src/updatenotifier/main.cpp" \
   && grep -Fq 'info.absolutePath().contains(QLatin1String("/apps"))' "$package_root/src/updatenotifier/appiconsync.cpp" \
   && grep -Fq 'kernora-app-icons --self-test' "$package_root/debian/rules" \
   || fail "app icons are not made the same size and shape"
-for file in Main AppsPage ProcessesPage PerformancePage TaskPage UsageCard; do
-  [[ -s "$package_root/apps/taskmanager/qml/$file.qml" ]] || fail "Task Manager lacks $file.qml"
-done
-grep -Fq 'Procs.ApplicationDataModel {' "$package_root/apps/taskmanager/qml/Main.qml" \
-  && grep -Fq 'Procs.ProcessDataModel {' "$package_root/apps/taskmanager/qml/ProcessesPage.qml" \
-  && grep -Fq 'Files.exists("file:///proc/" + pid)' "$package_root/apps/taskmanager/qml/Main.qml" \
-  && grep -Fq 'Procs.ProcessController.KillSignal' "$package_root/apps/taskmanager/qml/Main.qml" \
-  && grep -Fq 'sensorId: "gpu/all/totalVram"' "$package_root/apps/taskmanager/qml/PerformancePage.qml" \
-  && grep -Fq 'direction: Charts.XYChart.ZeroAtEnd' "$package_root/apps/taskmanager/qml/UsageCard.qml" \
-  && grep -Fq 'fillMode: Charts.HistoryProxySource.FillFromStart' "$package_root/apps/taskmanager/qml/UsageCard.qml" \
-  && grep -Fq 'return pid > 0 ? [pid] : [];' "$package_root/apps/taskmanager/qml/TaskPage.qml" \
-  && grep -Fq 'onClicked: page.sortKey = key' "$package_root/apps/taskmanager/qml/TaskPage.qml" \
-  || fail "Task Manager can't list, end or chart"
-grep -Fxq 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$package_root/apps/taskmanager/org.kernora.taskmanager.desktop" \
-  && grep -Fq 'DESTINATION ${KDE_INSTALL_DATADIR}/kglobalaccel' "$package_root/CMakeLists.txt" \
-  && grep -q 'share taskmanager drivers apkinstaller appsplash androiddialog)' "$package_root/src/apps/CMakeLists.txt" \
-  || fail "Task Manager has no shortcut or is not built"
-for dependency in ksystemstats libksysguard-bin qml6-module-org-kde-ksysguard qml6-module-org-kde-kitemmodels qml6-module-org-kde-quickcharts; do
-  grep -Eq "^ $dependency,?$" "$package_root/debian/control" || fail "Task Manager needs $dependency"
-done
-msgfmt --check -o /dev/null "$package_root/po/ru/kernora-taskmanager.po" || fail "the Task Manager translation is broken"
 grep -Fq 'key: "themedApps"' "$package_root/apps/settings/qml/pages/AppearancePage.qml" \
   && grep -Fq 'msgid "Themed app icons"' "$package_root/po/ru/kernora-settings.po" \
   && grep -Eq '^ qt6-svg-plugins,$' "$package_root/debian/control" \
@@ -239,7 +218,7 @@ grep -Fq '{ id: "android", title: i18n("Android apps")' "$package_root/apps/sett
 grep -Fxq 'MimeType=application/vnd.android.package-archive;' "$package_root/apps/apkinstaller/org.kernora.apkinstaller.desktop" \
   && grep -Fq 'Android.inspect(url)' "$package_root/apps/apkinstaller/qml/Main.qml" \
   && grep -Fq 'Android.install(app.file, app.apk.package' "$package_root/apps/apkinstaller/qml/Main.qml" \
-  && grep -q 'taskmanager drivers apkinstaller appsplash androiddialog)' "$package_root/src/apps/CMakeLists.txt" \
+  && grep -q 'tasks calendar drivers apkinstaller appsplash androiddialog)' "$package_root/src/apps/CMakeLists.txt" \
   || fail "the APK installer is missing"
 grep -Fq 'adaptive-icon' "$package_root/src/system/apk.cpp" \
   && grep -Fq 'QSvgRenderer renderer(vectorToSvg(elements));' "$package_root/src/system/apk.cpp" \

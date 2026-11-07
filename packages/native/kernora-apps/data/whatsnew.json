@@ -1415,7 +1415,7 @@
     "date": "2026-10-12",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "A more expressive Store",
           "ru": "Больше Material 3 в магазине",
@@ -1434,7 +1434,7 @@
     "date": "2026-10-12",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Open the app you installed",
           "ru": "Запускается установленная версия",
@@ -1452,7 +1452,7 @@
     "id": "2026-10-12-4",
     "items": [
       {
-        "icon": "org.kernora.screenshot",
+        "icon": "applets-screenshooter",
         "title": {
           "en": "Screenshots on two monitors",
           "ru": "Снимки экрана на двух мониторах",
@@ -1525,7 +1525,7 @@
     "date": "2026-10-11",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Smoother app browsing",
           "ru": "Удобнее искать приложения",
@@ -1544,7 +1544,7 @@
     "date": "2026-10-11",
     "items": [
       {
-        "icon": "org.kernora.store",
+        "icon": "system-software-install",
         "title": {
           "en": "Your new app store",
           "ru": "Новый магазин приложений",

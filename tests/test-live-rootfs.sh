@@ -43,7 +43,7 @@ fail() {
 }
 
 grep -Fxq 'ID=kernora' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' kernora-base)" == "1.6.3" ]] \
+[[ "$(dpkg-query -W -f='${Version}' kernora-base)" == "1.6.4" ]] \
   || fail "kernora-base is not installed"
 for module in kcm_lookandfeel kcm_desktoptheme kcm_colors kcm_style kcm_icons kcm_cursortheme kcm_kwindecoration kcm_splashscreen; do
   [[ ! -e "/usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/$module.so" ]] \
@@ -177,8 +177,8 @@ grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
 # The Kernora applications replace KDE's everyday tools.
 [[ "$(dpkg-query -W -f='${Version}' kernora-apps)" == "1.1.85" ]] \
   || fail "kernora-apps 1.1.85 is not installed"
-[[ "$(dpkg-query -W -f='${Version}' kernora-quickshare)" == "1.0.3" ]] \
-  || fail "kernora-quickshare 1.0.3 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' kernora-quickshare)" == "1.0.2" ]] \
+  || fail "kernora-quickshare 1.0.2 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
