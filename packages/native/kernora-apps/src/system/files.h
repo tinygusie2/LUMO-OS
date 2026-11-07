@@ -36,6 +36,8 @@ public:
     Q_INVOKABLE QVariantMap trashInfo(const QUrl &url) const;
     Q_INVOKABLE void createFolder(const QUrl &parent, const QString &name, const QJSValue &callback = QJSValue());
     Q_INVOKABLE void move(const QList<QUrl> &urls, const QUrl &destination, const QJSValue &callback = QJSValue());
+    Q_INVOKABLE QString transferError(const QList<QUrl> &urls, const QUrl &destination) const;
+    Q_INVOKABLE void startDrag(QObject *source, const QList<QUrl> &urls);
     Q_INVOKABLE QList<QUrl> conflicts(const QList<QUrl> &urls, const QUrl &destination) const;
     Q_INVOKABLE void transfer(const QList<QUrl> &urls, const QUrl &destination, bool move, const QString &onConflict,
                               const QJSValue &callback = QJSValue());
@@ -54,6 +56,8 @@ public:
     Q_INVOKABLE void setLiveWallpaper(const QString &plugin = QStringLiteral("org.kernora.shapes"));
     Q_INVOKABLE QVariantList liveWallpapers() const;
     Q_INVOKABLE void setLockScreenWallpaper(const QUrl &image);
+    Q_INVOKABLE void setLockScreenPlugin(const QString &plugin);
+    Q_INVOKABLE void syncGreeterBackground(const QString &plugin, const QUrl &image = QUrl());
     Q_INVOKABLE QVariantList wallpapers() const;
 
 private:

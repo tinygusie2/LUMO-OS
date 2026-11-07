@@ -1,22 +1,29 @@
 # Updates
 
-An installed Lumo system updates from four APT archives. The
-`kernora-archive` package sets them up, and `kernora-base` depends on it, so
-every installation has it.
+An installed Kernora system updates from four APT archives, five with demo
+updates on. The `kernora-archive` package sets them up, and `kernora-base`
+depends on it, so every installation has it.
 
 | Archive | What comes from it | How it is installed |
 | --- | --- | --- |
 | Debian security, `security.debian.org`, `trixie-security` | security fixes, kernel updates among them | automatically, once a day |
 | LibreWolf, `repo.librewolf.net` | the browser | automatically, once a day |
 | Debian, `deb.debian.org`, `trixie` and `trixie-updates` | Debian point releases | in Settings > Updates |
-| Lumo, `tinygusie2.github.io/lumo-updates` | Lumo's own packages | in Settings > Updates |
+| Kernora, `tinygusie2.github.io/lumo-updates` | Kernora's own packages | in Settings > Updates |
+| Kernora demo, same site, `ember-demo` | new Kernora packages before everyone else, only with Demo updates on | in Settings > Updates, after turning it on in Settings > System |
 
 The ISO is still built from the pinned Debian snapshot (`configs/upstream/base.env`).
 Only the installed system points at the live archives: `build-live-rootfs` removes
 the build's `sources.list` and its copy of the Lumo archive.
 
-Both the Debian archive and its security updates come with the `main` and
-`non-free-firmware` components. The image ships the firmware that graphics
+Both the Debian archive and its security updates include `main`, `contrib`,
+`non-free` and `non-free-firmware`. Archive package 1.3 enables `i386` on new
+amd64 installations and upgrades from earlier archive versions, so 32-bit
+application dependencies can be resolved. Later upgrades preserve an
+administrator’s decision to remove `i386`. Kernora’s own repositories are
+scoped to `amd64`; Debian supplies both native and 32-bit packages.
+
+The image ships the firmware that graphics
 cards, Wi-Fi, Bluetooth and laptop sound need, and CPU microcode
 (`configs/live/packages.txt`: AMD, Intel and NVIDIA graphics, Intel, Realtek,
 Qualcomm, MediaTek and Broadcom Wi-Fi, SOF sound); without it AMD's integrated
@@ -56,9 +63,31 @@ creates it), it asks once per boot for a restart, with a "Restart" button that
 opens the session's restart prompt.
 
 The events are in `kernora-updates.notifyrc`, so the notification server draws
-them like any other Lumo notification. What has been announced is kept in
-`~/.local/state/kernora-update-notifierstaterc`. The notifier exits at once in
-the live session.
+them like any other Kernora notification. What has been announced is kept in
+`~/.local/state/kernora-update-notifierstaterc`. In the live session the
+notifier only keeps the app icons in shape (docs/DESKTOP.md, Other apps'
+icons) and checks no updates.
+
+## Demo updates
+
+Settings > System has a Demo updates switch under Early access, off by
+default. Turning it on runs `/usr/libexec/kernora-update-channel set demo`
+through pkexec (polkit action `org.kernora.update-channel`, admin password).
+That copies
+`/usr/share/kernora/apt/kernora-demo.sources` to
+`/etc/apt/sources.list.d/kernora-demo.sources`, which adds the `ember-demo`
+suite from the same site and key, and Settings checks for updates again.
+
+Both suites come from the same site, so the 900 pin below covers both and APT
+just takes the higher version. `ember-demo` only holds packages newer than the
+normal ones, so a demo system gets those from it and everything else from
+`ember`.
+
+Turning it off removes the file. Demo versions that are already installed
+stay, APT doesn't downgrade. As soon as the normal updates have the same or a
+higher version the system is back in line with everyone else. When the
+switch is on, `kernora-archive` refreshes the file on upgrade, and it removes
+it on purge.
 
 ## What's new
 
@@ -92,16 +121,48 @@ users.
    with it, so that the "What's new" window tells them about it.
 3. If the ISO should carry the new version, update the pins in
    `configs/live/packages.txt` and the version checks in `tests/`.
-4. Run `make publish`. It builds every package and the local archive. It then
-   signs the archive with the Lumo archive key and force-pushes it to the
-   `lumo-updates` repository (`DIST_UPDATES_REPOSITORY`), which GitHub Pages
-   serves a minute later.
+4. Run `make publish`. It builds every package and the local archive, runs
+   `tests/test-publish-updates.sh`, then signs the archive with the Kernora
+   archive key and force-pushes it to the `lumo-updates` repository, which
+   GitHub Pages serves a minute later. The demo suite there is kept, only the
+   demo packages the new normal ones caught up with are dropped.
 
 Systems pick it up at their next check: the daily refresh, or Check in
 Settings > Updates.
 
-`lumo-updates` holds only the current packages. Each publication replaces
-all of its contents in a single commit, so the repository does not grow.
+`lumo-updates` holds only the current packages, normal and demo. Each
+publication replaces all of its contents in a single commit, so the
+repository does not grow.
+
+### Shared changes when demo is ahead
+
+APT selects the higher package version across enabled suites. A new stable
+package with a lower version than an installed demo package does not reach
+that system, even when the stable package contains a new feature. Backport
+shared features and fixes to the current demo source too, raise its versions,
+and publish that build with `make publish-demo`. Keep experimental demo code
+out of the stable build. Include the shared What's New entry in both builds,
+retaining each channel's history.
+
+Before announcing delivery to both channels, test the upgrade candidates from
+both the previous stable and previous demo versions and check that each
+selected package contains the feature. An empty-status APT test alone does
+not cover machines that already have newer demo packages installed.
+
+### Demo first
+
+`make publish-demo` builds the same way but leaves the normal updates exactly
+as they are published. Into `ember-demo` it puts every package from
+`out/archive` whose version is newer than the published normal one, replacing
+what the demo had before, and it refuses when nothing is newer.
+
+Give the packages the version the release will have. When the demo is good,
+`make publish` the same tree: the packages are identical, systems on the demo
+already have them and nothing reinstalls. If a package changes after it went
+to the demo, raise its version again. Both commands refuse to publish a
+package under a version the demo already has with other contents, because
+systems that installed the demo would never get the change. They also warn
+when a package changed but kept the version it is published with.
 
 ## The signing key
 
@@ -126,7 +187,7 @@ expires on 2029-10-12.
 ## Systems installed from Kernora OS
 
 Lumo no longer takes packages from the Kernora OS archive
-(`commywork9282-dotcom.github.io/kernora-updates`): its packages have their own
+(`tinygusie2.github.io/lumo-updates`): its packages have their own
 versions and would replace Lumo's. `kernora-archive` 1.2 points
 `/etc/apt/sources.list.d/kernora.sources` at the Lumo archive and ships the
 Lumo key instead of Kernora's. A Kernora OS system becomes Lumo by installing

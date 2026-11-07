@@ -62,7 +62,6 @@ for path in \
   usr/share/icons/Kernora/scalable/apps/start-here-kde-symbolic.svg \
   usr/share/icons/Kernora/scalable/apps/start-here-kde.svg \
   usr/share/plasma/look-and-feel/org.kernora.desktop/contents/splash/Splash.qml \
-  usr/share/plasma/look-and-feel/org.kernora.desktop/contents/splash/images/kernora.png \
   usr/share/plasma/look-and-feel/org.kernora.desktop/contents/layouts/org.kde.plasma.desktop-layout.js \
   etc/xdg/plasmarc \
   usr/share/color-schemes/KernoraDark.colors \
@@ -77,6 +76,9 @@ for path in \
   usr/share/icons/Kernora/scalable/status/audio-volume-high.svg \
   usr/share/icons/Kernora/scalable/status/audio-volume-high-symbolic.svg \
   usr/share/icons/Kernora/scalable/actions/system-shutdown.svg \
+  usr/share/icons/Kernora/scalable/categories/ksysguardd.svg \
+  usr/share/icons/Kernora/scalable/categories/kernora-analog-clock.svg \
+  usr/share/icons/Kernora/scalable/devices/device-notifier.svg \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.kernora.launcher.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.kernora.quicksettings.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.kernora.clipboard.mo \
@@ -85,6 +87,11 @@ for path in \
   usr/share/knotifications6/kernora-devices.notifyrc \
   usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/sources/DeviceSource.qml \
   usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/sources/ThemeSource.qml \
+  usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/TileGrid.qml \
+  usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/InternetPanel.qml \
+  usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/BluetoothPanel.qml \
+  usr/share/plasma/plasmoids/org.kernora.quicksettings/contents/ui/PanelRow.qml \
+  usr/share/plasma/plasmoids/org.kernora.launcher/contents/ui/SessionGroup.qml \
   usr/share/plasma/desktoptheme/kernora-md1/metadata.json \
   usr/share/plasma/desktoptheme/kernora-md1-light/colors \
   usr/share/plasma/desktoptheme/kernora-md2/dialogs/background.svg \
@@ -102,12 +109,6 @@ for path in \
   usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/materialshapes.js \
   usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/palettes/kernora.qml \
   usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui/palettes/blue-grey.qml \
-  usr/share/plasma/wallpapers/org.kernora.tower/metadata.json \
-  usr/share/plasma/wallpapers/org.kernora.tower/contents/ui/Scene.qml \
-  usr/share/plasma/wallpapers/org.kernora.tower/contents/ui/tower.js \
-  usr/share/plasma/wallpapers/org.kernora.tower/contents/ui/palettes/kernora.qml \
-  usr/share/plasma/wallpapers/org.kernora.tower/contents/ui/palettes/blue-grey.qml \
-  usr/share/plasma/wallpapers/org.kernora.tower/contents/ui/materialshapes.js \
   usr/share/plasma/wallpapers/org.kernora.rhythm/metadata.json \
   usr/share/plasma/wallpapers/org.kernora.rhythm/contents/ui/Scene.qml \
   usr/share/plasma/wallpapers/org.kernora.rhythm/contents/ui/palettes/kernora.qml \
@@ -123,10 +124,19 @@ for path in \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/materialshapes.js \
   usr/share/kconf_update/kernora-marbles-to-pastel.upd \
   usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/kernora_marbles_to_pastel.js \
+  usr/share/kconf_update/kernora-tower-to-shapes.upd \
+  etc/xdg/plasma-workspace/env/kernora-video-decoding.sh \
+  usr/share/kconf_update/kernora-tower-to-shapes.sh \
+  usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/kernora_tower_to_shapes.js \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/palettes/kernora.qml \
   usr/share/plasma/wallpapers/org.kernora.pastel/contents/ui/palettes/blue-grey.qml \
-  usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.kernora.tower.mo \
   usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.kernora.pastel.mo \
+  usr/share/plasma/wallpapers/org.kernora.ribbon/metadata.json \
+  usr/share/plasma/wallpapers/org.kernora.ribbon/contents/ui/Scene.qml \
+  usr/share/plasma/wallpapers/org.kernora.ribbon/contents/ui/morphs.js \
+  usr/share/plasma/wallpapers/org.kernora.ribbon/contents/ui/palettes/kernora.qml \
+  usr/share/plasma/wallpapers/org.kernora.ribbon/contents/ui/palettes/blue-grey.qml \
+  usr/share/locale/ru/LC_MESSAGES/plasma_wallpaper_org.kernora.ribbon.mo \
   usr/share/Kvantum/Kernora/Kernora.kvconfig \
   usr/share/Kvantum/Kernora/Kernora.svg \
   usr/share/Kvantum/Kernora/KernoraDark.kvconfig \
@@ -150,6 +160,10 @@ for path in \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/M3.qml \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/ui/qmldir \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/ui/ListItem.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/ui/FloatingToolbar.qml \
+  usr/libexec/kernora-splash-wallpaper \
+  usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/ContextMenu.qml \
+  usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/Task.qml \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/ui/Page.qml \
   usr/share/locale/ru/LC_MESSAGES/kernora-ui.mo \
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/M3.qml \
@@ -253,16 +267,96 @@ for path in \
   usr/share/plasma/desktoptheme/kernora-light/colors \
   usr/share/icons/Kernora/scalable/apps/org.kernora.settings.svg \
   usr/share/icons/Kernora/scalable/apps/org.kernora.files.svg \
+  usr/share/icons/Kernora/scalable/apps/org.kernora.taskmanager.svg \
   usr/share/sddm/themes/kernora/Main.qml \
   usr/share/sddm/themes/kernora/metadata.desktop \
-  usr/share/sddm/themes/kernora/palette.js \
-  usr/share/sddm/themes/kernora/icons/login.svg; do
+  usr/share/sddm/themes/kernora/icons/login.svg \
+  usr/share/kernora/faces/kernora.png \
+  usr/share/kernora/faces/light-blue.png \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MShapeEcho.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/materialshapes.js \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MLinearProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MCircularProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/MLinearProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/MCircularProgress.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/ProgressBar.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MLoadingIndicator.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MMorph.qml \
+  usr/libexec/kernora-grub-theme \
+  usr/libexec/kernora-boot-theme \
+  usr/share/kernora/boot/plymouth.pack \
+  usr/share/kernora/grub/kernora-dark/theme.txt \
+  usr/share/kernora/grub/kernora-dark/select_c.png \
+  usr/share/kernora/grub/light-blue-light/theme.txt \
+  usr/share/kernora/grub/green-dark/logo.png \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/MMorph.qml \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/loadingshapes.js \
+  usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/loadingshapes.js \
+  usr/share/plymouth/themes/kernora/wave-0.png \
+  usr/share/plymouth/themes/kernora/wave-89.png; do
   [[ -e "$temporary_root/desktop/$path" ]] \
     || fail "desktop package is missing $path"
 done
+[[ ! -e "$temporary_root/desktop/usr/share/sddm/themes/kernora/palette.js" ]] || fail "the login screen still ships a fixed palette"
+grep -Fxq 'MShapeEcho MShapeEcho.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/qmldir" \
+  || fail "the shape echo is not part of org.kernora.m3"
+grep -Fxq 'MLinearProgress MLinearProgress.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/qmldir" \
+  && grep -Fxq 'MCircularProgress MCircularProgress.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/impl/qmldir" \
+  && grep -Fxq 'ProgressBar 1.0 ProgressBar.qml' "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/desktop/qmldir" \
+  || fail "the wavy progress indicators are not registered"
+cmp -s "$temporary_root/desktop/usr/share/kernora/grub/kernora-dark/theme.txt" "$temporary_root/desktop/usr/share/grub/themes/kernora/theme.txt" \
+  || fail "the default boot menu and the kernora dark variant differ"
+grep -Fq 'desktop-color: "#f' "$temporary_root/desktop/usr/share/kernora/grub/light-blue-light/theme.txt" \
+  || fail "the light boot menu is not light"
+boot_work=$(mktemp -d)
+python3 -I - "$temporary_root/desktop" "$boot_work" <<'PY' || fail "the boot theme tool does not build a working Plymouth theme"
+import importlib.machinery, importlib.util, pathlib, sys
+root, work = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+loader = importlib.machinery.SourceFileLoader("boot", str(root / "usr/libexec/kernora-boot-theme"))
+spec = importlib.util.spec_from_loader("boot", loader)
+boot = importlib.util.module_from_spec(spec)
+loader.exec_module(boot)
+boot.PACK = root / "usr/share/kernora/boot/plymouth.pack"
+boot.PALETTES = root / "usr/share/kernora/palettes"
+boot.THEMES = work
+stock = root / "usr/share/plymouth/themes/kernora"
+boot.build("kernora", "dark")
+theme = work / boot.NAME
+assert (theme / f"{boot.NAME}.script").read_text() == (stock / "kernora.script").read_text()
+assert sorted(p.name for p in stock.glob("*.png")) == sorted(p.name for p in theme.glob("*.png"))
+boot.build("light-blue", "light")
+theme = work / boot.NAME
+assert (theme / "variant").read_text().strip() == "light-blue-light"
+for png in theme.glob("*.png"):
+    assert png.read_bytes()[:8] == b"\x89PNG\r\n\x1a\n", png
+script = (theme / f"{boot.NAME}.script").read_text()
+assert "@BG@" not in script and "Window.SetBackgroundTopColor(0.976, 0.976, 0.988)" in script, script[:400]
+assert f"ImageDir={work / boot.NAME}" in (theme / f"{boot.NAME}.plymouth").read_text()
+PY
+rm -rf "$boot_work"
+cmp -s "$temporary_root/desktop/usr/share/kernora/faces/kernora.png" "$temporary_root/desktop/usr/share/kernora/avatars/00-kernora.png" \
+  || fail "the Kernora face and the stock Kernora avatar differ"
+cmp -s "$temporary_root/desktop/usr/share/kernora/faces/kernora.png" "$temporary_root/desktop/usr/share/kernora/faces/light-blue.png" \
+  && fail "the Kernora face does not change with the colour"
 
 shell=usr/share/plasma/shells/org.kde.plasma.desktop/contents
 notifications=usr/share/plasma/plasmoids/org.kde.plasma.notifications/contents/ui
+cmp "$package_root/data/ui/Avatar.qml" "$temporary_root/desktop/usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/ui/Avatar.qml" \
+  || fail "the installed avatar lacks the current edge rendering fix"
+state_layers=0
+while IFS= read -r path; do
+  cmp "$package_root/data/shell/m3/MStateLayer.qml" "$path" \
+    || fail "a bundled press effect differs from the current source: $path"
+  state_layers=$((state_layers + 1))
+done < <(find "$temporary_root/desktop" -name MStateLayer.qml -type f)
+(( state_layers >= 3 )) || fail "the shared press effects are not packaged"
+for pair in \
+  "lockscreen/LockScreen.qml:$shell/lockscreen/LockScreen.qml" \
+  "sddm-theme/kernora/Main.qml:usr/share/sddm/themes/kernora/Main.qml" \
+  "look-and-feel/org.kernora.desktop/contents/logout/Logout.qml:usr/share/plasma/look-and-feel/org.kernora.desktop/contents/logout/Logout.qml"; do
+  cmp "$package_root/data/${pair%%:*}" "$temporary_root/desktop/${pair#*:}" \
+    || fail "a packaged account picture differs from its source: $pair"
+done
 for path in \
   "$shell/lockscreen/LockScreen.qml" \
   "$shell/lockscreen/KernoraMediaControls.qml" \
@@ -281,6 +375,9 @@ for path in \
   "$shell/explorer/WidgetExplorer.qml" \
   "$shell/explorer/WidgetPreview.qml" \
   "$shell/explorer/WidgetDrag.qml" \
+  "$shell/explorer/WidgetCard.qml" \
+  "$shell/explorer/OtherPreview.qml" \
+  "$shell/explorer/widgets.js" \
   "$shell/explorer/MaterialShape.qml" \
   "$shell/explorer/materialshapes.js" \
   "$shell/views/DesktopEditMode.qml" \
@@ -423,7 +520,7 @@ grep -Fxq 'X-KDE-Shortcuts=Meta+Ctrl+Alt+Shift+Space' "$temporary_root/desktop/u
 grep -Fq 'emoji.globalShortcut = "Meta+."' \
   "$temporary_root/desktop/usr/share/plasma/look-and-feel/org.kernora.desktop/contents/layouts/org.kde.plasma.desktop-layout.js" \
   || fail "the Kernora emoji tab does not open with Meta+."
-for widget in clock glance weather battery calendar media photo note; do
+for widget in clock glance weather battery cputemperature calendar media photo note; do
   widget_root="$temporary_root/desktop/usr/share/plasma/plasmoids/org.kernora.widget.$widget"
   for path in metadata.json contents/ui/main.qml contents/ui/m3/M3.qml contents/ui/materialshapes.js \
       contents/ui/MaterialShape.qml contents/config/main.xml; do
@@ -433,6 +530,21 @@ for widget in clock glance weather battery calendar media photo note; do
     "$widget_root/metadata.json" || fail "the $widget widget has no Russian name"
   grep -q 'name="placed"' "$widget_root/contents/config/main.xml" \
     || fail "the $widget widget does not remember that it was placed"
+done
+cpu_widget="$temporary_root/desktop/usr/share/plasma/plasmoids/org.kernora.widget.cputemperature"
+for file in contents/ui/main.qml contents/ui/ConfigGeneral.qml contents/config/config.qml contents/config/main.xml metadata.json; do
+  cmp "$package_root/data/widgets/cputemperature/$file" "$cpu_widget/$file" \
+    || fail "the CPU temperature widget differs from source: $file"
+done
+cmp "$package_root/data/widgets/common/TemperatureCard.qml" "$cpu_widget/contents/ui/TemperatureCard.qml" \
+  || fail "the CPU temperature card is missing or stale"
+cmp "$package_root/data/widgets/common/TemperatureCard.qml" "$temporary_root/desktop/$shell/explorer/TemperatureCard.qml" \
+  || fail "the widget menu lacks the CPU temperature preview component"
+[[ -s "$temporary_root/desktop/usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.kernora.widget.cputemperature.mo" ]] \
+  || fail "the CPU temperature widget is not translated"
+for dependency in qml6-module-org-kde-ksysguard ksystemstats; do
+  dpkg-deb --field "$desktop_deb" Depends | grep -Fq "$dependency" \
+    || fail "the CPU temperature widget lacks dependency $dependency"
 done
 for widget in glance weather; do
   [[ -s "$temporary_root/desktop/usr/share/locale/ru/LC_MESSAGES/plasma_applet_org.kernora.widget.$widget.mo" ]] \
@@ -460,17 +572,23 @@ grep -Fq 'allowDmaBuf: false' "$temporary_root/desktop/usr/share/plasma/plasmoid
 grep -Fq 'source: "KernoraWindowThumbnail.qml"' "$temporary_root/desktop/usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/ui/ToolTipInstance.qml" \
   || fail "the task tooltip does not use the Kernora window preview"
 [[ ! -e "$temporary_root/desktop/usr/share/plasma/wallpapers/org.kernora.marbles" ]] || fail "Marble Run is still installed"
+[[ ! -e "$temporary_root/desktop/usr/share/plasma/wallpapers/org.kernora.tower" ]] || fail "Tower is still installed"
 clipboard_ui="$temporary_root/desktop/usr/share/plasma/plasmoids/org.kernora.clipboard/contents/ui"
 [[ -s "$clipboard_ui/EmojiPage.qml" && -s "$clipboard_ui/emoji.js" ]] \
   || fail "the clipboard sheet has no emoji tab"
 grep -Fq '"😀","grinning face","широко улыбается"' "$clipboard_ui/emoji.js" \
   || fail "the emoji data lacks English and Russian names"
+for file in FolderView.qml KernoraIconLayout.qml IconPlacement.js; do
+  cmp "$project_root/packages/native/kernora-desktop/data/folderview/$file" \
+    "$temporary_root/desktop/usr/share/plasma/plasmoids/org.kde.desktopcontainment/contents/ui/$file" \
+    || fail "the packaged desktop icon layout differs from source: $file"
+done
 desktop_control=$(mktemp -d /tmp/kernora-desktop-control.XXXXXX)
 dpkg-deb --control "$desktop_deb" "$desktop_control"
 for file in lockscreen/LockScreen.qml osd/Osd.qml configuration/AppletConfiguration.qml \
     configuration/ConfigurationContainmentAppearance.qml configuration/ConfigurationContainmentActions.qml \
     configuration/AboutPlugin.qml configuration/ConfigurationShortcuts.qml \
-    org.kde.desktopcontainment/contents/ui ConfigLocation.qml ConfigIcons.qml ConfigFilter.qml ConfigOverlay.qml \
+    org.kde.desktopcontainment/contents/ui ConfigLocation.qml ConfigIcons.qml ConfigFilter.qml ConfigOverlay.qml FolderView.qml \
     explorer/WidgetExplorer.qml views/DesktopEditMode.qml panelconfiguration/PanelRepresentation.qml \
     org.kde.plasma.panelspacer/contents/ui/main.qml \
     org.kde.plasma.notifications/contents/ui main.qml \
@@ -510,5 +628,21 @@ if comm -12 "$temporary_root/desktop.list" "$temporary_root/installer.list" \
   | grep -q .; then
   fail "the two binary packages ship an overlapping path"
 fi
+
+[[ -x "$temporary_root/desktop/usr/libexec/kernora-locales" ]] \
+  || fail "locale repair helper is missing"
+cmp "$package_root/data/locales/kernora-locales" "$temporary_root/desktop/usr/libexec/kernora-locales" \
+  || fail "the packaged locale helper differs from the tested source"
+[[ -s "$temporary_root/installer/etc/calamares/modules/kernoralocales/main.py" ]] \
+  || fail "installer locale preparation is missing"
+dpkg-deb --ctrl-tarfile "$desktop_deb" | tar -xO ./postinst 2>/dev/null | grep -Fq '/usr/libexec/kernora-locales' \
+  || fail "upgrades do not repair missing selected locales"
+cmp "$package_root/data/calamares/modules/kernoralocales/module.desc" "$temporary_root/installer/etc/calamares/modules/kernoralocales/module.desc" \
+  || fail "the packaged locale module descriptor differs from its source"
+
+for locale_file in settings.conf modules/kernoralocales/main.py; do
+  cmp "$package_root/data/calamares/$locale_file" "$temporary_root/installer/etc/calamares/$locale_file" \
+    || fail "installer locale integration differs from its source: $locale_file"
+done
 
 printf 'kernora-desktop binary test: OK\n'

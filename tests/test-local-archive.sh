@@ -85,6 +85,10 @@ grep -Fxq 'Package: kernora-calamares' "$packages" \
   || fail "kernora-calamares is not indexed"
 grep -Fxq 'Package: kernora-desktop' "$sources" \
   || fail "kernora-desktop source is not indexed"
+grep -Fxq 'Package: kernora-quickshare' "$packages" \
+  || fail "kernora-quickshare is not indexed"
+grep -Fxq 'Package: kernora-quickshare' "$sources" \
+  || fail "kernora-quickshare source is not indexed"
 grep -Fxq "Origin: $DIST_NAME" "$release" || fail "wrong archive origin"
 grep -Fxq "Codename: $DIST_CODENAME" "$release" || fail "wrong archive codename"
 
@@ -116,8 +120,8 @@ apt-cache "${apt_options[@]}" show kernora-base \
   || fail "APT cannot read kernora-base from the archive"
 grep -Fxq "Version: $meta_version" "$temporary_root/kernora-base.txt" \
   || fail "APT selected the wrong kernora-base version"
-grep -Fxq "Depends: base-files (= $package_version), kernora-archive (>= 1.0)" \
-  "$temporary_root/kernora-base.txt" \
+grep -E '^Depends: ' "$temporary_root/kernora-base.txt" \
+  | grep -Fq "Depends: base-files (= $package_version), kernora-archive (>= 1.0)" \
   || fail "APT sees the wrong Kernora identity dependency"
 
 printf 'local archive test: OK\n'

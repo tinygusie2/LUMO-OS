@@ -137,8 +137,8 @@ the generation. Brown, grey and blue grey carry their own chroma (24, 0 and
 * **Live wallpapers.** `gen-wallpaper-assets` writes one palette per colour,
   `contents/ui/palettes/<colour>.qml`. Each scene loads the one named by
   `M3.colour` with a `Loader`, so the wallpaper changes colour with the
-  theme. Shapes rotates its families around the seed; Tower, Rhythm, Starfall
-  and Pastel turn their palette by the seed's hue difference from Lumo's,
+  theme. Shapes rotates its families around the seed; Rhythm, Starfall and
+  Pastel turn their palette by the seed's hue difference from Kernora's,
   except families marked fixed (Starfall's night sky, Pastel's accents).
 * **Switching.** `Appearance.setColour(colour)` runs the same steps as a
   change of generation with the colour's themes, and then
@@ -158,11 +158,11 @@ has no network) and `fetch-symbols --check` verifies them during the build.
 * Every drawing is re-gridded onto 24×24 and wrapped in the Breeze
   colour-scheme stylesheet, so Plasma recolours it with the palette.
 * Aliases, including every `-symbolic` spelling, are symlinks.
-* Application icons are left alone: apps keep their own full-colour icons in
-  the launcher and the taskbar. Lumo's own applications are the exception:
-  `APP_ICONS` draws a themed icon for them — the filled symbol on a round
-  tonal container, full colour, as a Pixel themes its app icons. System
+* Kernora's own applications get a themed icon from `APP_ICONS`: the filled
+  symbol on a round tonal container, as a Pixel themes its app icons. System
   Settings (`preferences-system`, `systemsettings`) is drawn that way.
+* Every other app icon is redrawn per user so all of them have the same size
+  and shape, like on ChromeOS (see below).
 * Every System Settings module and category has its own symbol. An unmapped
   `preferences-desktop-foo` would fall back to `preferences-desktop` and every
   module would wear the same glyph.
@@ -171,6 +171,40 @@ has no network) and `fetch-symbols --check` verifies them during the build.
 * The Plasma theme also carries `icons/<prefix>.svg` sheets drawn from the same
   symbols, because Plasma looks there before the icon theme.
 * Names not mapped fall back to Breeze (`Inherits=breeze-dark,breeze,hicolor`).
+
+### Other apps' icons (kernora-apps)
+
+`AppIconSync` runs in the session service `kernora-update-notifier` (also in
+the live session) and writes `~/.local/share/icons/Kernora/scalable/apps/<icon>.svg`
+for every visible app whose icon Kernora doesn't draw. The user directory has
+no `index.theme`, so it joins the system `Kernora` theme and every
+`Kernora-<colour>` theme that inherits it, ahead of Breeze and hicolor. So the
+dock, the app menu, the desktop, Alt+Tab and every other place get the new
+icon without changes of their own.
+
+* The source is the icon the app would have shown otherwise: the best file in
+  an `apps` directory of `breeze-dark`, `breeze` or `hicolor` (user dirs and
+  Flatpak exports included), or `pixmaps`. Icons from other contexts are never
+  overridden, so a service that borrows an action icon doesn't change it
+  everywhere.
+* A round icon is fitted to the Kernora circle (radius 22 of 48). Anything else
+  sits at 68 % on a white circle of the same size, like ChromeOS.
+* With "Themed app icons" on (`kernorarc` `[Icons] themedApps`, Settings ›
+  Wallpaper & style › Colour, off by default) the icon becomes a glyph in the
+  colours of the active `Kernora-<colour>` theme, read from its
+  `org.kernora.settings.svg`. A round or square icon with a flat background
+  keeps whatever stands out from that background; anything else is stamped by
+  luminance, and a flat one-colour icon becomes a solid silhouette.
+* It runs at login, when KSycoca changes (apps installed or removed) and when
+  `kernorarc` or `kdeglobals` change. `~/.local/state/kernora/app-icons`
+  remembers what each file was made from, so only changed icons are redrawn
+  and icons of removed apps are deleted. Afterwards it sends KIconLoader's
+  `iconChanged` D-Bus signal and open windows and Plasma pick the icons up.
+* Icons given as an absolute path in a desktop file can't be overridden that
+  way and stay as they are.
+* `kernora-app-icons render <icon> <out.png> [--themed]` draws one icon,
+  `kernora-app-icons sync` runs a sync by hand, and
+  `kernora-app-icons --self-test` runs during the package build.
 
 ## Plasma theme
 
@@ -181,7 +215,7 @@ has no network) and `fetch-symbols --check` verifies them during the build.
 | `widgets/panel-background` | floating pill, radius = half the 56px thickness |
 | `dialogs/background` | popups: extra-large 28dp corners, level-3 shadow |
 | `widgets/tooltip` | rich tooltip on the highest container |
-| `widgets/tasks` | task buttons as tonal containers, primary tint when active |
+| `widgets/tasks` | task buttons as chips inset around the icon, primary tint when active |
 | `widgets/slider`, `lineedit`, `button` | 16dp track, pill fields and buttons |
 | `widgets/listitem`, `viewitem`, `scrollbar`, `tabbar`, `line` | state layers, thin thumbs |
 
@@ -223,6 +257,26 @@ the notification popups.
 New accounts do not autostart the Xwayland video bridge (see
 `data/skel-autostart/`): its status icon is permanently passive and would bring
 the arrow back. Lumo's applications are native Wayland clients.
+
+Settings → Wallpaper & style → Panel has a **Transparent panel** switch.
+Plasma's own `panel.opacity` script setter is broken on 6.3 (on a live panel it
+calls `QWindow::setOpacity` with the enum value), so Settings goes through the
+launcher instead: it writes `panelOpacityRequest` into the launcher's config
+and the launcher sets `opacityMode` on the panel view it sits in. Plasma then
+saves it in `plasmashellrc` like any other panel setting. The switch needs the
+launcher on the panel, without it the switch is greyed out.
+
+The theme has `[AdaptiveTransparency] enabled=true`, otherwise Plasma ignores
+the panel's opacity mode and always draws the translucent SVG. Translucent is
+the same `ColorScheme-Background` at 82% with KWin blur behind it, `solid/` is
+fully opaque and is used for the opaque mode (and for adaptive panels while a
+maximized window touches them). Dialogs and tooltips stay solid.
+
+Two things only show up on the see-through panel. KWin draws shadow tiles under
+the window as well, so the panel shadow has the panel's shape cut out of it
+(minus a 1px seam), else a dark band shows along the top edge and in the round
+ends. And the task buttons are chips inset 6px around the icon: the old
+full-height boxes looked like a glitch once the wallpaper showed around them.
 
 ### Launcher (`org.kernora.launcher`)
 
@@ -367,14 +421,21 @@ then drops them, which keeps it from ever collapsing into an icon.
 
 ### Widget picker and edit mode
 
-Lumo replaces Plasma's widget explorer
-(`data/explorer/WidgetExplorer.qml`, diverted): a search bar, a Lumo
-section of cards whose previews (`WidgetPreview.qml`) are drawn on Material
-shapes and tick when the widget is on the desktop (the tick removes them
-again), and the other widgets as a list. A tap adds a widget, dragging it
-(`WidgetDrag.qml`, MIME `text/x-plasmoidservicename`) drops it where it
-should go. On a panel the Lumo widgets give way to the panel applets.
-The Lumo cards come in a fixed order, the clock first. Plasma 6 hides
+Kernora replaces Plasma's widget explorer
+(`data/explorer/WidgetExplorer.qml`, diverted): a search bar, a Kernora
+section and an "Other widgets" section, both made of the same cards
+(`WidgetCard.qml`). A card shows a preview drawn in Material, the widget's
+name next to a Pixel style icon (a Material symbol on a circle in the theme
+colour) and a tick when the widget is in use (the tick removes it again).
+Kernora's previews live in `WidgetPreview.qml`; the widgets that come with
+Plasma get theirs from `OtherPreview.qml`, picked by the table in
+`widgets.js`, which also gives each one its icon and a group (time, system
+monitor, files, media, system, input, panel). Widgets the table does not
+know keep their own icon on a Material shape. A tap adds a widget, dragging
+it (`WidgetDrag.qml`, MIME `text/x-plasmoidservicename`) drops it where it
+should go. On a panel the Kernora widgets give way to the panel applets and
+the panel group comes first. The Kernora cards come in a fixed order, the
+clock first. Plasma 6 hides
 "Add or Manage Widgets…" from the desktop's right-click menu; the
 `kernora_add_widgets_menu` kconf_update script turns it back on
 (`[ActionPlugins][0][RightButton;NoModifier] add widgets=true` in
@@ -396,9 +457,18 @@ reach. `kernora-desktop` puts Lumo's in place with `dpkg-divert`
 the package and live-image tests.
 
 * **Lock screen** (`data/lockscreen`, over the shell package's
-  `lockscreen/LockScreen.qml`): Lumo Shapes behind a large clock, the
-  account card, power actions, and the playing media's controls at the
-  bottom, usable without unlocking.
+  `lockscreen/LockScreen.qml`): the lock screen's wallpaper behind a large
+  clock, the account card, power actions, and the playing media's controls
+  at the bottom, usable without unlocking.
+* **Login screen wallpaper.** SDDM runs before anyone logs in and can't read
+  home folders, so the wallpaper gets copied over. `kernora-update-notifier`
+  watches `plasma-org.kde.plasma.desktop-appletsrc` and, for members of
+  `sudo`, runs `pkexec /usr/libexec/kernora-greeter-background` with the
+  desktop's live wallpaper or picture at login and whenever it changes
+  (Settings, Welcome, the desktop menu, anything). The helper writes
+  `theme.conf.user` of the SDDM theme and copies a picture to
+  `/var/lib/kernora/greeter`. The polkit rule lets local admins do that
+  without a password.
 * **On-screen display** (`data/osd`, over `osd/Osd.qml`): volume and
   brightness as a thick slider, messages as a pill.
 * **Notifications** (`data/notifications`): Plasma's notification applet is
@@ -491,17 +561,6 @@ scene; the palette's `c(family, tone)` returns the nearest tone it has.
 Settings and Welcome load `Scene.qml` directly for previews
 (`Files.liveWallpapers()`), a still at phase 0.3.
 
-* **Tower** (`org.kernora.tower`, 50 s): a stack of toy blocks on warm
-  paper -- a slab, a square, a cookie, an arch, a ball, a clover, a sun --
-  rocks on the edge of its base, once, twice, a third time too far, and
-  goes over; the pieces fly, bounce, rock and roll until each lies on a
-  flat side, then hop home one by one, from the base up, landing with a
-  squash. `tower.js` simulates the fall once per screen size: the standing
-  tower is a rigid body tipping about its edge; a loose piece flies under
-  gravity and on the floor rocks and rolls on its hull about its centre of
-  mass, so a square settles on a side and an arch onto its foot; pieces on
-  the floor overlap a little, as a heap does, and no more. The run is
-  sampled into a table the scene looks poses up in; about 90 ms per size.
 * **Rhythm** (`org.kernora.rhythm`, 160 s): a pendulum wave in the round.
   24 shapes on rays from the centre swing in and out, each one beat a loop
   faster than the one before; they start as a circle, wind into a spiral,
@@ -533,6 +592,23 @@ Settings and Welcome load `Scene.qml` directly for previews
   keep their night blue in every colour theme (a third `"fixed"` field in
   `THEMES` pins a family's hue); the horizon glow and the meteors take the
   theme's colour.
+* **Ribbon** (`org.kernora.ribbon`, 224 s), from a community member's
+  sketch: a dark ribbon with a narrow waist crosses a ground in the theme's
+  colour, and Material shapes ride along it from left to right. At the
+  waist each shape springs into the next one (an overshooting ease, a
+  quarter turn, a squeeze and a blend into its new tone), so the shapes
+  leave as different ones from those that came in. The sixteen shapes are
+  sampled as radii round their centre (`morphs.js`, written by
+  `gen-wallpaper-assets` with `material_shapes.polar_radii`, which the
+  loading indicator uses too); every Material shape except `puffy` is
+  star-shaped about its centre, so any two morph cleanly. Item *j* enters
+  as shape `5j mod 16` and leaves as the one after it: five is coprime
+  with sixteen, so both sides of the waist go through every shape, and
+  sixteen items a loop close the loop. The ribbon breathes, its waist
+  sways and a ripple runs along it six times a loop. Tones: light 92,
+  soft 80 and a tertiary accent (the seed's hue + 60) at 85; the shapes
+  and the ribbon are sized from `min(width × 1.35, height)` so portrait
+  screens keep the ribbon full.
 
 Picture wallpapers are not installed. kernora-desktop no longer ships one,
 and Breeze's (`breeze-wallpaper`, a dependency of `breeze`) is removed from

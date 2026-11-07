@@ -43,9 +43,20 @@ fail() {
 }
 
 grep -Fxq 'ID=kernora' /usr/lib/os-release || fail "wrong OS identity"
-[[ "$(dpkg-query -W -f='${Version}' kernora-base)" == "1.4" ]] \
+[[ "$(dpkg-query -W -f='${Version}' kernora-base)" == "1.6.3" ]] \
   || fail "kernora-base is not installed"
-[[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == "6.12.107-1" ]] \
+for module in kcm_lookandfeel kcm_desktoptheme kcm_colors kcm_style kcm_icons kcm_cursortheme kcm_kwindecoration kcm_splashscreen; do
+  [[ ! -e "/usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/$module.so" ]] \
+    || fail "KDE theme picker $module is still installed"
+done
+[[ ! -e /usr/bin/lookandfeeltool && ! -e /usr/bin/plasma-apply-lookandfeel ]] \
+  || fail "KDE global theme tools are still installed"
+grep -Fxq 'Exec=/usr/bin/kernora-installer --autostart' /etc/xdg/autostart/org.kernora.installer-autostart.desktop \
+  || fail "the live session does not open the installer on login"
+fastfetch_out=$(fastfetch --pipe true 2>/dev/null)
+grep -Fq ',o000000000oo,,' <<<"$fastfetch_out" && grep -Fq 'Kernel' <<<"$fastfetch_out" \
+  || fail "fastfetch does not show the Kernora logo with the system info"
+[[ "$(dpkg-query -W -f='${Version}' linux-image-amd64)" == "6.12.111-1" ]] \
   || fail "wrong kernel metapackage version"
 [[ "$(dpkg-query -W -f='${Version}' live-boot)" == "1:20250815~deb13u1" ]] \
   || fail "wrong live-boot version"
@@ -91,8 +102,8 @@ done
   || fail "sddm is not installed"
 
 # The Kernora Material 3 shell and what it is set in.
-[[ "$(dpkg-query -W -f='${Version}' kernora-desktop)" == "1.4.29" ]] \
-  || fail "kernora-desktop 1.4.29 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' kernora-desktop)" == "1.4.69.1" ]] \
+  || fail "kernora-desktop 1.4.69.1 is not installed"
 for applet in org.kernora.launcher org.kernora.quicksettings; do
   [[ -s "/usr/share/plasma/plasmoids/$applet/contents/ui/main.qml" ]] \
     || fail "Kernora shell applet is missing: $applet"
@@ -137,7 +148,7 @@ done
 grep -qx 'cursorTheme=kernora_cursors' /etc/xdg/kcminputrc || fail "Plasma does not use the Kernora cursors"
 grep -qx 'Bouncing=false' /etc/xdg/klaunchrc || fail "the bouncing launch icon is still on"
 # The wallpapers are Kernora's live ones; no picture wallpapers ship.
-for wallpaper in tower rhythm starfall pastel; do
+for wallpaper in rhythm starfall pastel ribbon; do
   [[ -s /usr/share/plasma/wallpapers/org.kernora.$wallpaper/contents/ui/Scene.qml ]] \
     || fail "the $wallpaper live wallpaper is missing"
 done
@@ -164,8 +175,10 @@ pictures=$(find /usr/share/wallpapers -type f \( -name '*.png' -o -name '*.jpg' 
 grep -Fxq 'widgetStyle=kvantum-dark' /etc/xdg/kdeglobals \
   || fail "system defaults do not select the Kvantum widget style"
 # The Kernora applications replace KDE's everyday tools.
-[[ "$(dpkg-query -W -f='${Version}' kernora-apps)" == "1.1.37" ]] \
-  || fail "kernora-apps 1.1.37 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' kernora-apps)" == "1.1.64.4" ]] \
+  || fail "kernora-apps 1.1.64.4 is not installed"
+[[ "$(dpkg-query -W -f='${Version}' kernora-quickshare)" == "1.0.2" ]] \
+  || fail "kernora-quickshare 1.0.2 is not installed"
 for package in flatpak appstream; do
   [[ "$(dpkg-query -W -f='${Status}' "$package")" == 'install ok installed' ]] || fail "Store dependency missing: $package"
 done
@@ -259,8 +272,11 @@ grep -Fxq 'gtk-theme-name=Kernora' "/home/$LIVE_USER/.config/gtk-3.0/settings.in
 if grep -rq 'snapshot.debian.org\|file:/usr/share/kernora' /etc/apt/sources.list.d; then
   fail "the image still points APT at the build's sources"
 fi
-grep -Fxq 'Components: main non-free-firmware' /etc/apt/sources.list.d/debian.sources \
-  || fail "the image takes no firmware updates"
+grep -Fxq 'Components: main contrib non-free non-free-firmware' /etc/apt/sources.list.d/debian.sources \
+  || fail "the image lacks Debian application components"
+dpkg --print-foreign-architectures | grep -Fxq i386 || fail "32-bit application support is missing"
+grep -Fxq 'Architectures: amd64' /etc/apt/sources.list.d/kernora.sources \
+  || fail "Kernora sources request unsupported architectures"
 for firmware in firmware-amd-graphics firmware-intel-graphics firmware-nvidia-graphics firmware-iwlwifi \
     firmware-realtek firmware-atheros firmware-mediatek firmware-sof-signed amd64-microcode intel-microcode; do
   [[ "$(dpkg-query -W -f='${Status}' "$firmware" 2>/dev/null)" == 'install ok installed' ]] \
@@ -273,6 +289,8 @@ grep -Fxq 'Suites: trixie-security' /etc/apt/sources.list.d/debian.sources \
 grep -Fxq 'Signed-By: /usr/share/keyrings/kernora-archive-keyring.asc' /etc/apt/sources.list.d/kernora.sources \
   || fail "the image takes no Lumo updates"
 grep -Fxq 'URIs: https://tinygusie2.github.io/lumo-updates' /etc/apt/sources.list.d/kernora.sources || fail "the image does not take Lumo updates"
+[[ ! -e /etc/apt/sources.list.d/kernora-demo.sources ]] || fail "demo updates are on in the image"
+[[ "$(/usr/libexec/kernora-update-channel status)" == stable ]] || fail "the image is not on the normal updates"
 [[ -s /usr/share/keyrings/debian-archive-keyring.pgp ]] || fail "the Debian archive keyring is missing"
 [[ "$(dpkg-query -W -f='${Status}' unattended-upgrades)" == 'install ok installed' ]] \
   || fail "unattended-upgrades is not installed"
@@ -301,6 +319,10 @@ command -v bsdtar >/dev/null || fail "bsdtar is missing; Files cannot handle arc
 for locale in en_US.utf8 nl_NL.utf8 ru_RU.utf8; do
   locale -a | grep -Fxq "$locale" || fail "locale is not generated: $locale"
 done
+for entry in 'en_PH.UTF-8 UTF-8' 'fil_PH UTF-8' 'de_DE.UTF-8 UTF-8'; do
+  sed 's/^[[:space:]#]*//' /etc/locale.gen | grep -Fxq "$entry" \
+    || fail "the installable locale catalog lacks $entry"
+done
 [[ -x /usr/lib/kernora/live-language ]] || fail "the boot menu language cannot be applied"
 [[ -L /etc/systemd/system/multi-user.target.wants/kernora-live-language.service ]] \
   || fail "the live language service is not enabled"
@@ -313,7 +335,7 @@ done
 # The Kernora login screen, and what it is drawn with.
 grep -Fxq 'Current=kernora' /etc/sddm.conf.d/kernora-theme.conf \
   || fail "SDDM does not use the Kernora login screen"
-[[ -s /usr/share/sddm/themes/kernora/Main.qml && -s /usr/share/sddm/themes/kernora/palette.js ]] \
+[[ -s /usr/share/sddm/themes/kernora/Main.qml && -s /usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/m3/MShapeEcho.qml ]] \
   || fail "the Kernora login screen is incomplete"
 grep -Fxq "User=${LIVE_USER:?}" /etc/sddm.conf.d/kernora-autologin.conf \
   || fail "SDDM autologin does not use the live account"

@@ -1,5 +1,5 @@
-kernora-base=1.4
-linux-image-amd64=6.12.107-1
+kernora-base=1.6.3
+linux-image-amd64=6.12.111-1
 live-boot=1:20250815~deb13u1
 systemd-sysv=257.13-1~deb13u1
 initramfs-tools=0.148.4
@@ -52,9 +52,10 @@ ufw
 python3
 xdg-utils
 
-kernora-desktop=1.4.29
-kernora-calamares=1.4.29
-kernora-apps=1.1.37
+kernora-desktop=1.4.69.1
+kernora-calamares=1.4.69.1
+kernora-apps=1.1.80.1
+kernora-quickshare=1.0.2
 polkit-kde-agent-1=4:6.3.6-1kernora1
 plymouth
 plymouth-label
@@ -81,7 +82,7 @@ bluez-firmware
 amd64-microcode
 intel-microcode
 
-calamares=3.3.14-1kernora1
+calamares=3.3.14-1kernora2
 squashfs-tools
 grub-common
 grub2-common

@@ -36,7 +36,7 @@ required_paths=(
   packages/native/kernora-desktop/data/ui/qmldir
   configs/live/kernora-live-language
   packages/native/kernora-desktop/data/calamares/settings.conf
-  packages/native/kernora-desktop/data/wallpaper/org.kernora.tower/metadata.json
+  packages/native/kernora-desktop/data/wallpaper/org.kernora.shapes/metadata.json
   packages/native/kernora-desktop/data/icons/kernora-logo.svg
   packages/native/kernora-desktop/data/symbols.lock
   packages/native/kernora-desktop/data/shell/m3/qmldir
@@ -62,6 +62,7 @@ required_paths=(
   scripts/build-kernora-archive-binary
   scripts/create-archive-key
   scripts/publish-updates
+  tests/test-publish-updates.sh
   scripts/build-kernora-desktop-source
   scripts/build-kernora-desktop-binary
   scripts/create-development-archive-key

@@ -19,7 +19,9 @@ key for now; there is no release key yet.
 If an older image leaves an installed system at a black screen, see
 [boot recovery](docs/BOOT-RECOVERY.md).
 
-## What's in the image
+Got a bug, a question or just wanna show your setup? Come hang out on
+[Discord](https://discord.gg/TvxBPButVu), I post updates there and most of
+the testers are there too. Issues here work as well.
 
 - Debian 13.6 from a fixed snapshot (2026-09-01), Linux 6.12, KDE Plasma 6.3.
 - A Lumo shell on top of Plasma: panel, app launcher, quick settings with an
@@ -56,8 +58,68 @@ If an older image leaves an installed system at a black screen, see
   own packages are offered in Settings > Updates. Lumo never restarts by
   itself. See [docs/UPDATES.md](docs/UPDATES.md).
 
-KDE's standalone apps (Dolphin, Konsole, Kate, Discover, Spectacle and others)
-are left out; the list is in `configs/live/excluded-packages.txt`.
+## Screenshots
+
+Taken in a VM with the default colour and dark theme.
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/launcher.png" alt="App launcher"></td>
+    <td><img src="docs/screenshots/quick-settings.png" alt="Quick settings"></td>
+  </tr>
+  <tr>
+    <td align="center">App launcher</td>
+    <td align="center">Quick settings</td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/settings.png" alt="Settings, wallpaper and style"></td>
+    <td><img src="docs/screenshots/files.png" alt="Files with a folder selected"></td>
+  </tr>
+  <tr>
+    <td align="center">Settings</td>
+    <td align="center">Files, with the selection toolbar</td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/store.png" alt="Store"></td>
+    <td><img src="docs/screenshots/lock-screen.png" alt="Lock screen"></td>
+  </tr>
+  <tr>
+    <td align="center">Store</td>
+    <td align="center">Lock screen</td>
+  </tr>
+</table>
+
+## What's in it
+
+- Debian 13.7 from a fixed snapshot (2026-10-15), Linux 6.12, KDE Plasma 6.3
+- a Kernora shell on top of Plasma: see-through floating panel (you can make
+  it solid in Settings), app launcher, quick settings, notifications, lock
+  screen, Alt+Tab and power menu. Every colour comes from one seed colour,
+  `#ff6a1e`, and you can switch the whole look between Material Design 1, 2
+  and 3 in Settings
+- Kernora apps instead of the KDE ones: Settings, Store, Files, Text Editor,
+  Photos, Media Player, Calculator, Screenshot, Terminal (Alacritty) and
+  Welcome, plus a file chooser every app uses
+- Store for apps and games from Flathub and Debian, so you don't need the
+  terminal to install stuff (see [docs/STORE.md](docs/STORE.md))
+- Material 3 desktop widgets and live wallpapers: Shapes, Rhythm, Starfall
+  and Pastel
+- the usual terminal tools out of the box: git, curl, htop, fastfetch and co
+- LibreWolf as the browser. It's not in Debian, so the build installs one
+  pinned version from the LibreWolf repo and installed systems update from
+  there
+- NVIDIA drivers install by themselves on PCs with an NVIDIA card
+  ([docs/DRIVERS.md](docs/DRIVERS.md))
+- Quick Share with Android phones: send and receive files over Wi-Fi, no
+  app needed on the phone ([docs/QUICKSHARE.md](docs/QUICKSHARE.md))
+- Calamares as the installer, restyled to match
+- English and Russian. You pick the live session language in the boot menu
+- updates: Debian security updates (kernel too) and LibreWolf install by
+  themselves once a day. Debian point releases and Kernora's own packages
+  show up in Settings > Updates. More in [docs/UPDATES.md](docs/UPDATES.md)
+
+KDE's standalone apps (Dolphin, Konsole, Kate, Discover, Spectacle and so on)
+are left out, the list is in `configs/live/excluded-packages.txt`.
 
 ## Building
 
@@ -77,7 +139,7 @@ Debian 13 ships `squashfs-tools` 4.6.1, which lacks `-numeric-owner`. Take
 4.7 from Debian forky: unpack its `.deb` with `dpkg-deb -x` and put
 `mksquashfs` and `unsquashfs` first in `PATH`.
 
-The host's own APT setup is not touched. Keyrings, tools and caches live in
+Your host's APT setup isn't touched. Keyrings, tools and caches all live in
 the working tree.
 
 Fetch the sources, then build the ISO and check that it boots in QEMU (BIOS
@@ -88,24 +150,25 @@ make sources
 make iso-smoke
 ```
 
-The result is `out/iso/kernora-1-ember-live-amd64.iso` with a `.sha256`
-file next to it. `make iso` builds the ISO without the boot tests.
+You get `out/iso/kernora-1-ember-live-amd64.iso` with a `.sha256` file next
+to it. `make iso` builds it without the boot tests.
 
-Steps can also be run one at a time, for example `make local-archive` (all
-packages and the signed APT archive) or `make live-rootfs`. See the
-`Makefile` for the full list.
+You can also run steps one by one, like `make local-archive` (all packages
+plus the signed APT archive) or `make live-rootfs`. The `Makefile` has the
+full list.
 
 The live root file system is built in `/var/tmp`, because `/tmp` is often a
 small tmpfs; set `KERNORA_TMPDIR` to use another place. The ISO build stages
 its squashfs in `_build/`; set `KERNORA_SCRATCH_DIR` to stage it elsewhere.
 
 Builds are reproducible: the Debian snapshot, tool versions and every
-downloaded file are pinned by SHA-256, and archives are written with fixed
-file order, times and owners. Build outputs (`_build/`, `_cache/`, `out/`,
-`_state/`) stay out of Git.
+downloaded file are pinned by SHA-256, and archives get a fixed file order,
+times and owners. Build output (`_build/`, `_cache/`, `out/`, `_state/`)
+stays out of Git.
 
-To try changes to the shell or the apps without rebuilding the ISO,
-`scripts/preview-desktop` boots the desktop in QEMU and syncs files into it.
+To try shell or app changes without rebuilding the whole ISO,
+`scripts/preview-desktop` boots the desktop in QEMU and syncs your files
+into it.
 
 ## Layout
 

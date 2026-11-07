@@ -32,7 +32,7 @@ for path in "$qml/qmldir" "$qml/libkernorasystem.so" usr/share/knotifications6/k
   usr/lib/x86_64-linux-gnu/qt6/qml/org/kernora/shell/libkernorashell.so; do
   [[ -s "$temporary_root/$path" ]] || fail "missing $path"
 done
-for app in settings files welcome editor photos player calculator screenshot store; do
+for app in settings files welcome editor photos player calculator screenshot store share taskmanager; do
   [[ -x "$temporary_root/usr/bin/kernora-$app" ]] || fail "missing kernora-$app"
   [[ -s "$temporary_root/usr/share/kernora/$app/Main.qml" ]] || fail "missing the $app interface"
   cmp -s "$package_root/apps/$app/qml/Main.qml" "$temporary_root/usr/share/kernora/$app/Main.qml" || fail "$app interface differs from the source"
@@ -41,11 +41,14 @@ done
 grep -q 'X-KDE-DBUS-Restricted-Interfaces=org.kde.KWin.ScreenShot2' \
   "$temporary_root/usr/share/applications/org.kernora.screenshot.desktop" \
   || fail "Screenshot cannot ask KWin for screenshots"
+cmp -s "$temporary_root/usr/share/applications/org.kernora.taskmanager.desktop" "$temporary_root/usr/share/kglobalaccel/org.kernora.taskmanager.desktop" \
+  && grep -qx 'X-KDE-Shortcuts=Ctrl+Shift+Esc,Ctrl+Esc' "$temporary_root/usr/share/kglobalaccel/org.kernora.taskmanager.desktop" \
+  || fail "Ctrl+Shift+Esc does not open the Task Manager"
 grep -qx 'Exec=/usr/bin/kernora-screenshot' \
   "$temporary_root/usr/share/applications/org.kernora.screenshot.desktop" \
   || fail "Screenshot's Exec is not an absolute path; KWin would refuse it"
 
-for domain in settings files editor photos player calculator screenshot welcome system update-notifier store; do
+for domain in settings files editor photos player calculator screenshot welcome system update-notifier store share taskmanager; do
   [[ -s "$temporary_root/usr/share/locale/ru/LC_MESSAGES/kernora-$domain.mo" ]] \
     || fail "Russian translation is missing: kernora-$domain"
 done
@@ -104,5 +107,12 @@ grep -q 'dpkg-divert --package kernora-apps --add --rename' "$control/preinst" \
 grep -q 'dpkg-divert --package kernora-apps --remove --rename' "$control/postrm" \
   || fail "the systemsettings diversion is not removed with the package"
 find "$control" -depth -delete
+
+for file in pages/BluetoothPage.qml pages/BluetoothPairPage.qml pages/BluetoothDevicePage.qml components/BluetoothNames.js components/BluetoothPairRow.qml; do
+  cmp "$package_root/apps/settings/qml/$file" "$temporary_root/usr/share/kernora/settings/$file" \
+    || fail "Bluetooth interface differs from the tested source: $file"
+done
+grep -l 'BluetoothDiscovery' "$temporary_root/$qml/"*.qmltypes >/dev/null \
+  || fail "the Bluetooth discovery controller is not registered in QML"
 
 printf 'kernora-apps binary test: OK\n'

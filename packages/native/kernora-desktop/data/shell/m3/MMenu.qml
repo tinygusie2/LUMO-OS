@@ -24,7 +24,15 @@ T.Popup {
     padding: 0
     topPadding: 12
     bottomPadding: 12
-    implicitWidth: Math.max(200, list.implicitWidth)
+    readonly property real widestRow: {
+        let widest = 0;
+        for (const row of list.children) {
+            widest = Math.max(widest, row.implicitWidth || 0);
+        }
+        return widest;
+    }
+
+    implicitWidth: Math.max(200, widestRow)
     implicitHeight: list.implicitHeight + topPadding + bottomPadding
     modal: false
     focus: true
@@ -89,7 +97,7 @@ T.Popup {
                     anchors.fill: parent
                     anchors.leftMargin: M3.classic ? 0 : 6
                     anchors.rightMargin: M3.classic ? 0 : 6
-                    radius: M3.classic ? 0 : 8
+                    radius: M3.classic ? 0 : 12
                     color: mouse.containsMouse ? M3.secondaryContainer : M3.withAlpha(M3.secondaryContainer, 0)
 
                     Behavior on color {

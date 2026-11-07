@@ -81,7 +81,68 @@ SettingsPage {
         }
         wallpaperPlugin = "org.kernora.shapes";
     }
-    Component.onCompleted: readWallpaper()
+    Component.onCompleted: {
+        readWallpaper();
+        updatePanelOpacity("");
+    }
+
+    property bool panelBusy: false
+    property bool panelAvailable: false
+    property bool panelTranslucent: false
+    property string panelWanted: ""
+
+    function updatePanelOpacity(mode: string): void {
+        if (panelBusy) {
+            return;
+        }
+        panelBusy = true;
+        const request = ({ opaque: 1, translucent: 2 })[mode];
+        const write = request === undefined ? ""
+            : "launchers.forEach(function (widget) { widget.currentConfigGroup = ['General']; "
+              + "widget.writeConfig('panelOpacityRequest', '" + request + ":" + Date.now() + "'); }); ";
+        const script = "print(JSON.stringify(panels().map(function (panel) { "
+            + "var launchers = panel.widgets('org.kernora.launcher'); " + write
+            + "return launchers.length > 0 ? panel.opacity : ''; })));";
+        DBus.call("session", "org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell", "evaluateScript",
+                  [{ type: "s", value: script }], (ok, result) => {
+            page.panelBusy = false;
+            let modes = [];
+            if (ok) {
+                try {
+                    modes = JSON.parse(String(result).trim()).filter(value => value !== "");
+                    ok = modes.every(value => ["opaque", "translucent", "adaptive"].includes(value));
+                } catch (error) {
+                    ok = false;
+                }
+            }
+            page.panelAvailable = ok && modes.length > 0;
+            if (request !== undefined) {
+                page.panelWanted = mode;
+                page.panelTranslucent = mode === "translucent";
+                panelCheck.restart();
+                return;
+            }
+            if (page.panelAvailable) {
+                page.panelTranslucent = modes.every(value => value !== "opaque");
+            }
+            if (page.panelWanted && (!page.panelAvailable || modes.some(value => value !== page.panelWanted))) {
+                page.notify(i18n("The panel transparency could not be changed."));
+            }
+            page.panelWanted = "";
+        });
+    }
+
+    Timer {
+        id: panelCheck
+        interval: 400
+        onTriggered: page.updatePanelOpacity("")
+    }
+
+    onVisibleChanged: {
+        if (visible) {
+            updatePanelOpacity("");
+        }
+    }
 
     function sameImage(a: string, b: string): bool {
         const strip = s => String(s).replace(/^file:\/\//, "");
@@ -95,22 +156,32 @@ SettingsPage {
         key: "WallpaperPlugin"
         defaultValue: ""
     }
-    property bool lockScreenToo: lockPlugin.value === "org.kde.image"
+    readonly property bool lockScreenToo: live ? lockPlugin.value === wallpaperPlugin : lockPlugin.value === "org.kde.image"
+
+    function syncGreeter(): void {
+        if (Accounts.administrator) {
+            Files.syncGreeterBackground(live ? wallpaperPlugin : "org.kde.image", live ? "" : wallpaperImage);
+        }
+    }
 
     function chooseImage(url: url): void {
+        const follow = lockScreenToo;
         Files.setWallpaper(url);
         wallpaperPlugin = "org.kde.image";
         wallpaperImage = String(url);
-        if (lockScreenToo) {
+        if (follow) {
             Files.setLockScreenWallpaper(url);
         }
+        syncGreeter();
     }
     function chooseLive(plugin: string): void {
+        const follow = lockScreenToo;
         Files.setLiveWallpaper(plugin);
         wallpaperPlugin = plugin;
-        if (lockScreenToo) {
-            Files.setLockScreenWallpaper("");
+        if (follow) {
+            Files.setLockScreenPlugin(plugin);
         }
+        syncGreeter();
     }
 
     function setLiveOption(key: string, value: var): void {
@@ -209,6 +280,25 @@ SettingsPage {
                 }
             }
         }
+
+        ListItem {
+            title: i18n("Themed app icons")
+            subtitle: i18n("Apps without a Kernora icon take on the colour too")
+            icon: "preferences-desktop-icons"
+            iconStyle: "plain"
+            checkable: true
+            checked: String(themedIcons.value) === "true"
+            enabled: !Appearance.busy
+            onToggled: on => themedIcons.value = on ? "true" : "false"
+        }
+    }
+
+    ConfigEntry {
+        id: themedIcons
+        file: "kernorarc"
+        group: "Icons"
+        key: "themedApps"
+        defaultValue: "false"
     }
 
     Group {
@@ -234,6 +324,22 @@ SettingsPage {
                 return option ? option.label : "";
             }
             onSelected: value => page.setGeneration(value)
+        }
+    }
+
+    Group {
+        title: i18n("Panel")
+        note: i18n("Applies to all panels. The shape and colour follow the system style.")
+
+        ListItem {
+            title: i18n("Transparent panel")
+            subtitle: page.panelBusy ? i18n("Applying…") : i18n("Let the wallpaper show through a softly tinted background")
+            icon: "preferences-desktop-plasma-theme"
+            iconStyle: "plain"
+            checkable: true
+            checked: page.panelTranslucent
+            enabled: page.panelAvailable && !page.panelBusy && !Appearance.busy
+            onToggled: on => page.updatePanelOpacity(on ? "translucent" : "opaque")
         }
     }
 
@@ -289,8 +395,13 @@ SettingsPage {
             checkable: true
             checked: page.lockScreenToo
             onToggled: on => {
-                page.lockScreenToo = on;
-                Files.setLockScreenWallpaper(on && !page.live ? page.wallpaperImage : "");
+                if (!on) {
+                    Files.setLockScreenWallpaper("");
+                } else if (page.live) {
+                    Files.setLockScreenPlugin(page.wallpaperPlugin);
+                } else {
+                    Files.setLockScreenWallpaper(page.wallpaperImage);
+                }
             }
         }
     }

@@ -1,6 +1,10 @@
 // SPDX-FileCopyrightText: 2026 Kernora Developers
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include "appiconsync.h"
+#include "avatarsync.h"
+#include "greetersync.h"
+
 #include <QDBusConnection>
 #include <QDBusMessage>
 #include <QDateTime>
@@ -353,14 +357,17 @@ int main(int argc, char **argv)
     about.setOrganizationDomain("kernora.invalid");
     KAboutData::setApplicationData(about);
 
+    KDBusService service(KDBusService::Unique);
+    AppIconSync icons;
     if (liveSession() || !QFileInfo::exists(QStringLiteral("/usr/libexec/packagekitd"))) {
-        return 0;
+        return app.exec();
     }
 
-    KDBusService service(KDBusService::Unique);
     if (!showKernelPanic()) {
         showWhatsNew();
     }
     Notifier notifier;
+    GreeterSync greeter;
+    AvatarSync avatar;
     return app.exec();
 }

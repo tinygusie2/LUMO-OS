@@ -233,7 +233,7 @@ sync() {
   cp -a "$package_root/data/wallpaper/org.kernora.shapes" "$tree/usr/share/plasma/wallpapers/"
   python3 "$tools/gen-wallpaper-assets" "$tree/usr/share/plasma/wallpapers/org.kernora.shapes/contents/ui" >/dev/null
   local theme
-  for theme in tower rhythm starfall pastel; do
+  for theme in rhythm starfall pastel; do
     cp -a "$package_root/data/wallpaper/org.kernora.$theme" "$tree/usr/share/plasma/wallpapers/"
     python3 "$tools/gen-wallpaper-assets" "$tree/usr/share/plasma/wallpapers/org.kernora.$theme/contents/ui" "$theme" >/dev/null
   done
@@ -284,7 +284,8 @@ sync() {
   local folder_ui="$tree/usr/share/plasma/plasmoids/org.kde.desktopcontainment/contents/ui"
   mkdir -p "$folder_ui"
   cp "$package_root/data/folderview/ConfigLocation.qml" "$package_root/data/folderview/ConfigIcons.qml" \
-    "$package_root/data/folderview/ConfigFilter.qml" "$folder_ui/"
+    "$package_root/data/folderview/ConfigFilter.qml" "$package_root/data/folderview/FolderView.qml" \
+    "$package_root/data/folderview/KernoraIconLayout.qml" "$package_root/data/folderview/IconPlacement.js" "$folder_ui/"
   local notifications="$tree/usr/share/plasma/plasmoids/org.kde.plasma.notifications/contents/ui"
   mkdir -p "$notifications"
   cp -a "$package_root/data/notifications/." "$notifications/"

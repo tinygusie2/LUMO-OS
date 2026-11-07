@@ -1,0 +1,235 @@
+--- a/src/hdl/ble.rs
++++ b/src/hdl/ble.rs
+@@ -9,6 +9,7 @@
+ use uuid::{uuid, Uuid};
+ 
+ const SERVICE_UUID_SHARING: Uuid = uuid!("0000fe2c-0000-1000-8000-00805f9b34fb");
++const MODEL_ID_SHARING: [u8; 3] = [0xfc, 0x12, 0x8e];
+ 
+ const INNER_NAME: &str = "BleListener";
+ 
+@@ -51,6 +52,7 @@
+             tokio::select! {
+                 _ = ctk.cancelled() => {
+                     info!("{INNER_NAME}: tracker cancelled, breaking");
++                    let _ = self.adapter.stop_scan().await;
+                     break;
+                 }
+                 Some(e) = events.next() => {
+@@ -62,12 +64,15 @@
+                             //
+                             // ...The filtering is being done only here now.
+                             if let Some(service_data) = service_data.get(&SERVICE_UUID_SHARING) {
++                                if !service_data.starts_with(&MODEL_ID_SHARING) {
++                                    continue;
++                                }
+                                 let now = SystemTime::now();
+                                 // Quick Share seems to emit LE advert every 10 seconds...
+                                 // Doesn't really seem much of a spam, so we wait for 10s now
+                                 // just in case some implementation is sending it under that
+                                 // time period
+-                                if now.duration_since(last_alert)? <= Duration::from_secs(10) {
++                                if now.duration_since(last_alert).is_ok_and(|gap| gap <= Duration::from_secs(2)) {
+                                     // debug!("{INNER_NAME}: Received LE advert but last alert was {}s ago", now.duration_since(last_alert)?.as_secs());
+                                     continue;
+                                 }
+--- a/src/hdl/blea.rs
++++ b/src/hdl/blea.rs
+@@ -21,7 +21,9 @@
+     pub async fn new() -> Result<Self, anyhow::Error> {
+         let session = bluer::Session::new().await?;
+         let adapter = session.default_adapter().await?;
+-        adapter.set_powered(true).await?;
++        if !adapter.is_powered().await? {
++            return Err(anyhow::anyhow!("Bluetooth is turned off"));
++        }
+ 
+         Ok(Self {
+             adapter: Arc::new(adapter),
+--- a/src/hdl/mdns_discovery.rs
++++ b/src/hdl/mdns_discovery.rs
+@@ -58,16 +58,11 @@
+                                         continue;
+                                     }
+ 
+-                                    let ip = match ip_hash.iter().next() {
++                                    let ip = match crate::utils::pick_peer_ip(ip_hash.iter().copied()) {
+                                         Some(i) => i,
+                                         None => continue,
+                                     };
+ 
+-                                    // Check that the IP is not a "self IP"
+-                                    if !is_not_self_ip(ip) {
+-                                        continue;
+-                                    }
+-
+                                     // Decode the "n" text properties
+                                     let n = match info.get_property("n") {
+                                         Some(_n) => _n,
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -59,6 +59,7 @@
+     // Discovery token is different than ctoken because he is on his own
+     // - can be cancelled while the ctoken is still active
+     discovery_ctk: Option<CancellationToken>,
++    nearby_ctk: Option<CancellationToken>,
+ 
+     // Used to trigger a change in the mDNS visibility (and later on, BLE)
+     pub visibility_sender: Arc<Mutex<watch::Sender<Visibility>>>,
+@@ -112,6 +113,7 @@
+             tracker: None,
+             ctoken: None,
+             discovery_ctk: None,
++            nearby_ctk: None,
+             visibility_sender: Arc::new(Mutex::new(visibility_sender)),
+             visibility_receiver,
+             ble_sender,
+@@ -155,17 +157,6 @@
+         let ctk = ctoken.clone();
+         tracker.spawn(async move { server.run(ctk).await });
+ 
+-        #[cfg(feature = "experimental")]
+-        {
+-            if let Ok(ble) = BleListener::new(self.ble_sender.clone())
+-                .await
+-                .inspect_err(|err| warn!("BleListener: {}", err))
+-            {
+-                let ctk = ctoken.clone();
+-                tracker.spawn(async move { ble.run(ctk).await });
+-            }
+-        }
+-
+         // Start MDnsServer in own "task"
+         let mut mdns = MDnsServer::new(
+             endpoint_id[..4].try_into()?,
+@@ -195,7 +186,7 @@
+         self.discovery_ctk = Some(ctk.clone());
+ 
+         #[cfg(all(feature = "experimental", target_os = "linux"))]
+-        {
++        if utils::has_bluetooth_adapter() {
+             let ctk_blea = ctk.clone();
+             tracker.spawn(async move {
+                 let blea = match BleAdvertiser::new().await {
+@@ -232,8 +223,45 @@
+             .send_modify(|state| *state = nv);
+     }
+ 
++    pub fn set_nearby_listener(&mut self, on: bool) {
++        if !on {
++            if let Some(ctk) = self.nearby_ctk.take() {
++                ctk.cancel();
++            }
++            return;
++        }
++        if self.nearby_ctk.is_some() {
++            return;
++        }
++
++        #[cfg(feature = "experimental")]
++        if utils::has_bluetooth_adapter() {
++            let (Some(tracker), Some(ctoken)) = (&self.tracker, &self.ctoken) else {
++                return;
++            };
++            let ctk = ctoken.child_token();
++            self.nearby_ctk = Some(ctk.clone());
++            let ble_sender = self.ble_sender.clone();
++            tracker.spawn(async move {
++                let ble = tokio::select! {
++                    _ = ctk.cancelled() => return,
++                    ble = BleListener::new(ble_sender) => ble,
++                };
++                match ble {
++                    Ok(ble) => {
++                        if let Err(err) = ble.run(ctk).await {
++                            warn!("BleListener: {}", err);
++                        }
++                    }
++                    Err(err) => warn!("BleListener: {}", err),
++                }
++            });
++        }
++    }
++
+     pub async fn stop(&mut self) {
+         self.stop_discovery();
++        self.nearby_ctk = None;
+ 
+         if let Some(ctoken) = &self.ctoken {
+             ctoken.cancel();
+--- a/src/manager.rs
++++ b/src/manager.rs
+@@ -53,8 +53,17 @@
+                 }
+                 Some(i) = self.connect_receiver.recv() => {
+                     info!("{INNER_NAME}: connect_receiver: got {:?}", i);
++                    let id = i.id.clone();
+                     if let Err(e) = self.connect(cctk, i).await {
+                         error!("{INNER_NAME}: error sending: {}", e.to_string());
++                        let _ = self.sender.send(ChannelMessage {
++                            id,
++                            msg: channel::Message::Client(MessageClient {
++                                kind: TransferKind::Outbound,
++                                state: Some(TransferState::Disconnected),
++                                metadata: Default::default(),
++                            }),
++                        });
+                     }
+                 }
+                 r = self.tcp_listener.accept() => {
+@@ -110,7 +119,11 @@
+     /// To be called inside a separate task if we want to handle concurrency
+     pub async fn connect(&self, ctk: CancellationToken, si: SendInfo) -> Result<(), anyhow::Error> {
+         debug!("{INNER_NAME}: Connecting to: {}", si.addr);
+-        let socket = TcpStream::connect(si.addr.clone()).await?;
++        let socket = tokio::time::timeout(
++            std::time::Duration::from_secs(10),
++            TcpStream::connect(si.addr.clone()),
++        )
++        .await??;
+ 
+         let mut or = OutboundRequest::new(
+             self.endpoint_id,
+--- a/src/utils.rs
++++ b/src/utils.rs
+@@ -202,6 +202,40 @@
+     Path::new("/").to_path_buf()
+ }
+ 
++pub fn has_bluetooth_adapter() -> bool {
++    std::fs::read_dir("/sys/class/bluetooth")
++        .map(|mut entries| entries.next().is_some())
++        .unwrap_or(false)
++}
++
++pub fn pick_peer_ip<'a>(addresses: impl Iterator<Item = &'a Ipv4Addr>) -> Option<Ipv4Addr> {
++    let own: Vec<(Ipv4Addr, Ipv4Addr)> = get_if_addrs()
++        .map(|addrs| {
++            addrs
++                .into_iter()
++                .filter_map(|addr| match addr.addr {
++                    get_if_addrs::IfAddr::V4(v4) if !v4.ip.is_loopback() => Some((v4.ip, v4.netmask)),
++                    _ => None,
++                })
++                .collect()
++        })
++        .unwrap_or_default();
++    let candidates: Vec<Ipv4Addr> = addresses
++        .copied()
++        .filter(|ip| !own.iter().any(|(mine, _)| mine == ip))
++        .collect();
++    let shared = |ip: &Ipv4Addr| {
++        own.iter().any(|(mine, mask)| {
++            u32::from(*mine) & u32::from(*mask) == u32::from(*ip) & u32::from(*mask)
++        })
++    };
++    candidates
++        .iter()
++        .find(|ip| shared(ip))
++        .or_else(|| candidates.first())
++        .copied()
++}
++
+ pub fn is_not_self_ip(ip_address: &Ipv4Addr) -> bool {
+     if let Ok(if_addrs) = get_if_addrs() {
+         for if_addr in if_addrs {

@@ -1,0 +1,6 @@
+Types: deb
+URIs: https://tinygusie2.github.io/lumo-updates
+Suites: ember-demo
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/kernora-archive-keyring.asc

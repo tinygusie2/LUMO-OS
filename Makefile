@@ -5,9 +5,10 @@ SHELL := /bin/bash
 	kernora-base-source kernora-base-binary kernora-archive-source \
 	kernora-archive-binary kernora-desktop-source \
 	kernora-desktop-binary kernora-apps-source kernora-apps-binary \
+	kernora-quickshare-source kernora-quickshare-binary quickshare-crates \
 	calamares-source calamares-binary \
 	polkit-kde-agent-1-source polkit-kde-agent-1-binary \
-	development-archive-key archive-key local-archive publish \
+	development-archive-key archive-key local-archive publish publish-demo \
 	minimal-rootfs iso-tools librewolf live-rootfs iso iso-smoke
 
 check:
@@ -36,6 +37,7 @@ verify:
 	./tests/test-kernora-base-source.sh
 	./tests/test-kernora-archive-source.sh
 	./tests/test-kernora-desktop-source.sh
+	./tests/test-kernora-quickshare-source.sh
 	./scripts/verify-sources
 
 base-files-source: verify
@@ -74,6 +76,15 @@ kernora-apps-source: verify
 kernora-apps-binary: verify build-rootfs
 	./scripts/build-kernora-apps-binary
 
+quickshare-crates:
+	./scripts/fetch-quickshare-crates
+
+kernora-quickshare-source: verify
+	./scripts/build-kernora-quickshare-source
+
+kernora-quickshare-binary: verify build-rootfs
+	./scripts/build-kernora-quickshare-binary
+
 calamares-source: verify
 	./scripts/build-calamares-source
 
@@ -90,7 +101,7 @@ development-archive-key:
 	./scripts/create-development-archive-key
 
 local-archive: base-files-binary kernora-base-binary kernora-archive-binary kernora-desktop-binary \
-		kernora-apps-binary calamares-binary polkit-kde-agent-1-binary \
+		kernora-apps-binary kernora-quickshare-binary calamares-binary polkit-kde-agent-1-binary \
 		development-archive-key
 	./scripts/build-local-archive
 
@@ -107,7 +118,12 @@ archive-key:
 	./scripts/create-archive-key
 
 publish: local-archive
+	./tests/test-publish-updates.sh
 	./scripts/publish-updates
+
+publish-demo: local-archive
+	./tests/test-publish-updates.sh
+	./scripts/publish-updates --demo
 
 live-rootfs: local-archive librewolf
 	./scripts/build-live-rootfs

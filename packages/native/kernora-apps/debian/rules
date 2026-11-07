@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+include /usr/share/dpkg/architecture.mk
 
 %:
 	dh $@ --buildsystem=cmake
@@ -14,3 +15,7 @@ override_dh_strip:
 override_dh_fixperms:
 	dh_fixperms
 	chmod 4755 debian/kernora-apps/usr/libexec/kernora-pin
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	QT_QPA_PLATFORM=offscreen obj-$(DEB_HOST_GNU_TYPE)/bin/kernora-app-icons --self-test
+endif
