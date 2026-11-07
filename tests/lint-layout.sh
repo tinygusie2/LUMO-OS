@@ -100,7 +100,7 @@ if find "$project_root/keys" -type f \( -name '*.key' -o -name '*.sec' \) -print
 fi
 
 leftovers=$(cd "$project_root" && grep -rIni 'kernora' . \
-  --exclude-dir=.git --exclude-dir=_build --exclude-dir=_state --exclude-dir=out \
+  --exclude-dir=.git --exclude-dir=_build --exclude-dir=_state --exclude-dir=out --exclude-dir=worktrees \
   --exclude=LICENSE --exclude=NOTICE --exclude=README.md --exclude=CLAUDE.md \
   --exclude=changelog --exclude=copyright --exclude=WIFI_REALTEK.md \
   --exclude=CLAUDE_STORE_HANDOFF.md --exclude=UPDATES.md --exclude=lint-layout.sh \
