@@ -1,5 +1,50 @@
 [
   {
+    "id": "2026-11-07-lumo",
+    "date": "2026-11-07",
+    "items": [
+      {
+        "icon": "kernora-android",
+        "title": {
+          "en": "Android apps",
+          "nl": "Android-apps",
+          "ru": "Приложения Android"
+        },
+        "text": {
+          "en": "Turn on Android in Settings > Android apps, then open an APK file or use Google Play. Android apps open in Lumo windows.",
+          "nl": "Zet Android aan in Instellingen > Android-apps en open daarna een APK-bestand of gebruik Google Play. Android-apps openen in Lumo-vensters.",
+          "ru": "Включите Android в Настройки > Приложения Android, затем откройте APK-файл или используйте Google Play. Приложения Android открываются в окнах Lumo."
+        }
+      },
+      {
+        "icon": "preferences-system-time",
+        "title": {
+          "en": "Windows keeps the right time",
+          "nl": "Windows houdt de juiste tijd",
+          "ru": "Windows показывает верное время"
+        },
+        "text": {
+          "en": "With Windows on the same computer, Lumo keeps the computer clock in local time, so Windows no longer runs an hour behind.",
+          "nl": "Staat Windows op dezelfde computer, dan houdt Lumo de klok op lokale tijd, zodat Windows niet meer een uur achterloopt.",
+          "ru": "Если на компьютере есть Windows, Lumo хранит время часов как местное, и Windows больше не отстаёт на час."
+        }
+      },
+      {
+        "icon": "cpu",
+        "title": {
+          "en": "Drivers app, Files tabs and Quick Share",
+          "nl": "Drivers-app, tabbladen in Bestanden en Quick Share",
+          "ru": "Драйверы, вкладки в файлах и Quick Share"
+        },
+        "text": {
+          "en": "Everything new from Kernora OS: a Drivers app that keeps Secure Boot on for NVIDIA, tabs in Files, Quick Share with phones and a CPU temperature widget.",
+          "nl": "Alles wat nieuw is in Kernora OS: een Drivers-app die Secure Boot aan laat voor NVIDIA, tabbladen in Bestanden, Quick Share met telefoons en een widget voor de processortemperatuur.",
+          "ru": "Всё новое из Kernora OS: приложение «Драйверы», которое оставляет Secure Boot включённым для NVIDIA, вкладки в файлах, Quick Share с телефонами и виджет температуры процессора."
+        }
+      }
+    ]
+  },
+  {
     "id": "2026-11-06-5",
     "date": "2026-11-06",
     "items": [
@@ -1374,24 +1419,6 @@
     ]
   },
   {
-    "id": "2026-10-13-1",
-    "items": [
-      {
-        "icon": "preferences-desktop-widgets",
-        "title": {
-          "en": "Widget settings keep edit mode",
-          "ru": "Настройки виджета не выходят из редактирования",
-          "nl": "Widgetinstellingen houden de bewerkmodus vast"
-        },
-        "text": {
-          "en": "Opening a widget's settings while you arrange the desktop no longer ends edit mode. Close the settings and carry on.",
-          "ru": "Если открыть настройки виджета во время редактирования рабочего стола, режим редактирования больше не выключается. Закройте настройки и продолжайте.",
-          "nl": "Open je de instellingen van een widget terwijl je het bureaublad indeelt, dan stopt de bewerkmodus niet meer. Sluit de instellingen en ga verder."
-        }
-      }
-    ]
-  },
-  {
     "id": "2026-10-13-7",
     "date": "2026-10-12",
     "items": [
@@ -1444,6 +1471,62 @@
           "en": "Store now starts the installed Flatpak version from the correct installation, even when a Debian launcher has the same name. Native apps use their Debian launcher.",
           "ru": "Магазин запускает установленную версию Flatpak из нужной области установки, даже если ярлык Debian называется так же. Для обычных пакетов используется ярлык Debian.",
           "nl": "De Store start nu de geïnstalleerde Flatpak-versie uit de juiste installatie, ook als een Debian-starter dezelfde naam heeft. Gewone apps gebruiken hun Debian-starter."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-3",
+    "date": "2026-10-11",
+    "items": [
+      {
+        "icon": "system-software-install",
+        "title": {
+          "en": "Smoother app browsing",
+          "ru": "Удобнее искать приложения",
+          "nl": "Soepeler apps zoeken"
+        },
+        "text": {
+          "en": "Typing a new search from an app page now takes you straight to the results. Missing screenshots show a fallback icon. Find Flatpak app updates in Store and system updates in Settings.",
+          "ru": "Новый запрос со страницы приложения сразу открывает результаты поиска. Если снимок экрана недоступен, показывается значок. Обновления Flatpak находятся в магазине, системные — в настройках.",
+          "nl": "Typ je op een app-pagina een nieuwe zoekopdracht, dan ga je meteen naar de resultaten. Ontbrekende schermafbeeldingen tonen een vervangend pictogram. Updates van Flatpak-apps vind je in de Store, systeemupdates in Instellingen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-2",
+    "date": "2026-10-11",
+    "items": [
+      {
+        "icon": "system-software-install",
+        "title": {
+          "en": "Your new app store",
+          "ru": "Новый магазин приложений",
+          "nl": "Je nieuwe appwinkel"
+        },
+        "text": {
+          "en": "Find apps and games in Store, choose Flathub or Debian, and install them without a terminal. Browse categories, screenshots and ratings, manage installed apps and update Flatpak apps in one place. System updates stay in Settings.",
+          "ru": "Находите приложения и игры в «Магазине», выбирайте Flathub или Debian и устанавливайте без терминала. Категории, снимки экрана, оценки, установленные приложения и обновления Flatpak теперь в одном месте. Обновления системы остаются в «Настройках».",
+          "nl": "Vind apps en games in de Store, kies Flathub of Debian en installeer ze zonder terminal. Blader door categorieën, schermafbeeldingen en beoordelingen, beheer je geïnstalleerde apps en werk Flatpak-apps op één plek bij. Systeemupdates blijven in Instellingen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "2026-10-13-1",
+    "items": [
+      {
+        "icon": "preferences-desktop-widgets",
+        "title": {
+          "en": "Widget settings keep edit mode",
+          "ru": "Настройки виджета не выходят из редактирования",
+          "nl": "Widgetinstellingen houden de bewerkmodus vast"
+        },
+        "text": {
+          "en": "Opening a widget's settings while you arrange the desktop no longer ends edit mode. Close the settings and carry on.",
+          "ru": "Если открыть настройки виджета во время редактирования рабочего стола, режим редактирования больше не выключается. Закройте настройки и продолжайте.",
+          "nl": "Open je de instellingen van een widget terwijl je het bureaublad indeelt, dan stopt de bewerkmodus niet meer. Sluit de instellingen en ga verder."
         }
       }
     ]
@@ -1516,44 +1599,6 @@
           "en": "If your computer has an NVIDIA graphics card, Lumo downloads its driver by itself, RTX 50 cards included, and asks you to restart. Without an NVIDIA card nothing is downloaded. See Settings › System › Drivers.",
           "ru": "Если в компьютере видеокарта NVIDIA, Lumo сама скачает для неё драйвер, в том числе для RTX 50, и попросит перезагрузиться. Без видеокарты NVIDIA ничего не скачивается. Подробности — в «Настройки › Система › Драйверы».",
           "nl": "Heeft je computer een NVIDIA-videokaart, dan downloadt Lumo zelf het stuurprogramma, ook voor RTX 50-kaarten, en vraagt je opnieuw op te starten. Zonder NVIDIA-kaart wordt er niets gedownload. Zie Instellingen › Systeem › Stuurprogramma's."
-        }
-      }
-    ]
-  },
-  {
-    "id": "2026-10-13-3",
-    "date": "2026-10-11",
-    "items": [
-      {
-        "icon": "system-software-install",
-        "title": {
-          "en": "Smoother app browsing",
-          "ru": "Удобнее искать приложения",
-          "nl": "Soepeler apps zoeken"
-        },
-        "text": {
-          "en": "Typing a new search from an app page now takes you straight to the results. Missing screenshots show a fallback icon. Find Flatpak app updates in Store and system updates in Settings.",
-          "ru": "Новый запрос со страницы приложения сразу открывает результаты поиска. Если снимок экрана недоступен, показывается значок. Обновления Flatpak находятся в магазине, системные — в настройках.",
-          "nl": "Typ je op een app-pagina een nieuwe zoekopdracht, dan ga je meteen naar de resultaten. Ontbrekende schermafbeeldingen tonen een vervangend pictogram. Updates van Flatpak-apps vind je in de Store, systeemupdates in Instellingen."
-        }
-      }
-    ]
-  },
-  {
-    "id": "2026-10-13-2",
-    "date": "2026-10-11",
-    "items": [
-      {
-        "icon": "system-software-install",
-        "title": {
-          "en": "Your new app store",
-          "ru": "Новый магазин приложений",
-          "nl": "Je nieuwe appwinkel"
-        },
-        "text": {
-          "en": "Find apps and games in Store, choose Flathub or Debian, and install them without a terminal. Browse categories, screenshots and ratings, manage installed apps and update Flatpak apps in one place. System updates stay in Settings.",
-          "ru": "Находите приложения и игры в «Магазине», выбирайте Flathub или Debian и устанавливайте без терминала. Категории, снимки экрана, оценки, установленные приложения и обновления Flatpak теперь в одном месте. Обновления системы остаются в «Настройках».",
-          "nl": "Vind apps en games in de Store, kies Flathub of Debian en installeer ze zonder terminal. Blader door categorieën, schermafbeeldingen en beoordelingen, beheer je geïnstalleerde apps en werk Flatpak-apps op één plek bij. Systeemupdates blijven in Instellingen."
         }
       }
     ]
