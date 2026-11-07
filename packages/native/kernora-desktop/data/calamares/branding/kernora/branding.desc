@@ -10,9 +10,9 @@ windowPlacement: center
 strings:
     productName:         Lumo
     shortProductName:    Lumo
-    version:             Ember
+    version:             1
     shortVersion:        1
-    versionedName:       Lumo 1 "Ember"
+    versionedName:       Lumo 1
     shortVersionedName:  Lumo 1
     bootloaderEntryName: Lumo
 
